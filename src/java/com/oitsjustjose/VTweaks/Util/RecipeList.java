@@ -29,12 +29,6 @@ public class RecipeList
 		// want to undermine other mods.
 		if (ConfigHandler.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipe(Items.paper));
-		
-		removeRecipe(new ItemStack(Items.cauldron));
-		GameRegistry.addRecipe(new ItemStack(Blocks.cauldron), new Object[]
-		{
-		"# #", "# #", "###", '#', Items.iron_ingot
-		});
 	}
 
 	private IRecipe findRecipe(InventoryCrafting crafting, World world)
