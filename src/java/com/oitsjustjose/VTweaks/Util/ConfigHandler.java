@@ -29,9 +29,6 @@ public class ConfigHandler
 	public static boolean horseArmor;
 	public static boolean stackSizeTweaks;
 	public static boolean disenchant;
-	// Client Configs
-	public static boolean fireAspectEmbers;
-	public static boolean extinguishSound;
 
 	public static void init(File configFile)
 	{
@@ -92,14 +89,6 @@ public class ConfigHandler
 
 		cakeTweak = configuration.getBoolean("Enable Cake Tweak?", Configuration.CATEGORY_GENERAL, true,
 				"If set to false, cake will not be dropped from an uneaten cake, as per vanilla mechanics");
-
-		fireAspectEmbers = configuration.getBoolean("Enable Client-Side Fire Aspect Embers?",
-				Configuration.CATEGORY_GENERAL, true,
-				"If set to false, the client-side Embers gained from holding a fire aspect item will go away");
-
-		extinguishSound = configuration.getBoolean("Enable Client-Side Extinguish Sound?",
-				Configuration.CATEGORY_GENERAL, true,
-				"If set to false, the client-side sizzle sound when extinguishing yourself will go away");
 
 		if (configuration.hasChanged())
 			configuration.save();

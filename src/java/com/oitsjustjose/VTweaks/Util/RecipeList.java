@@ -23,24 +23,18 @@ public class RecipeList
 {
 	public static void registerRecipes()
 	{
-		// Get my player head! Why not?
-		ItemStack oitsjustjosePlayerHead = new ItemStack(Items.skull, 1, 3);
-
-		// Sets the player head tags to be mine, not just a Steve head
-		oitsjustjosePlayerHead.stackTagCompound = new NBTTagCompound();
-		oitsjustjosePlayerHead.stackTagCompound.setString("SkullOwner", "oitsjustjose");
-
-		// Adds the recipe
-		GameRegistry.addRecipe(oitsjustjosePlayerHead,
-				new Object[] { "###", "#W#", "###", '#', Items.golden_carrot, 'W',
-				new ItemStack(Items.skull, 1, Short.MAX_VALUE) });
-
 		// Registers the disenchanting paper feature if config enabled AND if
 		// neither Botania nor ThaumicTinkerer are installed
 		// This was done because of the SpellBinding Cloths added by both. Don't
 		// want to undermine other mods.
 		if (ConfigHandler.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipe(Items.paper));
+		
+		removeRecipe(new ItemStack(Items.cauldron));
+		GameRegistry.addRecipe(new ItemStack(Blocks.cauldron), new Object[]
+		{
+		"# #", "# #", "###", '#', Items.iron_ingot
+		});
 	}
 
 	private IRecipe findRecipe(InventoryCrafting crafting, World world)

@@ -16,7 +16,6 @@ import com.oitsjustjose.VTweaks.Proxy.Common;
 import com.oitsjustjose.VTweaks.Tweaks.BlockTweaks;
 import com.oitsjustjose.VTweaks.Tweaks.BonemealTweaks;
 import com.oitsjustjose.VTweaks.Tweaks.CakeTweak;
-import com.oitsjustjose.VTweaks.Tweaks.ClientTweaks;
 import com.oitsjustjose.VTweaks.Tweaks.NetherWartTweaks;
 import com.oitsjustjose.VTweaks.Tweaks.StackTweaks;
 import com.oitsjustjose.VTweaks.Util.ConfigHandler;
@@ -99,12 +98,11 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
 		MinecraftForge.EVENT_BUS.register(new BlockTweaks());
-		MinecraftForge.EVENT_BUS.register(new ClientTweaks());
 
 		// Initializes other events.
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new RecipeList());
-
+	
 		// Achievement Things!
 		Achievements.initialize();
 	}
@@ -131,10 +129,6 @@ public class VTweaks
 		// Adds these vanilla blocks to creative tabs. Why weren't they already
 		// there?!
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
-		Blocks.bedrock.setCreativeTab(CreativeTabs.tabBlock);
-		Blocks.cake.setCreativeTab(CreativeTabs.tabFood);
-		Blocks.brewing_stand.setCreativeTab(CreativeTabs.tabBlock);
-		Blocks.cauldron.setCreativeTab(CreativeTabs.tabBlock);
 
 		// Registers Stack Tweaks, if enabled
 		StackTweaks.registerTweaks();
