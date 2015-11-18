@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantmentFeatherFallingHandler
+public class FeatherFallingTweak
 {
 	/*
 	 * Better Feather Falling is intended for making feather falling.... better.
@@ -16,7 +16,7 @@ public class EnchantmentFeatherFallingHandler
 	 */
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void unbreakable(PlayerEvent event)
+	public void registerTweak(PlayerEvent event)
 	{
 		// Checks the boot itemstack. Why are boots 0? You'd think it'd start
 		// from the helmet...

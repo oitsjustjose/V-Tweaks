@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Events;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
@@ -16,7 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class CropHelper
 {
 	@SubscribeEvent
-	public void registerEvent(PlayerInteractEvent event)
+	public void registerTweak(PlayerInteractEvent event)
 	{
 		if (event.world.getBlock(event.x, event.y, event.z) == null)
 			return;

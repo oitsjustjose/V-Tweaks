@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Tweaks;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCake;
@@ -10,7 +10,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class CakeTweak
 {
 	@SubscribeEvent
-	public void registerEvent(BlockEvent.HarvestDropsEvent event)
+	public void registerTweak(BlockEvent.HarvestDropsEvent event)
 	{
 		Block block = event.block;
 		if (event.harvester != null && block instanceof BlockCake && event.blockMetadata == 0)

@@ -1,25 +1,28 @@
 package com.oitsjustjose.VTweaks;
 
-import com.oitsjustjose.VTweaks.Achievement.Achievements;
+import com.oitsjustjose.VTweaks.Achievement.AchievementManager;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentAutosmeltHandler;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentFeatherFallingHandler;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentUnbreakableHandler;
 import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
-import com.oitsjustjose.VTweaks.Events.ChickenFeatherBuff;
-import com.oitsjustjose.VTweaks.Events.CowHideBuff;
-import com.oitsjustjose.VTweaks.Events.CropHelper;
-import com.oitsjustjose.VTweaks.Events.DragonRebirth;
-import com.oitsjustjose.VTweaks.Events.SkeletonBoneBuff;
-import com.oitsjustjose.VTweaks.Events.SquidSacBuff;
+import com.oitsjustjose.VTweaks.Enchantments.FeatherFallingTweak;
 import com.oitsjustjose.VTweaks.Events.ToolTips;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.BlockTweaks;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.BonemealTweaks;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.CakeTweak;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.CropHelper;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.NetherWartTweaks;
+import com.oitsjustjose.VTweaks.Events.BlockTweaks.StackTweaks;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.BatKiller;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobs;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobsDrops;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.ChickenFeatherBuff;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.CowHideBuff;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.DragonRebirth;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.SkeletonBoneBuff;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
-import com.oitsjustjose.VTweaks.Tweaks.BlockTweaks;
-import com.oitsjustjose.VTweaks.Tweaks.BonemealTweaks;
-import com.oitsjustjose.VTweaks.Tweaks.CakeTweak;
-import com.oitsjustjose.VTweaks.Tweaks.NetherWartTweaks;
-import com.oitsjustjose.VTweaks.Tweaks.StackTweaks;
 import com.oitsjustjose.VTweaks.Util.ConfigHandler;
-import com.oitsjustjose.VTweaks.Util.RecipeList;
+import com.oitsjustjose.VTweaks.Util.Recipes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -91,27 +94,39 @@ public class VTweaks
 
 		// Initializes better feather falling if enabled
 		if (ConfigHandler.betterFeatherFalling)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentFeatherFallingHandler());
+			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
 		// Initializes Dragon Rebirth if enabled
 		if (ConfigHandler.rebirth)
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
-		MinecraftForge.EVENT_BUS.register(new BlockTweaks());
+		// Initializes Block Tweaks if enabled
+		if(ConfigHandler.blockTweaks)
+			MinecraftForge.EVENT_BUS.register(new BlockTweaks());
+		
+		// Initializes challenger mobs if enabled
+		if(ConfigHandler.challengers)
+		{
+			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
+			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
+		}
+		
+		MinecraftForge.EVENT_BUS.register(new BatKiller());
+
 
 		// Initializes other events.
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
-		MinecraftForge.EVENT_BUS.register(new RecipeList());
+		MinecraftForge.EVENT_BUS.register(new Recipes());
 	
 		// Achievement Things!
-		Achievements.initialize();
+		AchievementManager.initialize();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		// Don't really have a lot of them yet:
-		RecipeList.registerRecipes();
+		Recipes.registerRecipes();
 
 		// Run Renderers for mobs
 		proxy.registerRenderers();

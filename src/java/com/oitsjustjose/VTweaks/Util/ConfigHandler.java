@@ -10,7 +10,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler
 {
-	public static Configuration configuration;
+	public static Configuration config;
 
 	// Buff Configs
 	public static boolean featherBuff;
@@ -29,69 +29,92 @@ public class ConfigHandler
 	public static boolean horseArmor;
 	public static boolean stackSizeTweaks;
 	public static boolean disenchant;
-
+	public static boolean blockTweaks;
+	//Mob Configs
+	public static boolean challengers;
+	public static String[] challengerMobDefaults = new String[]
+			{
+			"Mighty", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian",
+			"Resilient", "Hyper"
+			};
+	public static String[] challengerMobs;
+	public static boolean batKiller;
+	
+	
 	public static void init(File configFile)
 	{
 		// Create the configuration object from the given configuration file
-		if (configuration == null)
+		if (config == null)
 		{
-			configuration = new Configuration(configFile);
+			config = new Configuration(configFile);
 			loadConfiguration();
 		}
 	}
 
 	private static void loadConfiguration()
 	{
-		unbreakableEnchantmentID = configuration.getInt("Unbreakable Enchantment ID", Configuration.CATEGORY_GENERAL,
+		unbreakableEnchantmentID = config.getInt("#Unbreakable Enchantment ID", config.CATEGORY_GENERAL,
 				233, 0, 255,
-				"The Enchantment ID for VTweaks' Unbreakable Enchantment. If set to 0, the enchantment is disabled.");
+				"The Enchantment ID for VTweaks' Unbreakable Enchantment. If set to 0, the enchantment is disabled");
 
-		autosmeltEnchantmentID = configuration.getInt("Autosmelt Enchantment ID", Configuration.CATEGORY_GENERAL, 234,
+		autosmeltEnchantmentID = config.getInt("#Autosmelt Enchantment ID", config.CATEGORY_GENERAL, 234,
 				0, 255,
-				"The Enchantment ID for VTweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled.");
+				"The Enchantment ID for VTweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
 
-		featherBuff = configuration.getBoolean("Chickens Drop Extra Feathers?", Configuration.CATEGORY_GENERAL, true,
-				"If set to false, chicken drops will be unchanged.");
+		featherBuff = config.getBoolean("Chickens Drop Extra Feathers", config.CATEGORY_GENERAL, true,
+				"If set to false, chicken drops will be unchanged");
 
-		hideBuff = configuration.getBoolean("Cows Drop Extra Leather?", Configuration.CATEGORY_GENERAL, true,
-				"If set to false, cow drops will be unchanged.");
+		hideBuff = config.getBoolean("Cows Drop Extra Leather", config.CATEGORY_GENERAL, true,
+				"If set to false, cow drops will be unchanged");
 
-		boneBuff = configuration.getBoolean("Skeletons Drop Extra Bones and Bonemeal?", Configuration.CATEGORY_GENERAL,
-				true, "If set to false, skeleton drops will be unchanged.");
+		boneBuff = config.getBoolean("Skeletons Drop Extra Bones and Bonemeal", config.CATEGORY_GENERAL,
+				true, "If set to false, skeleton drops will be unchanged");
 
-		sacBuff = configuration.getBoolean("Squids Drop Extra Ink Sacs?", Configuration.CATEGORY_GENERAL, true,
-				"If set to false, squid drops will be unchanged.");
+		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true,
+				"If set to false, squid drops will be unchanged");
 
-		cropFeature = configuration.getBoolean("Allow Right-Click-To-Harvest Feature on Crops?",
-				Configuration.CATEGORY_GENERAL, true,
-				"This feature attempts to allow right-clicking on fully grown crops (on any block / mob block extending BlockCrop) that is fully grown."
-						+ " You will not get seeds back when harvesting like this, but you will get an extra bonus as a trade-off");
+		cropFeature = config.getBoolean("Allow Right-Click-To-Harvest Feature on Crops",
+				config.CATEGORY_GENERAL, true,
+				"This feature attempts to allow right-clicking on fully grown crops (on any block / mod block extending BlockCrop) that is fully grown"
+						+ "\n" + "\n" + "You will not get seeds back when harvesting like this, but you will get an extra bonus as a trade-off");
 
-		betterFeatherFalling = configuration.getBoolean("Enable Better Feather Falling?",
-				Configuration.CATEGORY_GENERAL, true,
+		betterFeatherFalling = config.getBoolean("Enable Better Feather Falling",
+				config.CATEGORY_GENERAL, true,
 				"This feature causes 100% negation of any fall damage at all if your boots' Feather Falling level is IV or higher");
 
-		rebirth = configuration.getBoolean("Enable Ender Dragon Rebirth Feature?", Configuration.CATEGORY_GENERAL, true,
-				"This features allows you to rebirth the ender dragon via a cryptic ritual...");
+		rebirth = config.getBoolean("Enable Ender Dragon Rebirth Feature", config.CATEGORY_GENERAL, true,
+				"This features allows you to rebirth the ender dragon via a cryptic ritual..");
 
-		horseArmor = configuration.getBoolean("Enable Horse Armor Recipes?", Configuration.CATEGORY_GENERAL, true,
-				"Combining two pairs of undamaged leggings (of the right kind) in an anvil will get you horse armor of that type."
-						+ "Set this option to false to disable this feature.");
+		horseArmor = config.getBoolean("Enable Horse Armor Recipes", config.CATEGORY_GENERAL, true,
+				"Combining two pairs of undamaged leggings (of the right kind) in an anvil will get you horse armor of that type"
+						+ "\n" + "\n" + "Set this option to false to disable this feature");
 
-		stackSizeTweaks = configuration.getBoolean("Enable Vanilla Item Stack Size Tweaks?",
-				Configuration.CATEGORY_GENERAL, true, "If set to false, all items' stack sizes will remain unchanged");
+		stackSizeTweaks = config.getBoolean("Enable Vanilla Item Stack Size Tweaks",
+				config.CATEGORY_GENERAL, true, "If set to false, all items' stack sizes will remain unchanged");
 
-		disenchant = configuration.getBoolean("Enable Disenchantment Recipes?", Configuration.CATEGORY_GENERAL, true,
-				"If set to false, you won't be able to combine an enchanted tool with a piece of paper to disenchant it");
+		disenchant = config.getBoolean("Enable Disenchantment Recipes", config.CATEGORY_GENERAL, true,
+				"Allow crafting a piece of paper with an enchanted tool to disenchant said tool");
 
-		bonemealTweak = configuration.getBoolean("Enable Bonemeal Tweak?", Configuration.CATEGORY_GENERAL, true,
-				"If set to false, Cactus and Sugar Cane will still be unable to be bonemealed");
+		bonemealTweak = config.getBoolean("Enable Bonemeal Tweak", config.CATEGORY_GENERAL, true,
+				"Enable Cactus and Sugar Cane to be bonemealed, and NetherWart to be blaze-powdered");
 
-		cakeTweak = configuration.getBoolean("Enable Cake Tweak?", Configuration.CATEGORY_GENERAL, true,
+		cakeTweak = config.getBoolean("Enable Cake Tweak", config.CATEGORY_GENERAL, true,
 				"If set to false, cake will not be dropped from an uneaten cake, as per vanilla mechanics");
 
-		if (configuration.hasChanged())
-			configuration.save();
+		blockTweaks = config.getBoolean("Enable Block Efficiency Tweaks", config.CATEGORY_GENERAL, true, 
+				"Enable fixes to tool efficiencies on certain blocks");
+		
+		challengers = config.getBoolean("Enable Challenger Mobs", config.CATEGORY_GENERAL, true, 
+				"Enable the spawning of randomly more difficult (but more lootworthy) enemies? Applies to ALL enemies");
+		
+		challengerMobs = config.get(config.CATEGORY_GENERAL, "Challenger Mobs' Names", challengerMobDefaults,
+				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name").getStringList();
+
+		batKiller = config.getBoolean("Disable bats", config.CATEGORY_GENERAL, true, 
+				"Hate bats? Leave this as 'true' and they'll die as soon as they spawn");
+		
+		if (config.hasChanged())
+			config.save();
 	}
 
 	@SubscribeEvent

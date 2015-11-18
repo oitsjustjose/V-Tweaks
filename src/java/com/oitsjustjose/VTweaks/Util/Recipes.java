@@ -19,7 +19,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class RecipeList
+public class Recipes
 {
 	public static void registerRecipes()
 	{
@@ -28,7 +28,7 @@ public class RecipeList
 		// This was done because of the SpellBinding Cloths added by both. Don't
 		// want to undermine other mods.
 		if (ConfigHandler.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
-			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipe(Items.paper));
+			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
 	}
 
 	private IRecipe findRecipe(InventoryCrafting crafting, World world)

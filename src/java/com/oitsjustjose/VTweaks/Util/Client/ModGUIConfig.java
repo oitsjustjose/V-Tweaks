@@ -14,8 +14,8 @@ public class ModGUIConfig extends GuiConfig
 	public ModGUIConfig(GuiScreen guiScreen)
 	{
 		super(guiScreen,
-				new ConfigElement(ConfigHandler.configuration.getCategory(Configuration.CATEGORY_GENERAL))
+				new ConfigElement(ConfigHandler.config.getCategory(Configuration.CATEGORY_GENERAL))
 						.getChildElements(),
-				VTweaks.modid, false, true, GuiConfig.getAbridgedConfigPath(ConfigHandler.configuration.toString()));
+				VTweaks.modid, false, true, GuiConfig.getAbridgedConfigPath(ConfigHandler.config.toString()));
 	}
 }

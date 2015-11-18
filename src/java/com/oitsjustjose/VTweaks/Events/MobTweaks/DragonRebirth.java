@@ -1,8 +1,8 @@
-package com.oitsjustjose.VTweaks.Events;
+package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.VTweaks.Achievement.Achievements;
+import com.oitsjustjose.VTweaks.Achievement.AchievementManager;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -85,7 +85,7 @@ public class DragonRebirth
 					{
 						spawnRitual(world, event.x, event.y, event.z, dragon);
 						spawnKikoku(player);
-						player.addStat(Achievements.rebirth, 1);
+						player.addStat(AchievementManager.rebirth, 1);
 						--heldItem.stackSize;
 					}
 					// Otherwise tell you how to fix your beacon, relative to

@@ -19,7 +19,7 @@ public class ToolTips
 {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void registerEvent(ItemTooltipEvent event)
+	public void registerTooltip(ItemTooltipEvent event)
 	{
 		if (event.itemStack == null)
 			return;

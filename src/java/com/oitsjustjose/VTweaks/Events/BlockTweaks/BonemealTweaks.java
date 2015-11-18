@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Tweaks;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import java.util.Random;
 
@@ -14,7 +14,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class BonemealTweaks
 {
 	@SubscribeEvent
-	public void registerEvent(PlayerInteractEvent event)
+	public void registerTweak(PlayerInteractEvent event)
 	{
 		// Drops out of the entire function if the block doesn't exist
 		if (event.world.getBlock(event.x, event.y, event.z) == null)

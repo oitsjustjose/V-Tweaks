@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Events;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import net.minecraft.block.Block;
 //import com.pam.harvestcraft.BlockPamCrop;

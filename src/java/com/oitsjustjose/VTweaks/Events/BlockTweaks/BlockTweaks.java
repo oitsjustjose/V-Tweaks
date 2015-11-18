@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Tweaks;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
@@ -10,14 +10,10 @@ import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
-/*
- * Fixes tool efficiencies. Why mojang, why not fix this yourself?? >_>
- */
-
 public class BlockTweaks
 {
 	@SubscribeEvent
-	public void registerEvent(PlayerEvent.BreakSpeed event)
+	public void registerTweak(PlayerEvent.BreakSpeed event)
 	{
 		Block block = event.block;
 		ItemStack stack = event.entityPlayer.getHeldItem();
@@ -34,6 +30,8 @@ public class BlockTweaks
 				event.newSpeed = event.originalSpeed * 6;
 			if (block == Blocks.hay_block)
 				event.newSpeed = event.originalSpeed * 4;
+			if (block == Blocks.ladder)
+				event.newSpeed = event.originalSpeed * 5;
 		}
 		if (stack.getItem() instanceof ItemPickaxe)
 		{

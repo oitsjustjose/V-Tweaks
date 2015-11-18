@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Events;
+package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class SquidSacBuff
 {
 	@SubscribeEvent
-	public void registerEvent(LivingDropsEvent event)
+	public void registerTweak(LivingDropsEvent event)
 	{
 		if (event.entity != null && event.entity instanceof EntitySquid)
 		{

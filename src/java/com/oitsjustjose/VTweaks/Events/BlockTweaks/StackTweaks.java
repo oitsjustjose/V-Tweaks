@@ -1,10 +1,9 @@
-package com.oitsjustjose.VTweaks.Tweaks;
+package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
 import com.oitsjustjose.VTweaks.Util.ConfigHandler;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 public class StackTweaks
 {

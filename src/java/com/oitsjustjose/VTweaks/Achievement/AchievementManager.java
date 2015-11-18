@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 
-public class Achievements
+public class AchievementManager
 {
 	public static Achievement rebirth;
 

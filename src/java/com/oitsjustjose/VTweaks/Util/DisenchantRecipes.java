@@ -18,12 +18,12 @@ import net.minecraft.world.World;
  * See https://github.com/Thaumic-Tinkerer/
  */
 
-public class DisenchantRecipe implements IRecipe
+public class DisenchantRecipes implements IRecipe
 {
 	// The item to be combined with an enchanted item
 	Item toCombineWith;
 
-	public DisenchantRecipe(Item item)
+	public DisenchantRecipes(Item item)
 	{
 		toCombineWith = item;
 	}
