@@ -1,9 +1,9 @@
 package com.oitsjustjose.VTweaks.Enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-
 import com.oitsjustjose.VTweaks.VTweaks;
 import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+
+import net.minecraft.enchantment.Enchantment;
 
 public class Enchantments
 {

@@ -34,7 +34,7 @@ public class ChallengerMobs
 			EntityMob monster = (EntityMob)event.entity;
 			
 			//Simple way of doing a "x in 100" chance, where x is the other variable
-			if(world.rand.nextInt(100) > 50)
+			if(world.rand.nextInt(100) == 1)
 			{
 				//Equips my monsters properly!
 				monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
