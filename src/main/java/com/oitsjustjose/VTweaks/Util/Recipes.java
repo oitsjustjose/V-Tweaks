@@ -42,8 +42,7 @@ public class Recipes
 	@SubscribeEvent
 	public void registerEvent(AnvilUpdateEvent event)
 	{
-		if(ConfigHandler.autosmeltEnchantmentID > 0 || ConfigHandler.unbreakableEnchantmentID > 0)
-			registerBookRecipes(event);
+		registerBookRecipes(event);
 
 		// Only registers horse armor recipes if enabled via config
 		if (ConfigHandler.horseArmor)
@@ -65,7 +64,7 @@ public class Recipes
 		boolean damaged = event.left.getItemDamage() > 0 || event.right.getItemDamage() > 0;
 
 		// Adds diamond horse armor recipe
-		if (left == Items.diamond_leggings && right == Items.diamond_leggings && !damaged)
+		if ((left == Items.diamond_leggings && right == Items.diamond_leggings) && !damaged)
 		{
 			// Sets the XP cost
 			event.cost = 35;
@@ -73,7 +72,7 @@ public class Recipes
 			event.output = new ItemStack(Items.diamond_horse_armor).setStackDisplayName("Large Dog Suit");
 		}
 		// Adds golden horse armor recipe
-		if (left == Items.golden_leggings && right == Items.golden_leggings && !damaged)
+		if ((left == Items.golden_leggings && right == Items.golden_leggings) && !damaged)
 		{
 			// Sets the XP cost
 			event.cost = 30;
@@ -81,69 +80,69 @@ public class Recipes
 			event.output = new ItemStack(Items.golden_horse_armor).setStackDisplayName("Medium Dog Suit");
 		}
 		// Adds iron horse armor recipe
-		if (left == Items.iron_leggings && right == Items.iron_leggings && !damaged)
+		if ((left == Items.iron_leggings && right == Items.iron_leggings) && !damaged)
 		{
 			// Sets the XP cost
 			event.cost = 20;
 			// Sets the output
 			event.output = new ItemStack(Items.iron_horse_armor).setStackDisplayName("Small Dog Suit");
 		}
-
 	}
 
 	// Adds recipes for my enchanted books
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-
-		
-		// Initializes an Enchanted Book with Unbreakable
-		ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
-		Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.unbreakable, 1));
-
-		// Initializes an Enchanted Book with AutoSmelt
-		ItemStack autosmeltBook = new ItemStack(Items.enchanted_book, 1, 0);
-		Items.enchanted_book.addEnchantment(autosmeltBook, new EnchantmentData(Enchantments.autosmelt, 1));
-
-		// Determines what to make the AutoSmelt book with. If fire creepers are
-		// disabled, you'll have no way to get Fire, so it defaults to lava
-		// buckets instead.
-		ItemStack lavaBucket = new ItemStack(Items.lava_bucket);
-
-		// Drops out if either side doesn't have an item
-		if (event.left == null || event.right == null)
-			return;
-
-		// Checks to see if there's a nether star in the right slot and a Book &
-		// Quill in the left slot
-		if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.nether_star
-				&& ConfigHandler.unbreakableEnchantmentID > 0)
-			// Makes sure the nether star stacksize is just 1. If I didn't make
-			// this check, it'd give the OK to make the recipe but then eat all
-			// of the nether stars in the stack
-			if (event.right.stackSize == 1)
+		if(ConfigHandler.unbreakableEnchantmentID > 0)
+		{
+			// Initializes an Enchanted Book with Unbreakable
+			ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.unbreakable, 1));
+			
+			// Drops out if either side doesn't have an item
+			if (event.left == null || event.right == null)
+				return;
+			
+			// Checks to see if there's a nether star in the right slot and a Book &
+			// Quill in the left slot
+			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.nether_star)
 			{
-				// Sets the XP cost
-				event.cost = 40;
-				// Sets the output
-				event.output = unbreakableBook;
+				// Makes sure the nether star stacksize is just 1. If I didn't make
+				// this check, it'd give the OK to make the recipe but then eat all
+				// of the nether stars in the stack
+				if (event.right.stackSize == 1)
+				{
+					// Sets the XP cost
+					event.cost = 40;
+					// Sets the output
+					event.output = unbreakableBook;
+				}
+				else
+					event.output = null;
 			}
-			else
-				event.output = null;
+		}
 
-		// Checks to see if there's a "hot item" in the right slot and a Book &
-		// Quill in the left slot
-		if (event.left.getItem() == Items.writable_book && event.right.getItem() == lavaBucket.getItem()
-				&& ConfigHandler.autosmeltEnchantmentID > 0)
-			// Checks the right side stack size according to the "hot item"
-			if (event.right.stackSize == 1)
-			{
-				// Sets the XP cost
-				event.cost = 40;
-				// Sets the output
-				event.output = autosmeltBook;
-			}
-			else
-				event.output = null;
+		if(ConfigHandler.autosmeltEnchantmentID > 0)
+		{
+			// Initializes an Enchanted Book with AutoSmelt
+			ItemStack autosmeltBook = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(autosmeltBook, new EnchantmentData(Enchantments.autosmelt, 1));
+			
+			// Drops out if either side doesn't have an item
+			if (event.left == null || event.right == null)
+				return;
+			
+			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.lava_bucket)
+				// Checks the right side stack size according to the "hot item"
+				if (event.right.stackSize == 1)
+				{
+					// Sets the XP cost
+					event.cost = 40;
+					// Sets the output
+					event.output = autosmeltBook;
+				}
+				else
+					event.output = null;
+		}
 	}
 
 	public static void removeRecipe(ItemStack result)
