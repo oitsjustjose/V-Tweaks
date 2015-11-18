@@ -42,7 +42,8 @@ public class Recipes
 	@SubscribeEvent
 	public void registerEvent(AnvilUpdateEvent event)
 	{
-		registerBookRecipes(event);
+		if(ConfigHandler.autosmeltEnchantmentID > 0 || ConfigHandler.unbreakableEnchantmentID > 0)
+			registerBookRecipes(event);
 
 		// Only registers horse armor recipes if enabled via config
 		if (ConfigHandler.horseArmor)
@@ -93,6 +94,8 @@ public class Recipes
 	// Adds recipes for my enchanted books
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
+
+		
 		// Initializes an Enchanted Book with Unbreakable
 		ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
 		Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.unbreakable, 1));

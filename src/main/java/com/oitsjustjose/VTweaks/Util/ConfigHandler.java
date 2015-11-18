@@ -105,13 +105,13 @@ public class ConfigHandler
 		blockTweaks = config.getBoolean("Enable Block Efficiency Tweaks", config.CATEGORY_GENERAL, true, 
 				"Enable fixes to tool efficiencies on certain blocks");
 		
-		challengers = config.getBoolean("Enable Challenger Mobs", config.CATEGORY_GENERAL, true, 
+		challengers = config.getBoolean("Challenger Mobs Enabled", config.CATEGORY_GENERAL, true, 
 				"Enable the spawning of randomly more difficult (but more lootworthy) enemies? Applies to ALL enemies");
 		
 		challengerMobs = config.get(config.CATEGORY_GENERAL, "Challenger Mobs' Names", challengerMobDefaults,
 				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name").getStringList();
 		
-		challengerMobRarity = config.getInt(config.CATEGORY_GENERAL, "Challenger Mob Rarity", 75, 1, Short.MAX_VALUE, 
+		challengerMobRarity = config.getInt("Challenger Mob Rarity", config.CATEGORY_GENERAL, 75, 1, Short.MAX_VALUE, 
 				"There is a 1 in x chance of a mob spawning as a Challenger Mob. This number is 'x'");
 
 		batKiller = config.getBoolean("Disable bats", config.CATEGORY_GENERAL, true, 
