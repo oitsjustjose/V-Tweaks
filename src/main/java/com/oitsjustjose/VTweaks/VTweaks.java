@@ -111,7 +111,9 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
 		
-		MinecraftForge.EVENT_BUS.register(new BatKiller());
+		// Initializes bat deaths if enabled
+		if(ConfigHandler.batKiller)
+			MinecraftForge.EVENT_BUS.register(new BatKiller());
 
 
 		// Initializes other events.

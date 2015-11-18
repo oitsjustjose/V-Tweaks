@@ -38,6 +38,7 @@ public class ConfigHandler
 			"Resilient", "Hyper"
 			};
 	public static String[] challengerMobs;
+	public static int challengerMobRarity;
 	public static boolean batKiller;
 	
 	
@@ -109,6 +110,9 @@ public class ConfigHandler
 		
 		challengerMobs = config.get(config.CATEGORY_GENERAL, "Challenger Mobs' Names", challengerMobDefaults,
 				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name").getStringList();
+		
+		challengerMobRarity = config.getInt(config.CATEGORY_GENERAL, "Challenger Mob Rarity", 75, 1, Short.MAX_VALUE, 
+				"There is a 1 in x chance of a mob spawning as a Challenger Mob. This number is 'x'");
 
 		batKiller = config.getBoolean("Disable bats", config.CATEGORY_GENERAL, true, 
 				"Hate bats? Leave this as 'true' and they'll die as soon as they spawn");

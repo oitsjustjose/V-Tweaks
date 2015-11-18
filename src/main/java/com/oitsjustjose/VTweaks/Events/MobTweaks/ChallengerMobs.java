@@ -33,8 +33,8 @@ public class ChallengerMobs
 			//Local Variable of the Event's Entity casted to type Mob
 			EntityMob monster = (EntityMob)event.entity;
 			
-			//Simple way of doing a "x in 100" chance, where x is the other variable
-			if(world.rand.nextInt(100) == 1)
+			//Simple way of doing a "1 in x" chance, where x is the other variable
+			if(1 == world.rand.nextInt(ConfigHandler.challengerMobRarity))
 			{
 				//Equips my monsters properly!
 				monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
