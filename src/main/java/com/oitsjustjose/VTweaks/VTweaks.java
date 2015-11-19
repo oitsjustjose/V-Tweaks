@@ -147,6 +147,12 @@ public class VTweaks
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 
 		// Registers Stack Tweaks, if enabled
-		StackTweaks.registerTweaks();
+		if (Config.stackSizeTweaks)
+			StackTweaks.registerTweaks();
+		
+		if(true)
+		{
+			Blocks.portal.setResistance(Float.MAX_VALUE);
+		}
 	}
 }
