@@ -2,7 +2,7 @@ package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import java.util.ArrayList;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.enchantment.Enchantment;
@@ -34,7 +34,7 @@ public class ChallengerMobs
 			EntityMob monster = (EntityMob)event.entity;
 			
 			//Simple way of doing a "1 in x" chance, where x is the other variable
-			if(1 == world.rand.nextInt(ConfigHandler.challengerMobRarity))
+			if(1 == world.rand.nextInt(Config.challengerMobRarity))
 			{
 				//Equips my monsters properly!
 				monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
@@ -141,7 +141,7 @@ public class ChallengerMobs
 			}
 		}
 		//Returns the prefix (configurable) with the mob's formal name appended
-		return ConfigHandler.challengerMobs[type] + " " + mobString;
+		return Config.challengerMobs[type] + " " + mobString;
 	}
 	
 }

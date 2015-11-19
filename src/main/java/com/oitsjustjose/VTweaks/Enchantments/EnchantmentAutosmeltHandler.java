@@ -7,7 +7,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -31,7 +31,7 @@ public class EnchantmentAutosmeltHandler
 		int fortune = event.fortuneLevel;
 		int qty = event.block.quantityDropped(event.blockMetadata, fortune, event.world.rand);
 		int metadata = event.blockMetadata;
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.autosmeltEnchantmentID, heldItem);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltEnchantmentID, heldItem);
 		World world = event.world;
 
 		if (autosmeltLevel > 0)

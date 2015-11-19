@@ -9,7 +9,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -38,7 +38,7 @@ public class EnchantmentUnbreakableHandler
 			heldItem = player.getCurrentEquippedItem();
 			if (heldItem != null && heldItem.getItemDamage() > 0)
 			{
-				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.unbreakableEnchantmentID,
+				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.unbreakableEnchantmentID,
 						heldItem);
 				if (EnchantmentLevelTool > 0)
 					heldItem.setItemDamage(0);
@@ -50,7 +50,7 @@ public class EnchantmentUnbreakableHandler
 			if (player.getCurrentArmor(i) != null)
 			{
 				armor = player.getCurrentArmor(i);
-				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(ConfigHandler.unbreakableEnchantmentID,
+				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.unbreakableEnchantmentID,
 						armor);
 				if (EnchantmentLevelArmor > 0)
 					armor.setItemDamage(0);

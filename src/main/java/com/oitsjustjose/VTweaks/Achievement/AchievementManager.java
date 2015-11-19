@@ -1,6 +1,6 @@
 package com.oitsjustjose.VTweaks.Achievement;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import net.minecraft.init.Items;
 import net.minecraft.stats.Achievement;
@@ -12,7 +12,7 @@ public class AchievementManager
 
 	public static void initialize()
 	{
-		if (ConfigHandler.rebirth)
+		if (Config.rebirth)
 			rebirth = new Achievement("achievement.rebirth", "rebirth", 7, 15, Items.experience_bottle,
 					AchievementList.field_150964_J).setSpecial().registerStat();
 	}

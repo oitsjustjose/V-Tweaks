@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class ConfigHandler
+public class Config
 {
 	public static Configuration config;
 
@@ -39,7 +39,8 @@ public class ConfigHandler
 			};
 	public static String[] challengerMobs;
 	public static int challengerMobRarity;
-	public static boolean batKiller;
+	public static boolean noBats;
+	public static boolean noPigZombies;
 	
 	
 	public static void init(File configFile)
@@ -114,8 +115,11 @@ public class ConfigHandler
 		challengerMobRarity = config.getInt("Challenger Mob Rarity", config.CATEGORY_GENERAL, 75, 1, Short.MAX_VALUE, 
 				"There is a 1 in x chance of a mob spawning as a Challenger Mob. This number is 'x'");
 
-		batKiller = config.getBoolean("Disable bats", config.CATEGORY_GENERAL, true, 
-				"Hate bats? Leave this as 'true' and they'll die as soon as they spawn");
+		noBats = config.getBoolean("Disable bats", config.CATEGORY_GENERAL, true, 
+				"Hate bats? Leave this as 'true' to disable their spawn");
+		
+		noPigZombies = config.getBoolean("Disable Pig Zombies", config.CATEGORY_GENERAL, true, 
+				"Do Pig Zombies really have a purpose? Leave this as 'true' to disable their spawn");
 		
 		if (config.hasChanged())
 			config.save();

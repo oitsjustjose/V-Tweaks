@@ -2,7 +2,7 @@ package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.enchantment.Enchantment;
@@ -36,7 +36,7 @@ public class ChallengerMobsDrops
 			if(n == null)
 				return;
 			//Clones the prefixes from the config file
-			String[] preFixes = ConfigHandler.challengerMobs.clone();
+			String[] preFixes = Config.challengerMobs.clone();
 			
 			//Scans through them all
 			for(int i = 0; i < preFixes.length; i++)

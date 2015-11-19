@@ -27,7 +27,7 @@ public class Recipes
 		// neither Botania nor ThaumicTinkerer are installed
 		// This was done because of the SpellBinding Cloths added by both. Don't
 		// want to undermine other mods.
-		if (ConfigHandler.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
+		if (Config.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
 	}
 
@@ -45,7 +45,7 @@ public class Recipes
 		registerBookRecipes(event);
 
 		// Only registers horse armor recipes if enabled via config
-		if (ConfigHandler.horseArmor)
+		if (Config.horseArmor)
 			registerHorseArmorRecipes(event);
 	}
 
@@ -92,7 +92,7 @@ public class Recipes
 	// Adds recipes for my enchanted books
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-		if(ConfigHandler.unbreakableEnchantmentID > 0)
+		if(Config.unbreakableEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with Unbreakable
 			ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
@@ -121,7 +121,7 @@ public class Recipes
 			}
 		}
 
-		if(ConfigHandler.autosmeltEnchantmentID > 0)
+		if(Config.autosmeltEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with AutoSmelt
 			ItemStack autosmeltBook = new ItemStack(Items.enchanted_book, 1, 0);

@@ -12,7 +12,7 @@ import com.oitsjustjose.VTweaks.Events.BlockTweaks.CakeTweak;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.CropHelper;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.NetherWartTweaks;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.StackTweaks;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.BatKiller;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.MobKiller;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobs;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobsDrops;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChickenFeatherBuff;
@@ -21,7 +21,7 @@ import com.oitsjustjose.VTweaks.Events.MobTweaks.DragonRebirth;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.SkeletonBoneBuff;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 import com.oitsjustjose.VTweaks.Util.Recipes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -53,68 +53,67 @@ public class VTweaks
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		// Initialize and Register my Configurable options
-		ConfigHandler.init(event.getSuggestedConfigurationFile());
-		FMLCommonHandler.instance().bus().register(new ConfigHandler());
+		Config.init(event.getSuggestedConfigurationFile());
+		FMLCommonHandler.instance().bus().register(new Config());
 
 		// Init Enchants
 		Enchantments.initialize();
 
 		// Registers Unbreakable if the ID is greater than zero
-		if (ConfigHandler.unbreakableEnchantmentID > 0)
+		if (Config.unbreakableEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentUnbreakableHandler());
 
 		// Registers Autosmelt if the ID is greater than zero
-		if (ConfigHandler.autosmeltEnchantmentID > 0)
+		if (Config.autosmeltEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 
 		// Initializes my mob drop buffs if they're enabled
-		if (ConfigHandler.boneBuff)
+		if (Config.boneBuff)
 			MinecraftForge.EVENT_BUS.register(new SkeletonBoneBuff());
-		if (ConfigHandler.hideBuff)
+		if (Config.hideBuff)
 			MinecraftForge.EVENT_BUS.register(new CowHideBuff());
-		if (ConfigHandler.featherBuff)
+		if (Config.featherBuff)
 			MinecraftForge.EVENT_BUS.register(new ChickenFeatherBuff());
-		if (ConfigHandler.sacBuff)
+		if (Config.sacBuff)
 			MinecraftForge.EVENT_BUS.register(new SquidSacBuff());
 
 		// Initializes the crop feature if enabled
-		if (ConfigHandler.cropFeature)
+		if (Config.cropFeature)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());
 
 		// Initializes the bonemeal feature if enabled
-		if (ConfigHandler.bonemealTweak)
+		if (Config.bonemealTweak)
 		{
 			MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
 			MinecraftForge.EVENT_BUS.register(new NetherWartTweaks());
 		}
 
 		// Initializes the cake feature if enabled
-		if (ConfigHandler.cakeTweak)
+		if (Config.cakeTweak)
 			MinecraftForge.EVENT_BUS.register(new CakeTweak());
 
 		// Initializes better feather falling if enabled
-		if (ConfigHandler.betterFeatherFalling)
+		if (Config.betterFeatherFalling)
 			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
 		// Initializes Dragon Rebirth if enabled
-		if (ConfigHandler.rebirth)
+		if (Config.rebirth)
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
 		// Initializes Block Tweaks if enabled
-		if(ConfigHandler.blockTweaks)
+		if(Config.blockTweaks)
 			MinecraftForge.EVENT_BUS.register(new BlockTweaks());
 		
 		// Initializes challenger mobs if enabled
-		if(ConfigHandler.challengers)
+		if(Config.challengers)
 		{
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
 		
-		// Initializes bat deaths if enabled
-		if(ConfigHandler.batKiller)
-			MinecraftForge.EVENT_BUS.register(new BatKiller());
-
+		//Initializes the MobKiller event handler regardless, the configs
+		//are checked inside of that class itself.
+		MinecraftForge.EVENT_BUS.register(new MobKiller());
 
 		// Initializes other events.
 		MinecraftForge.EVENT_BUS.register(new ToolTips());

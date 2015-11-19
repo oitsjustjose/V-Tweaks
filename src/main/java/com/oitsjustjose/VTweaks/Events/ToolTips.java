@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
 
 import com.oitsjustjose.VTweaks.VTweaks;
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -28,7 +28,7 @@ public class ToolTips
 		ItemStack lavaBucket = new ItemStack(Items.lava_bucket);
 		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 
-		if (ConfigHandler.autosmeltEnchantmentID > 0 && stack.getItem() == lavaBucket.getItem())
+		if (Config.autosmeltEnchantmentID > 0 && stack.getItem() == lavaBucket.getItem())
 			if (shift)
 			{
 				event.toolTip.add(localize("tooltip.fire1"));
@@ -38,7 +38,7 @@ public class ToolTips
 			else
 				event.toolTip.add(localize("tooltip.sneaking"));
 
-		if (ConfigHandler.unbreakableEnchantmentID > 0 && stack.getItem() == Items.nether_star)
+		if (Config.unbreakableEnchantmentID > 0 && stack.getItem() == Items.nether_star)
 			if (shift)
 			{
 				event.toolTip.add(localize("tooltip.netherstar1"));

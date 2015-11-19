@@ -1,6 +1,6 @@
 package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
-import com.oitsjustjose.VTweaks.Util.ConfigHandler;
+import com.oitsjustjose.VTweaks.Util.Config;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ public class StackTweaks
 {
 	public static void registerTweaks()
 	{
-		if (ConfigHandler.stackSizeTweaks)
+		if (Config.stackSizeTweaks)
 		{
 			Items.wooden_door.setMaxStackSize(64);
 			Items.iron_door.setMaxStackSize(64);
