@@ -15,13 +15,12 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class EnchantmentAutosmeltHandler
 {
 	/*
-	 * This part of the code does the actual work for the enchantment Without
-	 * this class, the enchantment exists, but does not actually do a single
-	 * thing....
+	 * This part of the code does the actual work for the enchantment Without this class, the enchantment exists, but
+	 * does not actually do a single thing....
 	 */
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void autosmelt(BlockEvent.HarvestDropsEvent event)
+	public void register(BlockEvent.HarvestDropsEvent event)
 	{
 		EntityPlayer player = event.harvester;
 		if (player == null || player.getCurrentEquippedItem() == null)
@@ -36,8 +35,8 @@ public class EnchantmentAutosmeltHandler
 
 		if (autosmeltLevel > 0)
 		{
-			ItemStack newDrop = getSmelted(
-					new ItemStack(event.block.getItemDropped(metadata, event.world.rand, fortune), qty, metadata));
+			ItemStack newDrop = getSmelted(new ItemStack(event.block.getItemDropped(metadata, event.world.rand,
+					fortune), qty, metadata));
 			if (newDrop != null)
 			{
 				int newQty;

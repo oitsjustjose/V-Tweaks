@@ -35,8 +35,8 @@ public class BonemealTweaks
 				{
 					// Check to see if the block is the third block up by making
 					// sure two blocks down isn't the same as said block
-					if (world.getBlock(event.x, event.y - 2, event.z) != testFor
-							&& world.isAirBlock(event.x, event.y + 1, event.z))
+					if (world.getBlock(event.x, event.y - 2, event.z) != testFor && world.isAirBlock(event.x, event.y
+							+ 1, event.z))
 					{
 						player.swingItem();
 						for (int i = 0; i < 8; i++)
@@ -58,8 +58,8 @@ public class BonemealTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle("happyVillager", (double) ((float) event.x + rand.nextFloat()),
-				(double) event.y + (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(),
-				(double) ((float) event.z + rand.nextFloat()), d0, d1, d2);
+		world.spawnParticle("happyVillager", (double) ((float) event.x + rand.nextFloat()), (double) event.y
+				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.z + rand
+						.nextFloat()), d0, d1, d2);
 	}
 }

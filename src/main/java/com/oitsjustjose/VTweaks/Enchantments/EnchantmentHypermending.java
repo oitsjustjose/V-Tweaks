@@ -3,11 +3,11 @@ package com.oitsjustjose.VTweaks.Enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
-public class EnchantmentUnbreakable extends Enchantment
+public class EnchantmentHypermending extends Enchantment
 {
-	public EnchantmentUnbreakable(int par1)
+	public EnchantmentHypermending(int id)
 	{
-		super(par1, 1, EnumEnchantmentType.breakable);
+		super(id, 1, EnumEnchantmentType.breakable);
 	}
 
 	// Makes this enchantment compatible with any other enchants

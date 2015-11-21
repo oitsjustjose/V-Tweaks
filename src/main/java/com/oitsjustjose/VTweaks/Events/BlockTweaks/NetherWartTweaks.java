@@ -52,8 +52,8 @@ public class NetherWartTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle("happyVillager", (double) ((float) event.x + rand.nextFloat()),
-				(double) event.y + (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(),
-				(double) ((float) event.z + rand.nextFloat()), d0, d1, d2);
+		world.spawnParticle("happyVillager", (double) ((float) event.x + rand.nextFloat()), (double) event.y
+				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.z + rand
+						.nextFloat()), d0, d1, d2);
 	}
 }

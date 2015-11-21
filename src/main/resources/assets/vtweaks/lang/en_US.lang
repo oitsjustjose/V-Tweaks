@@ -1,6 +1,7 @@
 #Enchantment Names
-enchantment.VTweaks_unbreakable=§3Unbreakable§r
+enchantment.VTweaks_hyperMending=§3Hypermending§r
 enchantment.VTweaks_autosmelt=§4Auto-Smelt§r
+enchantment.VTweaks_stepboost=Step Boost
 
 #Chat Messages
 chat.message.line=§k---------------------------------------------------§r

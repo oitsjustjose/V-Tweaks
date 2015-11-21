@@ -10,9 +10,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class FeatherFallingTweak
 {
 	/*
-	 * Better Feather Falling is intended for making feather falling.... better.
-	 * If your boots have Feather Falling IV or higher, instead of taking
-	 * reduced fall damage, this handler will negate all fall damage completely.
+	 * Better Feather Falling is intended for making feather falling.... better. If your boots have Feather Falling IV
+	 * or higher, instead of taking reduced fall damage, this handler will negate all fall damage completely.
 	 */
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

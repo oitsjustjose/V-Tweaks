@@ -21,8 +21,8 @@ public class CropHelperModSupport
 			Block harvestable = world.getBlock(event.x, event.y, event.z);
 			int harvestableMeta = world.getBlockMetadata(event.x, event.y, event.z);
 			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
-			ItemStack dropStack = new ItemStack(
-					harvestable.getItemDropped(harvestableMeta, event.world.rand, Short.MAX_VALUE), dropRate);
+			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(harvestableMeta, event.world.rand,
+					Short.MAX_VALUE), dropRate);
 
 			Block garlicCrop = GameRegistry.findBlock("witchery", "garlicplant");
 			Block artichokeCrop = GameRegistry.findBlock("witchery", "artichoke");
@@ -125,8 +125,8 @@ public class CropHelperModSupport
 			Block harvestable = world.getBlock(event.x, event.y, event.z);
 			int harvestableMeta = world.getBlockMetadata(event.x, event.y, event.z);
 			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
-			ItemStack dropStack = new ItemStack(
-					harvestable.getItemDropped(harvestableMeta, event.world.rand, Short.MAX_VALUE), dropRate);
+			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(harvestableMeta, event.world.rand,
+					Short.MAX_VALUE), dropRate);
 
 			Block barley = GameRegistry.findBlock("Natura", "N Crops");
 			if (barley == null)

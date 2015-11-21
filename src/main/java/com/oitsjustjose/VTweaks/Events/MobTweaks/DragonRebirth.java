@@ -54,14 +54,14 @@ public class DragonRebirth
 
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 1, event.z + zMod) != TEStorage
-										|| world.getBlockMetadata(event.x + xMod, event.y - 1, event.z + zMod) != 12)
+								if (world.getBlock(event.x + xMod, event.y - 1, event.z + zMod) != TEStorage || world
+										.getBlockMetadata(event.x + xMod, event.y - 1, event.z + zMod) != 12)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 2, event.z + zMod) != TEStorage
-										|| world.getBlockMetadata(event.x + xMod, event.y - 2, event.z + zMod) != 12)
+								if (world.getBlock(event.x + xMod, event.y - 2, event.z + zMod) != TEStorage || world
+										.getBlockMetadata(event.x + xMod, event.y - 2, event.z + zMod) != 12)
 									isValidPyramid = false;
 					}
 					// Or use vanilla's Emerald blocks to test that it's on a

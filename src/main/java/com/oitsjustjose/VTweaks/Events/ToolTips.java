@@ -38,7 +38,7 @@ public class ToolTips
 			else
 				event.toolTip.add(localize("tooltip.sneaking"));
 
-		if (Config.unbreakableEnchantmentID > 0 && stack.getItem() == Items.nether_star)
+		if (Config.hypermendingEnchantmentID > 0 && stack.getItem() == Items.nether_star)
 			if (shift)
 			{
 				event.toolTip.add(localize("tooltip.netherstar1"));

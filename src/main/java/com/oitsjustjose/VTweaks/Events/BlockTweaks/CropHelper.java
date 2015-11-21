@@ -25,8 +25,8 @@ public class CropHelper
 		Block harvestable = world.getBlock(event.x, event.y, event.z);
 		int harvestableMeta = world.getBlockMetadata(event.x, event.y, event.z);
 		int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
-		ItemStack dropStack = new ItemStack(
-				harvestable.getItemDropped(harvestableMeta, event.world.rand, Short.MAX_VALUE), dropRate);
+		ItemStack dropStack = new ItemStack(harvestable.getItemDropped(harvestableMeta, event.world.rand,
+				Short.MAX_VALUE), dropRate);
 
 		if (event.action == Action.RIGHT_CLICK_BLOCK)
 		{

@@ -14,16 +14,15 @@ import com.oitsjustjose.VTweaks.Util.Config;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantmentUnbreakableHandler
+public class EnchantmentHypermendingHandler
 {
 	/*
-	 * This part of the code does the actual work for the enchantment Without
-	 * this class, the enchantment exists, but does not actually do a single
-	 * thing....
+	 * This part of the code does the actual work for the enchantment Without this class, the enchantment exists, but
+	 * does not actually do a single thing....
 	 */
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void unbreakable(PlayerEvent event)
+	public void register(PlayerEvent event)
 	{
 		EntityPlayer player = event.entityPlayer;
 		ItemStack heldItem = null;
@@ -38,7 +37,7 @@ public class EnchantmentUnbreakableHandler
 			heldItem = player.getCurrentEquippedItem();
 			if (heldItem != null && heldItem.getItemDamage() > 0)
 			{
-				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.unbreakableEnchantmentID,
+				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingEnchantmentID,
 						heldItem);
 				if (EnchantmentLevelTool > 0)
 					heldItem.setItemDamage(0);
@@ -50,8 +49,7 @@ public class EnchantmentUnbreakableHandler
 			if (player.getCurrentArmor(i) != null)
 			{
 				armor = player.getCurrentArmor(i);
-				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.unbreakableEnchantmentID,
-						armor);
+				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingEnchantmentID, armor);
 				if (EnchantmentLevelArmor > 0)
 					armor.setItemDamage(0);
 			}

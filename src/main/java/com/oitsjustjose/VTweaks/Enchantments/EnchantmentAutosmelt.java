@@ -7,9 +7,9 @@ import net.minecraft.item.ItemTool;
 
 public class EnchantmentAutosmelt extends Enchantment
 {
-	public EnchantmentAutosmelt(int par1)
+	public EnchantmentAutosmelt(int id)
 	{
-		super(par1, 1, EnumEnchantmentType.digger);
+		super(id, 1, EnumEnchantmentType.digger);
 	}
 
 	// Makes this enchantment compatible with any other enchants that wouldn't

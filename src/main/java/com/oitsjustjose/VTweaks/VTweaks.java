@@ -2,7 +2,8 @@ package com.oitsjustjose.VTweaks;
 
 import com.oitsjustjose.VTweaks.Achievement.AchievementManager;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentAutosmeltHandler;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentUnbreakableHandler;
+import com.oitsjustjose.VTweaks.Enchantments.EnchantmentHypermendingHandler;
+import com.oitsjustjose.VTweaks.Enchantments.EnchantmentStepboostHandler;
 import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
 import com.oitsjustjose.VTweaks.Enchantments.FeatherFallingTweak;
 import com.oitsjustjose.VTweaks.Events.ToolTips;
@@ -12,12 +13,12 @@ import com.oitsjustjose.VTweaks.Events.BlockTweaks.CakeTweak;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.CropHelper;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.NetherWartTweaks;
 import com.oitsjustjose.VTweaks.Events.BlockTweaks.StackTweaks;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.MobKiller;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobs;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobsDrops;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.ChickenFeatherBuff;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.CowHideBuff;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.DragonRebirth;
+import com.oitsjustjose.VTweaks.Events.MobTweaks.MobKiller;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.SkeletonBoneBuff;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
@@ -60,12 +61,17 @@ public class VTweaks
 		Enchantments.initialize();
 
 		// Registers Unbreakable if the ID is greater than zero
-		if (Config.unbreakableEnchantmentID > 0)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentUnbreakableHandler());
+		if (Config.hypermendingEnchantmentID > 0)
+			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
 		// Registers Autosmelt if the ID is greater than zero
 		if (Config.autosmeltEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
+
+		if (Config.stepboostEnchantmentID > 0)
+			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
+
+		// Registers
 
 		// Initializes my mob drop buffs if they're enabled
 		if (Config.boneBuff)
@@ -101,24 +107,24 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
 		// Initializes Block Tweaks if enabled
-		if(Config.blockTweaks)
+		if (Config.blockTweaks)
 			MinecraftForge.EVENT_BUS.register(new BlockTweaks());
-		
+
 		// Initializes challenger mobs if enabled
-		if(Config.challengers)
+		if (Config.challengers)
 		{
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
-		
-		//Initializes the MobKiller event handler regardless, the configs
-		//are checked inside of that class itself.
+
+		// Initializes the MobKiller event handler regardless, the configs
+		// are checked inside of that class itself.
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 
 		// Initializes other events.
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
-	
+
 		// Achievement Things!
 		AchievementManager.initialize();
 	}
@@ -149,8 +155,8 @@ public class VTweaks
 		// Registers Stack Tweaks, if enabled
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
-		
-		if(true)
+
+		if (true)
 		{
 			Blocks.portal.setResistance(Float.MAX_VALUE);
 		}

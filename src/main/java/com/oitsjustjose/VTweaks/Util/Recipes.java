@@ -92,16 +92,16 @@ public class Recipes
 	// Adds recipes for my enchanted books
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-		if(Config.unbreakableEnchantmentID > 0)
+		if (Config.hypermendingEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with Unbreakable
 			ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.unbreakable, 1));
-			
+			Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.hyperMending, 1));
+
 			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
-			
+
 			// Checks to see if there's a nether star in the right slot and a Book &
 			// Quill in the left slot
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.nether_star)
@@ -121,16 +121,16 @@ public class Recipes
 			}
 		}
 
-		if(Config.autosmeltEnchantmentID > 0)
+		if (Config.autosmeltEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with AutoSmelt
 			ItemStack autosmeltBook = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(autosmeltBook, new EnchantmentData(Enchantments.autosmelt, 1));
-			
+
 			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
-			
+
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.lava_bucket)
 				// Checks the right side stack size according to the "hot item"
 				if (event.right.stackSize == 1)
