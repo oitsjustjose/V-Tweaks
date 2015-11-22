@@ -14,9 +14,11 @@ public class FeatherFallingTweak
 	 * or higher, instead of taking reduced fall damage, this handler will negate all fall damage completely.
 	 */
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent
 	public void registerTweak(PlayerEvent event)
 	{
+		if(event.entityPlayer.getCurrentArmor(0) == null)
+			return;
 		// Checks the boot itemstack. Why are boots 0? You'd think it'd start
 		// from the helmet...
 		ItemStack boots = event.entityPlayer.getCurrentArmor(0);
