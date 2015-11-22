@@ -1,9 +1,6 @@
 package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 
-import com.oitsjustjose.VTweaks.Util.Config;
-
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 
 public class StackTweaks
 {
@@ -26,5 +23,4 @@ public class StackTweaks
 		Items.saddle.setMaxStackSize(64);
 		Items.bed.setMaxStackSize(64);
 	}
-
 }

@@ -24,6 +24,7 @@ import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
 import com.oitsjustjose.VTweaks.Util.Config;
 import com.oitsjustjose.VTweaks.Util.Recipes;
+import com.oitsjustjose.VTweaks.Util.VTweaksGuide;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -41,7 +42,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class VTweaks
 {
 	public static final String modid = "VTweaks";
-	public static final String version = "1.0";
+	public static final String version = "1.1";
 	public static final String guifactory = "com.oitsjustjose.VTweaks.Util.Client.GUIFactory";
 
 	@Instance(modid)
@@ -60,7 +61,7 @@ public class VTweaks
 		// Init Enchants
 		Enchantments.initialize();
 
-		// Registers Unbreakable if the ID is greater than zero
+		// Registers Hypermending if the ID is greater than zero
 		if (Config.hypermendingEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
@@ -68,10 +69,12 @@ public class VTweaks
 		if (Config.autosmeltEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 
+		// Registers Stepboost if the ID is greater than zero
 		if (Config.stepboostEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 
-		// Registers
+		// Registers the event handler for getting the guidebook. You're getting it dammit
+		MinecraftForge.EVENT_BUS.register(new VTweaksGuide());
 
 		// Initializes my mob drop buffs if they're enabled
 		if (Config.boneBuff)

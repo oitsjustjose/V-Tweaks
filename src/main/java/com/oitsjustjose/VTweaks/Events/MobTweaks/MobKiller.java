@@ -19,7 +19,7 @@ public class MobKiller
 		// Checks if mob is a bat, and no bats are enabled.
 		if (toKill != null && toKill instanceof EntityBat && Config.noBats)
 			event.setResult(Result.DENY);
-		
+
 		// Checks if mob is a Pig Zombie, and no Pig Zombies are enabled.
 		if (toKill != null && toKill instanceof EntityPigZombie && Config.noPigZombies)
 			event.setResult(Result.DENY);
