@@ -24,7 +24,7 @@ import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
 import com.oitsjustjose.VTweaks.Util.Config;
 import com.oitsjustjose.VTweaks.Util.Recipes;
-import com.oitsjustjose.VTweaks.Util.VTweaksGuide;
+import com.oitsjustjose.VTweaks.Util.Guide;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -74,7 +74,7 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 
 		// Registers the event handler for getting the guidebook. You're getting it dammit
-		MinecraftForge.EVENT_BUS.register(new VTweaksGuide());
+		MinecraftForge.EVENT_BUS.register(new Guide());
 
 		// Initializes my mob drop buffs if they're enabled
 		if (Config.boneBuff)

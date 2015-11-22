@@ -16,14 +16,15 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
-public class VTweaksGuide
+public class Guide
 {
 	public static ItemStack guideBook()
 	{
 		ItemStack guideBook = new ItemStack(Items.written_book, 1);
 		guideBook.stackTagCompound = new NBTTagCompound();
-		guideBook.stackTagCompound.setString("author", "oitsjustjose");
 		guideBook.stackTagCompound.setString("title", StatCollector.translateToLocal("book.title"));
+		guideBook.stackTagCompound.setString("author", "Version: " + VTweaks.version);
+		
 		NBTTagList pages = new NBTTagList();
 
 		ArrayList<String> indiPages = new ArrayList<String>();
@@ -105,7 +106,7 @@ public class VTweaksGuide
 		EntityItem bookEntity = new EntityItem(event.world, event.entity.posX, event.entity.posY, event.entity.posZ,
 				guideBook());
 		final Entity entity = event.entity;
-		final String GIVEN_BOOK_TAG = "givenVTweaksBook";
+		final String GIVEN_BOOK_TAG = "givenVTweaksBook" + VTweaks.version;
 		if (entity == null)
 			return;
 		if (!event.world.isRemote && entity instanceof EntityPlayer)
