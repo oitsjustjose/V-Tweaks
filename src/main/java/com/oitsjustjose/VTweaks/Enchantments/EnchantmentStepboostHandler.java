@@ -19,9 +19,7 @@ public class EnchantmentStepboostHandler
 		// Gets the Step Boost enchantment level on your boots
 		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.stepboostEnchantmentID, boots);
 		// Does the thing!
-		if (event.entityPlayer.worldObj.isRemote)
-			return;
-		if (boots != null && EnchantmentLevelArmor > 0)
+		if (boots != null && EnchantmentLevelArmor != 0)
 			event.entityPlayer.stepHeight = 1.0F;
 		else
 			event.entityPlayer.stepHeight = 0.5F;
