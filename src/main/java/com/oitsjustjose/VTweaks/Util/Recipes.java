@@ -10,7 +10,10 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -92,8 +95,8 @@ public class Recipes
 		if (Config.hypermendingEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with Unbreakable
-			ItemStack unbreakableBook = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(unbreakableBook, new EnchantmentData(Enchantments.hyperMending, 1));
+			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
 
 			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
@@ -109,9 +112,9 @@ public class Recipes
 				if (event.right.stackSize == 1)
 				{
 					// Sets the XP cost
-					event.cost = 40;
+					event.cost = 30;
 					// Sets the output
-					event.output = unbreakableBook;
+					event.output = book;
 				}
 				else
 					event.output = null;
@@ -121,8 +124,8 @@ public class Recipes
 		if (Config.autosmeltEnchantmentID > 0)
 		{
 			// Initializes an Enchanted Book with AutoSmelt
-			ItemStack autosmeltBook = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(autosmeltBook, new EnchantmentData(Enchantments.autosmelt, 1));
+			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
 
 			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
@@ -133,12 +136,41 @@ public class Recipes
 				if (event.right.stackSize == 1)
 				{
 					// Sets the XP cost
-					event.cost = 40;
+					event.cost = 30;
 					// Sets the output
-					event.output = autosmeltBook;
+					event.output = book;
 				}
 				else
 					event.output = null;
+		}
+		
+		if (Config.lumberingEnchantmentID > 0)
+		{
+			//Initializes an Enchanted Book with Lumbering
+			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
+
+			// Drops out if either side doesn't have an item
+			if (event.left == null || event.right == null)
+				return;
+			
+			boolean damaged = event.right.getItemDamage() > 0;
+
+			// Checks to see if there's a nether star in the right slot and a Book &
+			// Quill in the left slot
+			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.golden_axe)
+			{
+				// Makes sure the axe isn't damaged
+				if (!damaged)
+				{
+					// Sets the XP cost
+					event.cost = 45;
+					// Sets the output
+					event.output = book;
+				}
+				else
+					event.output = null;
+			}
 		}
 	}
 

@@ -2,7 +2,7 @@
 enchantment.VTweaks_hyperMending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
 enchantment.VTweaks_autosmelt=§4Auto-Smelt
 enchantment.VTweaks_stepboost=§aStep Boost
-enchantment.VTweaks_lumbering=§dLumbering
+enchantment.VTweaks_lumbering=Lumbering
 
 
 #Book Things
@@ -12,6 +12,7 @@ book.title.enderdragon=§nDragon Rebirth§r
 book.title.hypermending=§nHypermending Enchant§r
 book.title.autosmelt=§nAuto-Smelt Enchant§r
 book.title.stepboost=§nStep Boost Enchant§r
+book.title.lumbering=§nLumbering Enchant§r
 book.title.featherfalling=§nFeather Falling§r
 book.title.disenchanting=§nDisenchanting§r
 book.title.cropharvesting=§nBetter Crop Harvesting§r

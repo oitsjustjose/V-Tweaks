@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
@@ -37,15 +38,17 @@ public class Guide
 				+ "This book will not tell you how, but a Dragon Egg may...");
 		indiPages.add(StatCollector.translateToLocal("book.title.hypermending") + "\n\n"
 				+ "V-Tweaks adds an enchantment named Hypermending. Similar to the 'Mending' enchantment that the future seems to hold, "
-				+ "this enchantment will keep your tools repaired, however at NO COST at all. If it is enabled...");
-		indiPages.add(
-				"...then a Nether Star should have all the information you need to know about getting this enchantment.");
+				+ "this enchantment will keep your tools repaired, at NO COST at all. " + EnumChatFormatting.DARK_AQUA + "Combine a Book & Quill + Nether Star in an anvil to craft.");
 		indiPages.add(StatCollector.translateToLocal("book.title.autosmelt") + "\n\n"
 				+ "An enchantment that is self-explanitory. All drops will be smelted when a tool with this enchant is used. This enchantment "
-				+ "stacks with Fortune as well (only on Ores, though). See tooltip on Lava Buckets for crafting...");
+				+ "stacks with Fortune as well (only on Ores, though). " + EnumChatFormatting.DARK_AQUA + "Combine a Book & Quill + Lava Bucket in an anvil to craft.");
 		indiPages.add(StatCollector.translateToLocal("book.title.stepboost") + "\n\n"
-				+ "Another self-explanitory enchantment. Applied only to boots (randomly obtainable from normal enchanting), and allows the "
-				+ "wearer to walk up 1-block high elevation changes without jumping.");
+				+ "Applied only to boots (randomly obtainable from normal enchanting)"
+				+ ", and allows the wearer to walk up 1-block high elevation changes without jumping.");
+		indiPages.add(StatCollector.translateToLocal("book.title.lumbering") + "\n\n"
+				+ "Lumbering is an enchantment which can only be applied to axes. When applied and the player is sneaking, you can use "
+				+ "your axe to cut down a whole tree with one swoop! " + EnumChatFormatting.DARK_AQUA + "Combine a Book & Quill + Gold Axe in an anvil to craft.");
+		
 		indiPages.add(StatCollector.translateToLocal("book.title.featherfalling") + "\n\n"
 				+ "Feather Falling can be adjusted by V-Tweaks to disable all fall damage when Feather Falling IV is applied to boots. "
 				+ "All fall damage negated by your boots will come at *no cost* to durability to your boots.");
@@ -82,22 +85,22 @@ public class Guide
 		guideBook.setTagInfo("pages", pages);
 		return guideBook;
 	}
-
+	
 	static String tableOfContentsPage1()
 	{
-		return StatCollector.translateToLocal("book.title.tablecontents") + "\n\n" + ">Dragon Rebirth   -3" + "\n"
-				+ ">Hypermending" + "\n" + "   Enchantment     -4" + "\n" + ">Auto-Smelt" + "\n"
-				+ "   Enchantment     -6" + "\n" + ">Step Boost" + "\n" + "   Enchantment     -7" + "\n"
-				+ ">Feather Falling" + "\n" + "   Tweaks            -8" + "\n" + ">Disenchanting     -9" + "\n"
-				+ ">Better Crop" + "\n" + "   Harvesting      -10" + "\n";
+		return StatCollector.translateToLocal("book.title.tablecontents") + "\n\n" + ">Dragon Rebirth-3" + "\n"
+				+ ">Hypermending" + "\n" + "Enchantment-4" + "\n" + ">Auto-Smelt" + "\n"
+				+ "   Enchantment-5" + "\n" + ">Step Boost" + "\n" + "   Enchantment-6" + "\n"
+				+ "Lumbering Enchantment-7" + "\n"
+				+ ">Feather Falling" + "\n" + "   Tweaks-8" + "\n" + ">Disenchanting-9";
 	}
 
 	static String tableOfContentsPage2()
 	{
-		return ">Better Tool" + "\n" + "   Efficiencies       -11" + "\n" + ">Bone Meal Tweaks -12" + "\n"
-				+ ">Cake Fix             -13" + "\n" + ">Challenger Mobs  -14" + "\n" + ">Mob Drop Buffs   -15" + "\n"
-				+ ">Mob Spawning" + "\n" + "   Adjustments     -16" + "\n" + ">Stack Size Tweaks-17" + "\n"
-				+ ">Horse Armor      -18" + "\n";
+		return ">Better Crop" + "\n" + "   Harvesting-10" + "\n" + ">Better Tool" + "\n" + "   Efficiencies-11" + "\n" + ">Bone Meal Tweaks-12" + "\n"
+				+ ">Cake Fix-13" + "\n" + ">Challenger Mobs-14" + "\n" + ">Mob Drop Buffs-15" + "\n"
+				+ ">Mob Spawning" + "\n" + "   Adjustments-16" + "\n" + ">Stack Size Tweaks-17" + "\n"
+				+ ">Horse Armor-18" + "\n";
 	}
 
 	@SubscribeEvent
