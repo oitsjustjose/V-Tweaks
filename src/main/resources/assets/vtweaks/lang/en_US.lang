@@ -2,6 +2,8 @@
 enchantment.VTweaks_hyperMending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
 enchantment.VTweaks_autosmelt=§4Auto-Smelt
 enchantment.VTweaks_stepboost=§aStep Boost
+enchantment.VTweaks_lumbering=§dLumbering
+
 
 #Book Things
 book.title=§cV§6-§eT§aw§2e§ba§3k§9s§1 G§5u§di§cd§6e§r
@@ -38,11 +40,9 @@ VTweaks.tooltip.sneaking=Hold Shift for More Info
 VTweaks.tooltip.netherstar1=§6Combine with a Book & Quill§r
 VTweaks.tooltip.netherstar2=§6in an anvil to get a§r
 VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r §6Enchanted Book!§r
-VTweaks.tooltip.fire1=§6Combine with a Book & Quill§r
-VTweaks.tooltip.fire2=§6in an anvil to get an§r
-VTweaks.tooltip.fire3=§4Auto-Smelt§r §6Enchanted Book!§r
-VTweaks.tooltip.whole=§f\u25A0§r
-VTweaks.tooltip.half=§7�r
+VTweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
+VTweaks.tooltip.autosmelt=§6in an anvil to get an§r
+VTweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r
 
 #Achievements
 achievement.rebirth=§5§lReincarnation§r

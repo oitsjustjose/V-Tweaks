@@ -3,6 +3,7 @@ package com.oitsjustjose.VTweaks;
 import com.oitsjustjose.VTweaks.Achievement.AchievementManager;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentAutosmeltHandler;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentHypermendingHandler;
+import com.oitsjustjose.VTweaks.Enchantments.EnchantmentLumberingHandler;
 import com.oitsjustjose.VTweaks.Enchantments.EnchantmentStepboostHandler;
 import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
 import com.oitsjustjose.VTweaks.Enchantments.FeatherFallingTweak;
@@ -23,8 +24,8 @@ import com.oitsjustjose.VTweaks.Events.MobTweaks.SkeletonBoneBuff;
 import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
 import com.oitsjustjose.VTweaks.Proxy.Common;
 import com.oitsjustjose.VTweaks.Util.Config;
-import com.oitsjustjose.VTweaks.Util.Recipes;
 import com.oitsjustjose.VTweaks.Util.Guide;
+import com.oitsjustjose.VTweaks.Util.Recipes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -72,6 +73,9 @@ public class VTweaks
 		// Registers Stepboost if the ID is greater than zero
 		if (Config.stepboostEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
+		
+		if (Config.lumberingEnchantmentID > 0)
+			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 
 		// Registers the event handler for getting the guidebook. You're getting it dammit
 		MinecraftForge.EVENT_BUS.register(new Guide());
