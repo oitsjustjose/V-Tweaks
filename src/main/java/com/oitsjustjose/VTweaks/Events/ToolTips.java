@@ -1,11 +1,5 @@
 package com.oitsjustjose.VTweaks.Events;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-
 import org.lwjgl.input.Keyboard;
 
 import com.oitsjustjose.VTweaks.VTweaks;
@@ -14,6 +8,12 @@ import com.oitsjustjose.VTweaks.Util.Config;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 public class ToolTips
 {
@@ -47,8 +47,46 @@ public class ToolTips
 			}
 			else
 				event.toolTip.add(localize("tooltip.sneaking"));
-	}
+		
+		if(stack.getItem() instanceof ItemFood)
+		{
+			ItemFood food = (ItemFood) stack.getItem();
+			int hunger = food.func_150905_g(stack);
 
+			
+			if(Config.foodToolTips == 0)
+				return;
+			else if(Config.foodToolTips == 1)
+				event.toolTip.add(getFlavorText(hunger));
+			else if(Config.foodToolTips == 2)
+				if(shift)
+					event.toolTip.add(getFlavorText(hunger));
+		}
+		
+		if(stack.getUnlocalizedName().contains("cake"))
+		{			
+			if(Config.foodToolTips == 0)
+				return;
+			else if(Config.foodToolTips == 1)
+				event.toolTip.add(getFlavorText(12));
+			else if(Config.foodToolTips == 2)
+				if(shift)
+					event.toolTip.add(getFlavorText(12));
+		}
+	}
+	
+	public static String getFlavorText(int hunger)
+	{
+		String ret = "";
+
+		for(int i = 0; i < (hunger / 2); i++)
+			ret += EnumChatFormatting.DARK_RED + "\u25A0";
+		if(hunger % 2 != 0)
+			ret += EnumChatFormatting.RED + "\u25A0";
+		
+		return ret;
+	}
+	
 	public static String localize(String string, boolean appendModID)
 	{
 		if (appendModID)

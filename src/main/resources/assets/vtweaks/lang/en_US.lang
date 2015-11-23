@@ -41,6 +41,8 @@ VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r 
 VTweaks.tooltip.fire1=§6Combine with a Book & Quill§r
 VTweaks.tooltip.fire2=§6in an anvil to get an§r
 VTweaks.tooltip.fire3=§4Auto-Smelt§r §6Enchanted Book!§r
+VTweaks.tooltip.whole=§f\u25A0§r
+VTweaks.tooltip.half=§7�r
 
 #Achievements
 achievement.rebirth=§5§lReincarnation§r

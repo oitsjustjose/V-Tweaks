@@ -21,6 +21,7 @@ public class Config
 	public static int hypermendingEnchantmentID;
 	public static int autosmeltEnchantmentID;
 	public static int stepboostEnchantmentID;
+	public static int lumberingEnchantmentID;
 	public static boolean betterFeatherFalling;
 	// Misc Configs
 	public static boolean cropFeature;
@@ -31,6 +32,7 @@ public class Config
 	public static boolean stackSizeTweaks;
 	public static boolean disenchant;
 	public static boolean blockTweaks;
+	public static int foodToolTips;
 	// Mob Configs
 	public static boolean challengers;
 	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro",
@@ -52,15 +54,7 @@ public class Config
 
 	private static void loadConfiguration()
 	{
-		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
-				"The Enchantment ID for VTweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
-
-		autosmeltEnchantmentID = config.getInt("#Autosmelt Enchantment ID", config.CATEGORY_GENERAL, 234, 0, 255,
-				"The Enchantment ID for VTweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
-
-		stepboostEnchantmentID = config.getInt("#Step Boost Enchantment ID", config.CATEGORY_GENERAL, 235, 0, 255,
-				"The Enchantment ID for VTweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
-
+		// Buff Configs
 		featherBuff = config.getBoolean("Chickens Drop Extra Feathers", config.CATEGORY_GENERAL, true,
 				"If set to false, chicken drops will be unchanged");
 
@@ -72,7 +66,23 @@ public class Config
 
 		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true,
 				"If set to false, squid drops will be unchanged");
+		
+		
+		// Enchantment Configs
+		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
+				"The Enchantment ID for VTweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
 
+		autosmeltEnchantmentID = config.getInt("#Autosmelt Enchantment ID", config.CATEGORY_GENERAL, 234, 0, 255,
+				"The Enchantment ID for VTweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
+
+		stepboostEnchantmentID = config.getInt("#Step Boost Enchantment ID", config.CATEGORY_GENERAL, 235, 0, 255,
+				"The Enchantment ID for VTweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
+		
+		lumberingEnchantmentID = config.getInt("#Lumbering Enchantment ID", config.CATEGORY_GENERAL, 236, 0, 255,
+				"The Enchantment ID for VTweaks' Lumbering Enchantment. If set to 0, the enchantment is disabled");
+
+		
+		// Misc Configs
 		cropFeature = config.getBoolean("Allow Right-Click-To-Harvest Feature on Crops", config.CATEGORY_GENERAL, true,
 				"This feature attempts to allow right-clicking on fully grown crops (on any block / mod block extending BlockCrop) that is fully grown"
 						+ "\n" + "\n"
@@ -102,7 +112,12 @@ public class Config
 
 		blockTweaks = config.getBoolean("Enable Block Efficiency Tweaks", config.CATEGORY_GENERAL, true,
 				"Enable fixes to tool efficiencies on certain blocks");
-
+		
+		foodToolTips = config.getInt("Enable Food Value Tooltips?", config.CATEGORY_GENERAL, 1, 0, 2, 
+				"0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking");
+		
+		
+		// Mob Configs
 		challengers = config.getBoolean("Challenger Mobs Enabled", config.CATEGORY_GENERAL, true,
 				"Enable the spawning of randomly more difficult (but more lootworthy) enemies? Applies to ALL enemies");
 

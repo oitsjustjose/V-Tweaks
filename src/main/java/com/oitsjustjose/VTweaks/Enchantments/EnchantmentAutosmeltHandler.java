@@ -1,16 +1,17 @@
 package com.oitsjustjose.VTweaks.Enchantments;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-
 import com.oitsjustjose.VTweaks.Util.Config;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent;
 
 public class EnchantmentAutosmeltHandler
 {
@@ -35,22 +36,37 @@ public class EnchantmentAutosmeltHandler
 
 		if (autosmeltLevel > 0)
 		{
+			//The to-be-dropped item
 			ItemStack newDrop = getSmelted(new ItemStack(event.block.getItemDropped(metadata, event.world.rand,
 					fortune), qty, metadata));
+			
+			//Checks to see that the block CAN be smelted. If it doesn't have a smelting result, 
+			//this class has absolutely no effect
 			if (newDrop != null)
 			{
-				int newQty;
+				//Determines the new quantity to drop. Defaults at 1
+				int newQty = 1;
+				
+				//But if it's an ore, we'll take fortune into account
 				if ((qty > 1 || event.block.getUnlocalizedName().toLowerCase().contains("ore")) && fortune > 0)
-					newQty = 1 + event.world.rand.nextInt(fortune + 1);
-				else
-					newQty = qty;
-
+					newQty *= (world.rand.nextInt(fortune + 1) + 1);
+				
+				//Prevents any other drops
 				event.drops.clear();
+				//Adds our new drop in. I don't know why I have to break it down into the 3
+				//different parts instead of just passing it newDrop, but doing THAT makes
+				//weird things happen with the dropped items
 				event.drops.add(new ItemStack(newDrop.getItem(), newQty, newDrop.getItemDamage()));
+
+				//XP SPAWNS HYPE
+				int xpAmt = MathHelper.ceiling_float_int(FurnaceRecipes.smelting().func_151398_b(newDrop)); // Yes, I give xtra ;)
+				event.world.spawnEntityInWorld(new EntityXPOrb(event.world, (double)event.x, event.y + 0.5, (double)event.z, xpAmt));
+				world.playSoundAtEntity(player, "fire.ignite", 0.4F, 1.0F); //A sound now. That's new. Heh. Congrats. Particles don't work.
 			}
 		}
-	}
 
+	}
+	
 	ItemStack getSmelted(ItemStack input)
 	{
 		if (FurnaceRecipes.smelting().getSmeltingResult(input) != null)

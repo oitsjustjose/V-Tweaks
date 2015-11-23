@@ -10,6 +10,7 @@ public class Enchantments
 	public static Enchantment hyperMending;
 	public static Enchantment autosmelt;
 	public static Enchantment stepboost;
+	public static Enchantment lumbering;
 
 	public static void initialize()
 	{
@@ -42,6 +43,13 @@ public class Enchantments
 			// Adds said enchantment to the Enchanted Books list. Otherwise an
 			// enchanted book with unbreakable would only be spawn-able.
 			Enchantment.addToBookList(stepboost);
+		}
+		
+		if (Config.lumberingEnchantmentID != 0)
+		{
+			lumbering = new EnchantmentLumbering(Config.lumberingEnchantmentID).setName(VTweaks.modid + "_lumbering");
+			
+			Enchantment.addToBookList(lumbering);
 		}
 
 	}
