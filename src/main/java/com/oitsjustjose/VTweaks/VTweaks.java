@@ -43,7 +43,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class VTweaks
 {
 	public static final String modid = "VTweaks";
-	public static final String version = "1.1a";
+	public static final String version = "1.2";
 	public static final String guifactory = "com.oitsjustjose.VTweaks.Util.Client.GUIFactory";
 
 	@Instance(modid)
