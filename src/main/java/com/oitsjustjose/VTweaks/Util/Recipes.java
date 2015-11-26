@@ -164,7 +164,7 @@ public class Recipes
 				if (!damaged)
 				{
 					// Sets the XP cost
-					event.cost = 45;
+					event.cost = 30;
 					// Sets the output
 					event.output = book;
 				}
