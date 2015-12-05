@@ -1,5 +1,7 @@
 package com.oitsjustjose.VTweaks.Enchantments;
 
+import com.oitsjustjose.VTweaks.Util.Config;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
@@ -8,17 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-
-import com.oitsjustjose.VTweaks.Util.Config;
-
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentHypermendingHandler
 {
 	/*
-	 * This part of the code does the actual work for the enchantment Without this class, the enchantment exists, but
-	 * does not actually do a single thing....
+	 * This part of the code does the actual work for the enchantment Without this class, the enchantment exists, but does not actually do a single
+	 * thing....
 	 */
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -37,8 +36,7 @@ public class EnchantmentHypermendingHandler
 			heldItem = player.getCurrentEquippedItem();
 			if (heldItem != null && heldItem.getItemDamage() > 0)
 			{
-				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingEnchantmentID,
-						heldItem);
+				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingEnchantmentID, heldItem);
 				if (EnchantmentLevelTool > 0)
 					heldItem.setItemDamage(0);
 			}

@@ -27,23 +27,23 @@ import com.oitsjustjose.VTweaks.Util.Config;
 import com.oitsjustjose.VTweaks.Util.Guide;
 import com.oitsjustjose.VTweaks.Util.Recipes;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = VTweaks.modid, version = VTweaks.version, guiFactory = VTweaks.guifactory)
 public class VTweaks
 {
 	public static final String modid = "VTweaks";
-	public static final String version = "1.2";
+	public static final String version = "1.2_1.8.8";
 	public static final String guifactory = "com.oitsjustjose.VTweaks.Util.Client.GUIFactory";
 
 	@Instance(modid)
@@ -73,7 +73,7 @@ public class VTweaks
 		// Registers Stepboost if the ID is greater than zero
 		if (Config.stepboostEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
-		
+
 		if (Config.lumberingEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 

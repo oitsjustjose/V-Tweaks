@@ -2,13 +2,13 @@ package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import com.oitsjustjose.VTweaks.Util.Config;
 
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MobKiller
 {

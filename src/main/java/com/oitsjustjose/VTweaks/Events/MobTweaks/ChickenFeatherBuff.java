@@ -7,7 +7,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChickenFeatherBuff
 {
@@ -18,8 +18,7 @@ public class ChickenFeatherBuff
 		{
 			Random random = new Random();
 			ItemStack featherStack = new ItemStack(Items.feather, 1 + random.nextInt(4));
-			EntityItem feather = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY,
-					event.entity.posZ, featherStack);
+			EntityItem feather = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, featherStack);
 			event.drops.add(feather);
 		}
 	}

@@ -4,20 +4,19 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FeatherFallingTweak
 {
 	/*
-	 * Better Feather Falling is intended for making feather falling.... better. If your boots have Feather Falling IV
-	 * or higher, instead of taking reduced fall damage, this handler will negate all fall damage completely.
+	 * Better Feather Falling is intended for making feather falling.... better. If your boots have Feather Falling IV or higher, instead of taking
+	 * reduced fall damage, this handler will negate all fall damage completely.
 	 */
 
 	@SubscribeEvent
 	public void registerTweak(PlayerEvent event)
 	{
-		if(event.entityPlayer.getCurrentArmor(0) == null)
+		if (event.entityPlayer.getCurrentArmor(0) == null)
 			return;
 		// Checks the boot itemstack. Why are boots 0? You'd think it'd start
 		// from the helmet...

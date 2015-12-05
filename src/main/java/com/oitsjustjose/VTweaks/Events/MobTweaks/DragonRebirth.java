@@ -12,24 +12,28 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class DragonRebirth
 {
 	@SubscribeEvent
 	public void registerEvent(PlayerInteractEvent event)
 	{
+		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+			return;
+
 		EntityPlayer player = event.entityPlayer;
 		ItemStack heldItem = player.getCurrentEquippedItem();
 		World world = event.world;
-		Block testFor = world.getBlock(event.x, event.y, event.z);
-		boolean inEnd = world.provider.dimensionId == 1;
+		Block testFor = world.getBlockState(event.pos).getBlock();
+		boolean inEnd = world.provider.getDimensionId() == 1;
 		boolean isValidPyramid = true;
 		boolean thermalFoundation = Loader.isModLoaded("ThermalFoundation");
 
@@ -37,7 +41,7 @@ public class DragonRebirth
 
 		// Test that the player is right clicking a block, said block exists,
 		// and that it's a dragon egg
-		if (event.action == Action.RIGHT_CLICK_BLOCK && testFor != null && testFor == Blocks.dragon_egg)
+		if (testFor == Blocks.dragon_egg)
 			// Test that the player is in the end, else output a "go to the end"
 			// type message
 			if (inEnd)
@@ -54,14 +58,18 @@ public class DragonRebirth
 
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 1, event.z + zMod) != TEStorage || world
-										.getBlockMetadata(event.x + xMod, event.y - 1, event.z + zMod) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod))
+										.getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1,
+												event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
+														event.pos.getY() - 1, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 2, event.z + zMod) != TEStorage || world
-										.getBlockMetadata(event.x + xMod, event.y - 2, event.z + zMod) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod))
+										.getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2,
+												event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
+														event.pos.getY() - 2, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 					}
 					// Or use vanilla's Emerald blocks to test that it's on a
@@ -70,12 +78,14 @@ public class DragonRebirth
 					{
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 1, event.z + zMod) != Blocks.emerald_block)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod))
+										.getBlock() != Blocks.emerald_block)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlock(event.x + xMod, event.y - 2, event.z + zMod) != Blocks.emerald_block)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod))
+										.getBlock() != Blocks.emerald_block)
 									isValidPyramid = false;
 					}
 
@@ -83,7 +93,7 @@ public class DragonRebirth
 					// pyramid is valid
 					if (isValidPyramid)
 					{
-						spawnRitual(world, event.x, event.y, event.z, dragon);
+						spawnRitual(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), dragon);
 						spawnKikoku(player);
 						player.addStat(AchievementManager.rebirth, 1);
 						--heldItem.stackSize;
@@ -130,7 +140,7 @@ public class DragonRebirth
 	void spawnRitual(World world, int x, int y, int z, EntityDragon dragon)
 	{
 		// Destroy Egg
-		world.setBlockToAir(x, y, z);
+		world.setBlockToAir(new BlockPos(x, y, z));
 		// Spawn Dragon
 		if (!world.isRemote)
 			world.spawnEntityInWorld(dragon);
@@ -139,12 +149,12 @@ public class DragonRebirth
 		// Set 3 x 3 pyramid part of pyramid blocks to air
 		for (int xMod = -1; xMod < 2; xMod++)
 			for (int zMod = -1; zMod < 2; zMod++)
-				world.setBlockToAir(x + xMod, y - 1, z + zMod);
+				world.setBlockToAir(new BlockPos(x + xMod, y - 1, z + zMod));
 
 		// Set 5 x 5 pyramid part of pyramid blocks to air
 		for (int xMod = -2; xMod < 3; xMod++)
 			for (int zMod = -2; zMod < 3; zMod++)
-				world.setBlockToAir(x + xMod, y - 2, z + zMod);
+				world.setBlockToAir(new BlockPos(x + xMod, y - 2, z + zMod));
 
 		// Spawn an explosion for pretties. Does not do damage
 		for (int explodeX = -5; explodeX < 6; explodeX++)

@@ -13,7 +13,7 @@ public class AchievementManager
 	public static void initialize()
 	{
 		if (Config.rebirth)
-			rebirth = new Achievement("achievement.rebirth", "rebirth", 7, 15, Items.experience_bottle,
-					AchievementList.field_150964_J).setSpecial().registerStat();
+			rebirth = new Achievement("achievement.rebirth", "rebirth", 7, 15, Items.experience_bottle, AchievementList.killWither).setSpecial()
+					.registerStat();
 	}
 }

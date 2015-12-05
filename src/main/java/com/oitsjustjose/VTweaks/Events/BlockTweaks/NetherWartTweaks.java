@@ -3,35 +3,37 @@ package com.oitsjustjose.VTweaks.Events.BlockTweaks;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class NetherWartTweaks
 {
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
 	{
-		// Drops out of the entire function if the block doesn't exist
-		if (event.world.getBlock(event.x, event.y, event.z) == null)
+		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		EntityPlayer player = event.entityPlayer;
 		World world = event.world;
-		Block testFor = world.getBlock(event.x, event.y, event.z);
+		Block testFor = world.getBlockState(event.pos).getBlock();
 		Random rand = world.rand;
+		int meta = testFor.getDamageValue(world, event.pos);
 
-		if (event.action == event.action.RIGHT_CLICK_BLOCK && player.getCurrentEquippedItem() != null)
+		if (player.getCurrentEquippedItem() != null)
 		{
 			ItemStack heldItem = player.getCurrentEquippedItem();
 			if (heldItem.getItem() == Items.blaze_powder)
 			{
 				// Check to see if the block is cactus or sugar cane
-				if (testFor == Blocks.nether_wart && world.getBlockMetadata(event.x, event.y, event.z) < 3)
+				if (testFor == Blocks.nether_wart && meta < 3)
 				{
 					player.swingItem();
 					for (int i = 0; i < 8; i++)
@@ -40,7 +42,7 @@ public class NetherWartTweaks
 					{
 						if (!player.capabilities.isCreativeMode)
 							--heldItem.stackSize;
-						world.setBlockMetadataWithNotify(event.x, event.y, event.z, 3, 3);
+						world.setBlockState(event.pos, testFor.getStateFromMeta(3), 3);
 					}
 				}
 			}
@@ -52,8 +54,7 @@ public class NetherWartTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle("happyVillager", (double) ((float) event.x + rand.nextFloat()), (double) event.y
-				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.z + rand
-						.nextFloat()), d0, d1, d2);
+		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) event.pos.getX() + rand.nextFloat()), (double) event.pos.getY()
+				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.pos.getZ() + rand.nextFloat()), d0, d1, d2);
 	}
 }

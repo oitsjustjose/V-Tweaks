@@ -2,12 +2,13 @@ package com.oitsjustjose.VTweaks.Enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentStepboost extends Enchantment
 {
 	public EnchantmentStepboost(int id)
 	{
-		super(id, 1, EnumEnchantmentType.armor_feet);
+		super(id, new ResourceLocation("stepboost"), 1, EnumEnchantmentType.ARMOR_FEET);
 	}
 
 	@Override

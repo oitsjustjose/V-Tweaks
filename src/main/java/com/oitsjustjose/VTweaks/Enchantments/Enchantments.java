@@ -18,8 +18,7 @@ public class Enchantments
 		if (Config.hypermendingEnchantmentID != 0)
 		{
 			// Initializes the unbreakable variable
-			hyperMending = new EnchantmentHypermending(Config.hypermendingEnchantmentID).setName(VTweaks.modid
-					+ "_hyperMending");
+			hyperMending = new EnchantmentHypermending(Config.hypermendingEnchantmentID).setName(VTweaks.modid + "_hyperMending");
 			// Adds said enchantment to the Enchanted Books list. Otherwise an
 			// enchanted book with unbreakable would only be spawn-able.
 			Enchantment.addToBookList(hyperMending);
@@ -44,11 +43,11 @@ public class Enchantments
 			// enchanted book with unbreakable would only be spawn-able.
 			Enchantment.addToBookList(stepboost);
 		}
-		
+
 		if (Config.lumberingEnchantmentID != 0)
 		{
 			lumbering = new EnchantmentLumbering(Config.lumberingEnchantmentID).setName(VTweaks.modid + "_lumbering");
-			
+
 			Enchantment.addToBookList(lumbering);
 		}
 

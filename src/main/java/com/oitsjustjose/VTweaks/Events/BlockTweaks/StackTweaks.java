@@ -6,8 +6,6 @@ public class StackTweaks
 {
 	public static void registerTweaks()
 	{
-		Items.wooden_door.setMaxStackSize(64);
-		Items.iron_door.setMaxStackSize(64);
 		Items.boat.setMaxStackSize(64);
 		Items.minecart.setMaxStackSize(64);
 		Items.furnace_minecart.setMaxStackSize(64);

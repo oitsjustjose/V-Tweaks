@@ -4,20 +4,17 @@ import java.util.List;
 
 import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Recipes
 {
@@ -143,17 +140,17 @@ public class Recipes
 				else
 					event.output = null;
 		}
-		
+
 		if (Config.lumberingEnchantmentID > 0)
 		{
-			//Initializes an Enchanted Book with Lumbering
+			// Initializes an Enchanted Book with Lumbering
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
 
 			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
-			
+
 			boolean damaged = event.right.getItemDamage() > 0;
 
 			// Checks to see if there's a nether star in the right slot and a Book &

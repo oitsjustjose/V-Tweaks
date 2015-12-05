@@ -4,12 +4,13 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentAutosmelt extends Enchantment
 {
 	public EnchantmentAutosmelt(int id)
 	{
-		super(id, 1, EnumEnchantmentType.digger);
+		super(id, new ResourceLocation("autosmelt"), 1, EnumEnchantmentType.DIGGER);
 	}
 
 	// Makes this enchantment compatible with any other enchants that wouldn't

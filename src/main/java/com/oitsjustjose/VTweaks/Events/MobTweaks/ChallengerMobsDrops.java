@@ -4,10 +4,8 @@ import java.util.Random;
 
 import com.oitsjustjose.VTweaks.Util.Config;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.Items;
@@ -15,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /*
  * This class is for adding special drops to my
@@ -48,11 +47,9 @@ public class ChallengerMobsDrops
 						// I add a special new drop. This is a good way of preventing exploits, really.
 						// Best way of doing this? NBT Tags, but I couldn't care enough to figure that out.
 						for (int j = 0; j < 2; j++)
-							event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY,
-									event.entity.posZ));
+							event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
 						if (event.entity.worldObj.rand.nextInt(100) == 99)
-							event.drops.add(getEnchantedBook(event.entity.worldObj, event.entity.posX,
-									event.entity.posY, event.entity.posZ));
+							event.drops.add(getEnchantedBook(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
 					}
 			}
 		}
@@ -96,8 +93,7 @@ public class ChallengerMobsDrops
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.fortune, rand.nextInt(3) + 1));
 			break;
 		case 2:
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.baneOfArthropods, rand.nextInt(4)
-					+ 1));
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.baneOfArthropods, rand.nextInt(4) + 1));
 			break;
 		case 3:
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.thorns, rand.nextInt(4) + 1));
@@ -115,8 +111,7 @@ public class ChallengerMobsDrops
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.unbreaking, rand.nextInt(3) + 1));
 			break;
 		case 8:
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.featherFalling, rand.nextInt(4)
-					+ 1));
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.featherFalling, rand.nextInt(4) + 1));
 			break;
 		case 9:
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.infinity, 1));

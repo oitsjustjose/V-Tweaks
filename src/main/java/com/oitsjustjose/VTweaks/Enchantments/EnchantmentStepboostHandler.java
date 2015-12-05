@@ -2,12 +2,11 @@ package com.oitsjustjose.VTweaks.Enchantments;
 
 import com.oitsjustjose.VTweaks.Util.Config;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWritableBook;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentStepboostHandler
 {
@@ -19,7 +18,7 @@ public class EnchantmentStepboostHandler
 		// Gets the Step Boost enchantment level on your boots
 		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.stepboostEnchantmentID, boots);
 		// Does the thing!
-		
+
 		if (boots != null && EnchantmentLevelArmor != 0)
 			event.entityPlayer.stepHeight = 1.0F;
 		else

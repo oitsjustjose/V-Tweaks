@@ -2,8 +2,6 @@ package com.oitsjustjose.VTweaks.Events.MobTweaks;
 
 import com.oitsjustjose.VTweaks.Util.Config;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -14,6 +12,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChallengerMobs
 {
@@ -49,7 +49,7 @@ public class ChallengerMobs
 				{
 					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
 					ItemStack helmet = new ItemStack(Items.leather_helmet);
-					((ItemArmor) helmet.getItem()).func_82813_b(helmet, world.rand.nextInt(1677215));
+					((ItemArmor) helmet.getItem()).setColor(helmet, world.rand.nextInt(1677215));
 					monster.setCurrentItemOrArmor(1, null);
 					monster.setCurrentItemOrArmor(2, null);
 					monster.setCurrentItemOrArmor(3, null);

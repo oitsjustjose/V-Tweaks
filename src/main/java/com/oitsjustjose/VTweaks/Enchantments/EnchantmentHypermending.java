@@ -2,12 +2,13 @@ package com.oitsjustjose.VTweaks.Enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentHypermending extends Enchantment
 {
 	public EnchantmentHypermending(int id)
 	{
-		super(id, 1, EnumEnchantmentType.breakable);
+		super(id, new ResourceLocation("hypermending"), 1, EnumEnchantmentType.BREAKABLE);
 	}
 
 	// Makes this enchantment compatible with any other enchants

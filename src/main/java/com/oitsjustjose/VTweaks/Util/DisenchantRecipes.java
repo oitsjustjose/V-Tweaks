@@ -92,4 +92,11 @@ public class DisenchantRecipes implements IRecipe
 	{
 		return null;
 	}
+
+	@Override
+	public ItemStack[] getRemainingItems(InventoryCrafting inv)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

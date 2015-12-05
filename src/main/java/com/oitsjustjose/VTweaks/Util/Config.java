@@ -5,8 +5,8 @@ import java.io.File;
 import com.oitsjustjose.VTweaks.VTweaks;
 
 import net.minecraftforge.common.config.Configuration;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config
 {
@@ -35,8 +35,7 @@ public class Config
 	public static int foodToolTips;
 	// Mob Configs
 	public static boolean challengers;
-	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro",
-			"Zestonian", "Resilient", "Hyper" };
+	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
 	public static String[] challengerMobs;
 	public static int challengerMobRarity;
 	public static boolean noBats;
@@ -58,16 +57,13 @@ public class Config
 		featherBuff = config.getBoolean("Chickens Drop Extra Feathers", config.CATEGORY_GENERAL, true,
 				"If set to false, chicken drops will be unchanged");
 
-		hideBuff = config.getBoolean("Cows Drop Extra Leather", config.CATEGORY_GENERAL, true,
-				"If set to false, cow drops will be unchanged");
+		hideBuff = config.getBoolean("Cows Drop Extra Leather", config.CATEGORY_GENERAL, true, "If set to false, cow drops will be unchanged");
 
 		boneBuff = config.getBoolean("Skeletons Drop Extra Bones and Bonemeal", config.CATEGORY_GENERAL, true,
 				"If set to false, skeleton drops will be unchanged");
 
-		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true,
-				"If set to false, squid drops will be unchanged");
-		
-		
+		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true, "If set to false, squid drops will be unchanged");
+
 		// Enchantment Configs
 		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
 				"The Enchantment ID for VTweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
@@ -77,16 +73,14 @@ public class Config
 
 		stepboostEnchantmentID = config.getInt("#Step Boost Enchantment ID", config.CATEGORY_GENERAL, 235, 0, 255,
 				"The Enchantment ID for VTweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
-		
+
 		lumberingEnchantmentID = config.getInt("#Lumbering Enchantment ID", config.CATEGORY_GENERAL, 236, 0, 255,
 				"The Enchantment ID for VTweaks' Lumbering Enchantment. If set to 0, the enchantment is disabled");
 
-		
 		// Misc Configs
 		cropFeature = config.getBoolean("Allow Right-Click-To-Harvest Feature on Crops", config.CATEGORY_GENERAL, true,
 				"This feature attempts to allow right-clicking on fully grown crops (on any block / mod block extending BlockCrop) that is fully grown"
-						+ "\n" + "\n"
-						+ "You will not get seeds back when harvesting like this, but you will get an extra bonus as a trade-off");
+						+ "\n" + "\n" + "You will not get seeds back when harvesting like this, but you will get an extra bonus as a trade-off");
 
 		betterFeatherFalling = config.getBoolean("Enable Better Feather Falling", config.CATEGORY_GENERAL, true,
 				"This feature causes 100% negation of any fall damage at all if your boots' Feather Falling level is IV or higher");
@@ -95,8 +89,8 @@ public class Config
 				"This features allows you to rebirth the ender dragon via a cryptic ritual..");
 
 		horseArmor = config.getBoolean("Enable Horse Armor Recipes", config.CATEGORY_GENERAL, true,
-				"Combining two pairs of undamaged leggings (of the right kind) in an anvil will get you horse armor of that type"
-						+ "\n" + "\n" + "Set this option to false to disable this feature");
+				"Combining two pairs of undamaged leggings (of the right kind) in an anvil will get you horse armor of that type" + "\n" + "\n"
+						+ "Set this option to false to disable this feature");
 
 		stackSizeTweaks = config.getBoolean("Enable Vanilla Item Stack Size Tweaks", config.CATEGORY_GENERAL, true,
 				"If set to false, all items' stack sizes will remain unchanged");
@@ -112,24 +106,21 @@ public class Config
 
 		blockTweaks = config.getBoolean("Enable Block Efficiency Tweaks", config.CATEGORY_GENERAL, true,
 				"Enable fixes to tool efficiencies on certain blocks");
-		
-		foodToolTips = config.getInt("Enable Food Value Tooltips?", config.CATEGORY_GENERAL, 1, 0, 2, 
+
+		foodToolTips = config.getInt("Enable Food Value Tooltips?", config.CATEGORY_GENERAL, 1, 0, 2,
 				"0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking");
-		
-		
+
 		// Mob Configs
 		challengers = config.getBoolean("Challenger Mobs Enabled", config.CATEGORY_GENERAL, true,
 				"Enable the spawning of randomly more difficult (but more lootworthy) enemies? Applies to ALL enemies");
 
 		challengerMobs = config.get(config.CATEGORY_GENERAL, "Challenger Mobs' Names", challengerMobDefaults,
-				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name")
-				.getStringList();
+				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name").getStringList();
 
 		challengerMobRarity = config.getInt("Challenger Mob Rarity", config.CATEGORY_GENERAL, 75, 1, Short.MAX_VALUE,
 				"There is a 1 in x chance of a mob spawning as a Challenger Mob. This number is 'x'");
 
-		noBats = config.getBoolean("Disable Bats", config.CATEGORY_GENERAL, true,
-				"Hate bats? Leave this as 'true' to disable their spawn");
+		noBats = config.getBoolean("Disable Bats", config.CATEGORY_GENERAL, true, "Hate bats? Leave this as 'true' to disable their spawn");
 
 		noPigZombies = config.getBoolean("Disable Pig Zombies", config.CATEGORY_GENERAL, true,
 				"Do Pig Zombies really have a purpose? Leave this as 'true' to disable their spawn");
