@@ -16,14 +16,13 @@ public class MobKiller
 	public void registerTweak(LivingSpawnEvent event)
 	{
 		Entity toKill = event.entity;
-		// Checks if mob is a bat, and no bats are enabled.
+	
 		if (toKill != null && toKill instanceof EntityBat && Config.noBats)
 			event.setResult(Result.DENY);
-
-		// Checks if mob is a Pig Zombie, and no Pig Zombies are enabled.
+	
 		if (toKill != null && toKill instanceof EntityPigZombie && Config.noPigZombies)
 			event.setResult(Result.DENY);
-		// Also decreases spawn rates of ghasts, which were out of control otherwise
+	
 		if (toKill != null && toKill instanceof EntityGhast && Config.noPigZombies)
 			if (event.world.rand.nextInt(100) < 95)
 				event.setResult(Result.DENY);

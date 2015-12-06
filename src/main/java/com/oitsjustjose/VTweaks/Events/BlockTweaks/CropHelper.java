@@ -26,25 +26,20 @@ public class CropHelper
 		World world = event.world;
 		Block harvestable = cropState.getBlock();
 		int harvestableMeta = harvestable.getMetaFromState(cropState);
-		int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
+		int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(1);
 		ItemStack dropStack = new ItemStack(harvestable.getItemDropped(cropState, event.world.rand, Short.MAX_VALUE), dropRate);
 
-		// Mod Compatibility, and a flag check to make sure that ExU Ender
-		// Lilly's don't get checked as a blockcrop too
-		// Another flag has been added, pamCrop, to check that the block
-		// isn't a Pam's HC Crop too, y'know, to be safe.
 		boolean flag = CropHelperModSupport.registerExU(event);
 		boolean pamCrop = harvestable.getClass().getName().startsWith("com.pam.harvestcraft.BlockPamCrop");
 		CropHelperModSupport.registerNatura(event);
 		CropHelperModSupport.registerWitchery(event);
 
-		// Hopefully compatible with most everything else....
 		if (harvestable instanceof BlockCrops && harvestableMeta >= 7 && !flag && !pamCrop)
 		{
 			event.entityPlayer.swingItem();
 			if (!world.isRemote)
 			{
-				EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ, dropStack);
+				EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), dropStack);
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 				world.spawnEntityInWorld(droppedItem);
 			}
@@ -57,8 +52,7 @@ public class CropHelper
 			if (!world.isRemote)
 			{
 				int dropQty = 1 + world.rand.nextInt(3);
-				EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
-						new ItemStack(Items.dye, dropQty, 3));
+				EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), new ItemStack(Items.dye, dropQty, 3));
 				world.setBlockState(event.pos, harvestable.getStateFromMeta(harvestableMeta - 8), 2);
 				world.spawnEntityInWorld(droppedItem);
 			}
@@ -71,8 +65,7 @@ public class CropHelper
 			if (!world.isRemote)
 			{
 				int dropQty = 2 + (world.rand.nextInt(2) + 1);
-				EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
-						new ItemStack(Items.nether_wart, dropQty));
+				EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), new ItemStack(Items.nether_wart, dropQty));
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 				world.spawnEntityInWorld(droppedItem);
 			}

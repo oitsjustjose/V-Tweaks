@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 
 public class DisenchantRecipes implements IRecipe
 {
-	// The item to be combined with an enchanted item
 	Item toCombineWith;
 
 	public DisenchantRecipes(Item item)
@@ -28,11 +27,9 @@ public class DisenchantRecipes implements IRecipe
 		toCombineWith = item;
 	}
 
-	// Checks to see if the input items match
 	@Override
 	public boolean matches(InventoryCrafting invCraft, World world)
 	{
-		// Flags for if I've found the paper or enchanted item yet
 		boolean paperItem = false;
 		boolean enchantedItem = false;
 
@@ -40,22 +37,16 @@ public class DisenchantRecipes implements IRecipe
 		{
 			ItemStack stack = invCraft.getStackInSlot(i);
 			if (stack != null)
-				// sets the flag to true if enchanted item is found
 				if (stack.isItemEnchanted() && !enchantedItem)
 					enchantedItem = true;
-				// sets the flag to true if the paper is found
+				else if (stack.getItem() == Items.paper && !paperItem)
+					paperItem = true;
 				else
-					if (stack.getItem() == Items.paper && !paperItem)
-						paperItem = true;
-					// ends the function altogether if it does nothing at all
-					else
-						return false;
+					return false;
 		}
-		// returns the combination of the flags
 		return enchantedItem && paperItem;
 	}
 
-	// Sets the result as an unenchanted version of the input
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting invCraft)
 	{
@@ -74,7 +65,6 @@ public class DisenchantRecipes implements IRecipe
 		if (stackToClear == null)
 			return null;
 
-		// disenchants the itemstack
 		NBTTagCompound compound = (NBTTagCompound) stackToClear.getTagCompound().copy();
 		compound.removeTag("ench");
 		stackToClear.setTagCompound(compound);
@@ -94,9 +84,16 @@ public class DisenchantRecipes implements IRecipe
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv)
+	public ItemStack[] getRemainingItems(InventoryCrafting invCraft)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		ItemStack[] ret = new ItemStack[9];
+		ItemStack stackToClear = null;
+
+		for(int i = 0; i < invCraft.getSizeInventory(); i++)
+			if(invCraft.getStackInSlot(i) != null)
+				if(invCraft.getStackInSlot(i).getItem() != Items.paper && !invCraft.getStackInSlot(i).isItemEnchanted() )
+					ret[i] = invCraft.getStackInSlot(i);
+		
+		return ret;
 	}
 }

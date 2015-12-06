@@ -32,7 +32,6 @@ public class NetherWartTweaks
 			ItemStack heldItem = player.getCurrentEquippedItem();
 			if (heldItem.getItem() == Items.blaze_powder)
 			{
-				// Check to see if the block is cactus or sugar cane
 				if (testFor == Blocks.nether_wart && meta < 3)
 				{
 					player.swingItem();
@@ -54,7 +53,7 @@ public class NetherWartTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) event.pos.getX() + rand.nextFloat()), (double) event.pos.getY()
-				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.pos.getZ() + rand.nextFloat()), d0, d1, d2);
+		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) event.pos.getX() + rand.nextFloat()), (double) event.pos.getY() + (double) rand.nextFloat() * testFor
+				.getBlockBoundsMaxY(), (double) ((float) event.pos.getZ() + rand.nextFloat()), d0, d1, d2);
 	}
 }

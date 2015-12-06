@@ -25,33 +25,18 @@ public class ChallengerMobsDrops
 	@SubscribeEvent
 	public void registerEvent(LivingDropsEvent event)
 	{
-		// Checks if there IS an entity, and then whether it's an enemy
 		if (event.entity != null && event.entity instanceof EntityMob)
 		{
-			// Grabs the nametag name, which we happen to assign in our special cases
 			String n = ((EntityMob) event.entity).getCustomNameTag().toLowerCase();
-			// If there isn't one, I stop all work here
 			if (n == null)
 				return;
-			// Clones the prefixes from the config file
-			String[] preFixes = Config.challengerMobs.clone();
 
-			// Scans through them all
+			String[] preFixes = Config.challengerMobs.clone();
 			for (int i = 0; i < preFixes.length; i++)
-			{
-				// If the mobs' nametag contians one of the prefixes
 				if (n.contains(preFixes[i].toLowerCase()))
-					// AND the mob has a resistance potion on it
 					if (((EntityMob) event.entity).isPotionActive(Potion.resistance))
-					{
-						// I add a special new drop. This is a good way of preventing exploits, really.
-						// Best way of doing this? NBT Tags, but I couldn't care enough to figure that out.
 						for (int j = 0; j < 2; j++)
 							event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
-						if (event.entity.worldObj.rand.nextInt(100) == 99)
-							event.drops.add(getEnchantedBook(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
-					}
-			}
 		}
 	}
 
@@ -59,27 +44,54 @@ public class ChallengerMobsDrops
 	{
 		ItemStack drop = null;
 		Random rand = new Random();
+		int i = rand.nextInt(100);
 
-		switch (rand.nextInt(4))
-		{
-		case 0:
-			drop = new ItemStack(Items.gold_ingot, rand.nextInt(3) + 1);
-			break;
-		case 1:
-			drop = new ItemStack(Items.gold_nugget, rand.nextInt(9) + 10);
-			break;
-		case 2:
-			drop = new ItemStack(Items.diamond);
-			break;
-		case 3:
-			drop = new ItemStack(Items.emerald);
-			break;
-		}
+		if (0 < i && i < 25)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.gold_ingot, rand.nextInt(3) + 1));
+		if (25 < i && i < 50)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.gold_nugget, rand.nextInt(9) + 10));
+		if (50 < i && i < 70)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.redstone, rand.nextInt(9) + 10));
+		if (70 < i && i < 80)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.ghast_tear, rand.nextInt(2)));
+		if (80 < i && i < 85)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.ender_pearl, rand.nextInt(2)));
+		if (i == 85)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_wait));
+		if (i == 86)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_ward));
+		if (i == 87)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_blocks));
+		if (i == 88)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_cat));
+		if (i == 89)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_chirp));
+		if (i == 90)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_far));
+		if (i == 91)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_mall));
+		if (i == 92)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_mellohi));
+		if (i == 93)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_stal));
+		if (i == 94)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_strad));
+		if (i == 95)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_13));
+		if (i == 96)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.record_11));
+		if (i == 97)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.diamond));
+		if (i == 98)
+			return new EntityItem(world, x, y, z, new ItemStack(Items.emerald));
+		if (i == 99)
+			return new EntityItem(world, x, y, z, getRandomEnchantedBook());
+
 		return new EntityItem(world, x, y, z, drop);
 	}
 
 	// A simple manner of finding a random enchanted book from a list of enchantments I'd like to see.
-	EntityItem getEnchantedBook(World world, double x, double y, double z)
+	ItemStack getRandomEnchantedBook()
 	{
 		Random rand = new Random();
 		ItemStack book = new ItemStack(Items.enchanted_book);
@@ -120,6 +132,7 @@ public class ChallengerMobsDrops
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantment.power, rand.nextInt(5) + 1));
 			break;
 		}
-		return new EntityItem(world, x, y, z, book);
+
+		return book;
 	}
 }

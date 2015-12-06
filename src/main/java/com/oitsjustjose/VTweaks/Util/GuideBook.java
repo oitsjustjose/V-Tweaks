@@ -17,9 +17,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Guide
+public class GuideBook
 {
-	public static ItemStack guideBook()
+	public static ItemStack getGuideBook()
 	{
 		ItemStack guideBook = new ItemStack(Items.written_book, 1);
 		guideBook.setTagCompound(new NBTTagCompound());
@@ -106,7 +106,7 @@ public class Guide
 	@SubscribeEvent
 	public void registerEvent(EntityJoinWorldEvent event)
 	{
-		EntityItem bookEntity = new EntityItem(event.world, event.entity.posX, event.entity.posY, event.entity.posZ, guideBook());
+		EntityItem bookEntity = new EntityItem(event.world, event.entity.posX, event.entity.posY, event.entity.posZ, getGuideBook());
 		final Entity entity = event.entity;
 		final String GIVEN_BOOK_TAG = "givenVTweaksBook" + VTweaks.version;
 		if (entity == null)
@@ -118,7 +118,7 @@ public class Guide
 			boolean shouldGive = !persistTag.getBoolean(GIVEN_BOOK_TAG);
 			if (shouldGive)
 			{
-				if (!player.inventory.addItemStackToInventory(guideBook()))
+				if (!player.inventory.addItemStackToInventory(getGuideBook()))
 					event.world.spawnEntityInWorld(bookEntity);
 				persistTag.setBoolean(GIVEN_BOOK_TAG, true);
 			}

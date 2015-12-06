@@ -22,16 +22,13 @@ public class BlockTweaks
 		if (block == null || stack == null)
 			return;
 
-		// Fixes blocks that don't have any blockHardness at all :|
 		if (block.getBlockHardness(event.entityPlayer.getEntityWorld(), event.pos) <= 0.0F)
 			block.setHardness(2.0F);
 
 		if (stack.getItem() instanceof ItemAxe)
 		{
-			// Melon Block Harvest Fixer
 			if (block == Blocks.melon_block)
 				event.newSpeed = event.originalSpeed * 4;
-			// Leaf Block Harvest Fixer
 			if (block.getMaterial() == Material.leaves)
 				event.newSpeed = event.originalSpeed * 6;
 			if (block == Blocks.hay_block)
@@ -42,17 +39,15 @@ public class BlockTweaks
 
 		if (stack.getItem() instanceof ItemPickaxe)
 		{
-			// Glass Block Harvest Fixer
 			if (block.getMaterial() == Material.glass)
 				event.newSpeed = event.originalSpeed * 5;
-			// Packed Ice Harvest Fixer
 			if (block == Blocks.packed_ice)
 				event.newSpeed = event.originalSpeed * 5;
-			// Mob / Entity Skull Fixer
 			if (block instanceof BlockSkull)
 				event.newSpeed = event.originalSpeed * 4;
-			// Lever Fixer
 			if (block instanceof BlockLever)
+				event.newSpeed = event.originalSpeed * 4;
+			if (block.getMaterial() == Material.piston)
 				event.newSpeed = event.originalSpeed * 4;
 		}
 

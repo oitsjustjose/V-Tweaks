@@ -8,22 +8,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FeatherFallingTweak
 {
-	/*
-	 * Better Feather Falling is intended for making feather falling.... better. If your boots have Feather Falling IV or higher, instead of taking
-	 * reduced fall damage, this handler will negate all fall damage completely.
-	 */
-
 	@SubscribeEvent
 	public void registerTweak(PlayerEvent event)
 	{
 		if (event.entityPlayer.getCurrentArmor(0) == null)
 			return;
-		// Checks the boot itemstack. Why are boots 0? You'd think it'd start
-		// from the helmet...
 		ItemStack boots = event.entityPlayer.getCurrentArmor(0);
-		// Gets the Feather Falling enchantment level on your boots
 		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Enchantment.featherFalling.effectId, boots);
-		// Does the thing!
 		if (boots != null && EnchantmentLevelArmor >= 4)
 			event.entityPlayer.fallDistance = 0.0F;
 	}

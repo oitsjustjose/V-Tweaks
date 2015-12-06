@@ -36,61 +36,44 @@ public class DragonRebirth
 		boolean inEnd = world.provider.getDimensionId() == 1;
 		boolean isValidPyramid = true;
 		boolean thermalFoundation = Loader.isModLoaded("ThermalFoundation");
-
 		EntityDragon dragon = new EntityDragon(world);
 
-		// Test that the player is right clicking a block, said block exists,
-		// and that it's a dragon egg
 		if (testFor == Blocks.dragon_egg)
-			// Test that the player is in the end, else output a "go to the end"
-			// type message
 			if (inEnd)
 			{
-				// Test that the player is in the end, not holding nothing, and
-				// is holding a nether star, else tell you do so.
 				if (player.isSneaking() && heldItem != null && heldItem.getItem() == Items.nether_star)
 				{
-					// Use Thermal Foundation's Enderium Blocks to test that
-					// it's on a nice big base
 					if (thermalFoundation)
 					{
 						Block TEStorage = GameRegistry.findBlock("ThermalFoundation", "Storage");
 
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod))
-										.getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1,
-												event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
-														event.pos.getY() - 1, event.pos.getZ() + zMod)) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(
+										new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
+												event.pos.getY() - 1, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod))
-										.getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2,
-												event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
-														event.pos.getY() - 2, event.pos.getZ() + zMod)) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(
+										new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
+												event.pos.getY() - 2, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 					}
-					// Or use vanilla's Emerald blocks to test that it's on a
-					// nice big base too.
 					else
 					{
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod))
-										.getBlock() != Blocks.emerald_block)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock() != Blocks.emerald_block)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod))
-										.getBlock() != Blocks.emerald_block)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock() != Blocks.emerald_block)
 									isValidPyramid = false;
 					}
 
-					// Perform the ritual and destroy 1 nether star if the
-					// pyramid is valid
 					if (isValidPyramid)
 					{
 						spawnRitual(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), dragon);
@@ -98,65 +81,53 @@ public class DragonRebirth
 						player.addStat(AchievementManager.rebirth, 1);
 						--heldItem.stackSize;
 					}
-					// Otherwise tell you how to fix your beacon, relative to
-					// what mods you have available.
-					else
-						if (!world.isRemote)
-							// Not on pyramid of Enderium if ThermalFoundation
-							// is installed
-							if (thermalFoundation)
-							{
-								player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-								player.addChatMessage(new ChatComponentTranslation("chat.message.enderium"));
-								player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-							}
-							// Or not on a pyramid of Emerald blocks if
-							// ThermalFoundation isn't installed
-							else
-							{
-								player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-								player.addChatMessage(new ChatComponentTranslation("chat.message.emerald"));
-								player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-							}
+					else if (!world.isRemote)
+						if (thermalFoundation)
+						{
+							player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+							player.addChatMessage(new ChatComponentTranslation("chat.message.enderium"));
+							player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+						}
+
+						else
+						{
+							player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+							player.addChatMessage(new ChatComponentTranslation("chat.message.emerald"));
+							player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+						}
 				}
-				else // Not holding a nether star message
-					if (!world.isRemote)
-					{
-						player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-						player.addChatMessage(new ChatComponentTranslation("chat.message.netherstar"));
-						player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-					}
-			}
-			else // Not in The End Message
-				if (!world.isRemote)
+				else if (!world.isRemote)
 				{
 					player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-					player.addChatMessage(new ChatComponentTranslation("chat.message.end"));
+					player.addChatMessage(new ChatComponentTranslation("chat.message.netherstar"));
 					player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
-
 				}
+			}
+			else if (!world.isRemote)
+			{
+				player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+				player.addChatMessage(new ChatComponentTranslation("chat.message.end"));
+				player.addChatMessage(new ChatComponentTranslation("chat.message.line"));
+
+			}
 	}
 
 	void spawnRitual(World world, int x, int y, int z, EntityDragon dragon)
 	{
-		// Destroy Egg
 		world.setBlockToAir(new BlockPos(x, y, z));
-		// Spawn Dragon
+
 		if (!world.isRemote)
 			world.spawnEntityInWorld(dragon);
 		Random rand = world.rand;
 
-		// Set 3 x 3 pyramid part of pyramid blocks to air
 		for (int xMod = -1; xMod < 2; xMod++)
 			for (int zMod = -1; zMod < 2; zMod++)
 				world.setBlockToAir(new BlockPos(x + xMod, y - 1, z + zMod));
 
-		// Set 5 x 5 pyramid part of pyramid blocks to air
 		for (int xMod = -2; xMod < 3; xMod++)
 			for (int zMod = -2; zMod < 3; zMod++)
 				world.setBlockToAir(new BlockPos(x + xMod, y - 2, z + zMod));
 
-		// Spawn an explosion for pretties. Does not do damage
 		for (int explodeX = -5; explodeX < 6; explodeX++)
 			for (int explodeY = -5; explodeY < 6; explodeY++)
 				for (int explodeZ = -5; explodeZ < 6; explodeZ++)

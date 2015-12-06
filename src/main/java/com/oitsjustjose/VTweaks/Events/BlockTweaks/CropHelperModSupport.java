@@ -24,7 +24,7 @@ public class CropHelperModSupport
 			World world = event.world;
 			Block harvestable = cropState.getBlock();
 			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
+			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(1);
 			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(cropState, event.world.rand, Short.MAX_VALUE), dropRate);
 
 			Block garlicCrop = GameRegistry.findBlock("witchery", "garlicplant");
@@ -47,7 +47,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							dropStack);
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -59,7 +59,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(ingredient, dropRate, artichoke));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -71,7 +71,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(ingredient, dropRate, wolfsbane));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -83,7 +83,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(ingredient, dropRate, belladonna));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -95,9 +95,9 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem1 = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem1 = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							dropStack);
-					EntityItem droppedItem2 = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem2 = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(ingredient, 1, icyNeedle));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem1);
@@ -111,7 +111,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(ingredient, dropRate, wormwood));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -140,7 +140,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							dropStack);
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);
@@ -168,7 +168,7 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.entityPlayer.posX, event.entityPlayer.posY, event.entityPlayer.posZ,
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
 							new ItemStack(Items.ender_pearl));
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
 					world.spawnEntityInWorld(droppedItem);

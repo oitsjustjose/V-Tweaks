@@ -19,7 +19,6 @@ public class BonemealTweaks
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
 	{
-		// Drops out of the entire function if the block doesn't exist
 		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
@@ -33,14 +32,9 @@ public class BonemealTweaks
 			ItemStack heldItem = player.getCurrentEquippedItem();
 			if (heldItem.getItemDamage() == 15 && heldItem.getItem() == Items.dye)
 			{
-				// Check to see if the block is cactus or sugar cane
 				if (testFor == Blocks.cactus || testFor == Blocks.reeds)
 				{
-					// Check to see if the block is the third block up by making
-					// sure two blocks down isn't the same as said block
-
-					if (world.getBlockState(new BlockPos(event.pos.getX(), event.pos.getY() - 2, event.pos.getZ())).getBlock() != testFor && world
-							.isAirBlock(new BlockPos(event.pos.getX(), event.pos.getY() + 1, event.pos.getZ())))
+					if (world.getBlockState(event.pos.down(2)).getBlock() != testFor && world.isAirBlock(event.pos.up()))
 					{
 						player.swingItem();
 						for (int i = 0; i < 8; i++)
@@ -49,8 +43,7 @@ public class BonemealTweaks
 						{
 							if (!player.capabilities.isCreativeMode)
 								--heldItem.stackSize;
-							world.setBlockState(new BlockPos(event.pos.getX(), event.pos.getY() + 1, event.pos.getZ()), world.getBlockState(
-									event.pos), 2);
+							world.setBlockState(event.pos.up(), world.getBlockState(event.pos), 2);
 						}
 					}
 				}
@@ -63,7 +56,7 @@ public class BonemealTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) event.pos.getX() + rand.nextFloat()), (double) event.pos.getY()
-				+ (double) rand.nextFloat() * testFor.getBlockBoundsMaxY(), (double) ((float) event.pos.getZ() + rand.nextFloat()), d0, d1, d2);
+		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) event.pos.getX() + rand.nextFloat()), (double) event.pos.getY() + (double) rand.nextFloat() * testFor
+				.getBlockBoundsMaxY(), (double) ((float) event.pos.getZ() + rand.nextFloat()), d0, d1, d2);
 	}
 }

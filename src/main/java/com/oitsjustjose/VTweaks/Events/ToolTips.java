@@ -35,21 +35,19 @@ public class ToolTips
 
 			if (Config.foodToolTips == 0)
 				return;
-			else
-				if (Config.foodToolTips == 1)
+			else if (Config.foodToolTips == 1)
+			{
+				event.toolTip.add(getHungerString(hunger));
+				event.toolTip.add(getSaturationString(saturation));
+			}
+			else if (Config.foodToolTips == 2)
+			{
+				if (shift)
 				{
 					event.toolTip.add(getHungerString(hunger));
 					event.toolTip.add(getSaturationString(saturation));
 				}
-				else
-					if (Config.foodToolTips == 2)
-					{
-						if (shift)
-						{
-							event.toolTip.add(getHungerString(hunger));
-							event.toolTip.add(getSaturationString(saturation));
-						}
-					}
+			}
 		}
 
 		if (stack.getItem() instanceof ItemWritableBook)

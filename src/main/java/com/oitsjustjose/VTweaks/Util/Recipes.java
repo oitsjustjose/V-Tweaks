@@ -20,10 +20,6 @@ public class Recipes
 {
 	public static void registerRecipes()
 	{
-		// Registers the disenchanting paper feature if config enabled AND if
-		// neither Botania nor ThaumicTinkerer are installed
-		// This was done because of the SpellBinding Cloths added by both. Don't
-		// want to undermine other mods.
 		if (Config.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
 	}
@@ -41,76 +37,52 @@ public class Recipes
 	{
 		registerBookRecipes(event);
 
-		// Only registers horse armor recipes if enabled via config
 		if (Config.horseArmor)
 			registerHorseArmorRecipes(event);
 	}
 
-	// Does what it says
 	public void registerHorseArmorRecipes(AnvilUpdateEvent event)
 	{
-		// Drops out if either side doesn't have an item
 		if (event.left == null || event.right == null)
 			return;
 
-		// Gets the left and right items
 		Item left = event.left.getItem();
 		Item right = event.right.getItem();
 
-		// Determines if the items are damaged
 		boolean damaged = event.left.getItemDamage() > 0 || event.right.getItemDamage() > 0;
 
-		// Adds diamond horse armor recipe
 		if ((left == Items.diamond_leggings && right == Items.diamond_leggings) && !damaged)
 		{
-			// Sets the XP cost
 			event.cost = 35;
-			// Sets the output
 			event.output = new ItemStack(Items.diamond_horse_armor).setStackDisplayName("Large Dog Suit");
 		}
-		// Adds golden horse armor recipe
 		if ((left == Items.golden_leggings && right == Items.golden_leggings) && !damaged)
 		{
-			// Sets the XP cost
 			event.cost = 30;
-			// Sets the output
 			event.output = new ItemStack(Items.golden_horse_armor).setStackDisplayName("Medium Dog Suit");
 		}
-		// Adds iron horse armor recipe
 		if ((left == Items.iron_leggings && right == Items.iron_leggings) && !damaged)
 		{
-			// Sets the XP cost
 			event.cost = 20;
-			// Sets the output
 			event.output = new ItemStack(Items.iron_horse_armor).setStackDisplayName("Small Dog Suit");
 		}
 	}
 
-	// Adds recipes for my enchanted books
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
 		if (Config.hypermendingEnchantmentID > 0)
 		{
-			// Initializes an Enchanted Book with Unbreakable
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
 
-			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
 
-			// Checks to see if there's a nether star in the right slot and a Book &
-			// Quill in the left slot
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.nether_star)
 			{
-				// Makes sure the nether star stacksize is just 1. If I didn't make
-				// this check, it'd give the OK to make the recipe but then eat all
-				// of the nether stars in the stack
 				if (event.right.stackSize == 1)
 				{
-					// Sets the XP cost
 					event.cost = 30;
-					// Sets the output
 					event.output = book;
 				}
 				else
@@ -120,21 +92,16 @@ public class Recipes
 
 		if (Config.autosmeltEnchantmentID > 0)
 		{
-			// Initializes an Enchanted Book with AutoSmelt
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
 
-			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
 
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.lava_bucket)
-				// Checks the right side stack size according to the "hot item"
 				if (event.right.stackSize == 1)
 				{
-					// Sets the XP cost
 					event.cost = 30;
-					// Sets the output
 					event.output = book;
 				}
 				else
@@ -143,48 +110,23 @@ public class Recipes
 
 		if (Config.lumberingEnchantmentID > 0)
 		{
-			// Initializes an Enchanted Book with Lumbering
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
 
-			// Drops out if either side doesn't have an item
 			if (event.left == null || event.right == null)
 				return;
 
 			boolean damaged = event.right.getItemDamage() > 0;
 
-			// Checks to see if there's a nether star in the right slot and a Book &
-			// Quill in the left slot
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.golden_axe)
 			{
-				// Makes sure the axe isn't damaged
 				if (!damaged)
 				{
-					// Sets the XP cost
 					event.cost = 30;
-					// Sets the output
 					event.output = book;
 				}
 				else
 					event.output = null;
-			}
-		}
-	}
-
-	public static void removeRecipe(ItemStack result)
-	{
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		for (int i = 0; i < recipes.size(); i++)
-		{
-			if (recipes.get(i) != null)
-			{
-				IRecipe temp = recipes.get(i);
-
-				IRecipe recipe = temp;
-				ItemStack recipeResult = recipe.getRecipeOutput();
-
-				if (ItemStack.areItemStacksEqual(result, recipeResult))
-					recipes.remove(i--);
 			}
 		}
 	}
