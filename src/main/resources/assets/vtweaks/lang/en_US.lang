@@ -1,0 +1,54 @@
+#Enchantment Names
+enchantment.VTweaks_hyperMending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
+enchantment.VTweaks_autosmelt=§4Auto-Smelt
+enchantment.VTweaks_stepboost=§aStep Boost
+enchantment.VTweaks_lumbering=Lumbering
+
+
+#Book Things
+book.title=§cV§6-§eT§aw§2e§ba§3k§9s§1 G§5u§di§cd§6e§r
+book.title.tablecontents=§n§lTable of Contents:§r
+book.title.enderdragon=§nDragon Rebirth§r
+book.title.hypermending=§nHypermending Enchant§r
+book.title.autosmelt=§nAuto-Smelt Enchant§r
+book.title.stepboost=§nStep Boost Enchant§r
+book.title.lumbering=§nLumbering Enchant§r
+book.title.featherfalling=§nFeather Falling§r
+book.title.disenchanting=§nDisenchanting§r
+book.title.cropharvesting=§nBetter Crop Harvesting§r
+book.title.blocktweaks=§nBetter Tool Efficiencies§r
+book.title.bonemealtweaks=§nBone Meal Tweaks§r
+book.title.caketweak=§nCake Tweaks§r
+book.title.challengermobs=§nChallenger Mobs§r
+book.title.mobdropbuffs=§nMob Drop Buffs§r
+book.title.mobkiller=§nTweaks to Mob Spawning§r
+book.title.stacktweaks=§nStack Size Tweaks§r
+book.title.horserecipes=§nHorse Armor§r
+
+
+#Chat Color Codes for Rainbow Chat: C 6 E A 2 B 3 9 1 5 D
+
+#Chat Messages
+chat.message.line=§k---------------------------------------------------§r
+chat.message.end=§5The End§r is the only place §bsuitably cold enough§r for §4§lrebirth§r.
+chat.message.netherstar=Sneak Right Click on §5The Egg§r with a §6Nether Star§r to revel the secrets of its hatching.
+chat.message.enderium=§5The Egg§r must be placed centered above a pyramid of §3Enderium Blocks§r with a 5 x 5 base.
+chat.message.emerald=§5The Egg§r must be placed centered above a pyramid of §aEmerald Blocks§r with a 5 x 5 base.
+chat.message.weird=§2Something weird happens in your inventory!§r
+
+#Tooltips
+VTweaks.tooltip.sneaking=Hold Shift for More Info
+VTweaks.tooltip.netherstar1=§6Combine with a Book & Quill§r
+VTweaks.tooltip.netherstar2=§6in an anvil to get a§r
+VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r §6Enchanted Book!§r
+VTweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
+VTweaks.tooltip.autosmelt=§6in an anvil to get an§r
+VTweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r
+
+#KeyBindings
+VTweaks.keybinding.crafting=Open Crafting Window
+VTweaks.keybinding.extraInventory=Open Ender Inventory
+
+#Achievements
+achievement.rebirth=§5§lReincarnation§r
+achievement.rebirth.desc=Using a nether star and the Dragon's Egg, birth a new dragon! 
