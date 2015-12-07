@@ -1,13 +1,6 @@
 package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.achievement.AchievementManager;
-import com.oitsjustjose.vtweaks.blocktweaks.BlockTweaks;
-import com.oitsjustjose.vtweaks.blocktweaks.BonemealTweaks;
-import com.oitsjustjose.vtweaks.blocktweaks.CakeTweak;
-import com.oitsjustjose.vtweaks.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.blocktweaks.NetherWartTweaks;
-import com.oitsjustjose.vtweaks.blocktweaks.StackTweaks;
-import com.oitsjustjose.vtweaks.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
@@ -16,14 +9,21 @@ import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.event.EasyGUI;
 import com.oitsjustjose.vtweaks.event.ToolTips;
-import com.oitsjustjose.vtweaks.mobtweaks.ChallengerMobs;
-import com.oitsjustjose.vtweaks.mobtweaks.ChallengerMobsDrops;
-import com.oitsjustjose.vtweaks.mobtweaks.ChickenFeatherBuff;
-import com.oitsjustjose.vtweaks.mobtweaks.CowHideBuff;
-import com.oitsjustjose.vtweaks.mobtweaks.DragonRebirth;
-import com.oitsjustjose.vtweaks.mobtweaks.MobKiller;
-import com.oitsjustjose.vtweaks.mobtweaks.SkeletonBoneBuff;
-import com.oitsjustjose.vtweaks.mobtweaks.SquidSacBuff;
+import com.oitsjustjose.vtweaks.event.blocktweaks.BlockTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
+import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
+import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
+import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
+import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
+import com.oitsjustjose.vtweaks.event.mobtweaks.ChickenFeatherBuff;
+import com.oitsjustjose.vtweaks.event.mobtweaks.CowHideBuff;
+import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
+import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
+import com.oitsjustjose.vtweaks.event.mobtweaks.SkeletonBoneBuff;
+import com.oitsjustjose.vtweaks.event.mobtweaks.SquidSacBuff;
 import com.oitsjustjose.vtweaks.proxy.Common;
 import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.GuideBook;
@@ -46,8 +46,8 @@ public class VTweaks
 {
 	public static final String modid = "VTweaks";
 	public static final String name = "V-Tweaks";
-	public static final String version = "1.2";
-	public static final String guifactory = "com.oitsjustjose.vtweaks.util.Client.GUIFactory";
+	public static final String version = "1.21";
+	public static final String guifactory = "com.oitsjustjose.vtweaks.util.client.GUIFactory";
 
 	@Instance(modid)
 	public static VTweaks instance;

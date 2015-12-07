@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.client;
+package com.oitsjustjose.vtweaks.util.client;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.Config;

@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.blocktweaks;
+package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
@@ -21,9 +21,6 @@ public class BlockTweaks
 		ItemStack stack = event.entityPlayer.getHeldItem();
 		if (block == null || stack == null)
 			return;
-
-		if (block.getBlockHardness(event.entityPlayer.getEntityWorld(), event.pos) <= 0.0F)
-			block.setHardness(2.0F);
 
 		if (stack.getItem() instanceof ItemAxe)
 		{

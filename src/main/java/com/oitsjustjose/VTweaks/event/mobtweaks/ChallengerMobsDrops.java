@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.mobtweaks;
+package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import java.util.Random;
 

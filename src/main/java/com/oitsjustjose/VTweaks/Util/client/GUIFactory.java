@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.client;
+package com.oitsjustjose.vtweaks.util.client;
 
 import java.util.Set;
 
