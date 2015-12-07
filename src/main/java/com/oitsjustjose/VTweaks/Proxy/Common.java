@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Proxy;
+package com.oitsjustjose.vtweaks.proxy;
 
 public class Common
 {

@@ -1,6 +1,6 @@
-package com.oitsjustjose.VTweaks.Achievement;
+package com.oitsjustjose.vtweaks.achievement;
 
-import com.oitsjustjose.VTweaks.Util.Config;
+import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.init.Items;
 import net.minecraft.stats.Achievement;

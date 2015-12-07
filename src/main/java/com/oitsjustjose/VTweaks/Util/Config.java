@@ -1,8 +1,8 @@
-package com.oitsjustjose.VTweaks.Util;
+package com.oitsjustjose.vtweaks.util;
 
 import java.io.File;
 
-import com.oitsjustjose.VTweaks.VTweaks;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -64,16 +64,16 @@ public class Config
 
 		// Enchantment Configs
 		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
-				"The Enchantment ID for VTweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
+				"The Enchantment ID for vtweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
 
 		autosmeltEnchantmentID = config.getInt("#Autosmelt Enchantment ID", config.CATEGORY_GENERAL, 234, 0, 255,
-				"The Enchantment ID for VTweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
+				"The Enchantment ID for vtweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
 
 		stepboostEnchantmentID = config.getInt("#Step Boost Enchantment ID", config.CATEGORY_GENERAL, 235, 0, 255,
-				"The Enchantment ID for VTweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
+				"The Enchantment ID for vtweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
 
 		lumberingEnchantmentID = config.getInt("#Lumbering Enchantment ID", config.CATEGORY_GENERAL, 236, 0, 255,
-				"The Enchantment ID for VTweaks' Lumbering Enchantment. If set to 0, the enchantment is disabled");
+				"The Enchantment ID for vtweaks' Lumbering Enchantment. If set to 0, the enchantment is disabled");
 
 		// Tweak Configs
 		cropFeature = config.getBoolean("Allow Right-Click-To-Harvest Feature on Crops", config.CATEGORY_GENERAL, true,

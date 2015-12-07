@@ -1,34 +1,34 @@
-package com.oitsjustjose.VTweaks;
+package com.oitsjustjose.vtweaks;
 
-import com.oitsjustjose.VTweaks.Achievement.AchievementManager;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentAutosmeltHandler;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentHypermendingHandler;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentLumberingHandler;
-import com.oitsjustjose.VTweaks.Enchantments.EnchantmentStepboostHandler;
-import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
-import com.oitsjustjose.VTweaks.Enchantments.FeatherFallingTweak;
-import com.oitsjustjose.VTweaks.Events.EasyGUI;
-import com.oitsjustjose.VTweaks.Events.ToolTips;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.BlockTweaks;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.BonemealTweaks;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.CakeTweak;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.CropHelper;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.NetherWartTweaks;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.StackTweaks;
-import com.oitsjustjose.VTweaks.Events.BlockTweaks.TorchHelper;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobs;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.ChallengerMobsDrops;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.ChickenFeatherBuff;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.CowHideBuff;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.DragonRebirth;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.MobKiller;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.SkeletonBoneBuff;
-import com.oitsjustjose.VTweaks.Events.MobTweaks.SquidSacBuff;
-import com.oitsjustjose.VTweaks.Proxy.Common;
-import com.oitsjustjose.VTweaks.Util.Config;
-import com.oitsjustjose.VTweaks.Util.GuideBook;
-import com.oitsjustjose.VTweaks.Util.KeyBindings;
-import com.oitsjustjose.VTweaks.Util.Recipes;
+import com.oitsjustjose.vtweaks.achievement.AchievementManager;
+import com.oitsjustjose.vtweaks.blocktweaks.BlockTweaks;
+import com.oitsjustjose.vtweaks.blocktweaks.BonemealTweaks;
+import com.oitsjustjose.vtweaks.blocktweaks.CakeTweak;
+import com.oitsjustjose.vtweaks.blocktweaks.CropHelper;
+import com.oitsjustjose.vtweaks.blocktweaks.NetherWartTweaks;
+import com.oitsjustjose.vtweaks.blocktweaks.StackTweaks;
+import com.oitsjustjose.vtweaks.blocktweaks.TorchHelper;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.event.EasyGUI;
+import com.oitsjustjose.vtweaks.event.ToolTips;
+import com.oitsjustjose.vtweaks.mobtweaks.ChallengerMobs;
+import com.oitsjustjose.vtweaks.mobtweaks.ChallengerMobsDrops;
+import com.oitsjustjose.vtweaks.mobtweaks.ChickenFeatherBuff;
+import com.oitsjustjose.vtweaks.mobtweaks.CowHideBuff;
+import com.oitsjustjose.vtweaks.mobtweaks.DragonRebirth;
+import com.oitsjustjose.vtweaks.mobtweaks.MobKiller;
+import com.oitsjustjose.vtweaks.mobtweaks.SkeletonBoneBuff;
+import com.oitsjustjose.vtweaks.mobtweaks.SquidSacBuff;
+import com.oitsjustjose.vtweaks.proxy.Common;
+import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.util.GuideBook;
+import com.oitsjustjose.vtweaks.util.KeyBindings;
+import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -47,12 +47,12 @@ public class VTweaks
 	public static final String modid = "VTweaks";
 	public static final String name = "V-Tweaks";
 	public static final String version = "1.2";
-	public static final String guifactory = "com.oitsjustjose.VTweaks.Util.Client.GUIFactory";
+	public static final String guifactory = "com.oitsjustjose.vtweaks.util.Client.GUIFactory";
 
 	@Instance(modid)
 	public static VTweaks instance;
 
-	@SidedProxy(clientSide = "com.oitsjustjose.VTweaks.Proxy.Client", serverSide = "com.oitsjustjose.VTweaks.Proxy.Common")
+	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.proxy.Client", serverSide = "com.oitsjustjose.vtweaks.proxy.Common")
 	public static Common proxy;
 
 	@EventHandler

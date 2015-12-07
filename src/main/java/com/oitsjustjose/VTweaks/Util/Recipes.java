@@ -1,8 +1,8 @@
-package com.oitsjustjose.VTweaks.Util;
+package com.oitsjustjose.vtweaks.util;
 
 import java.util.List;
 
-import com.oitsjustjose.VTweaks.Enchantments.Enchantments;
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;

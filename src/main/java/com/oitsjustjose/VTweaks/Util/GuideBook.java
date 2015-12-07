@@ -1,8 +1,8 @@
-package com.oitsjustjose.VTweaks.Util;
+package com.oitsjustjose.vtweaks.util;
 
 import java.util.ArrayList;
 
-import com.oitsjustjose.VTweaks.VTweaks;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

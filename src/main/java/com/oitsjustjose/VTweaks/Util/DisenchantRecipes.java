@@ -1,4 +1,4 @@
-package com.oitsjustjose.VTweaks.Util;
+package com.oitsjustjose.vtweaks.util;
 
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;

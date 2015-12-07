@@ -1,8 +1,8 @@
-package com.oitsjustjose.VTweaks.Util;
+package com.oitsjustjose.vtweaks.util;
 
 import org.lwjgl.input.Keyboard;
 
-import com.oitsjustjose.VTweaks.VTweaks;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.StatCollector;
@@ -15,8 +15,8 @@ public class KeyBindings
 
 	public static void initialize()
 	{
-		crafting = new KeyBinding(StatCollector.translateToLocal("VTweaks.keybinding.crafting"), Keyboard.KEY_C, VTweaks.name);
-		extraInventory = new KeyBinding(StatCollector.translateToLocal("VTweaks.keybinding.extraInventory"), Keyboard.KEY_V, VTweaks.name);
+		crafting = new KeyBinding(StatCollector.translateToLocal("vtweaks.keybinding.crafting"), Keyboard.KEY_C, VTweaks.name);
+		extraInventory = new KeyBinding(StatCollector.translateToLocal("vtweaks.keybinding.extraInventory"), Keyboard.KEY_V, VTweaks.name);
 		ClientRegistry.registerKeyBinding(crafting);
 		ClientRegistry.registerKeyBinding(extraInventory);
 	}
