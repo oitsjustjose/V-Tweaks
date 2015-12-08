@@ -46,7 +46,7 @@ public class VTweaks
 {
 	public static final String modid = "VTweaks";
 	public static final String name = "V-Tweaks";
-	public static final String version = "1.21";
+	public static final String version = "@VERSION@";
 	public static final String guifactory = "com.oitsjustjose.vtweaks.util.client.GUIFactory";
 
 	@Instance(modid)
