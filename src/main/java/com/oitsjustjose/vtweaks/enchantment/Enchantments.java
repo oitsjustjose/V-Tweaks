@@ -4,6 +4,8 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemStack;
 
 public class Enchantments
 {
@@ -38,5 +40,18 @@ public class Enchantments
 			Enchantment.addToBookList(lumbering);
 		}
 
+	}
+	
+	public static boolean hasAutoSmelt(ItemStack itemstack)
+	{
+		if(Config.autosmeltEnchantmentID == 0)
+			return false;
+		
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltEnchantmentID, itemstack);
+		
+		if(autosmeltLevel > 0)
+			return true;
+		
+		return false;
 	}
 }

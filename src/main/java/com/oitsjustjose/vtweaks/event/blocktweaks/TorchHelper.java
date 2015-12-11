@@ -1,6 +1,8 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockWorkbench;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -20,8 +22,10 @@ public class TorchHelper
 			return;
 
 		EntityPlayer player = event.entityPlayer;
-
-		if (!(player.getHeldItem().getItem() instanceof ItemTool))
+		IBlockState state = event.world.getBlockState(event.pos);
+		Boolean hasGUI = state.getBlock().hasTileEntity(state) || state.getBlock() instanceof BlockWorkbench;
+		
+		if (!(player.getHeldItem().getItem() instanceof ItemTool) || hasGUI)
 			return;
 
 		if (event.action == event.action.RIGHT_CLICK_BLOCK)

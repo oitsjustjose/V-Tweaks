@@ -41,6 +41,8 @@ public class Config
 	public static int challengerMobRarity;
 	public static boolean noBats;
 	public static boolean noPigZombies;
+	//Gameplay tweaks
+	public static boolean changeEarlyGame;
 
 	public static void init(File configFile)
 	{
@@ -117,6 +119,9 @@ public class Config
 		noBats = config.getBoolean("Disable Bats", config.CATEGORY_GENERAL, true, "Hate bats? Leave this as 'true' to disable their spawn");
 
 		noPigZombies = config.getBoolean("Disable Pig Zombies", config.CATEGORY_GENERAL, true, "Do Pig Zombies really have a purpose? Leave this as 'true' to disable their spawn");
+		
+		//Gameplay
+		changeEarlyGame = config.getBoolean("Change Early Game Mechanics?", config.CATEGORY_GENERAL, true, "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay");
 
 		if (config.hasChanged())
 			config.save();

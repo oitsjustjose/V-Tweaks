@@ -16,6 +16,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
+import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChickenFeatherBuff;
@@ -118,6 +119,9 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
+
+		if (Config.changeEarlyGame)
+			GamePlayHandler.init();
 
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
