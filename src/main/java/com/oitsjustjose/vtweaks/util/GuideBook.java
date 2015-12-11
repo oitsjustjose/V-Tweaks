@@ -50,7 +50,6 @@ public class GuideBook
 				+ "Lumbering is an enchantment which can only be applied to axes. When applied and the player is sneaking, you can use "
 				+ "your axe to cut down a whole tree with one swoop! " + EnumChatFormatting.DARK_AQUA
 				+ "Combine a Book & Quill + Gold Axe in an anvil to craft.");
-
 		indiPages.add(StatCollector.translateToLocal("book.title.featherfalling") + "\n\n"
 				+ "Feather Falling can be adjusted by V-Tweaks to disable all fall damage when Feather Falling IV is applied to boots. "
 				+ "All fall damage negated by your boots will come at *no cost* to durability to your boots.");
@@ -72,7 +71,7 @@ public class GuideBook
 				+ "Challenger Mobs are custom mobs (can apply to any enemy from any mod) that are equipped with some pretty dangerous items... and buffs. "
 				+ "HOWEVER! They drop some great loot, and they're really fun if you can take them down!");
 		indiPages.add(StatCollector.translateToLocal("book.title.mobdropbuffs") + "\n\n"
-				+ "Many mobs don't drop enough items if you ask me. V-Tweaks has added bonuses for Chickens, Cows, Skeletons and Squids!");
+				+ "Many mobs don't drop enough items if you ask me. V-Tweaks has added bonuses for Chickens, Cows, Endermen, Skeletons and Squids!");
 		indiPages.add(StatCollector.translateToLocal("book.title.mobkiller") + "\n\n"
 				+ "Nobody likes Bats, and some people really don't understand the purpose of Pig Zombies. For that reason, you can disable either/both!");
 		indiPages.add(StatCollector.translateToLocal("book.title.stacktweaks") + "\n\n"
@@ -80,6 +79,10 @@ public class GuideBook
 		indiPages.add(StatCollector.translateToLocal("book.title.horserecipes") + "\n\n"
 				+ "Need horse armor? That's perfectly reasonable. Take two *undamaged* pairs of Iron, Gold or Diamond leggings to an Anvil, "
 				+ "put one in each slot, and BAM!: for some levels, you've got it! Wait.. what's that say?");
+		indiPages.add(StatCollector.translateToLocal("book.title.gameplay") + "\n\n"
+				+ "Looking for something to spice up the game? Leave the gameplay tweaks enabled in the config and you'll find early-game to "
+				+ "be a lot more interesting! Not ridiculously challenging, just realistic!");
+		
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
@@ -100,7 +103,7 @@ public class GuideBook
 	{
 		return ">Better Crop" + "\n" + "   Harvesting-10" + "\n" + ">Better Tool" + "\n" + "   Efficiencies-11" + "\n" + ">Bone Meal Tweaks-12" + "\n"
 				+ ">Cake Fix-13" + "\n" + ">Challenger Mobs-14" + "\n" + ">Mob Drop Buffs-15" + "\n" + ">Mob Spawning" + "\n" + "   Adjustments-16"
-				+ "\n" + ">Stack Size Tweaks-17" + "\n" + ">Horse Armor-18" + "\n";
+				+ "\n" + ">Stack Size Tweaks-17" + "\n" + ">Horse Armor-18" + "\n" + ">Gameplay Tweaks-19" + "\n";
 	}
 
 	@SubscribeEvent

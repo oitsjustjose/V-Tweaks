@@ -71,16 +71,18 @@ public class ChallengerMobs
 	ItemStack toolForMobClass(int type)
 	{
 		ItemStack bow = new ItemStack(Items.bow);
-		ItemStack hungryBowl = new ItemStack(Items.bowl);
-		ItemStack opSword = new ItemStack(Items.diamond_sword);
+		ItemStack bowl = new ItemStack(Items.bowl);
+		ItemStack sword = new ItemStack(Items.diamond_sword);
 		ItemStack wand = new ItemStack(Items.stick);
 		ItemStack firework = new ItemStack(Items.fireworks);
 		ItemStack sign = new ItemStack(Items.sign);
 
-		opSword.setItemDamage(opSword.getMaxDamage() / 8);
+		sword.setItemDamage(sword.getMaxDamage() / 8);
 
-		opSword.addEnchantment(Enchantment.sharpness, 3);
-		hungryBowl.addEnchantment(Enchantment.sharpness, 8);
+		bow.addEnchantment(Enchantment.power, 2);
+		bow.addEnchantment(Enchantment.punch, 3);
+		sword.addEnchantment(Enchantment.sharpness, 3);
+		bowl.addEnchantment(Enchantment.sharpness, 8);
 		firework.addEnchantment(Enchantment.fireAspect, 5);
 		wand.addEnchantment(Enchantment.fireAspect, 1);
 		wand.addEnchantment(Enchantment.knockback, 2);
@@ -89,9 +91,9 @@ public class ChallengerMobs
 		switch (type)
 		{
 		case 0:
-			return opSword;
+			return sword;
 		case 1:
-			return hungryBowl;
+			return bowl;
 		case 2:
 			return bow;
 		case 3:
