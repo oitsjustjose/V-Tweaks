@@ -44,7 +44,7 @@ public class Enchantments
 	
 	public static boolean hasAutoSmelt(ItemStack itemstack)
 	{
-		if(Config.autosmeltEnchantmentID == 0)
+		if(Config.autosmeltEnchantmentID == 0 || itemstack == null)
 			return false;
 		
 		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltEnchantmentID, itemstack);

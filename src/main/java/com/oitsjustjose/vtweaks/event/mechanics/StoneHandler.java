@@ -15,7 +15,7 @@ public class StoneHandler
 	@SubscribeEvent
 	public void registerTweak(HarvestDropsEvent event)
 	{
-		if (event.harvester == null || event.harvester.getHeldItem() == null)
+		if (event.harvester == null)
 			return;
 		if (event.isSilkTouching || Enchantments.hasAutoSmelt(event.harvester.getHeldItem()))
 			return;

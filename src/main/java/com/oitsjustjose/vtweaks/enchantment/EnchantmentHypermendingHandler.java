@@ -32,14 +32,12 @@ public class EnchantmentHypermendingHandler
 			{
 				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingEnchantmentID, heldItem);
 				if (EnchantmentLevelTool > 0)
-				{
 					heldItem.setItemDamage(0);
-					heldItem.updateAnimation(player.getEntityWorld(), player, player.inventory.currentItem, true);
-				}
 			}
 		}
 
 		for (int i = 0; i < 4; i++)
+		{
 			if (player.getCurrentArmor(i) != null)
 			{
 				armor = player.getCurrentArmor(i);
@@ -47,6 +45,7 @@ public class EnchantmentHypermendingHandler
 				if (EnchantmentLevelArmor > 0)
 					armor.setItemDamage(0);
 			}
+		}
 	}
 
 	boolean isValidTool(ItemStack itemstack)

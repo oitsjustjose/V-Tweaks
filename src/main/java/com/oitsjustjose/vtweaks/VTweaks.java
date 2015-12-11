@@ -121,12 +121,8 @@ public class VTweaks
 	public void init(FMLInitializationEvent event)
 	{
 		Recipes.registerRecipes();
-
-		proxy.registerRenderers();
-		proxy.registerItemRenderers();
-		proxy.registerAudio();
 	}
-
+	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{

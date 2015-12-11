@@ -24,7 +24,7 @@ public class GuideBook
 		ItemStack guideBook = new ItemStack(Items.written_book, 1);
 		guideBook.setTagCompound(new NBTTagCompound());
 		guideBook.getTagCompound().setString("title", "aTitle");
-		guideBook.getTagCompound().setString("author", "v " + VTweaks.version);
+		guideBook.getTagCompound().setString("author", "v. " + VTweaks.version);
 		NBTTagList pages = new NBTTagList();
 
 		ArrayList<String> indiPages = new ArrayList<String>();
@@ -63,7 +63,7 @@ public class GuideBook
 				+ "Some blocks should really have a proper tool for breaking with... V-Tweaks fixes that with Melons, Hay Bales, Packed Ice, "
 				+ "Any Glass Material, Ladders, and Leaves.");
 		indiPages.add(StatCollector.translateToLocal("book.title.bonemealtweaks") + "\n\n"
-				+ "Bonemeal works on Cactus and Sugar Cane with V-Tweaks, however the max growth height is still ONLY going to be 3 blocks high. "
+				+ "Bonemeal works on Cactus and Sugar Cane with V-Tweaks, however the max growth height is still ONLY 3 blocks high. "
 				+ "Blaze Powder can be used to grow Nether Wart as well!");
 		indiPages.add(StatCollector.translateToLocal("book.title.caketweak") + "\n\n"
 				+ "An uneaten cake can be broken to be reclaimed! HOORAH! SAVE THE CAKE!");

@@ -22,7 +22,13 @@ public class GamePlayHandler
 		removeRecipe(new ItemStack(Items.stone_shovel));
 		removeRecipe(new ItemStack(Items.stone_axe));
 		removeRecipe(new ItemStack(Items.stone_hoe));
-
+		
+		Items.wooden_sword.setMaxDamage(16);
+		Items.wooden_pickaxe.setMaxDamage(16);
+		Items.wooden_shovel.setMaxDamage(16);
+		Items.wooden_axe.setMaxDamage(16);
+		Items.wooden_hoe.setMaxDamage(16);
+		
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_sword), "#", "#", "S", '#', Items.flint, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_pickaxe), "###", " S ", " S ", '#', Items.flint, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_shovel), "#", "S", "S", '#', Items.flint, 'S', "stickWood"));
@@ -30,7 +36,6 @@ public class GamePlayHandler
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_axe), "## ", "S# ", "S  ", '#', Items.flint, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_hoe), "##", "S ", "S ", '#', Items.flint, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.cobblestone, 2), "##", "##", '#', Blocks.gravel));
-
 	}
 
 	public static void removeRecipe(ItemStack resultItem)
