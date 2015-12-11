@@ -19,7 +19,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
-import com.oitsjustjose.vtweaks.event.mobtweaks.ChickenFeatherBuff;
+import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.CowHideBuff;
 import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
@@ -78,18 +78,6 @@ public class VTweaks
 		if (Config.lumberingEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 
-		if (Config.boneBuff)
-			MinecraftForge.EVENT_BUS.register(new SkeletonBoneBuff());
-
-		if (Config.hideBuff)
-			MinecraftForge.EVENT_BUS.register(new CowHideBuff());
-
-		if (Config.featherBuff)
-			MinecraftForge.EVENT_BUS.register(new ChickenFeatherBuff());
-
-		if (Config.sacBuff)
-			MinecraftForge.EVENT_BUS.register(new SquidSacBuff());
-
 		if (Config.cropFeature)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());
 
@@ -123,6 +111,7 @@ public class VTweaks
 		if (Config.changeEarlyGame)
 			GamePlayHandler.init();
 
+		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());

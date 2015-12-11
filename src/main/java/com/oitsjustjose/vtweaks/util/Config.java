@@ -17,6 +17,7 @@ public class Config
 	public static boolean hideBuff;
 	public static boolean boneBuff;
 	public static boolean sacBuff;
+	public static boolean enderpearlBuff;
 	// Enchantment Configs
 	public static int hypermendingEnchantmentID;
 	public static int autosmeltEnchantmentID;
@@ -63,6 +64,8 @@ public class Config
 		boneBuff = config.getBoolean("Skeletons Drop Extra Bones", config.CATEGORY_GENERAL, true, "If set to false, skeleton drops will be unchanged");
 
 		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true, "If set to false, squid drops will be unchanged");
+		
+		enderpearlBuff = config.getBoolean("Endermen Drop Extra Ender Pearls", config.CATEGORY_GENERAL, true, "If set to false, enderman drops will be unchanged");
 
 		// Enchantment Configs
 		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
