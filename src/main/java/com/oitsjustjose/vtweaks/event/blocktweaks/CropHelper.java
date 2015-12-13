@@ -31,10 +31,11 @@ public class CropHelper
 
 		boolean flag = CropHelperModSupport.registerExU(event);
 		boolean pamCrop = harvestable.getClass().getName().startsWith("com.pam.harvestcraft.BlockPamCrop");
+		boolean resourcefulCrops = harvestable.getClass().getName().startsWith("tehnut.resourceful.crops.block.BlockRCrop");
 		CropHelperModSupport.registerNatura(event);
 		CropHelperModSupport.registerWitchery(event);
 
-		if (harvestable instanceof BlockCrops && harvestableMeta >= 7 && !flag && !pamCrop)
+		if (harvestable instanceof BlockCrops && harvestableMeta >= 7 && !flag && !pamCrop && !resourcefulCrops)
 		{
 			event.entityPlayer.swingItem();
 			if (!world.isRemote)
