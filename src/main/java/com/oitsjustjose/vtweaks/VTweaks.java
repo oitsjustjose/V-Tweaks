@@ -7,7 +7,6 @@ import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
-import com.oitsjustjose.vtweaks.event.EasyGUI;
 import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BlockTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
@@ -25,7 +24,6 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
 import com.oitsjustjose.vtweaks.proxy.Common;
 import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.GuideBook;
-import com.oitsjustjose.vtweaks.util.KeyBindings;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -61,7 +59,6 @@ public class VTweaks
 
 		AchievementManager.initialize();
 		Enchantments.initialize();
-		KeyBindings.initialize();
 
 		if (Config.hypermendingEnchantmentID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
@@ -112,7 +109,6 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
-		MinecraftForge.EVENT_BUS.register(new EasyGUI());
 		MinecraftForge.EVENT_BUS.register(new GuideBook());
 
 	}

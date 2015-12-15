@@ -49,17 +49,6 @@ public class ToolTips
 				}
 			}
 		}
-
-		if (stack.getItem() instanceof ItemWritableBook)
-		{
-			ItemWritableBook book = (ItemWritableBook) stack.getItem();
-			ItemStack bookStack = new ItemStack(book);
-			if (bookStack.getTagCompound() == null)
-				return;
-			Set<String> s = bookStack.getTagCompound().getKeySet();
-			for (String x : s)
-				event.toolTip.add(x);
-		}
 	}
 
 	public static String getHungerString(int hunger)

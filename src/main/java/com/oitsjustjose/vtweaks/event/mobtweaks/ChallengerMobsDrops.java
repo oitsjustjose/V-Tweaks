@@ -42,9 +42,8 @@ public class ChallengerMobsDrops
 
 	EntityItem getItem(World world, double x, double y, double z)
 	{
-		ItemStack drop = null;
-		Random rand = new Random();
-		int i = rand.nextInt(100);
+		Random rand = world.rand;
+		int i = world.rand.nextInt(100);
 
 		if (0 < i && i < 25)
 			return new EntityItem(world, x, y, z, new ItemStack(Items.gold_ingot, rand.nextInt(3) + 1));
@@ -87,7 +86,8 @@ public class ChallengerMobsDrops
 		if (i == 99)
 			return new EntityItem(world, x, y, z, getRandomEnchantedBook());
 
-		return new EntityItem(world, x, y, z, drop);
+		//Fixes null EntityItem creation.. whoops. Drops an enchanted book instead.
+		return new EntityItem(world, x, y, z, getRandomEnchantedBook());
 	}
 
 	// A simple manner of finding a random enchanted book from a list of enchantments I'd like to see.
