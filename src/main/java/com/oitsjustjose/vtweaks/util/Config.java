@@ -1,49 +1,57 @@
 package com.oitsjustjose.vtweaks.util;
 
 import java.io.File;
+import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config
 {
 	public static Configuration config;
+	static ConfigCategory MobTweaks;
+	static ConfigCategory Enchantments;
+	static ConfigCategory BlockTweaks;
+	static ConfigCategory MiscFeatures;
 
-	// Buff Configs
+	// Mob Configs
 	public static boolean featherBuff;
 	public static boolean hideBuff;
 	public static boolean boneBuff;
 	public static boolean sacBuff;
 	public static boolean enderpearlBuff;
-	// Enchantment Configs
-	public static int hypermendingEnchantmentID;
-	public static int autosmeltEnchantmentID;
-	public static int stepboostEnchantmentID;
-	public static int lumberingEnchantmentID;
-	public static boolean betterFeatherFalling;
-	// Tweak Configs
-	public static boolean cropFeature;
-	public static boolean bonemealTweak;
-	public static boolean cakeTweak;
-	public static boolean rebirth;
-	public static boolean horseArmor;
-	public static boolean stackSizeTweaks;
-	public static boolean disenchant;
-	public static boolean blockTweaks;
-	public static boolean torchHelper;
-	public static int foodToolTips;
-	// Mob Configs
 	public static boolean challengers;
 	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
 	public static String[] challengerMobs;
 	public static int challengerMobRarity;
 	public static boolean noBats;
 	public static boolean noPigZombies;
-	//Gameplay tweaks
-	public static boolean changeEarlyGame;
+	// Enchantment Configs
+	public static int hypermendingEnchantmentID;
+	public static int autosmeltEnchantmentID;
+	public static int stepboostEnchantmentID;
+	public static int lumberingEnchantmentID;
+	public static boolean betterFeatherFalling;
+	public static boolean disenchant;
+	// Block Configs
+	public static boolean cropFeature;
+	public static boolean bonemealTweak;
+	public static boolean cakeTweak;
+	public static boolean toolEffTweaks;
+	public static boolean torchHelper;
+	// Misc Configs
+	public static boolean earlyGame;
+	public static boolean rebirth;
+	public static boolean horseArmor;
+	public static boolean stackSizeTweaks;
+	public static int foodToolTips;
+
 
 	public static void init(File configFile)
 	{
@@ -56,76 +64,162 @@ public class Config
 
 	private static void loadConfiguration()
 	{
-		// Buff Configs
-		featherBuff = config.getBoolean("Chickens Drop Extra Feathers", config.CATEGORY_GENERAL, true, "If set to false, chicken drops will be unchanged");
+		Property property;
 
-		hideBuff = config.getBoolean("Cows Drop Extra Leather", config.CATEGORY_GENERAL, true, "If set to false, cow drops will be unchanged");
+		// Mob Tweaks
+		String category = "mob tweaks";
+		List<String> propertyOrder = Lists.newArrayList();
+		MobTweaks = config.getCategory(category);
+		MobTweaks.setComment("Various Tweaks to Mobs");
 
-		boneBuff = config.getBoolean("Skeletons Drop Extra Bones", config.CATEGORY_GENERAL, true, "If set to false, skeleton drops will be unchanged");
+		property = config.get(category, "Chickens Drop Extra Feathers", true).setRequiresMcRestart(true);
+		property.comment = "If set to false, chicken drops will be unchanged";
+		featherBuff = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		sacBuff = config.getBoolean("Squids Drop Extra Ink Sacs", config.CATEGORY_GENERAL, true, "If set to false, squid drops will be unchanged");
+		property = config.get(category, "Cows Drop Extra Leather", true).setRequiresMcRestart(true);
+		property.comment = "If set to false, cow drops will be unchanged";
+		hideBuff = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Skeletons Drop Extra Bones", true).setRequiresMcRestart(true);
+		property.comment = "If set to false, skeleton drops will be unchanged";
+		boneBuff = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Squids Drop Extra Ink Sacs", true).setRequiresMcRestart(true);
+		property.comment = "If set to false, squid drops will be unchanged";
+		sacBuff = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Endermen Drop Extra Ender Pearls", true).setRequiresMcRestart(true);
+		property.comment = "If set to false, enderman drops will be unchanged";
+		enderpearlBuff = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Disable Bats", true).setRequiresMcRestart(true);
+		noBats = property.getBoolean();
+		propertyOrder.add(property.getName());
 		
-		enderpearlBuff = config.getBoolean("Endermen Drop Extra Ender Pearls", config.CATEGORY_GENERAL, true, "If set to false, enderman drops will be unchanged");
+		property = config.get(category, "Disable Pig Zombies", true).setRequiresMcRestart(true);
+		property.comment = "Also balances Ghast spawns";
+		noPigZombies = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		// Enchantment Configs
-		hypermendingEnchantmentID = config.getInt("#Hypermending Enchantment ID", config.CATEGORY_GENERAL, 233, 0, 255,
-				"The Enchantment ID for vtweaks' Hypermending Enchantment. If set to 0, the enchantment is disabled");
+		property = config.get(category, "Challenger Mobs Enabled", true).setRequiresMcRestart(true);
+		property.comment = "Randomly spawns more difficult (but more lootworthy) enemies? Applies to ALL enemies";
+		challengers = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		autosmeltEnchantmentID = config.getInt("#Autosmelt Enchantment ID", config.CATEGORY_GENERAL, 234, 0, 255,
-				"The Enchantment ID for vtweaks' Autosmelt Enchantment. If set to 0, the enchantment is disabled");
+		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE).setRequiresMcRestart(true);
+		challengerMobRarity = property.getInt();
+		propertyOrder.add(property.getName());
 
-		stepboostEnchantmentID = config.getInt("#Step Boost Enchantment ID", config.CATEGORY_GENERAL, 235, 0, 255,
-				"The Enchantment ID for vtweaks' Step Boost Enchantment. If set to 0, the enchantment is disabled");
+		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaults, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
+		challengerMobs = property.getStringList();
+		propertyOrder.add(property.getName());
 
-		lumberingEnchantmentID = config.getInt("#Lumbering Enchantment ID", config.CATEGORY_GENERAL, 236, 0, 255,
-				"The Enchantment ID for vtweaks' Lumbering Enchantment. If set to 0, the enchantment is disabled");
+		MobTweaks.setPropertyOrder(propertyOrder);
 
-		// Tweak Configs
-		cropFeature = config.getBoolean("Allow Right-Click-To-Harvest Feature on Crops", config.CATEGORY_GENERAL, true,
-				"This feature attempts to allow right-clicking on fully grown crops (on any block / mod block extending BlockCrop) that is fully grown" + "\n" + "\n"
-						+ "You will not get seeds back when harvesting like this, but you will get an extra bonus as a trade-off");
+		// Enchantments
+		category = "enchantments";
+		propertyOrder = Lists.newArrayList();
+		Enchantments = config.getCategory(category);
+		Enchantments.setComment("Enchantment ID's and Tweaks");
 
-		betterFeatherFalling = config.getBoolean("Enable Better Feather Falling", config.CATEGORY_GENERAL, true,
-				"This feature causes 100% negation of any fall damage at all if your boots' Feather Falling level is IV or higher");
+		property = config.get(category, "Hypermending Enchantment ID", 233, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		hypermendingEnchantmentID = property.getInt();
+		propertyOrder.add(property.getName());
 
-		rebirth = config.getBoolean("Enable Ender Dragon Rebirth Feature", config.CATEGORY_GENERAL, true, "This features allows you to rebirth the ender dragon via a cryptic ritual..");
+		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		autosmeltEnchantmentID = property.getInt();
+		propertyOrder.add(property.getName());
 
-		horseArmor = config.getBoolean("Enable Horse Armor Recipes", config.CATEGORY_GENERAL, true,
-				"Combining two pairs of undamaged leggings (of the right kind) in an anvil will get you horse armor of that type" + "\n" + "\n" + "Set this option to false to disable this feature");
+		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		stepboostEnchantmentID = property.getInt();
+		propertyOrder.add(property.getName());
 
-		stackSizeTweaks = config.getBoolean("Enable Vanilla Item Stack Size Tweaks", config.CATEGORY_GENERAL, true, "If set to false, all items' stack sizes will remain unchanged");
+		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		lumberingEnchantmentID = property.getInt();
+		propertyOrder.add(property.getName());
 
-		disenchant = config.getBoolean("Enable Disenchantment Recipes", config.CATEGORY_GENERAL, true, "Allow crafting a piece of paper with an enchanted tool to disenchant said tool");
+		property = config.get(category, "Enable Better Feather Falling", true).setRequiresMcRestart(true);
+		property.comment = "Tweaks Feather Falling IV to negate ALL fall damage";
+		betterFeatherFalling = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		bonemealTweak = config.getBoolean("Enable Bonemeal Tweak", config.CATEGORY_GENERAL, true, "Enable Cactus and Sugar Cane to be bonemealed, and NetherWart to be blaze-powdered");
+		property = config.get(category, "Enable Item Disenchantment", true).setRequiresMcRestart(true);
+		property.comment = "Allow crafting a piece of paper with an enchanted tool to disenchant said tool";
+		disenchant = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		cakeTweak = config.getBoolean("Enable Cake Tweak", config.CATEGORY_GENERAL, true, "If set to false, cake will not be dropped from an uneaten cake, as per vanilla mechanics");
+		Enchantments.setPropertyOrder(propertyOrder);
 
-		blockTweaks = config.getBoolean("Enable Block Efficiency Tweaks", config.CATEGORY_GENERAL, true, "Enable fixes to tool efficiencies on certain blocks");
+		// Block Tweaks
+		category = "block tweaks";
+		propertyOrder = Lists.newArrayList();
+		BlockTweaks = config.getCategory(category);
+		BlockTweaks.setComment("Tweaks for Blocks");
 
-		torchHelper = config.getBoolean("Enable Torch Helper Ability?", config.CATEGORY_GENERAL, true,
-				"Enables a neat feature to right click with a tool item to place a torch (if torches are anywhere in your inventory)");
+		property = config.get(category, "Easy Crop Harvesting", true).setRequiresMcRestart(true);
+		property.comment = "Allows for right-click-to-harvest on nearly any (including mod) crop. No seeds will be dropped - intended";
+		cropFeature = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		foodToolTips = config.getInt("Enable Food Value Tooltips?", config.CATEGORY_GENERAL, 1, 0, 2,
-				"0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking");
+		property = config.get(category, "Enable Bonemeal Tweak", true).setRequiresMcRestart(true);
+		property.comment = "Allows more things to be bonemealed; Nether Wart requires Blaze Powder";
+		bonemealTweak = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		// Mob Configs
-		challengers = config.getBoolean("Challenger Mobs Enabled", config.CATEGORY_GENERAL, true,
-				"Enable the spawning of randomly more difficult (but more lootworthy) enemies? Applies to ALL enemies");
+		property = config.get(category, "Enable Cake Drops", true).setRequiresMcRestart(true);
+		property.comment = "Uneaten Cakes can be broken and re-acquired";
+		cakeTweak = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		challengerMobs = config.get(config.CATEGORY_GENERAL, "Challenger Mobs' Names", challengerMobDefaults,
-				"Names for the Challenger Mobs. Renaming will not effect their bonuses, just their highlighted name").getStringList();
+		property = config.get(category, "Enable Tool Efficiency Tweaks", true).setRequiresMcRestart(true);
+		property.comment = "Fixes some tools NOT being effective on certain materials";
+		toolEffTweaks = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		challengerMobRarity = config.getInt("Challenger Mob Rarity", config.CATEGORY_GENERAL, 75, 1, Short.MAX_VALUE,
-				"There is a 1 in x chance of a mob spawning as a Challenger Mob. This number is 'x'");
+		property = config.get(category, "Enable Tool Torch Placement", true).setRequiresMcRestart(true);
+		property.comment = "Right clicking with a tool will place a torch from your inventory";
+		torchHelper = property.getBoolean();
+		propertyOrder.add(property.getName());
 
-		noBats = config.getBoolean("Disable Bats", config.CATEGORY_GENERAL, true, "Hate bats? Leave this as 'true' to disable their spawn");
-
-		noPigZombies = config.getBoolean("Disable Pig Zombies", config.CATEGORY_GENERAL, true, "Do Pig Zombies really have a purpose? Leave this as 'true' to disable their spawn");
+		BlockTweaks.setPropertyOrder(propertyOrder);
 		
-		//Gameplay
-		changeEarlyGame = config.getBoolean("Change Early Game Mechanics?", config.CATEGORY_GENERAL, true, "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay");
+		// Misc Features
+		category = "miscellaneous";
+		propertyOrder = Lists.newArrayList();
+		MiscFeatures = config.getCategory(category);
+		MiscFeatures.setComment("Other Tweaks");
+		
+		property = config.get(category, "Change Base Game Mechanics?", true).setRequiresMcRestart(true);
+		property.comment = "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay";
+		earlyGame = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Ender Dragon Rebirth", true).setRequiresMcRestart(true);
+		property.comment = "This features allows you to rebirth the ender dragon via a cryptic ritual..";
+		rebirth = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Horse Armor Recipes", true).setRequiresMcRestart(true);
+		property.comment = "Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type";
+		horseArmor = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Stack Size Tweaks", true).setRequiresMcRestart(true);
+		property.comment = "Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type";
+		stackSizeTweaks = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
+		foodToolTips = property.getInt();
+		propertyOrder.add(property.getName());
 
+		MiscFeatures.setPropertyOrder(propertyOrder);
+		
 		if (config.hasChanged())
 			config.save();
 	}

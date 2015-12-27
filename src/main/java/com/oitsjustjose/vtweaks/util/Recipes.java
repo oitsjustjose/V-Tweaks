@@ -15,22 +15,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 
 public class Recipes
 {
 	public static void registerRecipes()
 	{
 		if (Config.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
+		{
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
+			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
+		}
 	}
-
-	private IRecipe findRecipe(InventoryCrafting crafting, World world)
-	{
-		for (IRecipe recipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList())
-			if (recipe.matches(crafting, world))
-				return recipe;
-		return null;
-	}
+	
+	
 
 	@SubscribeEvent
 	public void registerEvent(AnvilUpdateEvent event)

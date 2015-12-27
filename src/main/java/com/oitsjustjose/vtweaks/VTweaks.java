@@ -26,6 +26,7 @@ import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.GuideBook;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,13 +38,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory)
+@Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory, dependencies = "required-after:Forge@[11.14,)")
 public class VTweaks
 {
 	public static final String modid = "VTweaks";
 	public static final String name = "V-Tweaks";
 	public static final String version = "@VERSION@";
-	public static final String guifactory = "com.oitsjustjose.vtweaks.util.client.GUIFactory";
+	public static final String guifactory = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
 
 	@Instance(modid)
 	public static VTweaks instance;
@@ -90,7 +91,7 @@ public class VTweaks
 		if (Config.rebirth)
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
-		if (Config.blockTweaks)
+		if (Config.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new BlockTweaks());
 
 		if (Config.torchHelper)
@@ -102,9 +103,10 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
 
-		if (Config.changeEarlyGame)
+		if (Config.earlyGame)
 			GamePlayHandler.init();
 
+		
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -124,6 +126,7 @@ public class VTweaks
 	{
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 		Blocks.portal.setResistance(Float.MAX_VALUE);
+		Blocks.anvil.setStepSound(Block.soundTypeMetal);
 
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
