@@ -16,27 +16,27 @@ public class Enchantments
 
 	public static void initialize()
 	{
-		if (Config.hypermendingEnchantmentID != 0)
+		if (Config.hypermendingID != 0)
 		{
-			hyperMending = new EnchantmentHypermending(Config.hypermendingEnchantmentID).setName(VTweaks.modid + "_hyperMending");
+			hyperMending = new EnchantmentHypermending(Config.hypermendingID).setName(VTweaks.modid + "_hyperMending");
 			Enchantment.addToBookList(hyperMending);
 		}
 
-		if (Config.autosmeltEnchantmentID != 0)
+		if (Config.autosmeltID != 0)
 		{
-			autosmelt = new EnchantmentAutosmelt(Config.autosmeltEnchantmentID).setName(VTweaks.modid + "_autosmelt");
+			autosmelt = new EnchantmentAutosmelt(Config.autosmeltID).setName(VTweaks.modid + "_autosmelt");
 			Enchantment.addToBookList(autosmelt);
 		}
 
-		if (Config.stepboostEnchantmentID != 0)
+		if (Config.stepboostID != 0)
 		{
-			stepboost = new EnchantmentStepboost(Config.stepboostEnchantmentID).setName(VTweaks.modid + "_stepboost");
+			stepboost = new EnchantmentStepboost(Config.stepboostID).setName(VTweaks.modid + "_stepboost");
 			Enchantment.addToBookList(stepboost);
 		}
 
-		if (Config.lumberingEnchantmentID != 0)
+		if (Config.lumberingID != 0)
 		{
-			lumbering = new EnchantmentLumbering(Config.lumberingEnchantmentID).setName(VTweaks.modid + "_lumbering");
+			lumbering = new EnchantmentLumbering(Config.lumberingID).setName(VTweaks.modid + "_lumbering");
 			Enchantment.addToBookList(lumbering);
 		}
 
@@ -44,10 +44,10 @@ public class Enchantments
 	
 	public static boolean hasAutoSmelt(ItemStack itemstack)
 	{
-		if(Config.autosmeltEnchantmentID == 0 || itemstack == null)
+		if(Config.autosmeltID == 0 || itemstack == null)
 			return false;
 		
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltEnchantmentID, itemstack);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltID, itemstack);
 		
 		if(autosmeltLevel > 0)
 			return true;

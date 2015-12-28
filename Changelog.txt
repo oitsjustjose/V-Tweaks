@@ -1,0 +1,5 @@
+1.4:
+-Changed: Completely rewrote configuration file and in-game mod config. All settings will need to be re-changed.
+-Changed: Many small internal refactors. Affects nothing.
+-Added: Ability to disable Lightning (or technically, thunderstorms). Lightning on my server causes a lot of stupidity.
+-Added: (1.8.8 only) Ability to change Anvil placement sound to the same as a metal block

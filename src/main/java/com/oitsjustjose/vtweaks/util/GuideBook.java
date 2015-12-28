@@ -24,7 +24,7 @@ public class GuideBook
 		ItemStack guideBook = new ItemStack(Items.written_book, 1);
 		guideBook.setTagCompound(new NBTTagCompound());
 		guideBook.getTagCompound().setString("title", "aTitle");
-		guideBook.getTagCompound().setString("author", "v. " + VTweaks.version);
+		guideBook.getTagCompound().setString("author", "Version " + VTweaks.version);
 		NBTTagList pages = new NBTTagList();
 
 		ArrayList<String> indiPages = new ArrayList<String>();

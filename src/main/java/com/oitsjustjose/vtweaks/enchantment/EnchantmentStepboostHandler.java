@@ -13,7 +13,7 @@ public class EnchantmentStepboostHandler
 	public void register(PlayerEvent event)
 	{
 		ItemStack boots = event.entityPlayer.getCurrentArmor(0);
-		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.stepboostEnchantmentID, boots);
+		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.stepboostID, boots);
 
 		if (boots != null && EnchantmentLevelArmor != 0)
 			event.entityPlayer.stepHeight = 1.0F;

@@ -7,7 +7,7 @@ import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
-import com.oitsjustjose.vtweaks.event.LightningKiller;
+import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
@@ -62,19 +62,19 @@ public class VTweaks
 		AchievementManager.initialize();
 		Enchantments.initialize();
 
-		if (Config.hypermendingEnchantmentID > 0)
+		if (Config.hypermendingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
-		if (Config.autosmeltEnchantmentID > 0)
+		if (Config.autosmeltID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 
-		if (Config.stepboostEnchantmentID > 0)
+		if (Config.stepboostID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 
-		if (Config.lumberingEnchantmentID > 0)
+		if (Config.lumberingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 
-		if (Config.cropFeature)
+		if (Config.cropHarvest)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());
 
 		if (Config.bonemealTweak)
@@ -86,7 +86,7 @@ public class VTweaks
 		if (Config.cakeTweak)
 			MinecraftForge.EVENT_BUS.register(new CakeTweak());
 
-		if (Config.betterFeatherFalling)
+		if (Config.featherFalling)
 			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
 		if (Config.rebirth)
@@ -95,7 +95,7 @@ public class VTweaks
 		if (Config.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
-		if (Config.torchHelper)
+		if (Config.torchPlacer)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
 		if (Config.challengers)
@@ -108,7 +108,11 @@ public class VTweaks
 			GamePlayHandler.init();
 
 		if (Config.lightning)
-			MinecraftForge.EVENT_BUS.register(new LightningKiller());
+			MinecraftForge.EVENT_BUS.register(new StormTweak());
+		
+		if (Config.noPigZombies)
+			Blocks.portal.setResistance(Float.MAX_VALUE);
+
 
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
@@ -128,10 +132,12 @@ public class VTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
-		Blocks.portal.setResistance(Float.MAX_VALUE);
-		Blocks.anvil.setStepSound(Block.soundTypeMetal);
 
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
+		
+		if (Config.altAnvilSounds)
+			Blocks.anvil.setStepSound(Block.soundTypeMetal);
+
 	}
 }

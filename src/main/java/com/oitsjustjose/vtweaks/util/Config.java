@@ -33,24 +33,25 @@ public class Config
 	public static boolean noBats;
 	public static boolean noPigZombies;
 	// Enchantment Configs
-	public static int hypermendingEnchantmentID;
-	public static int autosmeltEnchantmentID;
-	public static int stepboostEnchantmentID;
-	public static int lumberingEnchantmentID;
-	public static boolean betterFeatherFalling;
+	public static int hypermendingID;
+	public static int autosmeltID;
+	public static int stepboostID;
+	public static int lumberingID;
+	public static boolean featherFalling;
 	public static boolean disenchant;
 	// Block Configs
-	public static boolean cropFeature;
+	public static boolean cropHarvest;
 	public static boolean bonemealTweak;
 	public static boolean cakeTweak;
 	public static boolean toolEffTweaks;
-	public static boolean torchHelper;
+	public static boolean torchPlacer;
 	// Misc Configs
 	public static boolean earlyGame;
 	public static boolean rebirth;
 	public static boolean horseArmor;
 	public static boolean stackSizeTweaks;
 	public static boolean lightning;
+	public static boolean altAnvilSounds;
 	public static int foodToolTips;
 
 	public static void init(File configFile)
@@ -128,24 +129,24 @@ public class Config
 		Enchantments.setComment("Enchantment ID's and Tweaks");
 
 		property = config.get(category, "Hypermending Enchantment ID", 233, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		hypermendingEnchantmentID = property.getInt();
+		hypermendingID = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		autosmeltEnchantmentID = property.getInt();
+		autosmeltID = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		stepboostEnchantmentID = property.getInt();
+		stepboostID = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		lumberingEnchantmentID = property.getInt();
+		lumberingID = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Better Feather Falling", true).setRequiresMcRestart(true);
 		property.comment = "Tweaks Feather Falling IV to negate ALL fall damage";
-		betterFeatherFalling = property.getBoolean();
+		featherFalling = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Item Disenchantment", true).setRequiresMcRestart(true);
@@ -163,7 +164,7 @@ public class Config
 
 		property = config.get(category, "Easy Crop Harvesting", true).setRequiresMcRestart(true);
 		property.comment = "Allows for right-click-to-harvest on nearly any (including mod) crop. No seeds will be dropped - intended";
-		cropFeature = property.getBoolean();
+		cropHarvest = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Bonemeal Tweak", true).setRequiresMcRestart(true);
@@ -183,7 +184,7 @@ public class Config
 
 		property = config.get(category, "Enable Tool Torch Placement", true).setRequiresMcRestart(true);
 		property.comment = "Right clicking with a tool will place a torch from your inventory";
-		torchHelper = property.getBoolean();
+		torchPlacer = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
@@ -214,9 +215,14 @@ public class Config
 		stackSizeTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 		
-		property = config.get(category, "Disable Lightning?", true);
+		property = config.get(category, "Disable Lightning?", true).setRequiresMcRestart(true);
 		property.comment = "Disables lightning from spawning, it can get annoying";
 		lightning = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Fix Anvil Sounds?", true).setRequiresMcRestart(true);
+		property.comment = "Falling anvils still make a loud sounds, all other anvil sounds are nicer";
+		altAnvilSounds = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2)

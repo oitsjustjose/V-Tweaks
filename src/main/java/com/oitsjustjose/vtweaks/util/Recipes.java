@@ -69,7 +69,7 @@ public class Recipes
 
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-		if (Config.hypermendingEnchantmentID > 0)
+		if (Config.hypermendingID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
@@ -89,7 +89,7 @@ public class Recipes
 			}
 		}
 
-		if (Config.autosmeltEnchantmentID > 0)
+		if (Config.autosmeltID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
@@ -107,7 +107,7 @@ public class Recipes
 					event.output = null;
 		}
 
-		if (Config.lumberingEnchantmentID > 0)
+		if (Config.lumberingID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));

@@ -33,7 +33,7 @@ public class EnchantmentAutosmeltHandler
 		ItemStack heldItem = player.getCurrentEquippedItem();
 		int fortune = event.fortuneLevel;
 		int qty = block.quantityDropped(event.state, fortune, event.world.rand);
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltEnchantmentID, heldItem);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltID, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
