@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class BlockTweaks
+public class ToolEffTweaks
 {
 	@SubscribeEvent
 	public void registerTweak(PlayerEvent.BreakSpeed event)

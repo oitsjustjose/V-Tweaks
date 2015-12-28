@@ -16,7 +16,6 @@ public class GamePlayHandler
 	public static void init()
 	{
 		MinecraftForge.EVENT_BUS.register(new StoneHandler());
-		MinecraftForge.EVENT_BUS.register(new LavaTweak());
 
 		removeRecipe(new ItemStack(Items.stone_sword));
 		removeRecipe(new ItemStack(Items.stone_pickaxe));

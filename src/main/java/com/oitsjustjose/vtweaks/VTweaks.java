@@ -7,13 +7,14 @@ import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.event.LightningKiller;
 import com.oitsjustjose.vtweaks.event.ToolTips;
-import com.oitsjustjose.vtweaks.event.blocktweaks.BlockTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
@@ -92,7 +93,7 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
 		if (Config.toolEffTweaks)
-			MinecraftForge.EVENT_BUS.register(new BlockTweaks());
+			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
 		if (Config.torchHelper)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
@@ -106,7 +107,9 @@ public class VTweaks
 		if (Config.earlyGame)
 			GamePlayHandler.init();
 
-		
+		if (Config.lightning)
+			MinecraftForge.EVENT_BUS.register(new LightningKiller());
+
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -120,7 +123,7 @@ public class VTweaks
 	{
 		Recipes.registerRecipes();
 	}
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{

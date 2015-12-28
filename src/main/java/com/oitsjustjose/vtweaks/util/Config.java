@@ -50,8 +50,8 @@ public class Config
 	public static boolean rebirth;
 	public static boolean horseArmor;
 	public static boolean stackSizeTweaks;
+	public static boolean lightning;
 	public static int foodToolTips;
-
 
 	public static void init(File configFile)
 	{
@@ -100,7 +100,7 @@ public class Config
 		property = config.get(category, "Disable Bats", true).setRequiresMcRestart(true);
 		noBats = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Disable Pig Zombies", true).setRequiresMcRestart(true);
 		property.comment = "Also balances Ghast spawns";
 		noPigZombies = property.getBoolean();
@@ -187,39 +187,45 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
-		
+
 		// Misc Features
 		category = "miscellaneous";
 		propertyOrder = Lists.newArrayList();
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
-		
+
 		property = config.get(category, "Change Base Game Mechanics?", true).setRequiresMcRestart(true);
 		property.comment = "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay";
 		earlyGame = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Ender Dragon Rebirth", true).setRequiresMcRestart(true);
 		property.comment = "This features allows you to rebirth the ender dragon via a cryptic ritual..";
 		rebirth = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Horse Armor Recipes", true).setRequiresMcRestart(true);
 		property.comment = "Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type";
 		horseArmor = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Stack Size Tweaks", true).setRequiresMcRestart(true);
-		property.comment = "Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type";
+		property.comment = "Fixes stack sizes that don't make sense";
 		stackSizeTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 		
-		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
+		property = config.get(category, "Disable Lightning?", true);
+		property.comment = "Disables lightning from spawning, it can get annoying";
+		lightning = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2)
+				.setRequiresMcRestart(false);
 		foodToolTips = property.getInt();
 		propertyOrder.add(property.getName());
 
 		MiscFeatures.setPropertyOrder(propertyOrder);
-		
+
 		if (config.hasChanged())
 			config.save();
 	}
