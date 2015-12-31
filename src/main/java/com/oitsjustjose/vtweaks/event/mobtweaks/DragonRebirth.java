@@ -2,8 +2,6 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.vtweaks.achievement.AchievementManager;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
@@ -77,7 +75,6 @@ public class DragonRebirth
 					{
 						spawnRitual(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), dragon);
 						spawnKikoku(player);
-						player.addStat(AchievementManager.rebirth, 1);
 						--heldItem.stackSize;
 					}
 					else if (!world.isRemote)

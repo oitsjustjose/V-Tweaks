@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks;
 
-import com.oitsjustjose.vtweaks.achievement.AchievementManager;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
@@ -39,7 +38,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory, acceptedMinecraftVersions = "1.8.8, 1.8.9")
+@Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory, acceptedMinecraftVersions = "1.8, 1.8.8, 1.8.9")
 public class VTweaks
 {
 	public static final String modid = "VTweaks";
@@ -59,7 +58,6 @@ public class VTweaks
 		Config.init(event.getSuggestedConfigurationFile());
 		MinecraftForge.EVENT_BUS.register(new Config());
 
-		AchievementManager.initialize();
 		Enchantments.initialize();
 
 		if (Config.hypermendingID > 0)
