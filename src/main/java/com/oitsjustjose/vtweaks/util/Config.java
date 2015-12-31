@@ -211,15 +211,15 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Stack Size Tweaks", true).setRequiresMcRestart(true);
-		property.comment = "Fixes stack sizes that don't make sense";
+		property.comment = "Adjusts Max Stack Sizes of some vanilla items";
 		stackSizeTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Disable Lightning?", true).setRequiresMcRestart(true);
 		property.comment = "Disables lightning from spawning, it can get annoying";
 		lightning = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Fix Anvil Sounds?", true).setRequiresMcRestart(true);
 		property.comment = "Falling anvils still make a loud sounds, all other anvil sounds are nicer";
 		altAnvilSounds = property.getBoolean();
@@ -237,9 +237,9 @@ public class Config
 	}
 
 	@SubscribeEvent
-	public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
+	public void update(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
-		if (event.modID.equalsIgnoreCase(VTweaks.modid))
+		if (event.modID.equals(VTweaks.modid))
 			loadConfiguration();
 	}
 }
