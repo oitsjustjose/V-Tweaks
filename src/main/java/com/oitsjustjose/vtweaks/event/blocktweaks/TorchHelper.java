@@ -24,21 +24,25 @@ public class TorchHelper
 
 		EntityPlayer player = event.entityPlayer;
 		IBlockState state = event.world.getBlockState(event.pos);
-		Boolean hasGUI = state.getBlock().hasTileEntity(state) || state.getBlock() instanceof BlockWorkbench;
 
-		if (!(player.getHeldItem().getItem() instanceof ItemTool) || hasGUI)
+		if (!(player.getHeldItem().getItem() instanceof ItemTool))
 			return;
 
 		if (event.action == event.action.RIGHT_CLICK_BLOCK)
 		{
-			if (player.inventory.hasItem(Item.getItemFromBlock(Blocks.torch)))
+			for(int i = 0; i < player.inventory.getSizeInventory(); i++)
 			{
-				ItemStack torch = new ItemStack(Blocks.torch);
-				if (torch.onItemUse(player, event.world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+				ItemStack stack = player.inventory.getStackInSlot(i);
+				if(stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.torch.getLocalizedName().toLowerCase()))
 				{
-					player.swingItem();
-					if (!player.capabilities.isCreativeMode)
-						player.inventory.consumeInventoryItem(Item.getItemFromBlock(Blocks.torch));
+					if (stack.onItemUse(player, event.world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+					{
+						player.swingItem();
+						if (player.capabilities.isCreativeMode)
+							stack.stackSize++;
+						else if(stack.stackSize < 1)
+							player.inventory.setInventorySlotContents(i, null);
+					}
 				}
 			}
 		}

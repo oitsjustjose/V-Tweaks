@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 // import com.pam.harvestcraft.BlockPamCrop;
@@ -25,7 +27,7 @@ public class CropHelperModSupport
 			Block harvestable = cropState.getBlock();
 			int harvestableMeta = harvestable.getMetaFromState(cropState);
 			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(1);
-			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(cropState, event.world.rand, Short.MAX_VALUE), dropRate);
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
 
 			Block garlicCrop = GameRegistry.findBlock("witchery", "garlicplant");
 			Block artichokeCrop = GameRegistry.findBlock("witchery", "artichoke");
@@ -34,23 +36,17 @@ public class CropHelperModSupport
 			Block snowbellCrop = GameRegistry.findBlock("witchery", "snowbell");
 			Block wormwoodCrop = GameRegistry.findBlock("witchery", "wormwood");
 
-			Item ingredient = GameRegistry.findItem("witchery", "ingredient");
-
-			int artichoke = 69;
-			int wolfsbane = 156;
-			int belladonna = 21;
-			int icyNeedle = 78;
-			int wormwood = 111;
-
 			if (garlicCrop != null && harvestable == garlicCrop && harvestableMeta == 5)
 			{
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							dropStack);
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 			}
 
@@ -59,10 +55,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(ingredient, dropRate, artichoke));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 			}
 
@@ -71,10 +69,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(ingredient, dropRate, wolfsbane));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 			}
 
@@ -83,10 +83,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(ingredient, dropRate, belladonna));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 			}
 
@@ -95,14 +97,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem1 = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							dropStack);
-					EntityItem droppedItem2 = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(ingredient, 1, icyNeedle));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem1);
-					if (world.rand.nextInt(8) == 1)
-						world.spawnEntityInWorld(droppedItem2);
 				}
 			}
 
@@ -111,10 +111,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(ingredient, dropRate, wormwood));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 			}
 		}
@@ -125,12 +127,10 @@ public class CropHelperModSupport
 		if (Loader.isModLoaded("Natura"))
 		{
 			IBlockState cropState = event.world.getBlockState(event.pos);
-			EntityPlayer player = event.entityPlayer;
 			World world = event.world;
 			Block harvestable = cropState.getBlock();
 			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
-			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(cropState, event.world.rand, Short.MAX_VALUE), dropRate);
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
 
 			Block barley = GameRegistry.findBlock("Natura", "N Crops");
 			if (barley == null)
@@ -140,10 +140,12 @@ public class CropHelperModSupport
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							dropStack);
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 				}
 
 			}
@@ -155,23 +157,23 @@ public class CropHelperModSupport
 		if (Loader.isModLoaded("ExtraUtilities"))
 		{
 			IBlockState cropState = event.world.getBlockState(event.pos);
-			EntityPlayer player = event.entityPlayer;
 			World world = event.world;
 			Block harvestable = cropState.getBlock();
 			Block enderLilly = GameRegistry.findBlock("ExtraUtilities", "plant/ender_lilly");
 			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(2);
-			ItemStack dropStack = new ItemStack(harvestable.getItemDropped(cropState, event.world.rand, Short.MAX_VALUE), dropRate);
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
 
 			if (enderLilly != null && harvestable == enderLilly && harvestableMeta >= 7)
 			{
 				event.entityPlayer.swingItem();
 				if (!world.isRemote)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(),
-							new ItemStack(Items.ender_pearl));
+					for (ItemStack stack : drops)
+					{
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						world.spawnEntityInWorld(droppedItem);
+					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
-					world.spawnEntityInWorld(droppedItem);
 					return true;
 				}
 			}

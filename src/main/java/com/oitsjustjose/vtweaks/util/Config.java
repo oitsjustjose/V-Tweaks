@@ -45,13 +45,14 @@ public class Config
 	public static boolean cakeTweak;
 	public static boolean toolEffTweaks;
 	public static boolean torchPlacer;
+	public static boolean signEditor;
 	// Misc Configs
 	public static boolean earlyGame;
 	public static boolean rebirth;
 	public static boolean horseArmor;
 	public static boolean stackSizeTweaks;
 	public static boolean lightning;
-	public static boolean altAnvilSounds;
+	public static boolean soundFixes;
 	public static int foodToolTips;
 
 	public static void init(File configFile)
@@ -186,6 +187,11 @@ public class Config
 		property.comment = "Right clicking with a tool will place a torch from your inventory";
 		torchPlacer = property.getBoolean();
 		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Sign Editing", true).setRequiresMcRestart(true);
+		property.comment = "Right clicking on a written sign opens the GUI to edit it again";
+		signEditor = property.getBoolean();
+		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
 
@@ -220,9 +226,9 @@ public class Config
 		lightning = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Fix Anvil Sounds?", true).setRequiresMcRestart(true);
-		property.comment = "Falling anvils still make a loud sounds, all other anvil sounds are nicer";
-		altAnvilSounds = property.getBoolean();
+		property = config.get(category, "Adjust Various Block Sounds?", true).setRequiresMcRestart(true);
+		property.comment = "Small tweaks to fix inconsistencies";
+		soundFixes = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2)

@@ -24,7 +24,7 @@ public class NetherWartTweaks
 		World world = event.world;
 		Block testFor = world.getBlockState(event.pos).getBlock();
 		Random rand = world.rand;
-		int meta = testFor.getDamageValue(world, event.pos);
+		int meta = testFor.getMetaFromState(event.world.getBlockState(event.pos));
 
 		if (player.getCurrentEquippedItem() != null)
 		{
@@ -33,6 +33,7 @@ public class NetherWartTweaks
 			{
 				if (testFor == Blocks.nether_wart && meta < 3)
 				{
+					System.out.println(meta);
 					player.swingItem();
 					for (int i = 0; i < 8; i++)
 						spawnFX(world, rand, testFor, event);

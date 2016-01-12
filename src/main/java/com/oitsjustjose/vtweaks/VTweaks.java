@@ -12,6 +12,8 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
+import com.oitsjustjose.vtweaks.event.blocktweaks.SignEditor;
+import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
@@ -49,7 +51,7 @@ public class VTweaks
 	@Instance(modid)
 	public static VTweaks instance;
 
-	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.proxy.Client", serverSide = "com.oitsjustjose.vtweaks.proxy.Common")
+	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.proxy.Client", serverSide = "com.oitsjustjose.vtweaks.proxy.Common", modId = modid)
 	public static Common proxy;
 
 	@EventHandler
@@ -107,35 +109,39 @@ public class VTweaks
 
 		if (Config.lightning)
 			MinecraftForge.EVENT_BUS.register(new StormTweak());
-		
+
 		if (Config.noPigZombies)
 			Blocks.portal.setResistance(Float.MAX_VALUE);
 
+		if (Config.signEditor)
+			MinecraftForge.EVENT_BUS.register(new SignEditor());
 
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new GuideBook());
-
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		Recipes.registerRecipes();
+		
+		if (Config.soundFixes)
+		{
+			Blocks.anvil.setStepSound(Block.soundTypeMetal);
+			Blocks.light_weighted_pressure_plate.setStepSound(Block.soundTypeMetal);
+			Blocks.heavy_weighted_pressure_plate.setStepSound(Block.soundTypeMetal);
+			MinecraftForge.EVENT_BUS.register(new SoundTweaks());
+		}
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
-
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
-		
-		if (Config.altAnvilSounds)
-			Blocks.anvil.setStepSound(Block.soundTypeMetal);
-
 	}
 }
