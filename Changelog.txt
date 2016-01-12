@@ -1,3 +1,15 @@
+1.4.3:
+-Added: Ability to edit signs via shift R-click with empty hand
+-Added: Placement sound for doors (now all sound fixes are generalized in the config)
+-Added: Fix for Light / Heavy Pressure Plate step sounds (see above for config info)
+-Changed: Great optimizations to Easy Crop Harvesting drops
+-Changed: Torch + Tool interaction now supports any item in your inventory with the localized version of 
+	the name "Torch" - this offers multilingual support, so if your language it isn't named "Torch", 
+	it'll still work
+-Changed: Crop Harvesting now requires an empty hand to activate - temporary fix for weirdness with
+	right-click interaction with your currently equipped item
+-Fixed: Nether Wart "bonemealing" tweak allowing you to waste blaze powder on a fully grown crop
+
 1.4:
 -Changed: Completely rewrote configuration file and in-game mod config. All settings will need to be re-changed.
 -Changed: Many small internal refactors. Affects nothing.
