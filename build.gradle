@@ -11,6 +11,13 @@ buildscript{
     }
 }
 
+repositories {
+  maven {
+    url "http://dvs1.progwml6.com/files/maven"
+  }
+}
+
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.4.3"
@@ -18,16 +25,21 @@ group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.8.x"
 
 minecraft{
-    version = "1.8.9-11.15.0.1663"
-    runDir = "run"
-    
+    version = "1.8.9-11.15.0.1697"
+	if (file('../run').exists()){
+		runDir = "../run"
+	} else {
+		runDir = "run"
+	}    
+    useDepAts = true
     replaceIn "/VTweaks.java"
     replace "@VERSION@", project.version
     
     mappings = "snapshot_20151214"
 }
 
-dependencies{
+dependencies {
+  deobfCompile "mezz.jei:jei_1.8.9:2.16.1.77"
 }
 
 task deobfJar(type: Jar) {

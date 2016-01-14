@@ -26,6 +26,11 @@ book.title.stacktweaks=§nStack Size Tweaks§r
 book.title.horserecipes=§nHorse Armor§r
 book.title.gameplay=§nGameplay Tweaks
 
+#JEI Compat
+jei.desc.ironhorsearmor=Can be crafted by combining two undamaged pairs of Iron Leggings in an anvil.
+jei.desc.goldhorsearmor=Can be crafted by combining two undamaged pairs of Gold Leggings in an anvil.
+jei.desc.diamondhorsearmor=Can be crafted by combining two undamaged pairs of Diamond Leggings in an anvil.
+
 
 #Chat Color Codes for Rainbow Chat: C 6 E A 2 B 3 9 1 5 D
 
@@ -45,10 +50,6 @@ VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r 
 VTweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
 VTweaks.tooltip.autosmelt=§6in an anvil to get an§r
 VTweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r
-
-#KeyBindings
-VTweaks.keybinding.crafting=Open Crafting Window
-VTweaks.keybinding.extraInventory=Open Ender Inventory
 
 #Achievements
 achievement.rebirth=§5§lReincarnation§r
