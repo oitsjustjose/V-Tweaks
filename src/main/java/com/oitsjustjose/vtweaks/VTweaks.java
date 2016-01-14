@@ -11,6 +11,7 @@ import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
+import com.oitsjustjose.vtweaks.event.blocktweaks.HangingBlockFix;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SignEditor;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
@@ -119,6 +120,9 @@ public class VTweaks
 
 		if (Config.silenceVillagers)
 			MinecraftForge.EVENT_BUS.register(new VillagerTweak());
+
+		if (Config.hungItemFix)
+			MinecraftForge.EVENT_BUS.register(new HangingBlockFix());
 
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());

@@ -47,6 +47,7 @@ public class Config
 	public static boolean toolEffTweaks;
 	public static boolean torchPlacer;
 	public static boolean signEditor;
+	public static boolean hungItemFix;
 	// Misc Configs
 	public static boolean earlyGame;
 	public static boolean rebirth;
@@ -197,6 +198,11 @@ public class Config
 		property = config.get(category, "Enable Sign Editing", true).setRequiresMcRestart(true);
 		property.comment = "Right clicking on a written sign opens the GUI to edit it again";
 		signEditor = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Hung Item Fix", true).setRequiresMcRestart(true);
+		property.comment = "Fixes Item Frames or Paintings from glitching everywhere, they instead go straight to your inventory";
+		hungItemFix = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
