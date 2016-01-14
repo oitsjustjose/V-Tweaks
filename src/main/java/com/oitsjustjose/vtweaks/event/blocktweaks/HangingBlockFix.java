@@ -21,7 +21,7 @@ public class HangingBlockFix
 	public void registerTweak(AttackEntityEvent event)
 	{
 
-		if (event.entity == null || event.entityPlayer == null)
+		if (event.target == null || event.entityPlayer == null)
 			return;
 
 		Entity entity = event.target;
