@@ -87,7 +87,6 @@ public class DisenchantRecipes implements IRecipe
 	public ItemStack[] getRemainingItems(InventoryCrafting invCraft)
 	{
 		ItemStack[] ret = new ItemStack[9];
-		ItemStack stackToClear = null;
 
 		for(int i = 0; i < invCraft.getSizeInventory(); i++)
 			if(invCraft.getStackInSlot(i) != null)

@@ -6,9 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 // import com.pam.harvestcraft.BlockPamCrop;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -22,11 +19,9 @@ public class CropHelperModSupport
 		if (Loader.isModLoaded("witchery"))
 		{
 			IBlockState cropState = event.world.getBlockState(event.pos);
-			EntityPlayer player = event.entityPlayer;
 			World world = event.world;
 			Block harvestable = cropState.getBlock();
 			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			int dropRate = harvestable.quantityDropped(world.rand) + world.rand.nextInt(1);
 			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
 
 			Block garlicCrop = GameRegistry.findBlock("witchery", "garlicplant");

@@ -1,14 +1,11 @@
 package com.oitsjustjose.vtweaks.event;
 
-import java.util.Set;
-
 import org.lwjgl.input.Keyboard;
 
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemWritableBook;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

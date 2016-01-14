@@ -1,7 +1,5 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import java.util.Random;
-
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.block.Block;
@@ -11,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;

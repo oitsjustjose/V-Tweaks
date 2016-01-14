@@ -23,6 +23,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
+import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
 import com.oitsjustjose.vtweaks.proxy.Common;
 import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.GuideBook;
@@ -116,6 +117,9 @@ public class VTweaks
 		if (Config.signEditor)
 			MinecraftForge.EVENT_BUS.register(new SignEditor());
 
+		if (Config.silenceVillagers)
+			MinecraftForge.EVENT_BUS.register(new VillagerTweak());
+
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -127,7 +131,7 @@ public class VTweaks
 	public void init(FMLInitializationEvent event)
 	{
 		Recipes.registerRecipes();
-		
+
 		if (Config.soundFixes)
 		{
 			Blocks.anvil.setStepSound(Block.soundTypeMetal);

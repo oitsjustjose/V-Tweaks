@@ -1,20 +1,13 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,13 +24,10 @@ public class SoundTweaks
 		EntityPlayer player = event.entityPlayer;
 		World world = event.world;
 		ItemStack heldItem = player.getHeldItem();
-		BlockPos pos = event.pos;
 
 		if (heldItem != null && heldItem.getItem() instanceof ItemDoor)
 		{
 			cachedItem.add(heldItem);
-			IBlockState blockState = world.getBlockState(event.pos);
-			Block block = blockState.getBlock();
 
 			ItemDoor door = (ItemDoor) heldItem.getItem();
 			if (door.onItemUse(heldItem, player, world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))

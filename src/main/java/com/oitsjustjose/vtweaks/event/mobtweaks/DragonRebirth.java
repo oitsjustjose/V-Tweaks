@@ -1,7 +1,5 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
@@ -114,7 +112,6 @@ public class DragonRebirth
 
 		if (!world.isRemote)
 			world.spawnEntityInWorld(dragon);
-		Random rand = world.rand;
 
 		for (int xMod = -1; xMod < 2; xMod++)
 			for (int zMod = -1; zMod < 2; zMod++)

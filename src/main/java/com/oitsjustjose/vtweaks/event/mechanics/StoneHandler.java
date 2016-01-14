@@ -2,8 +2,6 @@ package com.oitsjustjose.vtweaks.event.mechanics;
 
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

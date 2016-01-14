@@ -32,6 +32,7 @@ public class Config
 	public static int challengerMobRarity;
 	public static boolean noBats;
 	public static boolean noPigZombies;
+	public static boolean silenceVillagers;
 	// Enchantment Configs
 	public static int hypermendingID;
 	public static int autosmeltID;
@@ -106,6 +107,11 @@ public class Config
 		property = config.get(category, "Disable Pig Zombies", true).setRequiresMcRestart(true);
 		property.comment = "Also balances Ghast spawns";
 		noPigZombies = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Disable Villager Sounds", false).setRequiresMcRestart(true);
+		property.comment = "NOTE: CAUSES LOTS OF CONSOLE SPAM. NO KNOWN WAY AROUND THIS.";
+		silenceVillagers = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Challenger Mobs Enabled", true).setRequiresMcRestart(true);

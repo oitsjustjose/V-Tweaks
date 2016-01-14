@@ -1,17 +1,12 @@
 package com.oitsjustjose.vtweaks.util;
 
-import java.util.List;
-
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
