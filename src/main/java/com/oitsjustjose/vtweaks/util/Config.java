@@ -32,6 +32,7 @@ public class Config
 	public static int challengerMobRarity;
 	public static boolean noBats;
 	public static boolean noPigZombies;
+	public static boolean noOverworldWither;
 	public static boolean silenceVillagers;
 	// Enchantment Configs
 	public static int hypermendingID;
@@ -49,6 +50,7 @@ public class Config
 	public static boolean signEditor;
 	public static boolean hungItemFix;
 	// Misc Configs
+	public static boolean giveGuideBook;
 	public static boolean earlyGame;
 	public static boolean rebirth;
 	public static boolean horseArmor;
@@ -108,6 +110,11 @@ public class Config
 		property = config.get(category, "Disable Pig Zombies", true).setRequiresMcRestart(true);
 		property.comment = "Also balances Ghast spawns";
 		noPigZombies = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Disallow Wither Spawning in the Overworld", false).setRequiresMcRestart(true);
+		property.comment = "Special request - only allows the wither to be summoned in non-overworld dimensions";
+		noOverworldWither = property.getBoolean();
 		propertyOrder.add(property.getName());
 		
 		property = config.get(category, "Disable Villager Sounds", false).setRequiresMcRestart(true);
@@ -212,6 +219,11 @@ public class Config
 		propertyOrder = Lists.newArrayList();
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
+		
+		property = config.get(category, "Give Players V-Tweaks Guidebook?", true).setRequiresMcRestart(true);
+		property.comment = "Allows you to prevent players from getting thet book if they won't need it / want it";
+		giveGuideBook= property.getBoolean();
+		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Change Base Game Mechanics?", true).setRequiresMcRestart(true);
 		property.comment = "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay";

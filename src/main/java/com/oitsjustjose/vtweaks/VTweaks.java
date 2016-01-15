@@ -124,11 +124,13 @@ public class VTweaks
 		if (Config.hungItemFix)
 			MinecraftForge.EVENT_BUS.register(new HangingBlockFix());
 
+		if (Config.giveGuideBook)
+			MinecraftForge.EVENT_BUS.register(new GuideBook());
+
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
-		MinecraftForge.EVENT_BUS.register(new GuideBook());
 	}
 
 	@EventHandler

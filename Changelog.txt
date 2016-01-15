@@ -1,3 +1,10 @@
+1.4.4:
+-Added: My own implementation for hung item fixes
+-Added: Ability to limit Wither spawning to other non-overworld dimensions
+-Added: JEI recipe compatibility
+-Added: Console-spammy implementation to hush villages (off by default, I'd suggest that)
+
+-Changed: Tons of refactors
 1.4.3:
 -Added: Ability to edit signs via shift R-click with empty hand
 -Added: Placement sound for doors (now all sound fixes are generalized in the config)

@@ -20,7 +20,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.3"
+version = "1.4.4"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.8.x"
 
@@ -39,7 +39,7 @@ minecraft{
 }
 
 dependencies {
-  deobfCompile "mezz.jei:jei_1.8.9:2.16.1.77"
+  deobfCompile "mezz.jei:jei_1.8.9:2.18.0.87"
 }
 
 task deobfJar(type: Jar) {
