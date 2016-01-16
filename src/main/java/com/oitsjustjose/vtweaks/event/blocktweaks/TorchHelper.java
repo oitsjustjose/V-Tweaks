@@ -19,6 +19,7 @@ public class TorchHelper
 
 		EntityPlayer player = event.entityPlayer;
 		IBlockState state = event.world.getBlockState(event.pos);
+		//Not the best check, but should work - anyone have better suggestions?
 		Boolean hasGUI = state.getBlock().hasTileEntity(state) || state.getBlock() instanceof BlockWorkbench;
 
 		if (!(player.getHeldItem().getItem() instanceof ItemTool) || hasGUI)
