@@ -1,3 +1,5 @@
+1.4.5.1:
+-Changed: tiny tweak to how better feather falling works: now applies fall damage negated to your boots
 1.4.5:
 -Added: Pet Armor!! Read my book or the config file :D
 -Added: Recipe for V-Tweaks guide if you need one for whatever reason
