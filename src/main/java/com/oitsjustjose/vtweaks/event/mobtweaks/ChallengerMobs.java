@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
+import java.util.Random;
+
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.enchantment.Enchantment;
@@ -10,7 +12,6 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,17 +21,17 @@ public class ChallengerMobs
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerEvent(LivingSpawnEvent event)
 	{
-		World world = event.world;
-		int rand = event.world.rand.nextInt(8);
-
-		if (event.entity != null && event.entity instanceof EntityMob)
+		Random random = new Random();
+		int rand = random.nextInt(8);
+		if (0 == random.nextInt(Config.challengerMobRarity))
 		{
-			if (event.entity instanceof EntityPigZombie)
-				return;
-			EntityMob monster = (EntityMob) event.entity;
-
-			if (0 == world.rand.nextInt(Config.challengerMobRarity))
+			if (event.entity != null && event.entity instanceof EntityMob)
 			{
+				if (event.entity instanceof EntityPigZombie)
+					return;
+
+				EntityMob monster = (EntityMob) event.entity;
+
 				if (rand == 0)
 				{
 					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
@@ -44,7 +45,7 @@ public class ChallengerMobs
 				{
 					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
 					ItemStack helmet = new ItemStack(Items.leather_helmet);
-					((ItemArmor) helmet.getItem()).setColor(helmet, world.rand.nextInt(1677215));
+					((ItemArmor) helmet.getItem()).setColor(helmet, random.nextInt(1677215));
 					monster.setCurrentItemOrArmor(1, null);
 					monster.setCurrentItemOrArmor(2, null);
 					monster.setCurrentItemOrArmor(3, null);
