@@ -5,11 +5,13 @@ import java.util.Random;
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -36,10 +38,6 @@ public class ChallengerMobs
 				{
 					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
 					monster.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, Short.MAX_VALUE, 1));
-					monster.setCurrentItemOrArmor(1, new ItemStack(Items.diamond_boots));
-					monster.setCurrentItemOrArmor(2, new ItemStack(Items.diamond_leggings));
-					monster.setCurrentItemOrArmor(3, new ItemStack(Items.diamond_chestplate));
-					monster.setCurrentItemOrArmor(4, new ItemStack(Items.diamond_helmet));
 				}
 				else
 				{
@@ -50,23 +48,48 @@ public class ChallengerMobs
 					monster.setCurrentItemOrArmor(2, null);
 					monster.setCurrentItemOrArmor(3, null);
 					monster.setCurrentItemOrArmor(4, helmet);
+
 				}
 
-				if (rand == 6)
-					monster.addPotionEffect(new PotionEffect(Potion.resistance.id, Short.MAX_VALUE, 3));
-				else
-					monster.addPotionEffect(new PotionEffect(Potion.resistance.id, Short.MAX_VALUE, 2));
-
-				if (rand == 7)
+				if (rand == 0)
+				{
+					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(80F);
+					monster.setHealth(80F);
+				}
+				else if (rand == 6)
+				{
+					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(160F);
+					monster.setHealth(160F);
+				}
+				else if (rand == 7)
+				{
 					monster.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, Short.MAX_VALUE, 4));
+				}
+				else
+				{
+					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40F);
+					monster.setHealth(40F);
+				}
 
 				monster.setCustomNameTag(mobClassName(rand, monster));
 				monster.addPotionEffect(new PotionEffect(Potion.fireResistance.id, Short.MAX_VALUE, 8));
-
-				for (int i = 0; i < 5; i++)
-					monster.setEquipmentDropChance(i, 0.0F);
 			}
 		}
+
+	}
+
+	public static boolean isChallengerMob(EntityMob entity)
+	{
+		String n = entity.getCustomNameTag().toLowerCase();
+		if (n == null)
+			return false;
+
+		String[] preFixes = Config.challengerMobs.clone();
+		for (int i = 0; i < preFixes.length; i++)
+			if (n.contains(preFixes[i].toLowerCase()))
+				if (entity.isPotionActive(Potion.fireResistance))
+					return true;
+		return false;
 	}
 
 	ItemStack toolForMobClass(int type)

@@ -2,23 +2,17 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.vtweaks.util.Config;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/*
- * This class is for adding special drops to my
- * specially made mobs
- */
+//This class is for adding special drops to my specially made mobs
 
 public class ChallengerMobsDrops
 {
@@ -26,18 +20,9 @@ public class ChallengerMobsDrops
 	public void registerEvent(LivingDropsEvent event)
 	{
 		if (event.entity != null && event.entity instanceof EntityMob)
-		{
-			String n = ((EntityMob) event.entity).getCustomNameTag().toLowerCase();
-			if (n == null)
-				return;
-
-			String[] preFixes = Config.challengerMobs.clone();
-			for (int i = 0; i < preFixes.length; i++)
-				if (n.contains(preFixes[i].toLowerCase()))
-					if (((EntityMob) event.entity).isPotionActive(Potion.resistance))
-						for (int j = 0; j < 2; j++)
-							event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
-		}
+			if (ChallengerMobs.isChallengerMob((EntityMob) event.entity))
+				for (int j = 0; j < 2; j++)
+					event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
 	}
 
 	EntityItem getItem(World world, double x, double y, double z)
@@ -86,11 +71,9 @@ public class ChallengerMobsDrops
 		if (i == 99)
 			return new EntityItem(world, x, y, z, getRandomEnchantedBook());
 
-		//Fixes null EntityItem creation.. whoops. Drops an enchanted book instead.
 		return new EntityItem(world, x, y, z, getRandomEnchantedBook());
 	}
 
-	// A simple manner of finding a random enchanted book from a list of enchantments I'd like to see.
 	ItemStack getRandomEnchantedBook()
 	{
 		Random rand = new Random();
