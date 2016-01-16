@@ -1,3 +1,5 @@
+1.4.5.2:
+-Fixed: Torch Helper placing torches on blocks with a GUI
 1.4.5.1:
 -Changed: tiny tweak to how better feather falling works: now applies fall damage negated to your boots
 1.4.5:
