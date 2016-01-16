@@ -1,6 +1,7 @@
 1.4.5:
 -Added: Pet Armor!! Read my book or the config file :D
 -Added: Recipe for V-Tweaks guide if you need one for whatever reason
+-Added: Config for disabled V-Tweaks guide given to players
 -Changed: Wither Whitelisting now gives the player back their resources
 -Changed: Challenger Mobs spawn with more health, rather than resistance potion effect
 -Fixed: Challenger Mob Spawn Rates
