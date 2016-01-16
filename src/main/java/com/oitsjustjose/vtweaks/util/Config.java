@@ -49,7 +49,7 @@ public class Config
 	public static boolean toolEffTweaks;
 	public static boolean torchPlacer;
 	public static boolean signEditor;
-	public static boolean hungItemFix;
+	public static boolean glitchingItemFix;
 	// Misc Configs
 	public static boolean giveGuideBook;
 	public static boolean earlyGame;
@@ -213,9 +213,9 @@ public class Config
 		signEditor = property.getBoolean();
 		propertyOrder.add(property.getName());
 		
-		property = config.get(category, "Hung Item Fix", true).setRequiresMcRestart(true);
-		property.comment = "Fixes Item Frames or Paintings from glitching everywhere, they instead go straight to your inventory";
-		hungItemFix = property.getBoolean();
+		property = config.get(category, "Glitching Item Fix", true).setRequiresMcRestart(true);
+		property.comment = "Fixes common vanilla instances of items spawning and glitching everywhere by bypassing the spawning situation completely";
+		glitchingItemFix = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);

@@ -8,10 +8,10 @@ import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
+import com.oitsjustjose.vtweaks.event.blocktweaks.BlockEntityFix;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.event.blocktweaks.HangingBlockFix;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SignEditor;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
@@ -122,8 +122,8 @@ public class VTweaks
 		if (Config.silenceVillagers)
 			MinecraftForge.EVENT_BUS.register(new VillagerTweak());
 
-		if (Config.hungItemFix)
-			MinecraftForge.EVENT_BUS.register(new HangingBlockFix());
+		if (Config.glitchingItemFix)
+			MinecraftForge.EVENT_BUS.register(new BlockEntityFix());
 
 		if (Config.giveGuideBook)
 			MinecraftForge.EVENT_BUS.register(new GuideBook());
