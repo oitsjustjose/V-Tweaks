@@ -25,7 +25,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
 import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
-import com.oitsjustjose.vtweaks.proxy.Common;
+import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.GuideBook;
 import com.oitsjustjose.vtweaks.util.Recipes;
@@ -53,8 +53,8 @@ public class VTweaks
 	@Instance(modid)
 	public static VTweaks instance;
 
-	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.proxy.Client", serverSide = "com.oitsjustjose.vtweaks.proxy.Common", modId = modid)
-	public static Common proxy;
+	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.util.ClientProxy", serverSide = "com.oitsjustjose.vtweaks.util.CommonProxy", modId = modid)
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
