@@ -10,8 +10,10 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Recipes
 {
@@ -22,9 +24,9 @@ public class Recipes
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
 		}
+
+		GameRegistry.addRecipe(new ShapedOreRecipe((GuideBook.getGuideBook()), "ROY", "GQC", "BIV", 'R', "dyeRed", 'O', "dyeOrange", 'Y', "dyeYellow", 'G', "dyeGreen", 'C', "dyeCyan", 'B', "dyeBlue", 'I', "dyePurple", 'V', "dyeMagenta", 'Q', Items.writable_book));
 	}
-	
-	
 
 	@SubscribeEvent
 	public void registerEvent(AnvilUpdateEvent event)
@@ -48,17 +50,17 @@ public class Recipes
 		if ((left == Items.diamond_leggings && right == Items.diamond_leggings) && !damaged)
 		{
 			event.cost = 35;
-			event.output = new ItemStack(Items.diamond_horse_armor).setStackDisplayName("Large Dog Suit");
+			event.output = new ItemStack(Items.diamond_horse_armor);
 		}
 		if ((left == Items.golden_leggings && right == Items.golden_leggings) && !damaged)
 		{
 			event.cost = 30;
-			event.output = new ItemStack(Items.golden_horse_armor).setStackDisplayName("Medium Dog Suit");
+			event.output = new ItemStack(Items.golden_horse_armor);
 		}
 		if ((left == Items.iron_leggings && right == Items.iron_leggings) && !damaged)
 		{
 			event.cost = 20;
-			event.output = new ItemStack(Items.iron_horse_armor).setStackDisplayName("Small Dog Suit");
+			event.output = new ItemStack(Items.iron_horse_armor);
 		}
 	}
 
