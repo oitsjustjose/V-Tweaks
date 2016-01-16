@@ -24,6 +24,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
+import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
 import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
@@ -127,10 +128,14 @@ public class VTweaks
 		if (Config.giveGuideBook)
 			MinecraftForge.EVENT_BUS.register(new GuideBook());
 
+		if (Config.petArmory)
+			MinecraftForge.EVENT_BUS.register(new PetArmory());
+
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
+
 	}
 
 	@EventHandler

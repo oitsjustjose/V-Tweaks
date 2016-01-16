@@ -21,6 +21,7 @@ public class Config
 	static ConfigCategory MiscFeatures;
 
 	// Mob Configs
+	public static boolean petArmory;
 	public static boolean featherBuff;
 	public static boolean hideBuff;
 	public static boolean boneBuff;
@@ -78,6 +79,11 @@ public class Config
 		MobTweaks = config.getCategory(category);
 		MobTweaks.setComment("Various Tweaks to Mobs");
 
+		property = config.get(category, "Allow pet armor?", true).setRequiresMcRestart(true);
+		property.comment = "Allows you to R-Click on TAMED pets with horse armor to armor them up!";
+		petArmory = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
 		property = config.get(category, "Chickens Drop Extra Feathers", true).setRequiresMcRestart(true);
 		property.comment = "If set to false, chicken drops will be unchanged";
 		featherBuff = property.getBoolean();
