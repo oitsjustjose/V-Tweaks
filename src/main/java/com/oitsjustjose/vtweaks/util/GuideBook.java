@@ -29,9 +29,6 @@ public class GuideBook
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(tableOfContentsPage1());
-		indiPages.add(tableOfContentsPage2());
-
 		indiPages.add(StatCollector.translateToLocal("book.title.enderdragon") + "\n\n"
 				+ "With V-Tweaks, you are able to respawn the ender dragon once it's been defeated. "
 				+ "This book will not tell you how, but a Dragon Egg may...");
@@ -57,8 +54,7 @@ public class GuideBook
 				+ "If Botania or ThaumicTinkerer are NOT installed, you can combine a piece of paper with any enchanted item to strip "
 				+ "all enchantments off of the item, without damaging the tool.");
 		indiPages.add(StatCollector.translateToLocal("book.title.cropharvesting") + "\n\n"
-				+ "Crop harvesting is easier than ever with V-Tweaks! Just right click on a crop to harvest it! NO SEEDS WILL DROP, this "
-				+ "is intended and will not change. Works with most crops, including Extra Utilities and Witchery.");
+				+ "Crop harvesting is easier than ever with V-Tweaks! Just right click on a crop to harvest it! Works with most crops, including Extra Utilities and Witchery.");
 		indiPages.add(StatCollector.translateToLocal("book.title.blocktweaks") + "\n\n"
 				+ "Some blocks should really have a proper tool for breaking with... V-Tweaks fixes that with Melons, Hay Bales, Packed Ice, "
 				+ "Any Glass Material, Ladders, and Leaves.");
@@ -78,11 +74,27 @@ public class GuideBook
 				+ "Some things inexplicably do not stack in this game. Well, if you want them to, they do now!");
 		indiPages.add(StatCollector.translateToLocal("book.title.horserecipes") + "\n\n"
 				+ "Need horse armor? That's perfectly reasonable. Take two *undamaged* pairs of Iron, Gold or Diamond leggings to an Anvil, "
-				+ "put one in each slot, and BAM!: for some levels, you've got it! Wait.. what's that say?");
+				+ "put one in each slot, and BAM!: for some levels, you've got it!");
 		indiPages.add(StatCollector.translateToLocal("book.title.gameplay") + "\n\n"
 				+ "Looking for something to spice up the game? Leave the gameplay tweaks enabled in the config and you'll find early-game to "
 				+ "be a lot more interesting! Not ridiculously challenging, just realistic!");
-		
+		indiPages.add(StatCollector.translateToLocal("book.title.audio") + "\n\n"
+				+ "Fixes up a few of the sounds for various objects in the vanilla game, including added sounds for door placement!");		
+		indiPages.add(StatCollector.translateToLocal("book.title.lightning") + "\n\n"
+				+ "Technical Details: turns any ''Thunder Storm'' event into just a normal rain event, preventing lightning. This is good for preventing "
+				+ "ghost light blocks and unwanted fires!");
+		indiPages.add(StatCollector.translateToLocal("book.title.torch") + "\n\n"
+				+ "Right-clicking with any conventional tool places a torch from your inventory! Works with most mod torches and any localization.");
+		indiPages.add(StatCollector.translateToLocal("book.title.signs") + "\n\n"
+				+ "Shift Right-clicking on a sign with an empty hand allows you to edit it again! :D");
+		indiPages.add(StatCollector.translateToLocal("book.title.hush") + "\n\n"
+				+ "Allows for a console-spammy method for silencing villager sounds. This feature is disabled by default");
+		indiPages.add(StatCollector.translateToLocal("book.title.withersafety") + "\n\n"
+				+ "Forces the player to spawn the wither outside of the overworld. Summoning items are returned to the player :)");
+		indiPages.add(StatCollector.translateToLocal("book.title.hangars") + "\n\n"
+				+ "Forcefully fixes ItemFrames and Paintings and their retarded dropping mannerisms.");
+		indiPages.add(StatCollector.translateToLocal("book.title.petarmory") + "\n\n"
+				+ "Gear your tamed animal up with Iron, Gold or Diamond Horse Armor! Right click the pet to equip; proper armor protection applied!");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
@@ -90,20 +102,6 @@ public class GuideBook
 		guideBook.setTagInfo("pages", pages);
 		guideBook.setStackDisplayName(StatCollector.translateToLocal("book.title"));
 		return guideBook;
-	}
-
-	static String tableOfContentsPage1()
-	{
-		return StatCollector.translateToLocal("book.title.tablecontents") + "\n\n" + ">Dragon Rebirth-3" + "\n" + ">Hypermending" + "\n"
-				+ "Enchantment-4" + "\n" + ">Auto-Smelt" + "\n" + "   Enchantment-5" + "\n" + ">Step Boost" + "\n" + "   Enchantment-6" + "\n"
-				+ "Lumbering Enchantment-7" + "\n" + ">Feather Falling" + "\n" + "   Tweaks-8" + "\n" + ">Disenchanting-9";
-	}
-
-	static String tableOfContentsPage2()
-	{
-		return ">Better Crop" + "\n" + "   Harvesting-10" + "\n" + ">Better Tool" + "\n" + "   Efficiencies-11" + "\n" + ">Bone Meal Tweaks-12" + "\n"
-				+ ">Cake Fix-13" + "\n" + ">Challenger Mobs-14" + "\n" + ">Mob Drop Buffs-15" + "\n" + ">Mob Spawning" + "\n" + "   Adjustments-16"
-				+ "\n" + ">Stack Size Tweaks-17" + "\n" + ">Horse Armor-18" + "\n" + ">Gameplay Tweaks-19" + "\n";
 	}
 
 	@SubscribeEvent

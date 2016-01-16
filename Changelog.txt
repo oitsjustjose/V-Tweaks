@@ -1,3 +1,9 @@
+1.4.5:
+-Added: Pet Armor!! Read my book or the config file :D
+-Added: Recipe for V-Tweaks guide if you need one for whatever reason
+-Changed: Wither Whitelisting now gives the player back their resources
+-Changed: Challenger Mobs spawn with more health, rather than resistance potion effect
+-Fixed: Challenger Mob Spawn Rates
 1.4.4:
 -Added: My own implementation for hung item fixes
 -Added: Ability to limit Wither spawning to other non-overworld dimensions
