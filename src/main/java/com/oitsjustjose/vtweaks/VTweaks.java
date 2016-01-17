@@ -13,7 +13,6 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
-import com.oitsjustjose.vtweaks.event.blocktweaks.SignEditor;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
@@ -115,9 +114,6 @@ public class VTweaks
 
 		if (Config.noPigZombies)
 			Blocks.portal.setResistance(Float.MAX_VALUE);
-
-		if (Config.signEditor)
-			MinecraftForge.EVENT_BUS.register(new SignEditor());
 
 		if (Config.silenceVillagers)
 			MinecraftForge.EVENT_BUS.register(new VillagerTweak());

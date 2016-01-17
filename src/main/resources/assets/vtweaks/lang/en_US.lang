@@ -28,11 +28,12 @@ book.title.gameplay=§nGameplay Tweaks§r
 book.title.audio=§nSound Tweaks§r
 book.title.lightning=§nStorm Stopper§r
 book.title.torch=§nTorch Helper§r
-book.title.signs=§nSign Editor§r
 book.title.hush=§nVillager Husher§r
 book.title.withersafety=§nWither Safety§r
 book.title.hangars=§nHung Item Fix§r
 book.title.petarmory=§nPet Armor§r
+
+book.changelog.title=§rV-Tweaks Changelog§r
 
 #JEI Compat
 jei.desc.ironhorsearmor=Can be crafted by combining two undamaged pairs of Iron Leggings in an anvil.

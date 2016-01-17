@@ -48,7 +48,6 @@ public class Config
 	public static boolean cakeTweak;
 	public static boolean toolEffTweaks;
 	public static boolean torchPlacer;
-	public static boolean signEditor;
 	public static boolean glitchingItemFix;
 	// Misc Configs
 	public static boolean giveGuideBook;
@@ -207,12 +206,7 @@ public class Config
 		property.comment = "Right clicking with a tool will place a torch from your inventory";
 		torchPlacer = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
-		property = config.get(category, "Enable Sign Editing", true).setRequiresMcRestart(true);
-		property.comment = "Right clicking on a written sign opens the GUI to edit it again";
-		signEditor = property.getBoolean();
-		propertyOrder.add(property.getName());
-		
+			
 		property = config.get(category, "Glitching Item Fix", true).setRequiresMcRestart(true);
 		property.comment = "Fixes common vanilla instances of items spawning and glitching everywhere by bypassing the spawning situation completely";
 		glitchingItemFix = property.getBoolean();
