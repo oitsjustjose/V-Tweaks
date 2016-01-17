@@ -27,6 +27,7 @@ public class ConfigGUI extends GuiConfig
 		list.add(new ConfigElement(Config.MobTweaks));
 		list.add(new ConfigElement(Config.Enchantments));
 		list.add(new ConfigElement(Config.BlockTweaks));
+		list.add(new ConfigElement(Config.ItemTweaks));
 		list.add(new ConfigElement(Config.MiscFeatures));
 
 		return list;

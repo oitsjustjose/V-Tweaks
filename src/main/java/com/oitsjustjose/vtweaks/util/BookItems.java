@@ -17,7 +17,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class GuideBook
+public class BookItems
 {
 	public static ItemStack getChangelog()
 	{
@@ -29,7 +29,7 @@ public class GuideBook
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "Quickly removed the sign editor tweak. This was not a good idea and has been adjusted");
+		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Easy Harvest now no longer requires an empty hand and doesn't do weirdness if you're holding a block!" + "\n" + "-Some missing wood items are now fuels, as they should be.");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));

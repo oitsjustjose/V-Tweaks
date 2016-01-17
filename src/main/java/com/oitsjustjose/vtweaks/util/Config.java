@@ -18,6 +18,7 @@ public class Config
 	static ConfigCategory MobTweaks;
 	static ConfigCategory Enchantments;
 	static ConfigCategory BlockTweaks;
+	static ConfigCategory ItemTweaks;
 	static ConfigCategory MiscFeatures;
 
 	// Mob Configs
@@ -49,6 +50,8 @@ public class Config
 	public static boolean toolEffTweaks;
 	public static boolean torchPlacer;
 	public static boolean glitchingItemFix;
+	// Item Configs
+	public static boolean addFuels;
 	// Misc Configs
 	public static boolean giveGuideBook;
 	public static boolean earlyGame;
@@ -82,7 +85,7 @@ public class Config
 		property.comment = "Allows you to R-Click on TAMED pets with horse armor to armor them up!";
 		petArmory = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Chickens Drop Extra Feathers", true).setRequiresMcRestart(true);
 		property.comment = "If set to false, chicken drops will be unchanged";
 		featherBuff = property.getBoolean();
@@ -116,12 +119,12 @@ public class Config
 		property.comment = "Also balances Ghast spawns";
 		noPigZombies = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Disallow Wither Spawning in the Overworld", false).setRequiresMcRestart(true);
 		property.comment = "Special request - only allows the wither to be summoned in non-overworld dimensions";
 		noOverworldWither = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Disable Villager Sounds", false).setRequiresMcRestart(true);
 		property.comment = "NOTE: CAUSES LOTS OF CONSOLE SPAM. NO KNOWN WAY AROUND THIS.";
 		silenceVillagers = property.getBoolean();
@@ -206,7 +209,7 @@ public class Config
 		property.comment = "Right clicking with a tool will place a torch from your inventory";
 		torchPlacer = property.getBoolean();
 		propertyOrder.add(property.getName());
-			
+
 		property = config.get(category, "Glitching Item Fix", true).setRequiresMcRestart(true);
 		property.comment = "Fixes common vanilla instances of items spawning and glitching everywhere by bypassing the spawning situation completely";
 		glitchingItemFix = property.getBoolean();
@@ -214,15 +217,28 @@ public class Config
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
 
+		// Item Tweaks
+		category = "item tweaks";
+		propertyOrder = Lists.newArrayList();
+		ItemTweaks = config.getCategory(category);
+		ItemTweaks.setComment("Tweaks for Items");
+
+		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
+		property.comment = "Adds wooden items to fuel list if they were missing";
+		addFuels = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		ItemTweaks.setPropertyOrder(propertyOrder);
+
 		// Misc Features
 		category = "miscellaneous";
 		propertyOrder = Lists.newArrayList();
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
-		
+
 		property = config.get(category, "Give Players V-Tweaks Guidebook?", true).setRequiresMcRestart(true);
 		property.comment = "Allows you to prevent players from getting thet book if they won't need it / want it";
-		giveGuideBook= property.getBoolean();
+		giveGuideBook = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Change Base Game Mechanics?", true).setRequiresMcRestart(true);
@@ -255,8 +271,7 @@ public class Config
 		soundFixes = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2)
-				.setRequiresMcRestart(false);
+		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
 		foodToolTips = property.getInt();
 		propertyOrder.add(property.getName());
 

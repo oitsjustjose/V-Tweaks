@@ -25,7 +25,7 @@ public class Recipes
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
 		}
 
-		GameRegistry.addRecipe(new ShapedOreRecipe((GuideBook.getGuideBook()), "ROY", "GQC", "BIV", 'R', "dyeRed", 'O', "dyeOrange", 'Y', "dyeYellow", 'G', "dyeGreen", 'C', "dyeCyan", 'B', "dyeBlue", 'I', "dyePurple", 'V', "dyeMagenta", 'Q', Items.writable_book));
+		GameRegistry.addRecipe(new ShapedOreRecipe((BookItems.getGuideBook()), "ROY", "GQC", "BIV", 'R', "dyeRed", 'O', "dyeOrange", 'Y', "dyeYellow", 'G', "dyeGreen", 'C', "dyeCyan", 'B', "dyeBlue", 'I', "dyePurple", 'V', "dyeMagenta", 'Q', Items.writable_book));
 	}
 
 	@SubscribeEvent

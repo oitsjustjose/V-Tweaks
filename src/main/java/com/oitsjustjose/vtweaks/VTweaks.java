@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
+import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
@@ -27,7 +28,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
 import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
-import com.oitsjustjose.vtweaks.util.GuideBook;
+import com.oitsjustjose.vtweaks.util.BookItems;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.block.Block;
@@ -41,6 +42,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory, acceptedMinecraftVersions = "1.8, 1.8.8, 1.8.9")
 public class VTweaks
@@ -122,7 +124,7 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new BlockEntityFix());
 
 		if (Config.giveGuideBook)
-			MinecraftForge.EVENT_BUS.register(new GuideBook());
+			MinecraftForge.EVENT_BUS.register(new BookItems());
 
 		if (Config.petArmory)
 			MinecraftForge.EVENT_BUS.register(new PetArmory());
@@ -146,6 +148,9 @@ public class VTweaks
 			Blocks.heavy_weighted_pressure_plate.setStepSound(Block.soundTypeMetal);
 			MinecraftForge.EVENT_BUS.register(new SoundTweaks());
 		}
+		
+		if(Config.addFuels)
+			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 
 	@EventHandler
