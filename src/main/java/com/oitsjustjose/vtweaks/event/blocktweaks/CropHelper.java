@@ -22,7 +22,7 @@ public class CropHelper
 	@SubscribeEvent
 	public void registerVanilla(PlayerInteractEvent event)
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null || event.entityPlayer.getHeldItem() != null)
+		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		IBlockState cropState = event.world.getBlockState(event.pos);
@@ -46,6 +46,7 @@ public class CropHelper
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+				event.setCanceled(true);
 			}
 		}
 
@@ -61,6 +62,7 @@ public class CropHelper
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getStateFromMeta(harvestableMeta - 8), 2);
+				event.setCanceled(true);
 			}
 		}
 
@@ -76,6 +78,7 @@ public class CropHelper
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -112,6 +115,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 
@@ -126,6 +130,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 
@@ -140,6 +145,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 
@@ -154,6 +160,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 
@@ -168,6 +175,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 
@@ -182,6 +190,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 			}
 		}
@@ -215,6 +224,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 				}
 
 			}
@@ -247,6 +257,7 @@ public class CropHelper
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
+					event.setCanceled(true);
 					this.enderLilly = true;
 				}
 			}
