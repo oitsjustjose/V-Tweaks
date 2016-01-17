@@ -88,7 +88,7 @@ public class CropHelper
 	{
 		if (Loader.isModLoaded("witchery"))
 		{
-			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null || event.entityPlayer.getHeldItem() != null)
+			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 				return;
 			
 			IBlockState cropState = event.world.getBlockState(event.pos);
@@ -201,7 +201,7 @@ public class CropHelper
 	{
 		if (Loader.isModLoaded("Natura"))
 		{
-			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null || event.entityPlayer.getHeldItem() != null)
+			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 				return;
 			
 			IBlockState cropState = event.world.getBlockState(event.pos);
