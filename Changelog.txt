@@ -1,3 +1,5 @@
+1.4.5.5:
+-Fixed: Fall damage negation when wearing no boots
 1.4.5.4:
 -Added: Option for smelting more vanilla items that are made of wood
 -Changed: Easy Harvesting now can be done with almost any item in-hand

@@ -29,7 +29,7 @@ public class BookItems
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Easy Harvest now no longer requires an empty hand and doesn't do weirdness if you're holding a block!" + "\n" + "-Some missing wood items are now fuels, as they should be.");
+		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Fixed all fall damage being negated if player is not wearing any boots");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
