@@ -1,3 +1,6 @@
+1.4.5.4:
+-Added: Option for smelting more vanilla items that are made of wood
+-Changed: Easy Harvesting now can be done with almost any item in-hand
 1.4.5.3:
 -Removed: Sign editor tweak. Was not working, and caused client crashes D:
 -Added: Changelog book also given instead of a whole new guide, since the guide has a recipe
