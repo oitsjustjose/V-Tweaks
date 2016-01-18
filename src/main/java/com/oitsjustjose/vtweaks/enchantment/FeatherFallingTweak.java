@@ -17,6 +17,9 @@ public class FeatherFallingTweak
 			return;
 
 		EntityPlayer player = (EntityPlayer) event.entity;
+		
+		if(player.getCurrentArmor(0) == null)
+			return;
 
 		if (player.getCurrentArmor(0).getMetadata() > player.getCurrentArmor(0).getMaxDamage() || player.getCurrentArmor(0).stackSize != 1)
 			player.setCurrentItemOrArmor(1, null);
