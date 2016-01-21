@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.event.blocktweaks;
+package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
@@ -68,27 +68,25 @@ public class BlockEntityFix
 		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
-		EntityPlayer player = event.entityPlayer;
 		World world = event.world;
 		Block block = world.getBlockState(event.pos).getBlock();
 
 		if (block instanceof BlockJukebox)
 		{
 			TileEntityJukebox jukebox = (TileEntityJukebox) world.getTileEntity(event.pos);
-			if (jukebox != null)
+			if (jukebox != null && !world.isRemote)
 			{
 				if (jukebox.getRecord() == null)
 					return;
-				
+
 				ItemStack recordStack = jukebox.getRecord().copy();
 
 				jukebox.setRecord(null);
 				world.playAuxSFX(1005, event.pos, 0);
-				world.playRecord(event.pos, (String)null);
+				world.playRecord(event.pos, (String) null);
 
 				EntityItem record = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, recordStack);
-				if (!player.inventory.addItemStackToInventory(recordStack))
-					event.entityPlayer.worldObj.spawnEntityInWorld(record);
+				world.spawnEntityInWorld(record);
 			}
 		}
 	}
