@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import net.minecraft.block.BlockWorkbench;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,25 +19,25 @@ public class TorchHelper
 
 		EntityPlayer player = event.entityPlayer;
 		IBlockState state = event.world.getBlockState(event.pos);
-		//Not the best check, but should work - anyone have better suggestions?
-		Boolean hasGUI = state.getBlock().hasTileEntity(state) || state.getBlock() instanceof BlockWorkbench;
+		Block block = state.getBlock();
 
-		if (!(player.getHeldItem().getItem() instanceof ItemTool) || hasGUI)
+		if (!(player.getHeldItem().getItem() instanceof ItemTool))
 			return;
 
 		if (event.action == event.action.RIGHT_CLICK_BLOCK)
 		{
-			for(int i = 0; i < player.inventory.getSizeInventory(); i++)
+			if (block.onBlockActivated(event.world, event.pos, state, player, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()) && !event.world.isRemote)
+				event.setCanceled(true);
+			else
 			{
-				ItemStack stack = player.inventory.getStackInSlot(i);
-				if(stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.torch.getLocalizedName().toLowerCase()))
+				for (int i = 0; i < player.inventory.getSizeInventory(); i++)
 				{
-					if (stack.onItemUse(player, event.world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+					ItemStack stack = player.inventory.getStackInSlot(i);
+					if (stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.torch.getLocalizedName().toLowerCase()))
 					{
-						player.swingItem();
-						if (player.capabilities.isCreativeMode)
-							stack.stackSize++;
-						else if(stack.stackSize < 1)
+						if (stack.onItemUse(player, event.world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+							player.swingItem();
+						if (stack.stackSize == 0)
 							player.inventory.setInventorySlotContents(i, null);
 					}
 				}

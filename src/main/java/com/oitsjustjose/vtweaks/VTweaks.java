@@ -16,7 +16,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
-import com.oitsjustjose.vtweaks.event.itemtweaks.BlockEntityFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.BlockItemEntityFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
@@ -121,7 +121,7 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new VillagerTweak());
 
 		if (Config.glitchingItemFix)
-			MinecraftForge.EVENT_BUS.register(new BlockEntityFix());
+			MinecraftForge.EVENT_BUS.register(new BlockItemEntityFix());
 
 		if (Config.giveGuideBook)
 			MinecraftForge.EVENT_BUS.register(new BookItems());
