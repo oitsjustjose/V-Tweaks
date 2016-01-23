@@ -22,13 +22,15 @@ import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
+import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
+import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
 import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
+import com.oitsjustjose.vtweaks.util.BookItems;
 import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
-import com.oitsjustjose.vtweaks.util.BookItems;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.block.Block;
@@ -63,6 +65,11 @@ public class VTweaks
 	{
 		Config.init(event.getSuggestedConfigurationFile());
 		MinecraftForge.EVENT_BUS.register(new Config());
+		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
+		MinecraftForge.EVENT_BUS.register(new MobKiller());
+		MinecraftForge.EVENT_BUS.register(new ToolTips());
+		MinecraftForge.EVENT_BUS.register(new Recipes());
+		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 
 		Enchantments.initialize();
 
@@ -129,11 +136,8 @@ public class VTweaks
 		if (Config.petArmory)
 			MinecraftForge.EVENT_BUS.register(new PetArmory());
 
-		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
-		MinecraftForge.EVENT_BUS.register(new MobKiller());
-		MinecraftForge.EVENT_BUS.register(new ToolTips());
-		MinecraftForge.EVENT_BUS.register(new Recipes());
-
+		if (Config.pluckFeather)
+			MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
 	}
 
 	@EventHandler
@@ -148,8 +152,8 @@ public class VTweaks
 			Blocks.heavy_weighted_pressure_plate.setStepSound(Block.soundTypeMetal);
 			MinecraftForge.EVENT_BUS.register(new SoundTweaks());
 		}
-		
-		if(Config.addFuels)
+
+		if (Config.addFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 

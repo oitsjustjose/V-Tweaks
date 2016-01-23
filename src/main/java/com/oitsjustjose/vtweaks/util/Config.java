@@ -28,6 +28,7 @@ public class Config
 	public static boolean boneBuff;
 	public static boolean sacBuff;
 	public static boolean enderpearlBuff;
+	public static boolean pluckFeather;
 	public static boolean challengers;
 	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
 	public static String[] challengerMobs;
@@ -110,7 +111,12 @@ public class Config
 		property.comment = "If set to false, enderman drops will be unchanged";
 		enderpearlBuff = property.getBoolean();
 		propertyOrder.add(property.getName());
-
+		
+		property = config.get(category, "Pluck Feathers from Chickens", true).setRequiresMcRestart(true);
+		property.comment = "Allows chickens to have a feather plucked using shears";
+		pluckFeather = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
 		property = config.get(category, "Disable Bats", true).setRequiresMcRestart(true);
 		noBats = property.getBoolean();
 		propertyOrder.add(property.getName());
