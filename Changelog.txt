@@ -1,5 +1,5 @@
 1.4.6:
--Added: Feather Plucker! Pluck feathers from chickens using shears - will hurt the chicken slightly
+-Added: Feather Plucker! Pluck feathers from chickens using shears - has a cooldown, but doesn't actually damage the chicken
 -Added: Sheep Dye Fix - nonconfigurable fix allowing oreDict dyes to color sheep
 -Fixed: Torch Helper interaction issues
 -Fixed: Jukebox Disc ejection inventory update issue
