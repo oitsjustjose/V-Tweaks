@@ -27,7 +27,6 @@
 -Added: Ability to limit Wither spawning to other non-overworld dimensions
 -Added: JEI recipe compatibility
 -Added: Console-spammy implementation to hush villages (off by default, I'd suggest that)
-
 -Changed: Tons of refactors
 1.4.3:
 -Added: Ability to edit signs via shift R-click with empty hand

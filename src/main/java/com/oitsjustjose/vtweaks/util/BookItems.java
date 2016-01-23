@@ -29,7 +29,8 @@ public class BookItems
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Fixed all fall damage being negated if player is not wearing any boots");
+		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Added: Feather Plucker! Pluck feathers from chickens using shears - will hurt the chicken slightly" + "\n\n" + "-Added: Sheep Dye Fix - nonconfigurable fix allowing oreDict dyes to color sheep");
+		indiPages.add("-Fixed: Torch Helper interaction issues" + "\n\n" + "-Fixed: Jukebox Disc ejection inventory update issue");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
@@ -62,6 +63,8 @@ public class BookItems
 		indiPages.add(StatCollector.translateToLocal("book.title.caketweak") + "\n\n" + "An uneaten cake can be broken to be reclaimed! HOORAH! SAVE THE CAKE!");
 		indiPages.add(StatCollector.translateToLocal("book.title.challengermobs") + "\n\n" + "Challenger Mobs are custom mobs (can apply to any enemy from any mod) that are equipped with some pretty dangerous items... and buffs. " + "HOWEVER! They drop some great loot, and they're really fun if you can take them down!");
 		indiPages.add(StatCollector.translateToLocal("book.title.mobdropbuffs") + "\n\n" + "Many mobs don't drop enough items if you ask me. V-Tweaks has added bonuses for Chickens, Cows, Endermen, Skeletons and Squids!");
+		indiPages.add(StatCollector.translateToLocal("book.title.plucker") +  "\n\n" + "Right clicking on a chicken with shears (periodically) lets you pluck a feather off if it!");
+		indiPages.add(StatCollector.translateToLocal("book.title.sheepfix") +  "\n\n" + "This is a non-configurable fix that allows you to dye sheep with any oreDictionary dye, not just vanilla ones");
 		indiPages.add(StatCollector.translateToLocal("book.title.mobkiller") + "\n\n" + "Nobody likes Bats, and some people really don't understand the purpose of Pig Zombies. For that reason, you can disable either/both!");
 		indiPages.add(StatCollector.translateToLocal("book.title.stacktweaks") + "\n\n" + "Some things inexplicably do not stack in this game. Well, if you want them to, they do now!");
 		indiPages.add(StatCollector.translateToLocal("book.title.horserecipes") + "\n\n" + "Need horse armor? That's perfectly reasonable. Take two *undamaged* pairs of Iron, Gold or Diamond leggings to an Anvil, " + "put one in each slot, and BAM!: for some levels, you've got it!");

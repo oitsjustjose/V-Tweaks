@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,12 +27,12 @@ public class FeatherPlucker
 		{
 			if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemShears)
 			{
-				if (!player.worldObj.isRemote)
+				if (!player.worldObj.isRemote && chicken.getGrowingAge() == 0)
 				{
 					EntityItem featherDrop = new EntityItem(player.worldObj, event.target.posX, event.target.posY, event.target.posZ, new ItemStack(Items.feather));
 					player.worldObj.spawnEntityInWorld(featherDrop);
-					chicken.attackEntityFrom(DamageSource.generic, 0.5F);
-					chicken.setLastAttacker(player);
+					chicken.attackEntityFrom(DamageSource.generic, 0.0F);
+					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItem().attemptDamageItem(1, player.getRNG());
 				}
