@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.BlockItemEntityFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.TerrariaItemHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
@@ -163,5 +164,8 @@ public class VTweaks
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
+		
+		if (Config.terrariaTools)
+			TerrariaItemHandler.registerTweak();
 	}
 }

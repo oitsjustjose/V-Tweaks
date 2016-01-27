@@ -29,8 +29,7 @@ public class BookItems
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Added: Feather Plucker! Pluck feathers from chickens using shears - will hurt the chicken slightly" + "\n\n" + "-Added: Sheep Dye Fix - nonconfigurable fix allowing oreDict dyes to color sheep");
-		indiPages.add("-Fixed: Torch Helper interaction issues" + "\n\n" + "-Fixed: Jukebox Disc ejection inventory update issue");
+		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "-Added: Terraria style Tools (disabled by default) - see config for more details");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
@@ -76,6 +75,8 @@ public class BookItems
 		indiPages.add(StatCollector.translateToLocal("book.title.withersafety") + "\n\n" + "Forces the player to spawn the wither outside of the overworld. Summoning items are returned to the player :)");
 		indiPages.add(StatCollector.translateToLocal("book.title.hangars") + "\n\n" + "Forcefully fixes ItemFrames and Paintings and their retarded dropping mannerisms.");
 		indiPages.add(StatCollector.translateToLocal("book.title.petarmory") + "\n\n" + "Gear your tamed animal up with Iron, Gold or Diamond Horse Armor! Right click the pet to equip; proper armor protection applied!");
+		indiPages.add(StatCollector.translateToLocal("book.title.terraria") + "\n\n" + "This is a pretty big game changer. The reason, however, that this was implemented was because I enjoyed how Terraria made it so that once you had a <difficult to get> tool, it was yours forever.");
+		indiPages.add("Because of that, any items effected below will no longer be enchantable, but, in return, they CAN be enchanted via enchanted books - this, in my opinion, is perfectly fair, considering the fact that beyond the initial enchantment costs, you'll never have to use XP for anything else on these tools!");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));

@@ -53,6 +53,7 @@ public class Config
 	public static boolean glitchingItemFix;
 	// Item Configs
 	public static boolean addFuels;
+	public static boolean terrariaTools;
 	// Misc Configs
 	public static boolean giveGuideBook;
 	public static boolean earlyGame;
@@ -229,11 +230,16 @@ public class Config
 		ItemTweaks = config.getCategory(category);
 		ItemTweaks.setComment("Tweaks for Items");
 
-		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
+		property = config.get(category, "Add Missing Items as Fuels?", true).setRequiresMcRestart(true);
 		property.comment = "Adds wooden items to fuel list if they were missing";
 		addFuels = property.getBoolean();
 		propertyOrder.add(property.getName());
 
+		property = config.get(category, "Terraria-Style Tool Damage?", false).setRequiresMcRestart(true);
+		property.comment = "Disables tool & armor damage (from most mods too). Big game changer - see guide for more info.";
+		terrariaTools = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
 		ItemTweaks.setPropertyOrder(propertyOrder);
 
 		// Misc Features
