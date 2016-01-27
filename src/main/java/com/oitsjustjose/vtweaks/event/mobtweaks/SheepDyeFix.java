@@ -22,7 +22,10 @@ public class SheepDyeFix
 		
 		if (!sheep.isChild())
 			if (player.getHeldItem() != null && getDye(player.getHeldItem()) != -1)
+			{
+				--player.getHeldItem().stackSize;
 				sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItem())));
+			}
 	}
 
 	int getDye(ItemStack itemstack)
