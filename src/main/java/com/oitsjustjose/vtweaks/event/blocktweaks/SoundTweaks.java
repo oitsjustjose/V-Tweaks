@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class SoundTweaks
 {
@@ -28,21 +29,29 @@ public class SoundTweaks
 		if (heldItem != null && heldItem.getItem() instanceof ItemDoor)
 		{
 			cachedItem.add(heldItem);
-
+			Block block = Blocks.planks;
 			ItemDoor door = (ItemDoor) heldItem.getItem();
-			if (door.onItemUse(heldItem, player, world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+			try
 			{
-				if (heldItem.getItem() == Items.iron_door)
-					world.playSoundEffect(event.pos.getX(), event.pos.getY(), event.pos.getZ(), Block.soundTypeMetal.getPlaceSound(), 1.0F, 1.0F);
-				else
-					world.playSoundEffect(event.pos.getX(), event.pos.getY(), event.pos.getZ(), Block.soundTypeWood.getPlaceSound(), 1.0F, 0.75F);
-
-				if (player.capabilities.isCreativeMode)
+				block = (Block) ReflectionHelper.findField(ItemDoor.class, "block").get(door);
+				if (door.onItemUse(heldItem, player, world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
 				{
-					player.inventory.addItemStackToInventory(new ItemStack(cachedItem.get(0).getItem(), 1, cachedItem.get(0).getMetadata()));
-					cachedItem.clear();
+					if (player.capabilities.isCreativeMode)
+					{
+						player.inventory.addItemStackToInventory(new ItemStack(cachedItem.get(0).getItem(), 1, cachedItem.get(0).getMetadata()));
+						cachedItem.clear();
+					}
+					world.playSoundEffect(event.pos.getX(), event.pos.getY(), event.pos.getZ(), block.stepSound.getPlaceSound(), 1.0F, block.stepSound.getFrequency() - 0.25F);					
+					player.swingItem();
 				}
-				player.swingItem();
+			}
+			catch (IllegalArgumentException e)
+			{
+				e.printStackTrace();
+			}
+			catch (IllegalAccessException e)
+			{
+				e.printStackTrace();
 			}
 		}
 	}
