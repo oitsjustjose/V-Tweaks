@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.BlockItemEntityFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.EggHatchHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.TerrariaItemHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
@@ -71,6 +72,8 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
+		//TODO: add config option
+		MinecraftForge.EVENT_BUS.register(new EggHatchHandler());
 
 		Enchantments.initialize();
 
