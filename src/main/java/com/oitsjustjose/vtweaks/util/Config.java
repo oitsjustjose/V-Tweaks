@@ -53,7 +53,6 @@ public class Config
 	public static boolean glitchingItemFix;
 	// Item Configs
 	public static boolean addFuels;
-	public static boolean terrariaTools;
 	// Misc Configs
 	public static boolean giveGuideBook;
 	public static boolean earlyGame;
@@ -112,12 +111,12 @@ public class Config
 		property.comment = "If set to false, enderman drops will be unchanged";
 		enderpearlBuff = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Pluck Feathers from Chickens", true).setRequiresMcRestart(true);
 		property.comment = "Allows chickens to have a feather plucked using shears";
 		pluckFeather = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Disable Bats", true).setRequiresMcRestart(true);
 		noBats = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -235,11 +234,6 @@ public class Config
 		addFuels = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Terraria-Style Tool Damage?", false).setRequiresMcRestart(true);
-		property.comment = "Disables tool & armor damage (from most mods too). Big game changer - see guide for more info.";
-		terrariaTools = property.getBoolean();
-		propertyOrder.add(property.getName());
-		
 		ItemTweaks.setPropertyOrder(propertyOrder);
 
 		// Misc Features

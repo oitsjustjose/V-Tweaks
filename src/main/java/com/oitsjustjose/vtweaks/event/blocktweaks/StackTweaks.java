@@ -17,7 +17,6 @@ public class StackTweaks
 		Items.snowball.setMaxStackSize(64);
 		Items.egg.setMaxStackSize(64);
 		Items.ender_pearl.setMaxStackSize(64);
-		Items.enchanted_book.setMaxStackSize(64);
 		Items.saddle.setMaxStackSize(64);
 		Items.bed.setMaxStackSize(64);
 	}

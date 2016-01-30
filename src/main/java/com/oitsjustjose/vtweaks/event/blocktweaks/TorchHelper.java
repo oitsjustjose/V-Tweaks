@@ -20,13 +20,13 @@ public class TorchHelper
 		EntityPlayer player = event.entityPlayer;
 		IBlockState state = event.world.getBlockState(event.pos);
 		Block block = state.getBlock();
-
-		if (!(player.getHeldItem().getItem() instanceof ItemTool))
+		
+		if (!(player.getHeldItem().getItem() instanceof ItemTool) || block.hasTileEntity(state))
 			return;
 
 		if (event.action == event.action.RIGHT_CLICK_BLOCK)
 		{
-			if (block.onBlockActivated(event.world, event.pos, state, player, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()) && !event.world.isRemote)
+			if (!event.world.isRemote && block.onBlockActivated(event.world, event.pos, state, player, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
 				event.setCanceled(true);
 			else
 			{

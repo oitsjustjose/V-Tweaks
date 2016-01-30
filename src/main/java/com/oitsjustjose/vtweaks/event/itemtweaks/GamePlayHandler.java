@@ -1,6 +1,8 @@
-package com.oitsjustjose.vtweaks.event.mechanics;
+package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import java.util.List;
+
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -8,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -15,7 +19,7 @@ public class GamePlayHandler
 {
 	public static void init()
 	{
-		MinecraftForge.EVENT_BUS.register(new StoneHandler());
+		MinecraftForge.EVENT_BUS.register(new GamePlayHandler());
 
 		removeRecipe(new ItemStack(Items.stone_sword));
 		removeRecipe(new ItemStack(Items.stone_pickaxe));
@@ -49,6 +53,27 @@ public class GamePlayHandler
 
 				if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
 					recipes.remove(i--);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void registerTweak(HarvestDropsEvent event)
+	{
+		if (event.harvester == null)
+			return;
+		if (event.isSilkTouching || Enchantments.hasAutoSmelt(event.harvester.getHeldItem()))
+			return;
+
+		if (event.state.getBlock() == Blocks.stone)
+		{
+			if (event.state.getBlock().getMetaFromState(event.state) == 0)
+			{
+				event.drops.clear();
+				if (event.world.rand.nextInt(10 - event.fortuneLevel * 3) == 0)
+					event.drops.add(new ItemStack(Items.flint));
+				else
+					event.drops.add(new ItemStack(Blocks.gravel));
 			}
 		}
 	}

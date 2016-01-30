@@ -8,19 +8,17 @@ import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
+import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweakNetherwart;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.event.blocktweaks.NetherWartTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.SoundTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
-import com.oitsjustjose.vtweaks.event.itemtweaks.BlockItemEntityFix;
-import com.oitsjustjose.vtweaks.event.itemtweaks.EggHatchHandler;
-import com.oitsjustjose.vtweaks.event.itemtweaks.TerrariaItemHandler;
+import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
+import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
-import com.oitsjustjose.vtweaks.event.mechanics.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.DragonRebirth;
@@ -29,7 +27,6 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
-import com.oitsjustjose.vtweaks.event.mobtweaks.VillagerTweak;
 import com.oitsjustjose.vtweaks.util.BookItems;
 import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
@@ -72,9 +69,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
-		//TODO: add config option
-		MinecraftForge.EVENT_BUS.register(new EggHatchHandler());
-
+		
 		Enchantments.initialize();
 
 		if (Config.hypermendingID > 0)
@@ -95,7 +90,7 @@ public class VTweaks
 		if (Config.bonemealTweak)
 		{
 			MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
-			MinecraftForge.EVENT_BUS.register(new NetherWartTweaks());
+			MinecraftForge.EVENT_BUS.register(new BonemealTweakNetherwart());
 		}
 
 		if (Config.cakeTweak)
@@ -129,10 +124,10 @@ public class VTweaks
 			Blocks.portal.setResistance(Float.MAX_VALUE);
 
 		if (Config.silenceVillagers)
-			MinecraftForge.EVENT_BUS.register(new VillagerTweak());
+			MinecraftForge.EVENT_BUS.register(SoundTweaks.VillagerTweak.getInstance());
 
 		if (Config.glitchingItemFix)
-			MinecraftForge.EVENT_BUS.register(new BlockItemEntityFix());
+			MinecraftForge.EVENT_BUS.register(new HangingItemFix());
 
 		if (Config.giveGuideBook)
 			MinecraftForge.EVENT_BUS.register(new BookItems());
@@ -167,8 +162,5 @@ public class VTweaks
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
-		
-		if (Config.terrariaTools)
-			TerrariaItemHandler.registerTweak();
 	}
 }

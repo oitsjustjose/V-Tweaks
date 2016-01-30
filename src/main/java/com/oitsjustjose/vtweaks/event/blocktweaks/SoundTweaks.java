@@ -7,12 +7,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.sound.SoundEvent.SoundSourceEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SoundTweaks
 {
+
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event) throws IllegalArgumentException, IllegalAccessException
 	{
@@ -30,7 +34,7 @@ public class SoundTweaks
 			cache.add(heldItem);
 			ItemDoor door = (ItemDoor) heldItem.getItem();
 			Block block = (Block) ReflectionHelper.findField(ItemDoor.class, "block").get(door);
-			
+
 			if (door.onItemUse(heldItem, player, world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
 			{
 				if (player.capabilities.isCreativeMode)
@@ -42,6 +46,25 @@ public class SoundTweaks
 				world.playSoundEffect(event.pos.getX(), event.pos.getY(), event.pos.getZ(), block.stepSound.getPlaceSound(), 1.0F, block.stepSound.getFrequency() - 0.25F);
 				player.swingItem();
 			}
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static class VillagerTweak
+	{
+		static final VillagerTweak instance = new VillagerTweak();
+
+		public static VillagerTweak getInstance()
+		{
+			return instance;
+		}
+
+		@SubscribeEvent
+		public void registerTweak(SoundSourceEvent event)
+		{
+			if (event.name != null)
+				if (event.name.contains("mob.villager"))
+					event.setCanceled(true);
 		}
 	}
 }

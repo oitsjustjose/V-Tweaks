@@ -44,16 +44,12 @@ public class DragonRebirth
 
 						for (int xMod = -1; xMod < 2; xMod++)
 							for (int zMod = -1; zMod < 2; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(
-										new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
-												event.pos.getY() - 1, event.pos.getZ() + zMod)) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 1, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 
 						for (int xMod = -2; xMod < 3; xMod++)
 							for (int zMod = -2; zMod < 3; zMod++)
-								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(
-										new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod,
-												event.pos.getY() - 2, event.pos.getZ() + zMod)) != 12)
+								if (world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock() != TEStorage || world.getBlockState(new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)).getBlock().getDamageValue(world, new BlockPos(event.pos.getX() + xMod, event.pos.getY() - 2, event.pos.getZ() + zMod)) != 12)
 									isValidPyramid = false;
 					}
 					else

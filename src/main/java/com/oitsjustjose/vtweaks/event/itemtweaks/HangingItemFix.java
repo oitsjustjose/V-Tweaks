@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class BlockItemEntityFix
+public class HangingItemFix
 {
 	/*
 	 * Idea borrowed from maruohon Execution is completely different and unique, however

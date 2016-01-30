@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class NetherWartTweaks
+public class BonemealTweakNetherwart
 {
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
