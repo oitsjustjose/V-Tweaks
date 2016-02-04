@@ -117,11 +117,11 @@ public class Config
 		pluckFeather = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Bats", true).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Bats", false).setRequiresMcRestart(true);
 		noBats = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Pig Zombies", true).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Pig Zombies", false).setRequiresMcRestart(true);
 		property.comment = "Also balances Ghast spawns";
 		noPigZombies = property.getBoolean();
 		propertyOrder.add(property.getName());
