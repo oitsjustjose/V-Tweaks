@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.sound.SoundEvent.SoundSourceEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,7 +21,7 @@ public class SoundTweaks
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event) throws IllegalArgumentException, IllegalAccessException
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		// Creative Mode Item Cache

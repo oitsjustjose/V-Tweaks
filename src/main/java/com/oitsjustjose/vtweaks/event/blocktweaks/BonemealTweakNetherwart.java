@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BonemealTweakNetherwart
@@ -17,7 +18,7 @@ public class BonemealTweakNetherwart
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		EntityPlayer player = event.entityPlayer;

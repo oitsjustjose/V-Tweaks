@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HangingItemFix
@@ -65,7 +66,7 @@ public class HangingItemFix
 	@SubscribeEvent
 	public void registerBlockFixes(PlayerInteractEvent event)
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		World world = event.world;

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BonemealTweaks
@@ -17,7 +18,7 @@ public class BonemealTweaks
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		EntityPlayer player = event.entityPlayer;
@@ -25,7 +26,7 @@ public class BonemealTweaks
 		Block testFor = world.getBlockState(event.pos).getBlock();
 		Random rand = world.rand;
 
-		if (event.action == event.action.RIGHT_CLICK_BLOCK && player.getCurrentEquippedItem() != null)
+		if (player.getCurrentEquippedItem() != null)
 		{
 			ItemStack heldItem = player.getCurrentEquippedItem();
 			if (heldItem.getItemDamage() == 15 && heldItem.getItem() == Items.dye)

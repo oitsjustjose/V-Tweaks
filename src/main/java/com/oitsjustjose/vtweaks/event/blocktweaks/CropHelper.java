@@ -11,6 +11,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -22,7 +23,7 @@ public class CropHelper
 	@SubscribeEvent
 	public void registerVanilla(PlayerInteractEvent event)
 	{
-		if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
 
 		IBlockState cropState = event.world.getBlockState(event.pos);
@@ -88,7 +89,7 @@ public class CropHelper
 	{
 		if (Loader.isModLoaded("witchery"))
 		{
-			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+			if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 				return;
 			
 			IBlockState cropState = event.world.getBlockState(event.pos);
@@ -201,7 +202,7 @@ public class CropHelper
 	{
 		if (Loader.isModLoaded("Natura"))
 		{
-			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
+			if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 				return;
 			
 			IBlockState cropState = event.world.getBlockState(event.pos);
@@ -236,7 +237,7 @@ public class CropHelper
 	{
 		if (Loader.isModLoaded("ExtraUtilities"))
 		{
-			if (event.action != event.action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null || event.entityPlayer.getHeldItem() != null)
+			if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null || event.entityPlayer.getHeldItem() != null)
 				return;
 			
 			IBlockState cropState = event.world.getBlockState(event.pos);
