@@ -1,3 +1,11 @@
+1.4.7:
+-Added: 100% Configurable Loot Table for Challenger Mobs
+-Changed: Door placement sound fixer now dynamically grabs the sound :D
+-Changed: Mob Tweak config options to default to false when the config is generated
+-Changed: Early Game config option to default to false when the config is generated
+-Changed: Many small refactors
+-Fixed: Somewhat fixed the Torch Placement helper.. it won't be perfect, but it's darn good!
+-Fixed: OreDictionary Dye fixer for sheep not reducing stacksize
 1.4.6:
 -Added: Feather Plucker! Pluck feathers from chickens using shears - has a cooldown, but doesn't actually damage the chicken
 -Added: Sheep Dye Fix - nonconfigurable fix allowing oreDict dyes to color sheep
