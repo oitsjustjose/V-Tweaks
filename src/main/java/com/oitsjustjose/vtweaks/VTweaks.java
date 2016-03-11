@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
+import java.util.ArrayList;
+
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
@@ -30,11 +32,13 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
 import com.oitsjustjose.vtweaks.util.BookItems;
 import com.oitsjustjose.vtweaks.util.CommonProxy;
 import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.util.ConfigItemParser;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -45,18 +49,20 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = VTweaks.modid, name = VTweaks.name, version = VTweaks.version, guiFactory = VTweaks.guifactory, acceptedMinecraftVersions = "1.8, 1.8.8, 1.8.9")
+@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.8, 1.8.8, 1.8.9")
 public class VTweaks
 {
-	public static final String modid = "VTweaks";
-	public static final String name = "V-Tweaks";
-	public static final String version = "@VERSION@";
-	public static final String guifactory = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
+	public static final String MODID = "VTweaks";
+	public static final String NAME = "V-Tweaks";
+	public static final String VERSION = "@VERSION@";
+	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
+	
+	public static ArrayList<ItemStack> challengerLootTable;
 
-	@Instance(modid)
+	@Instance(MODID)
 	public static VTweaks instance;
 
-	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.util.ClientProxy", serverSide = "com.oitsjustjose.vtweaks.util.CommonProxy", modId = modid)
+	@SidedProxy(clientSide = "com.oitsjustjose.vtweaks.util.ClientProxy", serverSide = "com.oitsjustjose.vtweaks.util.CommonProxy", modId = MODID)
 	public static CommonProxy proxy;
 
 	@EventHandler
@@ -71,7 +77,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 		
 		Enchantments.initialize();
-
+		
 		if (Config.hypermendingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
@@ -162,5 +168,6 @@ public class VTweaks
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
+		challengerLootTable = ConfigItemParser.getParsedItems();
 	}
 }
