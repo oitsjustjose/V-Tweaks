@@ -24,12 +24,12 @@ public class BookItems
 		ItemStack changelog = new ItemStack(Items.written_book, 1);
 		changelog.setTagCompound(new NBTTagCompound());
 		changelog.getTagCompound().setString("title", "_");
-		changelog.getTagCompound().setString("author", "Version " + VTweaks.version);
+		changelog.getTagCompound().setString("author", "Version " + VTweaks.VERSION);
 		NBTTagList pages = new NBTTagList();
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.version + " Changes:" + "\n\n" + "");
+		indiPages.add(VTweaks.VERSION + " Changes:" + "\n\n" + "");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));
@@ -44,7 +44,7 @@ public class BookItems
 		ItemStack guideBook = new ItemStack(Items.written_book, 1);
 		guideBook.setTagCompound(new NBTTagCompound());
 		guideBook.getTagCompound().setString("title", "_");
-		guideBook.getTagCompound().setString("author", "Last Written for Version: " + VTweaks.version);
+		guideBook.getTagCompound().setString("author", "Last Written for Version: " + VTweaks.VERSION);
 		NBTTagList pages = new NBTTagList();
 
 		ArrayList<String> indiPages = new ArrayList<String>();
@@ -91,14 +91,14 @@ public class BookItems
 		EntityItem changelogEntity = new EntityItem(event.world, event.entity.posX, event.entity.posY, event.entity.posZ, getChangelog());
 		final Entity entity = event.entity;
 		final String GIVEN_GUIDE_TAG = "givenVTweaksBook";
-		final String GIVEN_CHANGELOG_TAG = "givenVTweaksChangelog" + VTweaks.version;
+		final String GIVEN_CHANGELOG_TAG = "givenVTweaksChangelog" + VTweaks.VERSION;
 
 		if (entity == null)
 			return;
 		if (!event.world.isRemote && entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) entity;
-			NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.modid);
+			NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 			boolean shouldGiveGuide = !persistTag.getBoolean(GIVEN_GUIDE_TAG);
 			boolean shouldGiveChangelog = !persistTag.getBoolean(GIVEN_CHANGELOG_TAG);
 			if (shouldGiveGuide)

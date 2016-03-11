@@ -32,6 +32,8 @@ public class Config
 	public static boolean challengers;
 	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
 	public static String[] challengerMobs;
+	public static String[] challengerMobLootTableDefault = new String[] {"minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait"};
+	public static String[] challengerMobLootTable;
 	public static int challengerMobRarity;
 	public static boolean noBats;
 	public static boolean noPigZombies;
@@ -144,6 +146,10 @@ public class Config
 		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE).setRequiresMcRestart(true);
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Challenger Mobs Loot Table", challengerMobLootTableDefault, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
+		challengerMobLootTable = property.getStringList();
+		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaults, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
 		challengerMobs = property.getStringList();
@@ -247,7 +253,7 @@ public class Config
 		giveGuideBook = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Change Base Game Mechanics?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Change Base Game Mechanics?", false).setRequiresMcRestart(true);
 		property.comment = "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay";
 		earlyGame = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -290,7 +296,7 @@ public class Config
 	@SubscribeEvent
 	public void update(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
-		if (event.modID.equals(VTweaks.modid))
+		if (event.modID.equals(VTweaks.MODID))
 			loadConfiguration();
 	}
 }
