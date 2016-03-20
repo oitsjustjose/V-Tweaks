@@ -30,7 +30,6 @@ public class CropHelper
 		World world = event.world;
 		Block harvestable = cropState.getBlock();
 		int harvestableMeta = harvestable.getMetaFromState(cropState);
-		List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
 
 		boolean pamCrop = harvestable.getClass().getName().startsWith("com.pam.harvestcraft.BlockPamCrop");
 		boolean resourcefulCrops = harvestable.getClass().getName().startsWith("tehnut.resourceful.crops.block.BlockRCrop");
@@ -38,12 +37,17 @@ public class CropHelper
 		// Handles most crops
 		if (harvestable instanceof BlockCrops && harvestableMeta >= 7 && !enderLilly && !pamCrop && !resourcefulCrops)
 		{
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
+
 			event.entityPlayer.swingItem();
 			if (!world.isRemote)
 			{
 				for (ItemStack stack : drops)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+					ItemStack drop = stack.copy();
+					if(drop.stackSize > 1)
+						--drop.stackSize;
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -54,12 +58,17 @@ public class CropHelper
 		// Handles cocoa beans!
 		if (harvestable instanceof BlockCocoa && harvestableMeta >= 8)
 		{
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
+
 			event.entityPlayer.swingItem();
 			if (!world.isRemote)
 			{
 				for (ItemStack stack : drops)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+					ItemStack drop = stack.copy();
+					if(drop.stackSize > 1)
+						--drop.stackSize;
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getStateFromMeta(harvestableMeta - 8), 2);
@@ -70,12 +79,17 @@ public class CropHelper
 		// Handles Netherwart
 		if (harvestable instanceof BlockNetherWart && harvestableMeta >= 3)
 		{
+			List<ItemStack> drops = harvestable.getDrops(world, event.pos, cropState, 0);
+
 			event.entityPlayer.swingItem();
 			if (!world.isRemote)
 			{
 				for (ItemStack stack : drops)
 				{
-					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+					ItemStack drop = stack.copy();
+					if(drop.stackSize > 1)
+						--drop.stackSize;
+					EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 					world.spawnEntityInWorld(droppedItem);
 				}
 				world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -112,7 +126,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -127,7 +144,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -142,7 +162,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -157,7 +180,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -172,7 +198,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -187,7 +216,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -221,7 +253,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
@@ -254,7 +289,10 @@ public class CropHelper
 				{
 					for (ItemStack stack : drops)
 					{
-						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), stack);
+						ItemStack drop = stack.copy();
+						if(drop.stackSize > 1)
+							--drop.stackSize;
+						EntityItem droppedItem = new EntityItem(world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), drop);
 						world.spawnEntityInWorld(droppedItem);
 					}
 					world.setBlockState(event.pos, harvestable.getDefaultState(), 2);
