@@ -2,8 +2,11 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.ArrayList;
 
+import com.oitsjustjose.vtweaks.util.LogHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -19,7 +22,7 @@ public class SoundTweaks
 {
 
 	@SubscribeEvent
-	public void registerTweak(PlayerInteractEvent event) throws IllegalArgumentException, IllegalAccessException
+	public void registerTweak(PlayerInteractEvent event)
 	{
 		if (event.action != Action.RIGHT_CLICK_BLOCK || event.world.getBlockState(event.pos) == null)
 			return;
@@ -34,7 +37,16 @@ public class SoundTweaks
 		{
 			cache.add(heldItem);
 			ItemDoor door = (ItemDoor) heldItem.getItem();
-			Block block = (Block) ReflectionHelper.findField(ItemDoor.class, "block").get(door);
+			Block block;
+			try
+			{
+				block = (Block) ReflectionHelper.findField(ItemDoor.class, "block").get(door);
+			}
+			catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				block = Blocks.planks;
+				LogHelper.warn("There was an exception in reflection for the Door Sound-Tweak.");
+			}
 
 			if (door.onItemUse(heldItem, player, world, event.pos, event.face, event.pos.getX(), event.pos.getY(), event.pos.getZ()))
 			{
