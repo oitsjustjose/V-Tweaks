@@ -12,8 +12,6 @@ public class ConfigItemParser
 	{
 		ArrayList<ItemStack> returnStack = new ArrayList<ItemStack>();
 
-		LogHelper.info(">>Running Config Item Parser");
-
 		for (String s : Config.challengerMobLootTable)
 		{
 			// Splits the string apart by uncommon characters
