@@ -29,7 +29,7 @@ public class BookItems
 
 		ArrayList<String> indiPages = new ArrayList<String>();
 
-		indiPages.add(VTweaks.VERSION + " Changes:" + "\n\n" + "-Door Item Sound is now dynamic" + "\n" + "-OreDict Dye fixer now reduces stacksize" + "\n" + "Challenger Mob Loot Table now 100% Configurable!");
+		indiPages.add(VTweaks.VERSION + " Changes:" + "\n\n" + "-Hotfix to remove the door placement sound which is already a part of 1.9 anyways... just waiting on 1.9 :)");
 
 		for (String s : indiPages)
 			pages.appendTag(new NBTTagString(s));

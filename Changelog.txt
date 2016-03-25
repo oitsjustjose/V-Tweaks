@@ -1,3 +1,5 @@
+1.4.8.1:
+-Removed: Door placement sound. Reflection worked in dev environment but never after compilation
 1.4.8:
 -Fixed: Hanging item compatibility with Tinkers' Construct
 -Fixed: Massive crashing with door placement sound fixer
