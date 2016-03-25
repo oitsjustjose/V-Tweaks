@@ -1,10 +1,6 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import java.util.ArrayList;
-
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.util.ConfigItemParser;
-import com.oitsjustjose.vtweaks.util.LogHelper;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;

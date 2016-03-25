@@ -24,7 +24,7 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					returnStack.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3], Integer.parseInt(parts[2]))));
+					returnStack.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3]), Integer.parseInt(parts[2])));
 			}
 			else if (parts.length == 3)
 			{
