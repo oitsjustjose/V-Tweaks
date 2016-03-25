@@ -20,7 +20,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.7"
+version = "1.4.8"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.8.x"
 
