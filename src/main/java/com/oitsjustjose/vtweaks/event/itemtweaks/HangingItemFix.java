@@ -39,7 +39,8 @@ public class HangingItemFix
 			entity.setDead();
 		}
 
-		if (entity instanceof EntityItemFrame)
+		// Not using an instanceof check because Tinkers' frames extend EntityItemFrame, and I have no way to properly capture the right item to drop
+		if (entity.getClass().getName().startsWith("net.minecraft.entity.item.EntityItemFrame"))
 		{
 			EntityItem itemFrameItemEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(Items.item_frame, 1));
 			EntityItemFrame frame = (EntityItemFrame) entity;
@@ -62,7 +63,7 @@ public class HangingItemFix
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void registerBlockFixes(PlayerInteractEvent event)
 	{
