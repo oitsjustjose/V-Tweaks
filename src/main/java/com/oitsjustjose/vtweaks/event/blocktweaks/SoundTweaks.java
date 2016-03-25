@@ -42,7 +42,12 @@ public class SoundTweaks
 			{
 				block = (Block) ReflectionHelper.findField(ItemDoor.class, "block").get(door);
 			}
-			catch (IllegalArgumentException | IllegalAccessException e)
+			catch (IllegalArgumentException e)
+			{
+				block = Blocks.planks;
+				LogHelper.warn("There was an exception in reflection for the Door Sound-Tweak.");
+			}
+			catch (IllegalAccessException e)
 			{
 				block = Blocks.planks;
 				LogHelper.warn("There was an exception in reflection for the Door Sound-Tweak.");
