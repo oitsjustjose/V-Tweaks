@@ -18,25 +18,25 @@ public class Enchantments
 	{
 		if (Config.hypermendingID != 0)
 		{
-			hyperMending = new EnchantmentHypermending(Config.hypermendingID).setName(VTweaks.MODID + ":hyperMending");
+			hyperMending = new EnchantmentHypermending(Config.hypermendingID).setName(VTweaks.MODID + "_hyperMending");
 			Enchantment.addToBookList(hyperMending);
 		}
 
 		if (Config.autosmeltID != 0)
 		{
-			autosmelt = new EnchantmentAutosmelt(Config.autosmeltID).setName(VTweaks.MODID + ":autosmelt");
+			autosmelt = new EnchantmentAutosmelt(Config.autosmeltID).setName(VTweaks.MODID + "_autosmelt");
 			Enchantment.addToBookList(autosmelt);
 		}
 
 		if (Config.stepboostID != 0)
 		{
-			stepboost = new EnchantmentStepboost(Config.stepboostID).setName(VTweaks.MODID + ":stepboost");
+			stepboost = new EnchantmentStepboost(Config.stepboostID).setName(VTweaks.MODID + "_stepboost");
 			Enchantment.addToBookList(stepboost);
 		}
 
 		if (Config.lumberingID != 0)
 		{
-			lumbering = new EnchantmentLumbering(Config.lumberingID).setName(VTweaks.MODID + ":lumbering");
+			lumbering = new EnchantmentLumbering(Config.lumberingID).setName(VTweaks.MODID + "_lumbering");
 			Enchantment.addToBookList(lumbering);
 		}
 
