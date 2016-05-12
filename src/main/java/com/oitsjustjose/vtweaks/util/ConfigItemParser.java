@@ -8,15 +8,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ConfigItemParser
 {
-	public static ArrayList<ItemStack> getParsedItems()
+	/**
+	 * @return an ArrayList of ItemStacks parsed from the config to be added to the Challenger Mobs' Loot Table
+	 */
+	public static ArrayList<ItemStack> getChallengerLootTable()
 	{
-		ArrayList<ItemStack> returnStack = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();
 
 		for (String s : Config.challengerMobLootTable)
 		{
 			// Splits the string apart by uncommon characters
 			// Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>
-
 			String[] parts = s.split("[\\W]");
 
 			if (parts.length == 4)
@@ -24,7 +26,7 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					returnStack.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3]), Integer.parseInt(parts[2])));
+					returnList.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3]), Integer.parseInt(parts[2])));
 			}
 			else if (parts.length == 3)
 			{
@@ -33,7 +35,7 @@ public class ConfigItemParser
 				if (temp != null)
 				{
 					int qty = Integer.parseInt(parts[2]);
-					returnStack.add(new ItemStack(temp.getItem(), qty, 0));
+					returnList.add(new ItemStack(temp.getItem(), qty, 0));
 				}
 			}
 			else if (parts.length == 2)
@@ -41,7 +43,7 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					returnStack.add(new ItemStack(temp.getItem()));
+					returnList.add(new ItemStack(temp.getItem()));
 			}
 			// The string was not formatted correctly. User is notified.
 			else
@@ -50,7 +52,7 @@ public class ConfigItemParser
 			}
 		}
 
-		return returnStack;
+		return returnList;
 
 	}
 

@@ -32,7 +32,7 @@ public class Config
 	public static boolean challengers;
 	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
 	public static String[] challengerMobs;
-	public static String[] challengerMobLootTableDefault = new String[] {"minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait"};
+	public static String[] challengerMobLootTableDefault = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
 	public static String[] challengerMobLootTable;
 	public static int challengerMobRarity;
 	public static boolean noBats;
@@ -42,6 +42,7 @@ public class Config
 	// Enchantment Configs
 	public static int hypermendingID;
 	public static int autosmeltID;
+	public static String[] autosmeltOverrides;
 	public static int stepboostID;
 	public static int lumberingID;
 	public static boolean featherFalling;
@@ -146,7 +147,7 @@ public class Config
 		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE).setRequiresMcRestart(true);
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Challenger Mobs Loot Table", challengerMobLootTableDefault, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
 		challengerMobLootTable = property.getStringList();
 		propertyOrder.add(property.getName());
@@ -169,6 +170,11 @@ public class Config
 
 		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
 		autosmeltID = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
+		property.comment = "Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction";
+		autosmeltOverrides = property.getStringList();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);

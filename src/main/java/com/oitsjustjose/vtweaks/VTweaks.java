@@ -56,7 +56,7 @@ public class VTweaks
 	public static final String NAME = "V-Tweaks";
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
-	
+
 	public static ArrayList<ItemStack> challengerLootTable;
 
 	@Instance(MODID)
@@ -75,9 +75,9 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
-		
+
 		Enchantments.initialize();
-		
+
 		if (Config.hypermendingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
@@ -168,6 +168,6 @@ public class VTweaks
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
 		if (Config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
-		challengerLootTable = ConfigItemParser.getParsedItems();
+		challengerLootTable = ConfigItemParser.getChallengerLootTable();
 	}
 }

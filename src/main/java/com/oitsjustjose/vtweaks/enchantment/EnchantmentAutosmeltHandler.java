@@ -1,11 +1,14 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import java.util.ListIterator;
+
 import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.BlockPos;
@@ -28,64 +31,89 @@ public class EnchantmentAutosmeltHandler
 		Block block = event.state.getBlock();
 
 		ItemStack heldItem = player.getCurrentEquippedItem();
-		int fortune = event.fortuneLevel;
-		int qty = block.quantityDropped(event.state, fortune, event.world.rand);
 		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltID, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
-			ItemStack newDrop = getSmelted(new ItemStack(block.getItemDropped(event.state, event.world.rand, fortune), qty, event.state.getBlock().damageDropped(event.state)));
+			ListIterator<ItemStack> iterator = event.drops.listIterator();
 
-			if (newDrop != null)
+			while (iterator.hasNext())
 			{
-				int newQty = 1;
-				if ((qty > 1 || block.getUnlocalizedName().toLowerCase().contains("ore")) && fortune > 0)
-					newQty *= (world.rand.nextInt(fortune + 1) + 1);
+				ItemStack temp = iterator.next().copy();
+				ItemStack newDrop = FurnaceRecipes.instance().getSmeltingResult(temp.copy());
 
-				event.drops.clear();
-				event.drops.add(new ItemStack(newDrop.getItem(), newQty, newDrop.getItemDamage()));
+				if (newDrop != null)
+				{
+					newDrop = newDrop.copy();
+					newDrop.stackSize = temp.stackSize;
+					if (event.fortuneLevel > 0 && isOre(temp))
+						newDrop.stackSize *= world.rand.nextInt(event.fortuneLevel + 1) + 1;
 
-				spawnXP(event.world, event.pos, new ItemStack(newDrop.getItem(), newQty, newDrop.getItemDamage()));
+					iterator.set(newDrop);
+					spawnXP(event.world, event.pos, newDrop.copy());
+				}
 			}
 		}
 
 	}
 
-	// This code is very similar to Tinkers', because I didn't want to try to compete as "better or worse" because of XP returned
+	/**
+	 * This code is very similar to Tinkers', because I didn't want to try to compete as "better or worse" because of XP returned
+	 * 
+	 * @param world
+	 *            worldObj to use
+	 * @param pos
+	 *            the BlockPos where the block broken is located
+	 * @param itemstack
+	 *            the ItemStack that is a result of the smelted block
+	 */
 	void spawnXP(World world, BlockPos pos, ItemStack itemstack)
 	{
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		int i = itemstack.stackSize;
-		float f = FurnaceRecipes.instance().getSmeltingExperience(itemstack);
-		int j;
+		int stackSize = itemstack.stackSize;
+		float smeltingXP = FurnaceRecipes.instance().getSmeltingExperience(itemstack);
+		int xpSplit;
 
-		if (f == 0.0F)
-			i = 0;
-		else if (f < 1.0F)
+		if (smeltingXP == 0.0F)
+			stackSize = 0;
+		else if (smeltingXP < 1.0F)
 		{
-			j = MathHelper.floor_float((float) i * f);
+			xpSplit = MathHelper.floor_float((float) stackSize * smeltingXP);
 
-			if (j < MathHelper.ceiling_float_int((float) i * f) && (float) Math.random() < (float) i * f - (float) j)
-				++j;
+			if (xpSplit < MathHelper.ceiling_float_int((float) stackSize * smeltingXP) && (float) Math.random() < (float) stackSize * smeltingXP - (float) xpSplit)
+				++xpSplit;
 
-			i = j;
+			stackSize = xpSplit;
 		}
 
-		while (i > 0)
+		while (stackSize > 0)
 		{
-			j = EntityXPOrb.getXPSplit(i);
-			i -= j;
-			world.spawnEntityInWorld(new EntityXPOrb(world, x, y + 0.5, z, j));
+			xpSplit = EntityXPOrb.getXPSplit(stackSize);
+			stackSize -= xpSplit;
+			world.spawnEntityInWorld(new EntityXPOrb(world, x, y + 0.5, z, xpSplit));
 		}
 	}
 
-	ItemStack getSmelted(ItemStack input)
+	/**
+	 * @param block
+	 *            Block to check if is an ore
+	 * @return true if the block's unlocalized name contains "ore" or "resource" ("resource" is for IC2 Compat)
+	 */
+	boolean isOre(ItemStack stack)
 	{
-		if (FurnaceRecipes.instance().getSmeltingResult(input) != null)
-			return FurnaceRecipes.instance().getSmeltingResult(input);
-		return null;
+		if (stack.getItem() instanceof ItemBlock)
+		{
+			Block block = Block.getBlockFromItem(stack.getItem());
+			if (block.getRegistryName().toLowerCase().contains("ore"))
+				return true;
+			else
+				for (String s : Config.autosmeltOverrides)
+					if (block.getRegistryName().toLowerCase().contains(s))
+						return true;
+		}
+		return false;
 	}
 }
