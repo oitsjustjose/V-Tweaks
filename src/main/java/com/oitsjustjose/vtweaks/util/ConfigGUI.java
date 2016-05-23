@@ -17,18 +17,18 @@ public class ConfigGUI extends GuiConfig
 {
 	public ConfigGUI(GuiScreen guiScreen)
 	{
-		super(guiScreen, getConfigElements(), VTweaks.MODID, false, false, GuiConfig.getAbridgedConfigPath(Config.config.toString()));
+		super(guiScreen, getConfigElements(), VTweaks.MODID, false, false, GuiConfig.getAbridgedConfigPath(VTweaks.modConfig.config.toString()));
 	}
 
 	private static List<IConfigElement> getConfigElements()
 	{
 		List<IConfigElement> list = Lists.newArrayList();
 
-		list.add(new ConfigElement(Config.MobTweaks));
-		list.add(new ConfigElement(Config.Enchantments));
-		list.add(new ConfigElement(Config.BlockTweaks));
-		list.add(new ConfigElement(Config.ItemTweaks));
-		list.add(new ConfigElement(Config.MiscFeatures));
+		list.add(new ConfigElement(VTweaks.modConfig.MobTweaks));
+		list.add(new ConfigElement(VTweaks.modConfig.Enchantments));
+		list.add(new ConfigElement(VTweaks.modConfig.BlockTweaks));
+		list.add(new ConfigElement(VTweaks.modConfig.ItemTweaks));
+		list.add(new ConfigElement(VTweaks.modConfig.MiscFeatures));
 
 		return list;
 	}

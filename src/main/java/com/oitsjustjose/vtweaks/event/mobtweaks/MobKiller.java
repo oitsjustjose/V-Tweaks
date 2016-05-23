@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
@@ -23,13 +23,13 @@ public class MobKiller
 	{
 		Entity toKill = event.entity;
 
-		if (toKill != null && toKill instanceof EntityBat && Config.noBats)
+		if (toKill != null && toKill instanceof EntityBat && VTweaks.modConfig.noBats)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityPigZombie && Config.noPigZombies)
+		if (toKill != null && toKill instanceof EntityPigZombie && VTweaks.modConfig.noPigZombies)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityGhast && Config.noPigZombies)
+		if (toKill != null && toKill instanceof EntityGhast && VTweaks.modConfig.noPigZombies)
 			if (event.world.rand.nextInt(100) < 95)
 				event.setResult(Result.DENY);
 	}
@@ -39,7 +39,7 @@ public class MobKiller
 	{
 		Entity toKill = event.entity;
 
-		if (toKill != null && toKill instanceof EntityWither && Config.noOverworldWither)
+		if (toKill != null && toKill instanceof EntityWither && VTweaks.modConfig.noOverworldWither)
 		{
 			EntityWither wither = (EntityWither) toKill;
 			if (wither.worldObj.provider.getDimensionId() == 0)

@@ -2,6 +2,8 @@ package com.oitsjustjose.vtweaks.util;
 
 import java.util.ArrayList;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -15,7 +17,7 @@ public class ConfigItemParser
 	{
 		ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();
 
-		for (String s : Config.challengerMobLootTable)
+		for (String s : VTweaks.modConfig.challengerMobLootTable)
 		{
 			// Splits the string apart by uncommon characters
 			// Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>

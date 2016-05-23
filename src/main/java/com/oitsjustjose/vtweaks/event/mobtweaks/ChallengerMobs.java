@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,7 +24,7 @@ public class ChallengerMobs
 	{
 		Random random = new Random();
 		int rand = random.nextInt(8);
-		if (0 == random.nextInt(Config.challengerMobRarity))
+		if (0 == random.nextInt(VTweaks.modConfig.challengerMobRarity))
 		{
 			if (event.entity != null && event.entity instanceof EntityMob)
 			{
@@ -83,7 +83,7 @@ public class ChallengerMobs
 		if (n == null)
 			return false;
 
-		String[] preFixes = Config.challengerMobs.clone();
+		String[] preFixes = VTweaks.modConfig.challengerMobs.clone();
 		for (int i = 0; i < preFixes.length; i++)
 			if (n.contains(preFixes[i].toLowerCase()))
 				if (entity.isPotionActive(Potion.fireResistance))
@@ -147,6 +147,6 @@ public class ChallengerMobs
 					mobString += nameParts[i];
 			}
 		}
-		return Config.challengerMobs[type] + " " + mobString;
+		return VTweaks.modConfig.challengerMobs[type] + " " + mobString;
 	}
 }

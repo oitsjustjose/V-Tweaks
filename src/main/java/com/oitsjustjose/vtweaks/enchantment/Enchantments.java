@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.util.Config;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,27 +15,27 @@ public class Enchantments
 
 	public static void initialize()
 	{
-		if (Config.hypermendingID != 0)
+		if (VTweaks.modConfig.hypermendingID != 0)
 		{
-			hyperMending = new EnchantmentHypermending(Config.hypermendingID).setName(VTweaks.MODID + "_hyperMending");
+			hyperMending = new EnchantmentHypermending(VTweaks.modConfig.hypermendingID).setName(VTweaks.MODID + "_hyperMending");
 			Enchantment.addToBookList(hyperMending);
 		}
 
-		if (Config.autosmeltID != 0)
+		if (VTweaks.modConfig.autosmeltID != 0)
 		{
-			autosmelt = new EnchantmentAutosmelt(Config.autosmeltID).setName(VTweaks.MODID + "_autosmelt");
+			autosmelt = new EnchantmentAutosmelt(VTweaks.modConfig.autosmeltID).setName(VTweaks.MODID + "_autosmelt");
 			Enchantment.addToBookList(autosmelt);
 		}
 
-		if (Config.stepboostID != 0)
+		if (VTweaks.modConfig.stepboostID != 0)
 		{
-			stepboost = new EnchantmentStepboost(Config.stepboostID).setName(VTweaks.MODID + "_stepboost");
+			stepboost = new EnchantmentStepboost(VTweaks.modConfig.stepboostID).setName(VTweaks.MODID + "_stepboost");
 			Enchantment.addToBookList(stepboost);
 		}
 
-		if (Config.lumberingID != 0)
+		if (VTweaks.modConfig.lumberingID != 0)
 		{
-			lumbering = new EnchantmentLumbering(Config.lumberingID).setName(VTweaks.MODID + "_lumbering");
+			lumbering = new EnchantmentLumbering(VTweaks.modConfig.lumberingID).setName(VTweaks.MODID + "_lumbering");
 			Enchantment.addToBookList(lumbering);
 		}
 
@@ -44,10 +43,10 @@ public class Enchantments
 	
 	public static boolean hasAutoSmelt(ItemStack itemstack)
 	{
-		if(Config.autosmeltID == 0 || itemstack == null)
+		if(VTweaks.modConfig.autosmeltID == 0 || itemstack == null)
 			return false;
 		
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltID, itemstack);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.autosmeltID, itemstack);
 		
 		if(autosmeltLevel > 0)
 			return true;

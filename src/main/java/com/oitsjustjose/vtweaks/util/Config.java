@@ -14,59 +14,68 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config
 {
-	public static Configuration config;
-	static ConfigCategory MobTweaks;
-	static ConfigCategory Enchantments;
-	static ConfigCategory BlockTweaks;
-	static ConfigCategory ItemTweaks;
-	static ConfigCategory MiscFeatures;
+	public Configuration config;
+	public ConfigCategory MobTweaks;
+	public ConfigCategory Enchantments;
+	public ConfigCategory BlockTweaks;
+	public ConfigCategory ItemTweaks;
+	public ConfigCategory MiscFeatures;
 
 	// Mob Configs
-	public static boolean petArmory;
-	public static boolean featherBuff;
-	public static boolean hideBuff;
-	public static boolean boneBuff;
-	public static boolean sacBuff;
-	public static boolean enderpearlBuff;
-	public static boolean pluckFeather;
-	public static boolean challengers;
-	public static String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
-	public static String[] challengerMobs;
-	public static String[] challengerMobLootTableDefault = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
-	public static String[] challengerMobLootTable;
-	public static int challengerMobRarity;
-	public static boolean noBats;
-	public static boolean noPigZombies;
-	public static boolean noOverworldWither;
-	public static boolean silenceVillagers;
+	public boolean petArmory;
+	public boolean featherBuff;
+	public boolean hideBuff;
+	public boolean boneBuff;
+	public boolean sacBuff;
+	public boolean enderpearlBuff;
+	public boolean pluckFeather;
+	public boolean challengers;
+	final String[] CHALLENGER_MOB_DEFAULTS = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
+	final String[] CHALLENGER_MOB_LOOT_TABLE_DEFAULTS = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
+	public String[] challengerMobs;
+	public String[] challengerMobLootTable;
+	public int challengerMobRarity;
+	public boolean noBats;
+	public boolean noPigZombies;
+	public boolean noOverworldWither;
+	public boolean silenceVillagers;
 	// Enchantment Configs
-	public static int hypermendingID;
-	public static int autosmeltID;
-	public static String[] autosmeltOverrides;
-	public static int stepboostID;
-	public static int lumberingID;
-	public static boolean featherFalling;
-	public static boolean disenchant;
+	public int hypermendingID;
+	public int autosmeltID;
+	public int stepboostID;
+	public int lumberingID;
+	public String[] autosmeltOverrides;
+	public int hypermendingXPCost;
+	public int autosmeltXPCost;
+	public int stepboostXPCost;
+	public int lumberingXPCost;
+	public boolean featherFalling;
+	public boolean disenchant;
 	// Block Configs
-	public static boolean cropHarvest;
-	public static boolean bonemealTweak;
-	public static boolean cakeTweak;
-	public static boolean toolEffTweaks;
-	public static boolean torchPlacer;
-	public static boolean glitchingItemFix;
+	public boolean cropHarvest;
+	public boolean bonemealTweak;
+	public boolean cakeTweak;
+	public boolean toolEffTweaks;
+	public boolean torchPlacer;
+	public boolean glitchingItemFix;
 	// Item Configs
-	public static boolean addFuels;
+	public boolean addFuels;
 	// Misc Configs
-	public static boolean giveGuideBook;
-	public static boolean earlyGame;
-	public static boolean rebirth;
-	public static boolean horseArmor;
-	public static boolean stackSizeTweaks;
-	public static boolean lightning;
-	public static boolean soundFixes;
-	public static int foodToolTips;
-
-	public static void init(File configFile)
+	public boolean giveGuideBook;
+	public boolean earlyGame;
+	public boolean rebirth;
+	public boolean horseArmor;
+	public boolean stackSizeTweaks;
+	public boolean lightning;
+	public boolean soundFixes;
+	public int foodToolTips;
+	
+	public Config(File configFile)
+	{
+		this.init(configFile);
+	}
+	
+	void init(File configFile)
 	{
 		if (config == null)
 		{
@@ -75,7 +84,7 @@ public class Config
 		}
 	}
 
-	private static void loadConfiguration()
+	void loadConfiguration()
 	{
 		Property property;
 
@@ -85,7 +94,7 @@ public class Config
 		MobTweaks = config.getCategory(category);
 		MobTweaks.setComment("Various Tweaks to Mobs");
 
-		property = config.get(category, "Allow pet armor?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Allow pet armor", true).setRequiresMcRestart(true);
 		property.comment = "Allows you to R-Click on TAMED pets with horse armor to armor them up!";
 		petArmory = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -121,6 +130,7 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Disable Bats", false).setRequiresMcRestart(true);
+		property.comment = "Disables all bat spawns from the world. May prevent irration; side-effects are: difficulties with angel ring acquisition from ExU2";
 		noBats = property.getBoolean();
 		propertyOrder.add(property.getName());
 
@@ -140,7 +150,7 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Challenger Mobs Enabled", true).setRequiresMcRestart(true);
-		property.comment = "Randomly spawns more difficult (but more lootworthy) enemies? Applies to ALL enemies";
+		property.comment = "Randomly spawns more difficult (but more lootworthy) enemies Applies to ALL enemies";
 		challengers = property.getBoolean();
 		propertyOrder.add(property.getName());
 
@@ -148,11 +158,11 @@ public class Config
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Loot Table", challengerMobLootTableDefault, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
+		property = config.get(category, "Challenger Mobs Loot Table", CHALLENGER_MOB_LOOT_TABLE_DEFAULTS, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
 		challengerMobLootTable = property.getStringList();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaults, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
+		property = config.get(category, "Challenger Mobs' Prefixes", CHALLENGER_MOB_DEFAULTS, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
 		challengerMobs = property.getStringList();
 		propertyOrder.add(property.getName());
 
@@ -168,13 +178,8 @@ public class Config
 		hypermendingID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		property = config.get(category, "Auto-Smelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
 		autosmeltID = property.getInt();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
-		property.comment = "Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction";
-		autosmeltOverrides = property.getStringList();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
@@ -183,6 +188,27 @@ public class Config
 
 		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
 		lumberingID = property.getInt();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Auto-Smelt Fortune Interaction Overrides", new String[] {}).setRequiresMcRestart(true);
+		property.comment = "Registry Names (or part of a registry name) that you want to have Auto-Smelt + Fortune interaction";
+		autosmeltOverrides = property.getStringList();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Hypermending XP Cost", 30, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		hypermendingXPCost = property.getInt();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Auto-Smelt XP Cost", 15, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		autosmeltXPCost = property.getInt();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "StepBoost XP Cost", 5, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		stepboostXPCost = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Lumbering XP Cost", 20, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		lumberingXPCost = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Better Feather Falling", true).setRequiresMcRestart(true);
@@ -241,7 +267,7 @@ public class Config
 		ItemTweaks = config.getCategory(category);
 		ItemTweaks.setComment("Tweaks for Items");
 
-		property = config.get(category, "Add Missing Items as Fuels?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
 		property.comment = "Adds wooden items to fuel list if they were missing";
 		addFuels = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -254,12 +280,12 @@ public class Config
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
 
-		property = config.get(category, "Give Players V-Tweaks Guidebook?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Give Players V-Tweaks Guidebook", true).setRequiresMcRestart(true);
 		property.comment = "Allows you to prevent players from getting thet book if they won't need it / want it";
 		giveGuideBook = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Change Base Game Mechanics?", false).setRequiresMcRestart(true);
+		property = config.get(category, "Change Base Game Mechanics", false).setRequiresMcRestart(true);
 		property.comment = "This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay";
 		earlyGame = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -279,17 +305,17 @@ public class Config
 		stackSizeTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Lightning?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Lightning", true).setRequiresMcRestart(true);
 		property.comment = "Disables lightning from spawning, it can get annoying";
 		lightning = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Adjust Various Block Sounds?", true).setRequiresMcRestart(true);
+		property = config.get(category, "Adjust Various Block Sounds", true).setRequiresMcRestart(true);
 		property.comment = "Small tweaks to fix inconsistencies";
 		soundFixes = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
+		property = config.get(category, "Enable Food Value Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
 		foodToolTips = property.getInt();
 		propertyOrder.add(property.getName());
 

@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import java.util.ListIterator;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +31,7 @@ public class EnchantmentAutosmeltHandler
 		Block block = event.state.getBlock();
 
 		ItemStack heldItem = player.getCurrentEquippedItem();
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Config.autosmeltID, heldItem);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.autosmeltID, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
@@ -110,7 +110,7 @@ public class EnchantmentAutosmeltHandler
 			if (block.getRegistryName().toLowerCase().contains("ore"))
 				return true;
 			else
-				for (String s : Config.autosmeltOverrides)
+				for (String s : VTweaks.modConfig.autosmeltOverrides)
 					if (block.getRegistryName().toLowerCase().contains(s))
 						return true;
 		}

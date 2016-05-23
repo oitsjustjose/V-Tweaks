@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import java.util.Random;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -25,35 +25,35 @@ public class MobDropBuffs
 		if (event.entity == null)
 			return;
 
-		if (event.entity instanceof EntityChicken && Config.featherBuff)
+		if (event.entity instanceof EntityChicken && VTweaks.modConfig.featherBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.feather, 1 + random.nextInt(4));
 			EntityItem dropEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, dropStack);
 			event.drops.add(dropEntity);
 		}
 
-		else if (event.entity instanceof EntityCow && Config.hideBuff)
+		else if (event.entity instanceof EntityCow && VTweaks.modConfig.hideBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.leather, 1 + random.nextInt(3));
 			EntityItem dropEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, dropStack);
 			event.drops.add(dropEntity);
 		}
 
-		else if (event.entity instanceof EntitySkeleton && Config.boneBuff)
+		else if (event.entity instanceof EntitySkeleton && VTweaks.modConfig.boneBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.bone, 1 + random.nextInt(2));
 			EntityItem dropEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, dropStack);
 			event.drops.add(dropEntity);
 		}
 
-		else if (event.entity instanceof EntitySquid && Config.sacBuff)
+		else if (event.entity instanceof EntitySquid && VTweaks.modConfig.sacBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.dye, 1 + random.nextInt(3));
 			EntityItem dropEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, dropStack);
 			event.drops.add(dropEntity);
 		}
 
-		else if (event.entity instanceof EntityEnderman && Config.enderpearlBuff)
+		else if (event.entity instanceof EntityEnderman && VTweaks.modConfig.enderpearlBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.ender_pearl, 1 + random.nextInt(1));
 			EntityItem dropEntity = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, dropStack);

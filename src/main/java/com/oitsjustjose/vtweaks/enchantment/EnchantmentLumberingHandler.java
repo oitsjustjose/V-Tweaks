@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +25,7 @@ public class EnchantmentLumberingHandler
 		EntityPlayer player = event.getPlayer();
 		boolean isTree = world.getBlockState(event.pos.up()).getBlock().isWood(world, event.pos.up());
 
-		if (EnchantmentHelper.getEnchantmentLevel(Config.lumberingID, player.getHeldItem()) > 0)
+		if (EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.lumberingID, player.getHeldItem()) > 0)
 			if (block.isWood(world, event.pos) && player.isSneaking() && isTree)
 				for (int xPos = event.pos.getX() - 5; xPos <= event.pos.getX() + 5; xPos++)
 					for (int yPos = event.pos.getY() - 1; yPos <= event.pos.getY() + 30; yPos++)

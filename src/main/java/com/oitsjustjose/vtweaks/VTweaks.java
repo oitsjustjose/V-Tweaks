@@ -58,6 +58,7 @@ public class VTweaks
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
 
 	public static ArrayList<ItemStack> challengerLootTable;
+	public static Config modConfig;
 
 	@Instance(MODID)
 	public static VTweaks instance;
@@ -68,8 +69,8 @@ public class VTweaks
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		Config.init(event.getSuggestedConfigurationFile());
-		MinecraftForge.EVENT_BUS.register(new Config());
+		modConfig = new Config(event.getSuggestedConfigurationFile());
+		MinecraftForge.EVENT_BUS.register(modConfig);
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -78,70 +79,70 @@ public class VTweaks
 
 		Enchantments.initialize();
 
-		if (Config.hypermendingID > 0)
+		if (modConfig.hypermendingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
-		if (Config.autosmeltID > 0)
+		if (modConfig.autosmeltID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 
-		if (Config.stepboostID > 0)
+		if (modConfig.stepboostID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 
-		if (Config.lumberingID > 0)
+		if (modConfig.lumberingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 
-		if (Config.cropHarvest)
+		if (modConfig.cropHarvest)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());
 
-		if (Config.bonemealTweak)
+		if (modConfig.bonemealTweak)
 		{
 			MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
 			MinecraftForge.EVENT_BUS.register(new BonemealTweakNetherwart());
 		}
 
-		if (Config.cakeTweak)
+		if (modConfig.cakeTweak)
 			MinecraftForge.EVENT_BUS.register(new CakeTweak());
 
-		if (Config.featherFalling)
+		if (modConfig.featherFalling)
 			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
-		if (Config.rebirth)
+		if (modConfig.rebirth)
 			MinecraftForge.EVENT_BUS.register(new DragonRebirth());
 
-		if (Config.toolEffTweaks)
+		if (modConfig.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
-		if (Config.torchPlacer)
+		if (modConfig.torchPlacer)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
-		if (Config.challengers)
+		if (modConfig.challengers)
 		{
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
 
-		if (Config.earlyGame)
+		if (modConfig.earlyGame)
 			GamePlayHandler.init();
 
-		if (Config.lightning)
+		if (modConfig.lightning)
 			MinecraftForge.EVENT_BUS.register(new StormTweak());
 
-		if (Config.noPigZombies)
+		if (modConfig.noPigZombies)
 			Blocks.portal.setResistance(Float.MAX_VALUE);
 
-		if (Config.silenceVillagers)
+		if (modConfig.silenceVillagers)
 			MinecraftForge.EVENT_BUS.register(SoundTweaks.VillagerTweak.getInstance());
 
-		if (Config.glitchingItemFix)
+		if (modConfig.glitchingItemFix)
 			MinecraftForge.EVENT_BUS.register(new HangingItemFix());
 
-		if (Config.giveGuideBook)
+		if (modConfig.giveGuideBook)
 			MinecraftForge.EVENT_BUS.register(new BookItems());
 
-		if (Config.petArmory)
+		if (modConfig.petArmory)
 			MinecraftForge.EVENT_BUS.register(new PetArmory());
 
-		if (Config.pluckFeather)
+		if (modConfig.pluckFeather)
 			MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
 	}
 
@@ -150,7 +151,7 @@ public class VTweaks
 	{
 		Recipes.registerRecipes();
 
-		if (Config.soundFixes)
+		if (modConfig.soundFixes)
 		{
 			Blocks.anvil.setStepSound(Block.soundTypeMetal);
 			Blocks.light_weighted_pressure_plate.setStepSound(Block.soundTypeMetal);
@@ -158,7 +159,7 @@ public class VTweaks
 			MinecraftForge.EVENT_BUS.register(new SoundTweaks());
 		}
 
-		if (Config.addFuels)
+		if (modConfig.addFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 
@@ -166,7 +167,7 @@ public class VTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.command_block.setCreativeTab(CreativeTabs.tabRedstone);
-		if (Config.stackSizeTweaks)
+		if (modConfig.stackSizeTweaks)
 			StackTweaks.registerTweaks();
 		challengerLootTable = ConfigItemParser.getChallengerLootTable();
 	}

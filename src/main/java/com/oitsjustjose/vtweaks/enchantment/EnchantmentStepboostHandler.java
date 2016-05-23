@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ public class EnchantmentStepboostHandler
 	public void register(PlayerEvent event)
 	{
 		ItemStack boots = event.entityPlayer.getCurrentArmor(0);
-		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.stepboostID, boots);
+		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.stepboostID, boots);
 
 		if (boots != null && EnchantmentLevelArmor != 0)
 			event.entityPlayer.stepHeight = 1.0F;

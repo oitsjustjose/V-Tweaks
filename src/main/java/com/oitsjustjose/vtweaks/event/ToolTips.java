@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.event;
 
 import org.lwjgl.input.Keyboard;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -30,14 +30,14 @@ public class ToolTips
 			int hunger = food.getHealAmount(stack);
 			float saturation = food.getSaturationModifier(stack) * 10;
 
-			if (Config.foodToolTips == 0)
+			if (VTweaks.modConfig.foodToolTips == 0)
 				return;
-			else if (Config.foodToolTips == 1)
+			else if (VTweaks.modConfig.foodToolTips == 1)
 			{
 				event.toolTip.add(getHungerString(hunger));
 				event.toolTip.add(getSaturationString(saturation));
 			}
-			else if (Config.foodToolTips == 2)
+			else if (VTweaks.modConfig.foodToolTips == 2)
 			{
 				if (shift)
 				{

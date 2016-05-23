@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public class EnchantmentHypermendingHandler
 			heldItem = player.getCurrentEquippedItem();
 			if (heldItem != null && heldItem.getItemDamage() > 0)
 			{
-				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingID, heldItem);
+				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.hypermendingID, heldItem);
 				if (EnchantmentLevelTool > 0)
 					heldItem.setItemDamage(0);
 			}
@@ -41,7 +41,7 @@ public class EnchantmentHypermendingHandler
 			if (player.getCurrentArmor(i) != null)
 			{
 				armor = player.getCurrentArmor(i);
-				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Config.hypermendingID, armor);
+				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.hypermendingID, armor);
 				if (EnchantmentLevelArmor > 0)
 					armor.setItemDamage(0);
 			}
