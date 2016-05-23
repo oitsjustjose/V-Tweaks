@@ -1,10 +1,13 @@
 package com.oitsjustjose.vtweaks.util;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -19,7 +22,7 @@ public class Recipes
 {
 	public static void registerRecipes()
 	{
-		if (Config.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
+		if (VTweaks.modConfig.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 		{
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
@@ -33,7 +36,7 @@ public class Recipes
 	{
 		registerBookRecipes(event);
 
-		if (Config.horseArmor)
+		if (VTweaks.modConfig.horseArmor)
 			registerHorseArmorRecipes(event);
 	}
 
@@ -66,7 +69,7 @@ public class Recipes
 
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-		if (Config.hypermendingID > 0)
+		if (VTweaks.modConfig.hypermendingID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
@@ -78,7 +81,7 @@ public class Recipes
 			{
 				if (event.right.stackSize == 1)
 				{
-					event.cost = 30;
+					event.cost = VTweaks.modConfig.hypermendingXPCost;
 					event.output = book;
 				}
 				else
@@ -86,7 +89,7 @@ public class Recipes
 			}
 		}
 
-		if (Config.autosmeltID > 0)
+		if (VTweaks.modConfig.autosmeltID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
@@ -97,14 +100,35 @@ public class Recipes
 			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.lava_bucket)
 				if (event.right.stackSize == 1)
 				{
-					event.cost = 30;
+					event.cost = VTweaks.modConfig.autosmeltXPCost;
 					event.output = book;
 				}
 				else
 					event.output = null;
 		}
+		
+		if(VTweaks.modConfig.stepboostID > 0)
+		{
+			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
+			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));
 
-		if (Config.lumberingID > 0)
+			if (event.left == null || event.right == null)
+				return;
+
+			if (event.left.getItem() == Items.writable_book && event.right.getItem() instanceof ItemBlock)
+			{
+				Block inputBlock = Block.getBlockFromItem(event.right.getItem());
+				if (inputBlock.getRegistryName().contains("stair") && event.right.stackSize == 16)
+				{
+					event.cost = VTweaks.modConfig.stepboostXPCost;
+					event.output = book;
+				}
+				else
+					event.output = null;
+			}
+		}
+
+		if (VTweaks.modConfig.lumberingID > 0)
 		{
 			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
 			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
@@ -118,7 +142,7 @@ public class Recipes
 			{
 				if (!damaged)
 				{
-					event.cost = 30;
+					event.cost = VTweaks.modConfig.lumberingXPCost;
 					event.output = book;
 				}
 				else
