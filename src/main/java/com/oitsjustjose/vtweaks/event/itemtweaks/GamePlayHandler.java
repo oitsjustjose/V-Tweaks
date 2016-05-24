@@ -21,25 +21,25 @@ public class GamePlayHandler
 	{
 		MinecraftForge.EVENT_BUS.register(new GamePlayHandler());
 
-		removeRecipe(new ItemStack(Items.stone_sword));
-		removeRecipe(new ItemStack(Items.stone_pickaxe));
-		removeRecipe(new ItemStack(Items.stone_shovel));
-		removeRecipe(new ItemStack(Items.stone_axe));
-		removeRecipe(new ItemStack(Items.stone_hoe));
-		
-		Items.wooden_sword.setMaxDamage(16);
-		Items.wooden_pickaxe.setMaxDamage(16);
-		Items.wooden_shovel.setMaxDamage(16);
-		Items.wooden_axe.setMaxDamage(16);
-		Items.wooden_hoe.setMaxDamage(16);
-		
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_sword), "#", "#", "S", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_pickaxe), "###", " S ", " S ", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_shovel), "#", "S", "S", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_axe), "## ", "#S ", " S ", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_axe), "## ", "S# ", "S  ", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.stone_hoe), "##", "S ", "S ", '#', Items.flint, 'S', "stickWood"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.cobblestone, 2), "##", "##", '#', Blocks.gravel));
+		removeRecipe(new ItemStack(Items.STONE_SWORD));
+		removeRecipe(new ItemStack(Items.STONE_PICKAXE));
+		removeRecipe(new ItemStack(Items.STONE_SHOVEL));
+		removeRecipe(new ItemStack(Items.STONE_AXE));
+		removeRecipe(new ItemStack(Items.STONE_HOE));
+
+		Items.WOODEN_SWORD.setMaxDamage(16);
+		Items.WOODEN_PICKAXE.setMaxDamage(16);
+		Items.WOODEN_SHOVEL.setMaxDamage(16);
+		Items.WOODEN_AXE.setMaxDamage(16);
+		Items.WOODEN_HOE.setMaxDamage(16);
+
+//		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_SWORD), "#", "#", "S", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_PICKAXE), "###", " S ", " S ", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_SHOVEL), "#", "S", "S", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_AXE), "## ", "#S ", " S ", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_AXE), "## ", "S# ", "S  ", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_HOE), "##", "S ", "S ", '#', Items.FLINT, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.COBBLESTONE, 2), "##", "##", '#', Blocks.GRAVEL));
 	}
 
 	public static void removeRecipe(ItemStack resultItem)
@@ -56,24 +56,24 @@ public class GamePlayHandler
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void registerTweak(HarvestDropsEvent event)
 	{
-		if (event.harvester == null)
+		if (event.getHarvester() == null)
 			return;
-		if (event.isSilkTouching || Enchantments.hasAutoSmelt(event.harvester.getHeldItem()))
+		if (event.isSilkTouching() || Enchantments.hasAutoSmelt(event.getHarvester().getHeldItemMainhand()))
 			return;
 
-		if (event.state.getBlock() == Blocks.stone)
+		if (event.getState().getBlock() == Blocks.STONE)
 		{
-			if (event.state.getBlock().getMetaFromState(event.state) == 0)
+			if (event.getState().getBlock().getMetaFromState(event.getState()) == 0)
 			{
-				event.drops.clear();
-				if (event.world.rand.nextInt(10 - event.fortuneLevel * 3) == 0)
-					event.drops.add(new ItemStack(Items.flint));
+				event.getDrops().clear();
+				if (event.getWorld().rand.nextInt(10 - event.getFortuneLevel() * 3) == 0)
+					event.getDrops().add(new ItemStack(Items.FLINT));
 				else
-					event.drops.add(new ItemStack(Blocks.gravel));
+					event.getDrops().add(new ItemStack(Blocks.GRAVEL));
 			}
 		}
 	}

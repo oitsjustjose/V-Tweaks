@@ -9,11 +9,6 @@ public class LogHelper
 {
 	private static Logger LOGGER = LogManager.getLogger(VTweaks.MODID);
 
-	public LogHelper()
-	{
-
-	}
-
 	public static void warn(String msg)
 	{
 		LOGGER.warn(msg);

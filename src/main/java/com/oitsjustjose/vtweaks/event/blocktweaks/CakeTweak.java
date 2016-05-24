@@ -12,11 +12,11 @@ public class CakeTweak
 	@SubscribeEvent
 	public void registerTweak(BlockEvent.HarvestDropsEvent event)
 	{
-		Block block = event.state.getBlock();
-		if (event.harvester != null && block instanceof BlockCake && block.getDamageValue(event.world, event.pos) == 0)
+		Block block = event.getState().getBlock();
+		if (event.getHarvester() != null && block instanceof BlockCake && block.getMetaFromState(event.getState()) == 0)
 		{
-			event.drops.clear();
-			event.drops.add(new ItemStack(Items.cake));
+			event.getDrops().clear();
+			event.getDrops().add(new ItemStack(Items.CAKE));
 		}
 	}
 }

@@ -13,26 +13,26 @@ public class FeatherFallingTweak
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
-		if (!(event.entity instanceof EntityPlayer))
+		if (!(event.getEntity() instanceof EntityPlayer))
 			return;
 
-		EntityPlayer player = (EntityPlayer) event.entity;
-		
-		if(player.getCurrentArmor(0) == null)
+		EntityPlayer player = (EntityPlayer) event.getEntity();
+
+		if (player.inventory.armorInventory[0] == null)
 			return;
 
-		if (player.getCurrentArmor(0).getMetadata() > player.getCurrentArmor(0).getMaxDamage() || player.getCurrentArmor(0).stackSize != 1)
-			player.setCurrentItemOrArmor(1, null);
+		if (player.inventory.armorInventory[0].getMetadata() > player.inventory.armorInventory[0].getMaxDamage() || player.inventory.armorInventory[0].stackSize != 1)
+			player.inventory.armorInventory[0] = null;
 
-		ItemStack boots = player.getCurrentArmor(0);
+		ItemStack boots = player.inventory.armorInventory[0];
 
-		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantment.featherFalling.effectId, boots) >= 4)
-			if (event.source == DamageSource.fall)
+		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantment.getEnchantmentByID(2), boots) >= 4)
+			if (event.getSource() == DamageSource.fall)
 			{
-				boots.damageItem((int) event.ammount, player);
-				event.ammount = 0.0F;
+				boots.damageItem((int) event.getAmount(), player);
+				event.setAmount(0.0F);
 				if (boots.getMetadata() > boots.getMaxDamage() || boots.stackSize != 1)
-					player.setCurrentItemOrArmor(1, null);
+					player.inventory.armorInventory[0] = null;
 			}
 	}
 }

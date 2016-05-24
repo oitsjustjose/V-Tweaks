@@ -1,7 +1,5 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import com.oitsjustjose.vtweaks.VTweaks;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
@@ -18,34 +16,19 @@ public class EnchantmentHypermendingHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(PlayerEvent event)
 	{
-		EntityPlayer player = event.entityPlayer;
-		ItemStack heldItem = null;
-		ItemStack armor = null;
-		int EnchantmentLevelTool;
-		int EnchantmentLevelArmor;
-		boolean isValid = isValidTool(player.getCurrentEquippedItem());
+		EntityPlayer player = event.getEntityPlayer();
+		ItemStack heldItem = player.getHeldItemMainhand();
 
-		if (player.getCurrentEquippedItem() != null && isValid)
-		{
-			heldItem = player.getCurrentEquippedItem();
+		if (heldItem != null && isValidTool(player.getHeldItemMainhand()))
 			if (heldItem != null && heldItem.getItemDamage() > 0)
-			{
-				EnchantmentLevelTool = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.hypermendingID, heldItem);
-				if (EnchantmentLevelTool > 0)
+				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.hyperMending, heldItem) > 0)
 					heldItem.setItemDamage(0);
-			}
-		}
 
-		for (int i = 0; i < 4; i++)
-		{
-			if (player.getCurrentArmor(i) != null)
-			{
-				armor = player.getCurrentArmor(i);
-				EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.hypermendingID, armor);
-				if (EnchantmentLevelArmor > 0)
-					armor.setItemDamage(0);
-			}
-		}
+		if (player.getArmorInventoryList() != null)
+			for (ItemStack stack : player.getArmorInventoryList())
+				if (stack != null)
+					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.hyperMending, stack) > 0)
+						stack.setItemDamage(0);
 	}
 
 	boolean isValidTool(ItemStack itemstack)

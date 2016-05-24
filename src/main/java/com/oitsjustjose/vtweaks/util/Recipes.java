@@ -13,10 +13,8 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Recipes
 {
@@ -24,11 +22,9 @@ public class Recipes
 	{
 		if (VTweaks.modConfig.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 		{
-			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.paper));
+			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.PAPER));
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
 		}
-
-		GameRegistry.addRecipe(new ShapedOreRecipe((BookItems.getGuideBook()), "ROY", "GQC", "BIV", 'R', "dyeRed", 'O', "dyeOrange", 'Y', "dyeYellow", 'G', "dyeGreen", 'C', "dyeCyan", 'B', "dyeBlue", 'I', "dyePurple", 'V', "dyeMagenta", 'Q', Items.writable_book));
 	}
 
 	@SubscribeEvent
@@ -42,28 +38,28 @@ public class Recipes
 
 	public void registerHorseArmorRecipes(AnvilUpdateEvent event)
 	{
-		if (event.left == null || event.right == null)
+		if (event.getLeft() == null || event.getRight() == null)
 			return;
 
-		Item left = event.left.getItem();
-		Item right = event.right.getItem();
+		Item left = event.getLeft().getItem();
+		Item right = event.getRight().getItem();
 
-		boolean damaged = event.left.getItemDamage() > 0 || event.right.getItemDamage() > 0;
+		boolean damaged = event.getLeft().getItemDamage() > 0 || event.getRight().getItemDamage() > 0;
 
-		if ((left == Items.diamond_leggings && right == Items.diamond_leggings) && !damaged)
+		if ((left == Items.DIAMOND_LEGGINGS && right == Items.DIAMOND_LEGGINGS) && !damaged)
 		{
-			event.cost = 35;
-			event.output = new ItemStack(Items.diamond_horse_armor);
+			event.setCost(35);
+			event.setOutput(new ItemStack(Items.DIAMOND_HORSE_ARMOR));
 		}
-		if ((left == Items.golden_leggings && right == Items.golden_leggings) && !damaged)
+		if ((left == Items.GOLDEN_LEGGINGS && right == Items.GOLDEN_LEGGINGS) && !damaged)
 		{
-			event.cost = 30;
-			event.output = new ItemStack(Items.golden_horse_armor);
+			event.setCost(30);
+			event.setOutput(new ItemStack(Items.GOLDEN_HORSE_ARMOR));
 		}
-		if ((left == Items.iron_leggings && right == Items.iron_leggings) && !damaged)
+		if ((left == Items.IRON_LEGGINGS && right == Items.IRON_LEGGINGS) && !damaged)
 		{
-			event.cost = 20;
-			event.output = new ItemStack(Items.iron_horse_armor);
+			event.setCost(20);
+			event.setOutput(new ItemStack(Items.IRON_HORSE_ARMOR));
 		}
 	}
 
@@ -71,82 +67,82 @@ public class Recipes
 	{
 		if (VTweaks.modConfig.hypermendingID > 0)
 		{
-			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
+			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
 
-			if (event.left == null || event.right == null)
+			if (event.getLeft() == null || event.getRight() == null)
 				return;
 
-			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.nether_star)
+			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.NETHER_STAR)
 			{
-				if (event.right.stackSize == 1)
+				if (event.getRight().stackSize == 1)
 				{
-					event.cost = VTweaks.modConfig.hypermendingXPCost;
-					event.output = book;
+					event.setCost(VTweaks.modConfig.hypermendingXPCost);
+					event.setOutput(book);
 				}
 				else
-					event.output = null;
+					event.setOutput(null);
 			}
 		}
 
 		if (VTweaks.modConfig.autosmeltID > 0)
 		{
-			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
+			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
 
-			if (event.left == null || event.right == null)
+			if (event.getLeft() == null || event.getRight() == null)
 				return;
 
-			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.lava_bucket)
-				if (event.right.stackSize == 1)
+			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.LAVA_BUCKET)
+				if (event.getRight().stackSize == 1)
 				{
-					event.cost = VTweaks.modConfig.autosmeltXPCost;
-					event.output = book;
+					event.setCost(VTweaks.modConfig.autosmeltXPCost);
+					event.setOutput(book);
 				}
 				else
-					event.output = null;
+					event.setOutput(null);
 		}
 		
 		if(VTweaks.modConfig.stepboostID > 0)
 		{
-			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
+			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));
 
-			if (event.left == null || event.right == null)
+			if (event.getLeft() == null || event.getRight() == null)
 				return;
 
-			if (event.left.getItem() == Items.writable_book && event.right.getItem() instanceof ItemBlock)
+			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() instanceof ItemBlock)
 			{
-				Block inputBlock = Block.getBlockFromItem(event.right.getItem());
-				if (inputBlock.getRegistryName().contains("stair") && event.right.stackSize == 16)
+				Block inputBlock = Block.getBlockFromItem(event.getRight().getItem());
+				if (inputBlock.getRegistryName().toString().contains("stair") && event.getRight().stackSize == 16)
 				{
-					event.cost = VTweaks.modConfig.stepboostXPCost;
-					event.output = book;
+					event.setCost(VTweaks.modConfig.stepboostXPCost);
+					event.setOutput(book);
 				}
 				else
-					event.output = null;
+					event.setOutput(null);
 			}
 		}
 
 		if (VTweaks.modConfig.lumberingID > 0)
 		{
-			ItemStack book = new ItemStack(Items.enchanted_book, 1, 0);
-			Items.enchanted_book.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
+			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
 
-			if (event.left == null || event.right == null)
+			if (event.getLeft() == null || event.getRight() == null)
 				return;
 
-			boolean damaged = event.right.getItemDamage() > 0;
+			boolean damaged = event.getRight().getItemDamage() > 0;
 
-			if (event.left.getItem() == Items.writable_book && event.right.getItem() == Items.golden_axe)
+			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.GOLDEN_AXE)
 			{
 				if (!damaged)
 				{
-					event.cost = VTweaks.modConfig.lumberingXPCost;
-					event.output = book;
+					event.setCost(VTweaks.modConfig.lumberingXPCost);
+					event.setOutput(book);
 				}
 				else
-					event.output = null;
+					event.setOutput(null);
 			}
 		}
 	}

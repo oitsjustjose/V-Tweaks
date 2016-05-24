@@ -17,41 +17,41 @@ public class ToolEffTweaks
 	@SubscribeEvent
 	public void registerTweak(PlayerEvent.BreakSpeed event)
 	{
-		Block block = event.state.getBlock();
-		ItemStack stack = event.entityPlayer.getHeldItem();
+		Block block = event.getState().getBlock();
+		ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 		if (block == null || stack == null)
 			return;
 
 		if (stack.getItem() instanceof ItemAxe)
 		{
-			if (block == Blocks.melon_block)
-				event.newSpeed = event.originalSpeed * 4;
-			if (block.getMaterial() == Material.leaves)
-				event.newSpeed = event.originalSpeed * 6;
-			if (block == Blocks.hay_block)
-				event.newSpeed = event.originalSpeed * 4;
-			if (block == Blocks.ladder)
-				event.newSpeed = event.originalSpeed * 5;
+			if (block == Blocks.MELON_BLOCK)
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
+			if (block.getDefaultState().getMaterial() == Material.LEAVES)
+				event.setNewSpeed(event.getOriginalSpeed() * 6);
+			if (block == Blocks.HAY_BLOCK)
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
+			if (block == Blocks.LADDER)
+				event.setNewSpeed(event.getOriginalSpeed() * 5);
 		}
 
 		if (stack.getItem() instanceof ItemPickaxe)
 		{
-			if (block.getMaterial() == Material.glass)
-				event.newSpeed = event.originalSpeed * 5;
-			if (block == Blocks.packed_ice)
-				event.newSpeed = event.originalSpeed * 5;
+			if (block.getDefaultState().getMaterial() == Material.GLASS)
+				event.setNewSpeed(event.getOriginalSpeed() * 5);
+			if (block == Blocks.PACKED_ICE)
+				event.setNewSpeed(event.getOriginalSpeed() * 5);
 			if (block instanceof BlockSkull)
-				event.newSpeed = event.originalSpeed * 4;
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
 			if (block instanceof BlockLever)
-				event.newSpeed = event.originalSpeed * 4;
-			if (block.getMaterial() == Material.piston)
-				event.newSpeed = event.originalSpeed * 4;
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
+			if (block.getDefaultState().getMaterial() == Material.PISTON)
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
 		}
 
 		if (stack.getItem() instanceof ItemShears)
 		{
-			if (block == Blocks.hay_block)
-				event.newSpeed = event.originalSpeed * 4;
+			if (block == Blocks.HAY_BLOCK)
+				event.setNewSpeed(event.getOriginalSpeed() * 4);
 		}
 	}
 }

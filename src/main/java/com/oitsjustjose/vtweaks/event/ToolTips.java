@@ -6,7 +6,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,10 +18,10 @@ public class ToolTips
 	@SideOnly(Side.CLIENT)
 	public void registerTweak(ItemTooltipEvent event)
 	{
-		if (event.itemStack == null)
+		if (event.getItemStack() == null)
 			return;
 
-		ItemStack stack = event.itemStack;
+		ItemStack stack = event.getItemStack();
 		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 
 		if (stack.getItem() instanceof ItemFood)
@@ -34,15 +34,15 @@ public class ToolTips
 				return;
 			else if (VTweaks.modConfig.foodToolTips == 1)
 			{
-				event.toolTip.add(getHungerString(hunger));
-				event.toolTip.add(getSaturationString(saturation));
+				event.getToolTip().add(getHungerString(hunger));
+				event.getToolTip().add(getSaturationString(saturation));
 			}
 			else if (VTweaks.modConfig.foodToolTips == 2)
 			{
 				if (shift)
 				{
-					event.toolTip.add(getHungerString(hunger));
-					event.toolTip.add(getSaturationString(saturation));
+					event.getToolTip().add(getHungerString(hunger));
+					event.getToolTip().add(getSaturationString(saturation));
 				}
 			}
 		}
@@ -50,39 +50,39 @@ public class ToolTips
 
 	public static String getHungerString(int hunger)
 	{
-		String ret = EnumChatFormatting.GRAY + "Hunger:";
+		String ret = TextFormatting.GRAY + "Hunger:";
 
 		for (int i = 0; i < (hunger / 2); i++)
-			ret += EnumChatFormatting.DARK_RED + "\u25A0";
+			ret += TextFormatting.DARK_RED + "\u25A0";
 		if (hunger % 2 != 0)
-			ret += EnumChatFormatting.RED + "\u25A0";
+			ret += TextFormatting.RED + "\u25A0";
 
 		return ret;
 	}
 
 	public static String getSaturationString(float saturation)
 	{
-		String ret = EnumChatFormatting.GRAY + "Saturation:";
+		String ret = TextFormatting.GRAY + "Saturation:";
 
 		if (saturation <= 1)
-			return ret += EnumChatFormatting.DARK_RED + "\u25A0";
+			return ret += TextFormatting.DARK_RED + "\u25A0";
 		if (saturation <= 2)
-			return ret += EnumChatFormatting.RED + "\u25A0";
+			return ret += TextFormatting.RED + "\u25A0";
 		if (saturation <= 3)
-			return ret += EnumChatFormatting.GOLD + "\u25A0";
+			return ret += TextFormatting.GOLD + "\u25A0";
 		if (saturation <= 4)
-			return ret += EnumChatFormatting.YELLOW + "\u25A0";
+			return ret += TextFormatting.YELLOW + "\u25A0";
 		if (saturation <= 5)
-			return ret += EnumChatFormatting.DARK_GREEN + "\u25A0";
+			return ret += TextFormatting.DARK_GREEN + "\u25A0";
 		if (saturation <= 6)
-			return ret += EnumChatFormatting.GREEN + "\u25A0";
+			return ret += TextFormatting.GREEN + "\u25A0";
 		if (saturation <= 7)
-			return ret += EnumChatFormatting.BLUE + "\u25A0";
+			return ret += TextFormatting.BLUE + "\u25A0";
 		if (saturation <= 8)
-			return ret += EnumChatFormatting.DARK_AQUA + "\u25A0";
+			return ret += TextFormatting.DARK_AQUA + "\u25A0";
 		if (saturation <= 9)
-			return ret += EnumChatFormatting.DARK_PURPLE + "\u25A0";
+			return ret += TextFormatting.DARK_PURPLE + "\u25A0";
 		else
-			return ret += EnumChatFormatting.LIGHT_PURPLE + "\u25A0";
+			return ret += TextFormatting.LIGHT_PURPLE + "\u25A0";
 	}
 }

@@ -6,34 +6,37 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class TorchHelper {
+public class TorchHelper
+{
 	@SubscribeEvent
-	public void registerTweak(PlayerInteractEvent event) {
-		if (event.action != Action.RIGHT_CLICK_BLOCK || event.entityPlayer.getCurrentEquippedItem() == null)
+	public void registerTweak(RightClickBlock event)
+	{
+		if (event.getEntityPlayer().getHeldItemMainhand() == null || event.getEntityPlayer().getHeldItemOffhand() != null)
 			return;
 
-		EntityPlayer player = event.entityPlayer;
-		IBlockState state = event.world.getBlockState(event.pos);
+		EntityPlayer player = event.getEntityPlayer();
+		IBlockState state = event.getWorld().getBlockState(event.getPos());
 		Block block = state.getBlock();
 
-		if (!(player.getHeldItem().getItem() instanceof ItemTool) || block.hasTileEntity(state))
+		if (!(player.getHeldItemMainhand().getItem() instanceof ItemTool) || block.hasTileEntity(state))
 			return;
 
-		if (!event.world.isRemote && block.onBlockActivated(event.world, event.pos, state, player, event.face,
-				event.pos.getX(), event.pos.getY(), event.pos.getZ()))
+		if (!event.getWorld().isRemote && block.onBlockActivated(event.getWorld(), event.getPos(), state, player, EnumHand.MAIN_HAND, player.getHeldItemMainhand(), event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
 			event.setCanceled(true);
-		else {
-			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+		else
+		{
+			for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+			{
 				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack != null && stack.getDisplayName().toLowerCase()
-						.matches(Blocks.torch.getLocalizedName().toLowerCase())) {
-					if (stack.onItemUse(player, event.world, event.pos, event.face, event.pos.getX(), event.pos.getY(),
-							event.pos.getZ()))
-						player.swingItem();
+				if (stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
+				{
+					if (stack.onItemUse(player, event.getWorld(), event.getPos(), EnumHand.MAIN_HAND, event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()) == EnumActionResult.SUCCESS)
+						player.swingArm(EnumHand.MAIN_HAND);
 					if (stack.stackSize == 0)
 						player.inventory.setInventorySlotContents(i, null);
 				}

@@ -39,7 +39,7 @@ public class DisenchantRecipes implements IRecipe
 			if (stack != null)
 				if (stack.isItemEnchanted() && !enchantedItem)
 					enchantedItem = true;
-				else if (stack.getItem() == Items.paper && !paperItem)
+				else if (stack.getItem() == Items.PAPER && !paperItem)
 					paperItem = true;
 				else
 					return false;
@@ -88,11 +88,11 @@ public class DisenchantRecipes implements IRecipe
 	{
 		ItemStack[] ret = new ItemStack[9];
 
-		for(int i = 0; i < invCraft.getSizeInventory(); i++)
-			if(invCraft.getStackInSlot(i) != null)
-				if(invCraft.getStackInSlot(i).getItem() != Items.paper && !invCraft.getStackInSlot(i).isItemEnchanted() )
+		for (int i = 0; i < invCraft.getSizeInventory(); i++)
+			if (invCraft.getStackInSlot(i) != null)
+				if (invCraft.getStackInSlot(i).getItem() != Items.PAPER && !invCraft.getStackInSlot(i).isItemEnchanted())
 					ret[i] = invCraft.getStackInSlot(i);
-		
+
 		return ret;
 	}
 }

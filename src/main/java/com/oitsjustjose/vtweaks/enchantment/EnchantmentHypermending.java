@@ -2,13 +2,13 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class EnchantmentHypermending extends Enchantment
 {
-	public EnchantmentHypermending(int id)
+	protected EnchantmentHypermending()
 	{
-		super(id, new ResourceLocation("hypermending"), 1, EnumEnchantmentType.BREAKABLE);
+		super(Rarity.UNCOMMON, EnumEnchantmentType.ALL, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 	}
 
 	@Override

@@ -2,21 +2,22 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentAutosmelt extends Enchantment
 {
-	public EnchantmentAutosmelt(int id)
+
+	protected EnchantmentAutosmelt()
 	{
-		super(id, new ResourceLocation("autosmelt"), 1, EnumEnchantmentType.DIGGER);
+		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
 	}
 
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment)
 	{
-		if (enchantment == Enchantment.silkTouch)
+		if (enchantment == Enchantment.getEnchantmentByID(33))
 			return false;
 		return true;
 	}

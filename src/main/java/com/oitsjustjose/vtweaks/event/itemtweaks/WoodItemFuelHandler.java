@@ -13,15 +13,15 @@ public class WoodItemFuelHandler implements IFuelHandler
 	public int getBurnTime(ItemStack fuel)
 	{
 		Item item = fuel.getItem();
-		if (item instanceof ItemDoor && item != Items.iron_door)
+		if (item instanceof ItemDoor && item != Items.IRON_DOOR)
 			return 600;
-		else if (item == Item.getItemFromBlock(Blocks.wooden_button))
+		else if (item == Item.getItemFromBlock(Blocks.WOODEN_BUTTON))
 			return 300;
-		else if (item == Items.sign)
+		else if (item == Items.SIGN)
 			return 600;
-		else if (item == Item.getItemFromBlock(Blocks.ladder))
+		else if (item == Item.getItemFromBlock(Blocks.LADDER))
 			return 200;
-		else if (item == Items.boat)
+		else if (item == Items.BOAT)
 			return 1500;
 		else
 			return 0;

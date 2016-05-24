@@ -1,41 +1,8 @@
 #Enchantment Names
-enchantment.VTweaks_hyperMending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
-enchantment.VTweaks_autosmelt=§4Auto-Smelt
-enchantment.VTweaks_stepboost=§aStep Boost
-enchantment.VTweaks_lumbering=Lumbering
-
-
-#Book Things
-book.title=§cV§6-§eT§aw§2e§ba§3k§9s§1 G§5u§di§cd§6e§r
-book.title.tablecontents=§n§lTable of Contents:§r
-book.title.enderdragon=§nDragon Rebirth§r
-book.title.hypermending=§nHypermending Enchant§r
-book.title.autosmelt=§nAuto-Smelt Enchant§r
-book.title.stepboost=§nStep Boost Enchant§r
-book.title.lumbering=§nLumbering Enchant§r
-book.title.featherfalling=§nFeather Falling§r
-book.title.disenchanting=§nDisenchanting§r
-book.title.cropharvesting=§nBetter Crop Harvesting§r
-book.title.blocktweaks=§nBetter Tool Efficiencies§r
-book.title.bonemealtweaks=§nBone Meal Tweaks§r
-book.title.caketweak=§nCake Tweaks§r
-book.title.challengermobs=§nChallenger Mobs§r
-book.title.mobdropbuffs=§nMob Drop Buffs§r
-book.title.mobkiller=§nTweaks to Mob Spawning§r
-book.title.stacktweaks=§nStack Size Tweaks§r
-book.title.horserecipes=§nHorse Armor§r
-book.title.gameplay=§nGameplay Tweaks§r
-book.title.audio=§nSound Tweaks§r
-book.title.lightning=§nStorm Stopper§r
-book.title.torch=§nTorch Helper§r
-book.title.hush=§nVillager Husher§r
-book.title.withersafety=§nWither Safety§r
-book.title.hangars=§nHung Item Fix§r
-book.title.petarmory=§nPet Armor§r
-book.title.plucker=§nChicken Plucker§r
-book.title.sheepfix=§nSheep Fix§r
-
-book.changelog.title=§rV-Tweaks Changelog§r
+enchantment.VTweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
+enchantment.VTweaks:autosmelt=§4Auto-Smelt
+enchantment.VTweaks:stepboost=§aStep Boost
+enchantment.VTweaks:lumbering=Lumbering
 
 #JEI Compat
 jei.desc.ironhorsearmor=Can be crafted by combining two undamaged pairs of Iron Leggings in an anvil.

@@ -8,8 +8,8 @@ public class StormTweak
 	@SubscribeEvent
 	public void registerTweak(WorldEvent event)
 	{
-		if (event.world.isRaining())
-			if (event.world.getWorldInfo().isThundering())
-				event.world.getWorldInfo().setThundering(false);
+		if (event.getWorld().isRaining())
+			if (event.getWorld().getWorldInfo().isThundering())
+				event.getWorld().getWorldInfo().setThundering(false);
 	}
 }

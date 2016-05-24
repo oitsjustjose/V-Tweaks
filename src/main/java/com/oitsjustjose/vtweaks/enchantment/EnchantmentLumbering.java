@@ -2,15 +2,15 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentLumbering extends Enchantment
 {
-	public EnchantmentLumbering(int id)
+	protected EnchantmentLumbering()
 	{
-		super(id, new ResourceLocation("lumbering"), 1, EnumEnchantmentType.DIGGER);
+		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
 	}
 
 	@Override

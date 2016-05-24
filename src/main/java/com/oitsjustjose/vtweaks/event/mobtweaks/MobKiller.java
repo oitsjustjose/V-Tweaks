@@ -21,7 +21,7 @@ public class MobKiller
 	@SubscribeEvent
 	public void registerTweak(LivingSpawnEvent event)
 	{
-		Entity toKill = event.entity;
+		Entity toKill = event.getEntity();
 
 		if (toKill != null && toKill instanceof EntityBat && VTweaks.modConfig.noBats)
 			event.setResult(Result.DENY);
@@ -30,28 +30,28 @@ public class MobKiller
 			event.setResult(Result.DENY);
 
 		if (toKill != null && toKill instanceof EntityGhast && VTweaks.modConfig.noPigZombies)
-			if (event.world.rand.nextInt(100) < 95)
+			if (event.getWorld().rand.nextInt(100) < 95)
 				event.setResult(Result.DENY);
 	}
 
 	@SubscribeEvent
 	public void registerWitherTweak(EntityEvent event)
 	{
-		Entity toKill = event.entity;
+		Entity toKill = event.getEntity();
 
 		if (toKill != null && toKill instanceof EntityWither && VTweaks.modConfig.noOverworldWither)
 		{
 			EntityWither wither = (EntityWither) toKill;
-			if (wither.worldObj.provider.getDimensionId() == 0)
+			if (wither.worldObj.provider.getDimension() == 0)
 			{
 				wither.setDead();
-				if (!event.entity.worldObj.isRemote)
+				if (!event.getEntity().worldObj.isRemote)
 				{
-					EntityItem soulSand = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(Blocks.soul_sand, 2));
-					EntityItem skulls = new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(Items.skull, 1, 1).setStackDisplayName("No Withers in the Overworld"));
-					
-					event.entity.getEntityWorld().spawnEntityInWorld(soulSand);
-					event.entity.getEntityWorld().spawnEntityInWorld(skulls);
+					EntityItem soulSand = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Blocks.SOUL_SAND, 2));
+					EntityItem skulls = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.SKULL, 1, 1).setStackDisplayName("No Withers in the Overworld"));
+
+					event.getEntity().getEntityWorld().spawnEntityInWorld(soulSand);
+					event.getEntity().getEntityWorld().spawnEntityInWorld(skulls);
 				}
 			}
 		}

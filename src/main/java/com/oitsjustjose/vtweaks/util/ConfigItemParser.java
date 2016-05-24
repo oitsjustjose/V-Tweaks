@@ -4,23 +4,24 @@ import java.util.ArrayList;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.ResourceLocation;
 
 public class ConfigItemParser
 {
-	/**
-	 * @return an ArrayList of ItemStacks parsed from the config to be added to the Challenger Mobs' Loot Table
-	 */
-	public static ArrayList<ItemStack> getChallengerLootTable()
+	public static void parseItems()
 	{
-		ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> stackList = new ArrayList<ItemStack>();
+
+		LogHelper.info(">>Running Config Item Parser");
 
 		for (String s : VTweaks.modConfig.challengerMobLootTable)
 		{
 			// Splits the string apart by uncommon characters
 			// Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>
+
 			String[] parts = s.split("[\\W]");
 
 			if (parts.length == 4)
@@ -28,7 +29,7 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					returnList.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3]), Integer.parseInt(parts[2])));
+					stackList.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3], Integer.parseInt(parts[2]))));
 			}
 			else if (parts.length == 3)
 			{
@@ -37,7 +38,7 @@ public class ConfigItemParser
 				if (temp != null)
 				{
 					int qty = Integer.parseInt(parts[2]);
-					returnList.add(new ItemStack(temp.getItem(), qty, 0));
+					stackList.add(new ItemStack(temp.getItem(), qty, 0));
 				}
 			}
 			else if (parts.length == 2)
@@ -45,7 +46,7 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					returnList.add(new ItemStack(temp.getItem()));
+					stackList.add(new ItemStack(temp.getItem()));
 			}
 			// The string was not formatted correctly. User is notified.
 			else
@@ -54,17 +55,17 @@ public class ConfigItemParser
 			}
 		}
 
-		return returnList;
-
+		VTweaks.modConfig.setChallengerLootTable(stackList);
 	}
 
 	public static ItemStack findItemStack(String modid, String name)
 	{
-		if (GameRegistry.findItem(modid, name) != null)
-			return new ItemStack(GameRegistry.findItem(modid, name), 1);
-		else if (GameRegistry.findBlock(modid, name) != null)
-			if (Item.getItemFromBlock(GameRegistry.findBlock(modid, name)) != null)
-				return new ItemStack(Item.getItemFromBlock(GameRegistry.findBlock(modid, name)), 1);
+		ResourceLocation resLoc = new ResourceLocation(modid, name);
+		if(Item.REGISTRY.containsKey(resLoc))
+				return new ItemStack(Item.REGISTRY.getObject(resLoc));
+		else if (Block.REGISTRY.containsKey(resLoc))
+			if (Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)) != null)
+				return new ItemStack(Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)), 1);
 
 		return null;
 	}

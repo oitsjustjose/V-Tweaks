@@ -11,8 +11,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -23,19 +23,18 @@ public class EnchantmentAutosmeltHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(BlockEvent.HarvestDropsEvent event)
 	{
-		EntityPlayer player = event.harvester;
-		if (player == null || player.getCurrentEquippedItem() == null)
+		EntityPlayer player = event.getHarvester();
+		if (player == null || player.getHeldItemMainhand() == null)
 			return;
 
-		World world = event.world;
-		Block block = event.state.getBlock();
+		World world = event.getWorld();
 
-		ItemStack heldItem = player.getCurrentEquippedItem();
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(VTweaks.modConfig.autosmeltID, heldItem);
+		ItemStack heldItem = player.getHeldItemMainhand();
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.autosmelt, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
-			ListIterator<ItemStack> iterator = event.drops.listIterator();
+			ListIterator<ItemStack> iterator = event.getDrops().listIterator();
 
 			while (iterator.hasNext())
 			{
@@ -46,11 +45,11 @@ public class EnchantmentAutosmeltHandler
 				{
 					newDrop = newDrop.copy();
 					newDrop.stackSize = temp.stackSize;
-					if (event.fortuneLevel > 0 && isOre(temp))
-						newDrop.stackSize *= world.rand.nextInt(event.fortuneLevel + 1) + 1;
+					if (event.getFortuneLevel() > 0 && isOre(temp))
+						newDrop.stackSize *= world.rand.nextInt(event.getFortuneLevel() + 1) + 1;
 
 					iterator.set(newDrop);
-					spawnXP(event.world, event.pos, newDrop.copy());
+					spawnXP(event.getWorld(), event.getPos(), newDrop.copy());
 				}
 			}
 		}
@@ -107,11 +106,11 @@ public class EnchantmentAutosmeltHandler
 		if (stack.getItem() instanceof ItemBlock)
 		{
 			Block block = Block.getBlockFromItem(stack.getItem());
-			if (block.getRegistryName().toLowerCase().contains("ore"))
+			if (block.getRegistryName().toString().toLowerCase().contains("ore"))
 				return true;
 			else
 				for (String s : VTweaks.modConfig.autosmeltOverrides)
-					if (block.getRegistryName().toLowerCase().contains(s))
+					if (block.getRegistryName().toString().toLowerCase().contains(s))
 						return true;
 		}
 		return false;

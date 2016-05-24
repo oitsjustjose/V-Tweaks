@@ -5,26 +5,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class SheepDyeFix
 {
 	@SubscribeEvent
-	public void registerEvent(EntityInteractEvent event)
+	public void registerEvent(EntityInteract event)
 	{
-		if (event.target == null || !(event.target instanceof EntitySheep))
+		if (event.getTarget() == null || !(event.getTarget() instanceof EntitySheep))
 			return;
 
-		EntitySheep sheep = (EntitySheep) event.target;
-		EntityPlayer player = event.entityPlayer;
-		
+		EntitySheep sheep = (EntitySheep) event.getTarget();
+		EntityPlayer player = event.getEntityPlayer();
+
 		if (!sheep.isChild())
-			if (player.getHeldItem() != null && getDye(player.getHeldItem()) != -1)
+			if (player.getHeldItemMainhand() != null && getDye(player.getHeldItemMainhand()) != -1)
 			{
-				--player.getHeldItem().stackSize;
-				sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItem())));
+				--player.getHeldItemMainhand().stackSize;
+				sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItemMainhand())));
 			}
 	}
 
@@ -36,7 +36,7 @@ public class SheepDyeFix
 			String name = OreDictionary.getOreName(ids[i]);
 			for (int meta = 0; meta < 16; meta++)
 			{
-				int[] dyeIDs = OreDictionary.getOreIDs(new ItemStack(Items.dye, 1, meta));
+				int[] dyeIDs = OreDictionary.getOreIDs(new ItemStack(Items.DYE, 1, meta));
 				for (int j = 0; j < dyeIDs.length; j++)
 					if (name.equalsIgnoreCase(OreDictionary.getOreName(dyeIDs[j])))
 						return meta;

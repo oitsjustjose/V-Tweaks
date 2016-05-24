@@ -9,10 +9,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,90 +28,77 @@ public class ChallengerMobs
 		int rand = random.nextInt(8);
 		if (0 == random.nextInt(VTweaks.modConfig.challengerMobRarity))
 		{
-			if (event.entity != null && event.entity instanceof EntityMob)
+			if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
 			{
-				if (event.entity instanceof EntityPigZombie)
+				if (event.getEntity() instanceof EntityPigZombie)
 					return;
 
-				EntityMob monster = (EntityMob) event.entity;
+				EntityMob monster = (EntityMob) event.getEntity();
 
 				if (rand == 0)
 				{
-					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
-					monster.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, Short.MAX_VALUE, 1));
+					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
+					monster.addPotionEffect(new PotionEffect(Potion.getPotionById(2), Short.MAX_VALUE, 1));
 				}
 				else
 				{
-					monster.setCurrentItemOrArmor(0, toolForMobClass(rand));
-					ItemStack helmet = new ItemStack(Items.leather_helmet);
+					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
+					
+					ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
 					((ItemArmor) helmet.getItem()).setColor(helmet, random.nextInt(1677215));
-					monster.setCurrentItemOrArmor(1, null);
-					monster.setCurrentItemOrArmor(2, null);
-					monster.setCurrentItemOrArmor(3, null);
-					monster.setCurrentItemOrArmor(4, helmet);
-
+					
+					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, helmet);
+					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, null);
+					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, null);
+					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, null);
 				}
 
 				if (rand == 0)
 				{
-					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(80F);
+					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80F);
 					monster.setHealth(80F);
 				}
 				else if (rand == 6)
 				{
-					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(160F);
+					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(160F);
 					monster.setHealth(160F);
 				}
 				else if (rand == 7)
 				{
-					monster.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, Short.MAX_VALUE, 4));
+					monster.addPotionEffect(new PotionEffect(Potion.getPotionById(1), Short.MAX_VALUE, 4));
 				}
 				else
 				{
-					monster.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40F);
+					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40F);
 					monster.setHealth(40F);
 				}
 
 				monster.setCustomNameTag(mobClassName(rand, monster));
-				monster.addPotionEffect(new PotionEffect(Potion.fireResistance.id, Short.MAX_VALUE, 8));
+				monster.addPotionEffect(new PotionEffect(Potion.getPotionById(12), Short.MAX_VALUE, 8));
 			}
 		}
 
 	}
 
-	public static boolean isChallengerMob(EntityMob entity)
-	{
-		String n = entity.getCustomNameTag().toLowerCase();
-		if (n == null)
-			return false;
-
-		String[] preFixes = VTweaks.modConfig.challengerMobs.clone();
-		for (int i = 0; i < preFixes.length; i++)
-			if (n.contains(preFixes[i].toLowerCase()))
-				if (entity.isPotionActive(Potion.fireResistance))
-					return true;
-		return false;
-	}
-
 	ItemStack toolForMobClass(int type)
 	{
-		ItemStack bow = new ItemStack(Items.bow);
-		ItemStack bowl = new ItemStack(Items.bowl);
-		ItemStack sword = new ItemStack(Items.diamond_sword);
-		ItemStack wand = new ItemStack(Items.stick);
-		ItemStack firework = new ItemStack(Items.fireworks);
-		ItemStack sign = new ItemStack(Items.sign);
+		ItemStack bow = new ItemStack(Items.BOW);
+		ItemStack bowl = new ItemStack(Items.BOWL);
+		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+		ItemStack wand = new ItemStack(Items.STICK);
+		ItemStack firework = new ItemStack(Items.FIREWORKS);
+		ItemStack sign = new ItemStack(Items.SIGN);
 
 		sword.setItemDamage(sword.getMaxDamage() / 8);
 
-		bow.addEnchantment(Enchantment.power, 2);
-		bow.addEnchantment(Enchantment.punch, 3);
-		sword.addEnchantment(Enchantment.sharpness, 3);
-		bowl.addEnchantment(Enchantment.sharpness, 8);
-		firework.addEnchantment(Enchantment.fireAspect, 5);
-		wand.addEnchantment(Enchantment.fireAspect, 1);
-		wand.addEnchantment(Enchantment.knockback, 2);
-		sign.addEnchantment(Enchantment.knockback, 10);
+		bow.addEnchantment(Enchantment.getEnchantmentByID(48), 2);
+		bow.addEnchantment(Enchantment.getEnchantmentByID(49), 3);
+		sword.addEnchantment(Enchantment.getEnchantmentByID(16), 3);
+		bowl.addEnchantment(Enchantment.getEnchantmentByID(16), 8);
+		firework.addEnchantment(Enchantment.getEnchantmentByID(20), 5);
+		wand.addEnchantment(Enchantment.getEnchantmentByID(20), 1);
+		wand.addEnchantment(Enchantment.getEnchantmentByID(19), 2);
+		sign.addEnchantment(Enchantment.getEnchantmentByID(19), 10);
 
 		switch (type)
 		{

@@ -16,18 +16,29 @@ public class ChallengerMobsDrops
 	@SubscribeEvent
 	public void registerEvent(LivingDropsEvent event)
 	{
-		if (event.entity != null && event.entity instanceof EntityMob)
-			if (ChallengerMobs.isChallengerMob((EntityMob) event.entity))
+		if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
+			if (isChallengerMob((EntityMob) event.getEntity()))
 				for (int j = 0; j < 2; j++)
-					event.drops.add(getItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ));
+					event.getDrops().add(getItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ));
 	}
 
 	EntityItem getItem(World world, double x, double y, double z)
 	{
-		int RNG = world.rand.nextInt(VTweaks.challengerLootTable.size());
-		ItemStack temp = VTweaks.challengerLootTable.get(RNG).copy();
-
-		//EntityItems are weird sometimes... so I did this instead.
+		int RNG = world.rand.nextInt(VTweaks.modConfig.challengerLootTable.size());
+		ItemStack temp = VTweaks.modConfig.challengerLootTable.get(RNG).copy();
 		return new EntityItem(world, x, y, z, temp.copy());
+	}
+
+	boolean isChallengerMob(EntityMob entity)
+	{
+		String n = entity.getCustomNameTag().toLowerCase();
+		if (n == null)
+			return false;
+
+		String[] preFixes = VTweaks.modConfig.challengerMobs.clone();
+		for (int i = 0; i < preFixes.length; i++)
+			if (n.contains(preFixes[i].toLowerCase()))
+				return true;
+		return false;
 	}
 }
