@@ -1,3 +1,10 @@
+1.4.8.5:
+-Added: Config Options for level costs
+-Added: Anvil Recipe for Step-Boost: 16 stairs of any kind (mod included) plus Book & Quill
+-Changed: Lots of config stuff - you should probably delete and re-configure your V-Tweaks config
+1.4.8.4:
+-Added: Config to add custom block registry entries to the Autosmelt + Fortune interaction list
+-Changed: Autosmelt algorithm: functionality is still identical
 1.4.8.3:
 -Fixed: Derpy enchantment names
 1.4.8.2:
