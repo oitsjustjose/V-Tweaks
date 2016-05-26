@@ -45,7 +45,7 @@ public class EnchantmentAutosmeltHandler
 				{
 					newDrop = newDrop.copy();
 					newDrop.stackSize = temp.stackSize;
-					if (event.getFortuneLevel() > 0 && isOre(temp))
+					if (event.getFortuneLevel() > 0 && shouldFortuneSmelt(temp))
 						newDrop.stackSize *= world.rand.nextInt(event.getFortuneLevel() + 1) + 1;
 
 					iterator.set(newDrop);
@@ -56,16 +56,6 @@ public class EnchantmentAutosmeltHandler
 
 	}
 
-	/**
-	 * This code is very similar to Tinkers', because I didn't want to try to compete as "better or worse" because of XP returned
-	 * 
-	 * @param world
-	 *            worldObj to use
-	 * @param pos
-	 *            the BlockPos where the block broken is located
-	 * @param itemstack
-	 *            the ItemStack that is a result of the smelted block
-	 */
 	void spawnXP(World world, BlockPos pos, ItemStack itemstack)
 	{
 		int x = pos.getX();
@@ -96,12 +86,7 @@ public class EnchantmentAutosmeltHandler
 		}
 	}
 
-	/**
-	 * @param block
-	 *            Block to check if is an ore
-	 * @return true if the block's unlocalized name contains "ore" or "resource" ("resource" is for IC2 Compat)
-	 */
-	boolean isOre(ItemStack stack)
+	boolean shouldFortuneSmelt(ItemStack stack)
 	{
 		if (stack.getItem() instanceof ItemBlock)
 		{

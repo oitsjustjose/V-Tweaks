@@ -3,8 +3,6 @@ package com.oitsjustjose.vtweaks.enchantment;
 import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class Enchantments
@@ -39,19 +37,15 @@ public class Enchantments
 			lumbering = new EnchantmentLumbering().setName(VTweaks.MODID + ":lumbering");
 			Enchantment.REGISTRY.register(VTweaks.modConfig.lumberingID, new ResourceLocation(VTweaks.MODID, "lumbering"), lumbering);
 		}
-
 	}
-
-	public static boolean hasAutoSmelt(ItemStack itemstack)
+	
+	public static Enchantment getEnchantment(String enchName)
 	{
-		if (VTweaks.modConfig.autosmeltID == 0 || itemstack == null)
-			return false;
-
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(autosmelt, itemstack);
-
-		if (autosmeltLevel > 0)
-			return true;
-
-		return false;
+		return Enchantment.REGISTRY.getObject(new ResourceLocation(enchName));
+	}
+	
+	public static Enchantment getEnchantment(String modid, String enchName)
+	{
+		return Enchantment.REGISTRY.getObject(new ResourceLocation(modid, enchName));
 	}
 }

@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,7 +25,7 @@ public class FeatherFallingTweak
 
 		ItemStack boots = player.inventory.armorInventory[0];
 
-		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantment.getEnchantmentByID(2), boots) >= 4)
+		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.getEnchantment("feather_falling"), boots) >= 4)
 			if (event.getSource() == DamageSource.fall)
 			{
 				boots.damageItem((int) event.getAmount(), player);

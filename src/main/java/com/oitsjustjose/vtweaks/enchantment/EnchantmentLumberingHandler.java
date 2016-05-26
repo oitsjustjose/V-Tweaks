@@ -50,7 +50,6 @@ public class EnchantmentLumberingHandler
 			block.onBlockDestroyedByPlayer(world, pos, state);
 			block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
 		}
-
 		world.setBlockToAir(pos);
 	}
 }

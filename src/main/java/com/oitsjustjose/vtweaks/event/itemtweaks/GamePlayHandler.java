@@ -2,8 +2,10 @@ package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import java.util.List;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -62,7 +64,7 @@ public class GamePlayHandler
 	{
 		if (event.getHarvester() == null)
 			return;
-		if (event.isSilkTouching() || Enchantments.hasAutoSmelt(event.getHarvester().getHeldItemMainhand()))
+		if (event.isSilkTouching() || hasAutoSmelt(event.getHarvester().getHeldItemMainhand()))
 			return;
 
 		if (event.getState().getBlock() == Blocks.STONE)
@@ -76,5 +78,18 @@ public class GamePlayHandler
 					event.getDrops().add(new ItemStack(Blocks.GRAVEL));
 			}
 		}
+	}
+	
+	boolean hasAutoSmelt(ItemStack itemstack)
+	{
+		if (VTweaks.modConfig.autosmeltID == 0 || itemstack == null)
+			return false;
+
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.autosmelt, itemstack);
+
+		if (autosmeltLevel > 0)
+			return true;
+
+		return false;
 	}
 }

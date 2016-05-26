@@ -3,8 +3,8 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 import java.util.Random;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -91,14 +91,14 @@ public class ChallengerMobs
 
 		sword.setItemDamage(sword.getMaxDamage() / 8);
 
-		bow.addEnchantment(Enchantment.getEnchantmentByID(48), 2);
-		bow.addEnchantment(Enchantment.getEnchantmentByID(49), 3);
-		sword.addEnchantment(Enchantment.getEnchantmentByID(16), 3);
-		bowl.addEnchantment(Enchantment.getEnchantmentByID(16), 8);
-		firework.addEnchantment(Enchantment.getEnchantmentByID(20), 5);
-		wand.addEnchantment(Enchantment.getEnchantmentByID(20), 1);
-		wand.addEnchantment(Enchantment.getEnchantmentByID(19), 2);
-		sign.addEnchantment(Enchantment.getEnchantmentByID(19), 10);
+		bow.addEnchantment(Enchantments.getEnchantment("punch"), 2);
+		bow.addEnchantment(Enchantments.getEnchantment("power"), 3);
+		sword.addEnchantment(Enchantments.getEnchantment("sharpness"), 3);
+		bowl.addEnchantment(Enchantments.getEnchantment("sharpness"), 8);
+		firework.addEnchantment(Enchantments.getEnchantment("fire_aspect"), 5);
+		wand.addEnchantment(Enchantments.getEnchantment("fire_aspect"), 1);
+		wand.addEnchantment(Enchantments.getEnchantment("knockback"), 2);
+		sign.addEnchantment(Enchantments.getEnchantment("knockback"), 10);
 
 		switch (type)
 		{

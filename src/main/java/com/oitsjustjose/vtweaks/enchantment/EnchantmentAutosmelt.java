@@ -17,7 +17,7 @@ public class EnchantmentAutosmelt extends Enchantment
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment)
 	{
-		if (enchantment == Enchantment.getEnchantmentByID(33))
+		if (enchantment == Enchantments.getEnchantment("silk_touch"))
 			return false;
 		return true;
 	}

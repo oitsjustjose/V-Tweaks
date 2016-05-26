@@ -37,13 +37,10 @@ public class ToolTips
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
 			}
-			else if (VTweaks.modConfig.foodToolTips == 2)
+			else if (VTweaks.modConfig.foodToolTips == 2 && shift)
 			{
-				if (shift)
-				{
-					event.getToolTip().add(getHungerString(hunger));
-					event.getToolTip().add(getSaturationString(saturation));
-				}
+				event.getToolTip().add(getHungerString(hunger));
+				event.getToolTip().add(getSaturationString(saturation));
 			}
 		}
 	}
