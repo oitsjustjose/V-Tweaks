@@ -1,7 +1,8 @@
-1.4.9.x:
--Ported to 1.9.4 :D
+1.4.9.2:
 -Removed: Guide Book, Dragon Respawn
 -Added: One-time chat notifier of V-Tweaks wiki link
+1.4.9.1:
+-Ported to 1.9.4 :D
 1.4.8.5:
 -Added: Config Options for level costs
 -Added: Anvil Recipe for Step-Boost: 16 stairs of any kind (mod included) plus Book & Quill
