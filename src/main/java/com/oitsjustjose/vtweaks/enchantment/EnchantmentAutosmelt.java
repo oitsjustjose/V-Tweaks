@@ -11,7 +11,7 @@ public class EnchantmentAutosmelt extends Enchantment
 
 	protected EnchantmentAutosmelt()
 	{
-		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
+		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 	}
 
 	@Override

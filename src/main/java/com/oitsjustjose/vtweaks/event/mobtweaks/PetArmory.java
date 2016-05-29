@@ -47,7 +47,7 @@ public class PetArmory
 					tameable.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS));
 					tameable.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
 					tameable.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET));
-					
+
 					--player.getHeldItemMainhand().stackSize;
 				}
 			}

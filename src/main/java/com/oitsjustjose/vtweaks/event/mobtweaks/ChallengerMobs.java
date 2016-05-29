@@ -43,10 +43,10 @@ public class ChallengerMobs
 				else
 				{
 					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
-					
+
 					ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
 					((ItemArmor) helmet.getItem()).setColor(helmet, random.nextInt(1677215));
-					
+
 					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, helmet);
 					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, null);
 					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, null);

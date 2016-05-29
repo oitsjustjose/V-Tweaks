@@ -58,7 +58,7 @@ public class CropHelper
 			}
 		}
 
-		// Handles beetroot. What the hell mojang, why not keep these BlockCrop...  :|
+		// Handles beetroot. What the hell mojang, why not keep these BlockCrop... :|
 		if (harvestable instanceof BlockBeetroot && harvestableMeta >= 3 && !enderLilly && !pamCrop && !resourcefulCrops)
 		{
 			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
@@ -78,7 +78,7 @@ public class CropHelper
 				event.setCanceled(true);
 			}
 		}
-		
+
 		// Handles cocoa beans!
 		if (harvestable instanceof BlockCocoa && harvestableMeta >= 8)
 		{

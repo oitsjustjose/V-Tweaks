@@ -3,12 +3,13 @@ package com.oitsjustjose.vtweaks.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 
-public class EnchantmentLumbering extends Enchantment
+public class EnchantmentDwarvenLuck extends Enchantment
 {
-	protected EnchantmentLumbering()
+
+	protected EnchantmentDwarvenLuck()
 	{
 		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 	}
@@ -22,18 +23,18 @@ public class EnchantmentLumbering extends Enchantment
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
-		return stack.getItem() instanceof ItemAxe;
+		return stack.getItem() instanceof ItemPickaxe;
 	}
 
 	@Override
-	public int getMinEnchantability(int par1)
+	public int getMinEnchantability(int enchantmentLevel)
 	{
-		return 0;
+		return 15;
 	}
 
 	@Override
-	public int getMaxEnchantability(int par1)
+	public int getMaxEnchantability(int enchantmentLevel)
 	{
-		return 0;
+		return super.getMinEnchantability(enchantmentLevel) + 50;
 	}
 }

@@ -1,8 +1,10 @@
 package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentDwarvenLuckHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentPiercingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
@@ -77,6 +79,12 @@ public class VTweaks
 
 		if (modConfig.lumberingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
+
+		if (modConfig.piercingID > 0)
+			MinecraftForge.EVENT_BUS.register(new EnchantmentPiercingHandler());
+
+		if (modConfig.dwarvenLuckID > 0)
+			MinecraftForge.EVENT_BUS.register(new EnchantmentDwarvenLuckHandler());
 
 		if (modConfig.cropHarvest)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());

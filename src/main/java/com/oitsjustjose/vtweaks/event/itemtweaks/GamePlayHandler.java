@@ -35,7 +35,7 @@ public class GamePlayHandler
 		Items.WOODEN_AXE.setMaxDamage(16);
 		Items.WOODEN_HOE.setMaxDamage(16);
 
-//		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_SWORD), "#", "#", "S", '#', Items.FLINT, 'S', "stickWood"));
+		// GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_SWORD), "#", "#", "S", '#', Items.FLINT, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_PICKAXE), "###", " S ", " S ", '#', Items.FLINT, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_SHOVEL), "#", "S", "S", '#', Items.FLINT, 'S', "stickWood"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.STONE_AXE), "## ", "#S ", " S ", '#', Items.FLINT, 'S', "stickWood"));
@@ -79,7 +79,7 @@ public class GamePlayHandler
 			}
 		}
 	}
-	
+
 	boolean hasAutoSmelt(ItemStack itemstack)
 	{
 		if (VTweaks.modConfig.autosmeltID == 0 || itemstack == null)
