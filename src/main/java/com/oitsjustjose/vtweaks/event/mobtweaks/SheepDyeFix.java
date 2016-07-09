@@ -20,12 +20,17 @@ public class SheepDyeFix
 		EntitySheep sheep = (EntitySheep) event.getTarget();
 		EntityPlayer player = event.getEntityPlayer();
 
-		if (!sheep.isChild())
+		if (!sheep.isChild() && !sheep.getSheared())
+		{
 			if (player.getHeldItemMainhand() != null && getDye(player.getHeldItemMainhand()) != -1)
 			{
-				--player.getHeldItemMainhand().stackSize;
-				sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItemMainhand())));
+				if (!(player.getHeldItemMainhand().getItem().getClass().getName().contains("biomesoplenty")))
+				{
+					--player.getHeldItemMainhand().stackSize;
+					sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItemMainhand())));
+				}
 			}
+		}
 	}
 
 	int getDye(ItemStack itemstack)

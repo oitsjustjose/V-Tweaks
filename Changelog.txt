@@ -1,3 +1,8 @@
+1.4.9.3:
+-Officially ported to 1.10.2 (will work on 1.9.4, 1.10 and 1.10.2 though)
+-Fixed Challenger Mob config parsing
+-Fixed Sheep Dying fix inter-mod compat with BiomesOPlenty
+-Fixed Hanging Item Fix doing anything with TiCon Frames
 1.4.9.2:
 -Removed: Guide Book, Dragon Respawn
 -Added: One-time chat notifier of V-Tweaks wiki link

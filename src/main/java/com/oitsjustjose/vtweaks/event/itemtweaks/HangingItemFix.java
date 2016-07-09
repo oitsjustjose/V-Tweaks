@@ -39,7 +39,8 @@ public class HangingItemFix
 			entity.setDead();
 		}
 
-		if (entity instanceof EntityItemFrame)
+		// Ensures compatibility with TiCon
+		if (entity instanceof EntityItemFrame && !(entity.getClass().getName().contains("tconstruct")))
 		{
 			EntityItem itemFrameItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.ITEM_FRAME, 1));
 			EntityItemFrame frame = (EntityItemFrame) entity;

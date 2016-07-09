@@ -15,7 +15,7 @@ public class ConfigItemParser
 	{
 		ArrayList<ItemStack> stackList = new ArrayList<ItemStack>();
 
-		LogHelper.info(">>Running Config Item Parser");
+		LogHelper.info(">> Running Config Item Parser");
 
 		for (String s : VTweaks.modConfig.challengerMobLootTable)
 		{
@@ -29,7 +29,20 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					stackList.add(new ItemStack(temp.getItem(), Integer.parseInt(parts[3], Integer.parseInt(parts[2]))));
+				{
+					try
+					{
+						int meta = Integer.parseInt(parts[2]);
+						int qty = Integer.parseInt(parts[3]);
+						temp.setItemDamage(meta);
+						temp.stackSize = qty;
+						stackList.add(temp.copy());
+					}
+					catch (NumberFormatException e)
+					{
+						LogHelper.info("There was a number formatting issue with entry: " + s + ". It has been skipped.");
+					}
+				}
 			}
 			else if (parts.length == 3)
 			{
@@ -37,8 +50,17 @@ public class ConfigItemParser
 
 				if (temp != null)
 				{
-					int qty = Integer.parseInt(parts[2]);
-					stackList.add(new ItemStack(temp.getItem(), qty, 0));
+					try
+					{
+						int meta = Integer.parseInt(parts[2]);
+						temp.setItemDamage(meta);
+						stackList.add(temp.copy());
+					}
+					catch (NumberFormatException e)
+					{
+						LogHelper.info("There was a number formatting issue with entry: " + s + ". It has been skipped.");
+					}
+					
 				}
 			}
 			else if (parts.length == 2)
@@ -46,7 +68,9 @@ public class ConfigItemParser
 				ItemStack temp = findItemStack(parts[0], parts[1]);
 
 				if (temp != null)
-					stackList.add(new ItemStack(temp.getItem()));
+				{
+					stackList.add(temp.copy());
+				}
 			}
 			// The string was not formatted correctly. User is notified.
 			else
@@ -55,14 +79,15 @@ public class ConfigItemParser
 			}
 		}
 
+		LogHelper.info(">> Config Item Parsing complete!");
 		VTweaks.modConfig.setChallengerLootTable(stackList);
 	}
 
 	public static ItemStack findItemStack(String modid, String name)
 	{
 		ResourceLocation resLoc = new ResourceLocation(modid, name);
-		if(Item.REGISTRY.containsKey(resLoc))
-				return new ItemStack(Item.REGISTRY.getObject(resLoc));
+		if (Item.REGISTRY.containsKey(resLoc))
+			return new ItemStack(Item.REGISTRY.getObject(resLoc));
 		else if (Block.REGISTRY.containsKey(resLoc))
 			if (Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)) != null)
 				return new ItemStack(Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)), 1);

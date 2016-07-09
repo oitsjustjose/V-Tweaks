@@ -12,12 +12,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.9.2"
+version = "1.4.9.3"
 group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-1.9.4"
+archivesBaseName = "VTweaks-1.10.x"
 
 minecraft {
-    version = "1.9.4-12.17.0.1917-1.9.4"
+    version = "1.10.2-12.18.0.2010"
     
 	if (file('../run').exists()){
 	runDir = "../run"
@@ -40,7 +40,7 @@ task deobfJar(type: Jar) {
 }
 
 artifacts{
-    archives deobfJar
+	archives deobfJar
 }
 
 processResources
