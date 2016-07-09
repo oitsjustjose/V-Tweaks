@@ -69,7 +69,7 @@ public class ConfigItemParser
 
 				if (temp != null)
 				{
-					stackList.add(new ItemStack(temp.copy().getItem()));
+					stackList.add(temp.copy());
 				}
 			}
 			// The string was not formatted correctly. User is notified.
