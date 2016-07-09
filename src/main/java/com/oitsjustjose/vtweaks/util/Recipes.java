@@ -102,8 +102,8 @@ public class Recipes
 				else
 					event.setOutput(null);
 		}
-
-		if (VTweaks.modConfig.stepboostID > 0)
+		
+		if(VTweaks.modConfig.stepboostID > 0)
 		{
 			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
 			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));

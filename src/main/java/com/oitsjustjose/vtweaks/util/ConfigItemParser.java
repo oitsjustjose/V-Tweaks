@@ -61,8 +61,8 @@ public class ConfigItemParser
 	public static ItemStack findItemStack(String modid, String name)
 	{
 		ResourceLocation resLoc = new ResourceLocation(modid, name);
-		if (Item.REGISTRY.containsKey(resLoc))
-			return new ItemStack(Item.REGISTRY.getObject(resLoc));
+		if(Item.REGISTRY.containsKey(resLoc))
+				return new ItemStack(Item.REGISTRY.getObject(resLoc));
 		else if (Block.REGISTRY.containsKey(resLoc))
 			if (Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)) != null)
 				return new ItemStack(Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)), 1);

@@ -52,7 +52,7 @@ public class BonemealTweaks
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void registerTweakNetherwart(RightClickBlock event)
 	{

@@ -43,19 +43,9 @@ public class ToolTips
 				event.getToolTip().add(getSaturationString(saturation));
 			}
 		}
-
-		if (stack.getMaxDamage() > 0)
-		{
-			if (VTweaks.modConfig.durabilityToolTips == 0)
-				return;
-			else if (VTweaks.modConfig.durabilityToolTips == 1)
-				event.getToolTip().add(TextFormatting.LIGHT_PURPLE + "Rem. Durability: " + (stack.getMaxDamage() - stack.getItemDamage()));
-			else if (VTweaks.modConfig.durabilityToolTips == 2 && shift)
-				event.getToolTip().add(TextFormatting.LIGHT_PURPLE + "Rem. Durability: " + (stack.getMaxDamage() - stack.getItemDamage()));
-		}
 	}
 
-	String getHungerString(int hunger)
+	public static String getHungerString(int hunger)
 	{
 		String ret = TextFormatting.GRAY + "Hunger:";
 
@@ -67,7 +57,7 @@ public class ToolTips
 		return ret;
 	}
 
-	String getSaturationString(float saturation)
+	public static String getSaturationString(float saturation)
 	{
 		String ret = TextFormatting.GRAY + "Saturation:";
 

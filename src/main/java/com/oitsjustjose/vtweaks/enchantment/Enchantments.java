@@ -11,8 +11,6 @@ public class Enchantments
 	public static Enchantment autosmelt;
 	public static Enchantment stepboost;
 	public static Enchantment lumbering;
-	public static Enchantment piercing;
-	public static Enchantment dwarvenLuck;
 
 	public static void initialize()
 	{
@@ -39,25 +37,13 @@ public class Enchantments
 			lumbering = new EnchantmentLumbering().setName(VTweaks.MODID + ":lumbering");
 			Enchantment.REGISTRY.register(VTweaks.modConfig.lumberingID, new ResourceLocation(VTweaks.MODID, "lumbering"), lumbering);
 		}
-
-		if (VTweaks.modConfig.piercingID != 0)
-		{
-			piercing = new EnchantmentPiercing().setName(VTweaks.MODID + ":piercing");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.piercingID, new ResourceLocation(VTweaks.MODID, "piercing"), piercing);
-		}
-		
-		if(VTweaks.modConfig.dwarvenLuckID != 0)
-		{
-			dwarvenLuck =  new EnchantmentDwarvenLuck().setName(VTweaks.MODID +  ":dwarvenLuck");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.dwarvenLuckID, new ResourceLocation(VTweaks.MODID, "dwarvenLuck"), dwarvenLuck);
-		}
 	}
-
+	
 	public static Enchantment getEnchantment(String enchName)
 	{
 		return Enchantment.REGISTRY.getObject(new ResourceLocation(enchName));
 	}
-
+	
 	public static Enchantment getEnchantment(String modid, String enchName)
 	{
 		return Enchantment.REGISTRY.getObject(new ResourceLocation(modid, enchName));

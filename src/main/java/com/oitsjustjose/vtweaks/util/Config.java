@@ -46,8 +46,6 @@ public class Config
 	public int autosmeltID;
 	public int stepboostID;
 	public int lumberingID;
-	public int piercingID;
-	public int dwarvenLuckID;
 	public String[] autosmeltOverrides;
 	public int hypermendingXPCost;
 	public int autosmeltXPCost;
@@ -70,8 +68,7 @@ public class Config
 	public boolean stackSizeTweaks;
 	public boolean lightning;
 	public int foodToolTips;
-	public int durabilityToolTips;
-
+	
 	public ArrayList<ItemStack> challengerLootTable;
 
 	public Config(File configFile)
@@ -87,7 +84,7 @@ public class Config
 			loadConfiguration();
 		}
 	}
-
+	
 	public void setChallengerLootTable(ArrayList<ItemStack> newList)
 	{
 		this.challengerLootTable = newList;
@@ -103,7 +100,7 @@ public class Config
 		MobTweaks = config.getCategory(category);
 		MobTweaks.setComment("Various Tweaks to Mobs");
 
-		property = config.get(category, "Allow pet armor", true).setRequiresMcRestart(true);
+		property = config.get(category, "Allow pet armor?", true).setRequiresMcRestart(true);
 		property.setComment("Allows you to R-Click on TAMED pets with horse armor to armor them up!");
 		petArmory = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -154,7 +151,7 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Challenger Mobs Enabled", true).setRequiresMcRestart(true);
-		property.setComment("Randomly spawns more difficult (but more lootworthy) enemies Applies to ALL enemies");
+		property.setComment("Randomly spawns more difficult (but more lootworthy) enemies? Applies to ALL enemies");
 		challengers = property.getBoolean();
 		propertyOrder.add(property.getName());
 
@@ -193,28 +190,20 @@ public class Config
 		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
 		lumberingID = property.getInt();
 		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Piercing Enchantment ID", 237, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		piercingID = property.getInt();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Dwarven Luck Enchantment ID", 238, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
-		dwarvenLuckID = property.getInt();
-		propertyOrder.add(property.getName());
-
+		
 		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
 		property.setComment("Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction");
 		autosmeltOverrides = property.getStringList();
 		propertyOrder.add(property.getName());
-
+		
 		property = config.get(category, "Hypermending XP Cost", 30, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		hypermendingXPCost = property.getInt();
 		propertyOrder.add(property.getName());
-
+		
 		property = config.get(category, "Auto-Smelt XP Cost", 15, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		autosmeltXPCost = property.getInt();
 		propertyOrder.add(property.getName());
-
+		
 		property = config.get(category, "StepBoost XP Cost", 5, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		stepboostXPCost = property.getInt();
 		propertyOrder.add(property.getName());
@@ -279,7 +268,7 @@ public class Config
 		ItemTweaks = config.getCategory(category);
 		ItemTweaks.setComment("Tweaks for Items");
 
-		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
+		property = config.get(category, "Add Missing Items as Fuels?", true).setRequiresMcRestart(true);
 		property.setComment("Adds wooden items to fuel list if they were missing");
 		addFuels = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -292,7 +281,7 @@ public class Config
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
 
-		property = config.get(category, "Change Base Game Mechanics", false).setRequiresMcRestart(true);
+		property = config.get(category, "Change Base Game Mechanics?", false).setRequiresMcRestart(true);
 		property.setComment("This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay");
 		earlyGame = property.getBoolean();
 		propertyOrder.add(property.getName());
@@ -307,17 +296,13 @@ public class Config
 		stackSizeTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Lightning", true).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Lightning?", true).setRequiresMcRestart(true);
 		property.setComment("Disables lightning from spawning, it can get annoying");
 		lightning = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Food Value Tooltips", 2, "0 disables the feature, 1 enables the feature all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false).setRequiresWorldRestart(false);
+		property = config.get(category, "Enable Food Value Tooltips?", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
 		foodToolTips = property.getInt();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Enable Durability Tooltips", 2, "0 disables the feature, 1 enables the feature all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false).setRequiresWorldRestart(false);
-		durabilityToolTips = property.getInt();
 		propertyOrder.add(property.getName());
 
 		MiscFeatures.setPropertyOrder(propertyOrder);

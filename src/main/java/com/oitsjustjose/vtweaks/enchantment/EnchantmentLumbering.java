@@ -10,7 +10,7 @@ public class EnchantmentLumbering extends Enchantment
 {
 	protected EnchantmentLumbering()
 	{
-		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
 	}
 
 	@Override

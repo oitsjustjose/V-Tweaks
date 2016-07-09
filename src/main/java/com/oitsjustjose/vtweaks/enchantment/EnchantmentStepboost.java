@@ -8,7 +8,7 @@ public class EnchantmentStepboost extends Enchantment
 {
 	protected EnchantmentStepboost()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
+		super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] {EntityEquipmentSlot.FEET});
 	}
 
 	@Override

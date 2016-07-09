@@ -20,14 +20,14 @@ public class GuideNotifier
 	{
 		final Entity entity = event.getEntity();
 		final String SHOWN_LINK = "shownVTweaksLink";
-
-		if (entity == null)
+		
+		if(entity == null)
 			return;
-		if (entity instanceof EntityPlayer)
+		if(entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) entity;
 			NBTTagCompound persistTag = getPlayerPsersistTag(player, VTweaks.MODID);
-			if (!persistTag.getBoolean(SHOWN_LINK) && !entity.worldObj.isRemote)
+			if(!persistTag.getBoolean(SHOWN_LINK) && !entity.worldObj.isRemote)
 			{
 				Style style = new Style();
 				String wikiURL = "http://oitsjustjose.github.io/V-Tweaks-Online/";
@@ -36,15 +36,15 @@ public class GuideNotifier
 				style.setUnderlined(true);
 				style.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiURL));
 				style.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("V-Tweaks Wiki")));
-
+				
 				player.addChatMessage(new TextComponentString("Welcome! Seems like this is your first time running V-Tweaks in this world! Here's a link to an online wiki if you're interested, keep in mind some features may be disabled!"));
 				player.addChatMessage(new TextComponentString("V-Tweaks Online Wiki").setStyle(style));
-
+				
 				persistTag.setBoolean(SHOWN_LINK, true);
 			}
 		}
 	}
-
+	
 	public NBTTagCompound getPlayerPsersistTag(EntityPlayer player, String modid)
 	{
 		NBTTagCompound tag = player.getEntityData();

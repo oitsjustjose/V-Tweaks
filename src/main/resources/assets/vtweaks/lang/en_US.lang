@@ -3,8 +3,6 @@ enchantment.VTweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§c
 enchantment.VTweaks:autosmelt=§4Auto-Smelt
 enchantment.VTweaks:stepboost=§aStep Boost
 enchantment.VTweaks:lumbering=Lumbering
-enchantment.VTweaks:piercing=§3Piercing
-enchantment.VTweaks:dwarvenLuck=§EDwarven Luck
 
 #JEI Compat
 jei.desc.ironhorsearmor=Can be crafted by combining two undamaged pairs of Iron Leggings in an anvil.
@@ -13,3 +11,24 @@ jei.desc.diamondhorsearmor=Can be crafted by combining two undamaged pairs of Di
 
 
 #Chat Color Codes for Rainbow Chat: C 6 E A 2 B 3 9 1 5 D
+
+#Chat Messages
+chat.message.line=§k---------------------------------------------------§r
+chat.message.end=§5The End§r is the only place §bsuitably cold enough§r for §4§lrebirth§r.
+chat.message.netherstar=Sneak Right Click on §5The Egg§r with a §6Nether Star§r to revel the secrets of its hatching.
+chat.message.enderium=§5The Egg§r must be placed centered above a pyramid of §3Enderium Blocks§r with a 5 x 5 base.
+chat.message.emerald=§5The Egg§r must be placed centered above a pyramid of §aEmerald Blocks§r with a 5 x 5 base.
+chat.message.weird=§2Something weird happens in your inventory!§r
+
+#Tooltips
+VTweaks.tooltip.sneaking=Hold Shift for More Info
+VTweaks.tooltip.netherstar1=§6Combine with a Book & Quill§r
+VTweaks.tooltip.netherstar2=§6in an anvil to get a§r
+VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r §6Enchanted Book!§r
+VTweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
+VTweaks.tooltip.autosmelt=§6in an anvil to get an§r
+VTweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r
+
+#Achievements
+achievement.rebirth=§5§lReincarnation§r
+achievement.rebirth.desc=Using a nether star and the Dragon's Egg, birth a new dragon! 
