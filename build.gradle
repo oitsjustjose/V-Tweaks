@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.9.2"
+version = "1.4.9.1"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.9.4"
 
@@ -37,10 +37,6 @@ dependencies {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'DEV'
-}
-
-artifacts{
-    archives deobfJar
 }
 
 processResources
