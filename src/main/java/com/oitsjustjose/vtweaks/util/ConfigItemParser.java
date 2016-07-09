@@ -52,8 +52,8 @@ public class ConfigItemParser
 				{
 					try
 					{
-						int meta = Integer.parseInt(parts[2]);
-						temp.setItemDamage(meta);
+						int qty = Integer.parseInt(parts[2]);
+						temp.stackSize = qty;
 						stackList.add(temp.copy());
 					}
 					catch (NumberFormatException e)
@@ -69,7 +69,7 @@ public class ConfigItemParser
 
 				if (temp != null)
 				{
-					stackList.add(temp.copy());
+					stackList.add(new ItemStack(temp.copy().getItem()));
 				}
 			}
 			// The string was not formatted correctly. User is notified.
