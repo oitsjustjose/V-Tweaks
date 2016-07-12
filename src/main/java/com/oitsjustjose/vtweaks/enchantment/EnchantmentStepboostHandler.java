@@ -16,6 +16,6 @@ public class EnchantmentStepboostHandler
 		if (boots != null && EnchantmentLevelArmor != 0)
 			event.getEntityPlayer().stepHeight = 1.0F;
 		else
-			event.getEntityPlayer().stepHeight = 0.5F;
+			event.getEntityPlayer().stepHeight = 0.6F;
 	}
 }
