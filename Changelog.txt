@@ -1,3 +1,5 @@
+1.4.9.4:
+-Fixed Step Height Issues. Jesus I'm a tard
 1.4.9.3:
 -Officially ported to 1.10.2 (will work on 1.9.4, 1.10 and 1.10.2 though)
 -Fixed Challenger Mob config parsing
