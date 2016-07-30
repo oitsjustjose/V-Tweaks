@@ -1,7 +1,5 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import java.util.Random;
-
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -10,11 +8,11 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,99 +22,96 @@ public class ChallengerMobs
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerEvent(LivingSpawnEvent event)
 	{
-		Random random = new Random();
-		int rand = random.nextInt(8);
-		if (0 == random.nextInt(VTweaks.modConfig.challengerMobRarity))
+		if (!event.getWorld().isRemote)
 		{
-			if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
+			if (0 == event.getWorld().rand.nextInt(VTweaks.modConfig.challengerMobRarity))
 			{
-				if (event.getEntity() instanceof EntityPigZombie)
-					return;
+				final int rand = event.getWorld().rand.nextInt(8);
 
-				EntityMob monster = (EntityMob) event.getEntity();
+				if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
+				{
+					if (event.getEntity() instanceof EntityPigZombie)
+						return;
 
-				if (rand == 0)
-				{
-					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
-					monster.addPotionEffect(new PotionEffect(Potion.getPotionById(2), Short.MAX_VALUE, 1));
-				}
-				else
-				{
-					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
-					
-					ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
-					((ItemArmor) helmet.getItem()).setColor(helmet, random.nextInt(1677215));
-					
-					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, helmet);
+					EntityMob monster = (EntityMob) event.getEntity();
+					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, null);
 					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, null);
 					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, null);
 					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, null);
-				}
 
-				if (rand == 0)
-				{
-					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80F);
-					monster.setHealth(80F);
-				}
-				else if (rand == 6)
-				{
-					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(160F);
-					monster.setHealth(160F);
-				}
-				else if (rand == 7)
-				{
-					monster.addPotionEffect(new PotionEffect(Potion.getPotionById(1), Short.MAX_VALUE, 4));
-				}
-				else
-				{
-					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40F);
-					monster.setHealth(40F);
-				}
+					// Custom Name Tags, and infinite fire resistance to prevent cheesy kills
+					monster.setCustomNameTag(mobClassName(rand, monster));
+					PotionEffect p = new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance")), Integer.MAX_VALUE, 0, true, true);
+					monster.addPotionEffect(p);
+					monster.fireResistance = Integer.MAX_VALUE;
+					// Every challenger mob will have a main hand item. Done before any checks.
+					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
+					monster.setDropChance(EntityEquipmentSlot.MAINHAND, Float.MIN_VALUE);
 
-				monster.setCustomNameTag(mobClassName(rand, monster));
-				monster.addPotionEffect(new PotionEffect(Potion.getPotionById(12), Short.MAX_VALUE, 8));
+					monster.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getMobSpeed(rand));
+					monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getMobHealth(rand));
+					monster.setHealth(getMobHealth(rand));
+
+					// Special Man Pants for Zestonian Mobs
+					if (rand == 5)
+					{
+						ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
+						pants.setStackDisplayName("Man Pants");
+						pants.addEnchantment(Enchantments.getEnchantment("blast_protection"), 5);
+						monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, pants);
+					}
+
+				}
 			}
 		}
+	}
 
+	double getMobSpeed(int type)
+	{
+		switch (type)
+		{
+		case 0:
+			return 0.18D;
+		case 7:
+			return 0.6D;
+		default:
+			return 0.25;
+		}
+	}
+
+	float getMobHealth(int type)
+	{
+		switch (type)
+		{
+		case 0:
+			return 80F;
+		case 6:
+			return 160F;
+		case 7:
+			return 10F;
+		default:
+			return 40F;
+		}
 	}
 
 	ItemStack toolForMobClass(int type)
 	{
-		ItemStack bow = new ItemStack(Items.BOW);
-		ItemStack bowl = new ItemStack(Items.BOWL);
-		ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
-		ItemStack wand = new ItemStack(Items.STICK);
-		ItemStack firework = new ItemStack(Items.FIREWORKS);
-		ItemStack sign = new ItemStack(Items.SIGN);
+		ItemStack[] r = new ItemStack[] { new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW), new ItemStack(Items.STICK), new ItemStack(Items.FIREWORKS), new ItemStack(Items.SIGN) };
 
-		sword.setItemDamage(sword.getMaxDamage() / 8);
+		r[0].setItemDamage(r[0].getMaxDamage() / 8);
+		r[0].addEnchantment(Enchantments.getEnchantment("sharpness"), 3);
+		r[1].addEnchantment(Enchantments.getEnchantment("sharpness"), 10);
+		r[2].addEnchantment(Enchantments.getEnchantment("punch"), 2);
+		r[2].addEnchantment(Enchantments.getEnchantment("power"), 3);
+		r[3].addEnchantment(Enchantments.getEnchantment("fire_aspect"), 1);
+		r[3].addEnchantment(Enchantments.getEnchantment("knockback"), 2);
+		r[4].addEnchantment(Enchantments.getEnchantment("fire_aspect"), 5);
+		r[5].addEnchantment(Enchantments.getEnchantment("knockback"), 10);
 
-		bow.addEnchantment(Enchantments.getEnchantment("punch"), 2);
-		bow.addEnchantment(Enchantments.getEnchantment("power"), 3);
-		sword.addEnchantment(Enchantments.getEnchantment("sharpness"), 3);
-		bowl.addEnchantment(Enchantments.getEnchantment("sharpness"), 8);
-		firework.addEnchantment(Enchantments.getEnchantment("fire_aspect"), 5);
-		wand.addEnchantment(Enchantments.getEnchantment("fire_aspect"), 1);
-		wand.addEnchantment(Enchantments.getEnchantment("knockback"), 2);
-		sign.addEnchantment(Enchantments.getEnchantment("knockback"), 10);
-
-		switch (type)
-		{
-		case 0:
-			return sword;
-		case 1:
-			return bowl;
-		case 2:
-			return bow;
-		case 3:
-			return wand;
-		case 4:
-			return firework;
-		case 5:
-			return sign;
-		default:
+		if (type <= (r.length - 1))
+			return r[type];
+		else
 			return null;
-		}
 	}
 
 	public String mobClassName(int type, EntityMob mob)
