@@ -1,329 +1,151 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import java.util.Iterator;
 import java.util.List;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@SuppressWarnings("deprecation")
 public class CropHelper
 {
-	public boolean enderLilly = false;
-
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void registerVanilla(RightClickBlock event)
 	{
-		if (event.getWorld().getBlockState(event.getPos()) == null)
+		if (event.getWorld().getBlockState(event.getPos()) == null || event.getEntityPlayer() == null || event.getHand() != EnumHand.MAIN_HAND)
 			return;
 
-		IBlockState cropState = event.getWorld().getBlockState(event.getPos());
-		World world = event.getWorld();
-		Block harvestable = cropState.getBlock();
-		int harvestableMeta = harvestable.getMetaFromState(cropState);
+		IBlockState state = event.getWorld().getBlockState(event.getPos());
+		Block harvestable = state.getBlock();
 
-		boolean pamCrop = harvestable.getClass().getName().startsWith("com.pam.harvestcraft.BlockPamCrop");
-		boolean resourcefulCrops = harvestable.getClass().getName().startsWith("tehnut.resourceful.crops.block.BlockRCrop");
+		// Checks the class blacklist from the config
+		for (String blackList : VTweaks.config.cropHarvestBlacklist)
+			if (harvestable.getClass().getName().toLowerCase().contains(blackList.toLowerCase()))
+				return;
 
-		// Handles most crops
-		if (harvestable instanceof BlockCrops && harvestableMeta >= 7 && !enderLilly && !pamCrop && !resourcefulCrops)
+		if (harvestable instanceof BlockCrops)
 		{
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-			if (!world.isRemote)
+			if (harvestGenericCrop(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
 			{
-				for (ItemStack stack : drops)
-				{
-					ItemStack drop = stack.copy();
-					if (drop.stackSize > 1)
-						--drop.stackSize;
-					EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-					world.spawnEntityInWorld(droppedItem);
-				}
-				world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
 				event.setCanceled(true);
 			}
 		}
-
-		// Handles beetroot. What the hell mojang, why not keep these BlockCrop...  :|
-		if (harvestable instanceof BlockBeetroot && harvestableMeta >= 3 && !enderLilly && !pamCrop && !resourcefulCrops)
+		else if (harvestable instanceof BlockNetherWart)
 		{
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-			if (!world.isRemote)
+			if (harvestNetherWart(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
 			{
-				for (ItemStack stack : drops)
-				{
-					ItemStack drop = stack.copy();
-					if (drop.stackSize > 1)
-						--drop.stackSize;
-					EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-					world.spawnEntityInWorld(droppedItem);
-				}
-				world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
 				event.setCanceled(true);
 			}
 		}
-		
-		// Handles cocoa beans!
-		if (harvestable instanceof BlockCocoa && harvestableMeta >= 8)
+		else if (harvestable instanceof BlockCocoa)
 		{
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-			if (!world.isRemote)
+			if (harvestCocoaPod(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
 			{
-				for (ItemStack stack : drops)
-				{
-					ItemStack drop = stack.copy();
-					if (drop.stackSize > 1)
-						--drop.stackSize;
-					EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-					world.spawnEntityInWorld(droppedItem);
-				}
-				world.setBlockState(event.getPos(), harvestable.getStateFromMeta(harvestableMeta - 8), 2);
-				event.setCanceled(true);
-			}
-		}
-
-		// Handles Netherwart
-		if (harvestable instanceof BlockNetherWart && harvestableMeta >= 3)
-		{
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-			if (!world.isRemote)
-			{
-				for (ItemStack stack : drops)
-				{
-					ItemStack drop = stack.copy();
-					if (drop.stackSize > 1)
-						--drop.stackSize;
-					EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-					world.spawnEntityInWorld(droppedItem);
-				}
-				world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
 				event.setCanceled(true);
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void registerWitchery(PlayerInteractEvent event)
+	public boolean harvestGenericCrop(World world, BlockPos pos, IBlockState state, EntityPlayer player)
 	{
-		if (Loader.isModLoaded("witchery"))
+		BlockCrops crop = (BlockCrops) state.getBlock();
+		if (crop.isMaxAge(state))
 		{
-			if (event.getWorld().getBlockState(event.getPos()) == null)
-				return;
-
-			IBlockState cropState = event.getWorld().getBlockState(event.getPos());
-			World world = event.getWorld();
-			Block harvestable = cropState.getBlock();
-			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			Block garlicCrop = GameRegistry.findBlock("witchery", "garlicplant");
-			Block artichokeCrop = GameRegistry.findBlock("witchery", "artichoke");
-			Block wolfsbaneCrop = GameRegistry.findBlock("witchery", "wolfsbane");
-			Block belladonnaCrop = GameRegistry.findBlock("witchery", "belladonna");
-			Block snowbellCrop = GameRegistry.findBlock("witchery", "snowbell");
-			Block wormwoodCrop = GameRegistry.findBlock("witchery", "wormwood");
-
-			if (garlicCrop != null && harvestable == garlicCrop && harvestableMeta == 5)
+			if (!world.isRemote)
 			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-			}
+				final List<ItemStack> drops = crop.getDrops(world, pos, state, 0);
+				final Item mainDrop = crop.getItemDropped(state, world.rand, 0);
 
-			if (artichokeCrop != null && harvestable == artichokeCrop && harvestableMeta == 4)
-			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
+				// An iterator to remove a seed or potato / carrot
+				if (mainDrop != null)
 				{
-					for (ItemStack stack : drops)
+					Iterator<ItemStack> iter = drops.iterator();
+					while (iter.hasNext())
 					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
+						final ItemStack next = iter.next();
+						if (next.getItem() != mainDrop || next.getItem() == Items.POTATO || next.getItem() == Items.CARROT)
+						{
+							iter.remove();
+							break;
+						}
 					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
 				}
+				// Drops all items remaining in the drop list
+				for (ItemStack i : drops)
+					dropItem(world, player.getPosition(), i);
+				// Reverts crop to freshly planted state
+				world.setBlockState(pos, crop.withAge(0));
 			}
-
-			if (wolfsbaneCrop != null && harvestable == wolfsbaneCrop && harvestableMeta == 7)
-			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-			}
-
-			if (belladonnaCrop != null && harvestable == belladonnaCrop && harvestableMeta == 4)
-			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-			}
-
-			if (snowbellCrop != null && harvestable == snowbellCrop && harvestableMeta == 4)
-			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-			}
-
-			if (wormwoodCrop != null && harvestable == wormwoodCrop && harvestableMeta == 4)
-			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-			}
+			player.swingArm(EnumHand.MAIN_HAND);
+			return true;
 		}
+		return false;
 	}
 
-	@SubscribeEvent
-	public void registerNatura(PlayerInteractEvent event)
+	public boolean harvestNetherWart(World world, BlockPos pos, IBlockState state, EntityPlayer player)
 	{
-		if (Loader.isModLoaded("Natura"))
+		BlockNetherWart wart = (BlockNetherWart) state.getBlock();
+		final List<ItemStack> drops = wart.getDrops(world, pos, state, 0);
+		// This is how I'm determining the crop is grown
+		if (drops.size() > 1)
 		{
-			if (event.getWorld().getBlockState(event.getPos()) == null)
-				return;
-
-			IBlockState cropState = event.getWorld().getBlockState(event.getPos());
-			World world = event.getWorld();
-			Block harvestable = cropState.getBlock();
-			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			Block barley = GameRegistry.findBlock("Natura", "N Crops");
-			if (barley == null)
-				return;
-			if (harvestable == barley && harvestableMeta == 3)
+			if (!world.isRemote)
 			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-				}
-
+				// Removes initial drop item, because it should cost one to be planted
+				drops.remove(0);
+				// Drops all items remaining in the drop list
+				for (ItemStack i : drops)
+					dropItem(world, player.getPosition(), i);
+				// Reverts crop to freshly planted state
+				world.setBlockState(pos, wart.getDefaultState());
 			}
+			player.swingArm(EnumHand.MAIN_HAND);
+			return true;
 		}
+		return false;
 	}
 
-	@SubscribeEvent
-	public void registerExU(PlayerInteractEvent event)
+	public boolean harvestCocoaPod(World world, BlockPos pos, IBlockState state, EntityPlayer player)
 	{
-		if (Loader.isModLoaded("ExtraUtilities"))
+		BlockCocoa cocoa = (BlockCocoa) state.getBlock();
+		final List<ItemStack> drops = cocoa.getDrops(world, pos, state, 0);
+		// This is how I'm determining the crop is grown
+		if (drops.size() > 1)
 		{
-			if (event.getWorld().getBlockState(event.getPos()) == null)
-				return;
-
-			IBlockState cropState = event.getWorld().getBlockState(event.getPos());
-			World world = event.getWorld();
-			Block harvestable = cropState.getBlock();
-			Block enderLilly = GameRegistry.findBlock("ExtraUtilities", "plant/ender_lilly");
-			int harvestableMeta = harvestable.getMetaFromState(cropState);
-			List<ItemStack> drops = harvestable.getDrops(world, event.getPos(), cropState, 0);
-
-			if (enderLilly != null && harvestable == enderLilly && harvestableMeta >= 7)
+			if (!world.isRemote)
 			{
-				event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
-				if (!world.isRemote)
-				{
-					for (ItemStack stack : drops)
-					{
-						ItemStack drop = stack.copy();
-						if (drop.stackSize > 1)
-							--drop.stackSize;
-						EntityItem droppedItem = new EntityItem(world, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), drop);
-						world.spawnEntityInWorld(droppedItem);
-					}
-					world.setBlockState(event.getPos(), harvestable.getDefaultState(), 2);
-					event.setCanceled(true);
-					this.enderLilly = true;
-				}
+				// Removes initial drop item, because it should cost one to be planted
+				drops.remove(0);
+				// Drops all items remaining in the drop list
+				for (ItemStack i : drops)
+					dropItem(world, player.getPosition(), i);
+				// Reverts crop to freshly planted state
+				world.setBlockState(pos, state.withProperty(BlockCocoa.AGE, Integer.valueOf(0)));
 			}
+			player.swingArm(EnumHand.MAIN_HAND);
+			return true;
 		}
+		return false;
+	}
+
+	public void dropItem(World world, BlockPos pos, ItemStack itemstack)
+	{
+		EntityItem drop = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
+		world.spawnEntityInWorld(drop);
 	}
 }
