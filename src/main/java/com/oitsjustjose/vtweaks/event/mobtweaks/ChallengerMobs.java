@@ -24,7 +24,7 @@ public class ChallengerMobs
 	{
 		if (!event.getWorld().isRemote)
 		{
-			if (0 == event.getWorld().rand.nextInt(VTweaks.modConfig.challengerMobRarity))
+			if (0 == event.getWorld().rand.nextInt(VTweaks.config.challengerMobRarity))
 			{
 				final int rand = event.getWorld().rand.nextInt(8);
 
@@ -131,6 +131,6 @@ public class ChallengerMobs
 					mobString += nameParts[i];
 			}
 		}
-		return VTweaks.modConfig.challengerMobs[type] + " " + mobString;
+		return VTweaks.config.challengerMobs[type] + " " + mobString;
 	}
 }

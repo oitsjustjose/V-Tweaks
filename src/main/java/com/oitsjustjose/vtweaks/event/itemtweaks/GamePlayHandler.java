@@ -82,7 +82,7 @@ public class GamePlayHandler
 	
 	boolean hasAutoSmelt(ItemStack itemstack)
 	{
-		if (VTweaks.modConfig.autosmeltID == 0 || itemstack == null)
+		if (VTweaks.config.autosmeltID == 0 || itemstack == null)
 			return false;
 
 		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.autosmelt, itemstack);

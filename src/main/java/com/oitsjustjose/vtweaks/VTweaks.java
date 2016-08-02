@@ -48,7 +48,7 @@ public class VTweaks
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
 
-	public static Config modConfig;
+	public static Config config;
 
 	@Instance(MODID)
 	public static VTweaks instance;
@@ -56,8 +56,8 @@ public class VTweaks
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		modConfig = new Config(event.getSuggestedConfigurationFile());
-		MinecraftForge.EVENT_BUS.register(modConfig);
+		config = new Config(event.getSuggestedConfigurationFile());
+		MinecraftForge.EVENT_BUS.register(config);
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -66,58 +66,58 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
 		Enchantments.initialize();
 
-		if (modConfig.hypermendingID > 0)
+		if (config.hypermendingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 
-		if (modConfig.autosmeltID > 0)
+		if (config.autosmeltID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 
-		if (modConfig.stepboostID > 0)
+		if (config.stepboostID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 
-		if (modConfig.lumberingID > 0)
+		if (config.lumberingID > 0)
 			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
 
-		if (modConfig.cropHarvest)
+		if (config.cropHarvest)
 			MinecraftForge.EVENT_BUS.register(new CropHelper());
 
-		if (modConfig.bonemealTweak)
+		if (config.bonemealTweak)
 			MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
 
-		if (modConfig.cakeTweak)
+		if (config.cakeTweak)
 			MinecraftForge.EVENT_BUS.register(new CakeTweak());
 
-		if (modConfig.featherFalling)
+		if (config.featherFalling)
 			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
-		if (modConfig.toolEffTweaks)
+		if (config.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
-		if (modConfig.torchPlacer)
+		if (config.torchPlacer)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
-		if (modConfig.challengers)
+		if (config.challengers)
 		{
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
 		}
 
-		if (modConfig.earlyGame)
+		if (config.earlyGame)
 			GamePlayHandler.init();
 
-		if (modConfig.lightning)
+		if (config.lightning)
 			MinecraftForge.EVENT_BUS.register(new StormTweak());
 
-		if (modConfig.noPigZombies)
+		if (config.noPigZombies)
 			Blocks.PORTAL.setResistance(Float.MAX_VALUE);
 
-		if (modConfig.glitchingItemFix)
+		if (config.glitchingItemFix)
 			MinecraftForge.EVENT_BUS.register(new HangingItemFix());
 
-		if (modConfig.petArmory)
+		if (config.petArmory)
 			MinecraftForge.EVENT_BUS.register(new PetArmory());
 
-		if (modConfig.pluckFeather)
+		if (config.pluckFeather)
 			MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
 	}
 
@@ -126,7 +126,7 @@ public class VTweaks
 	{
 		Recipes.registerRecipes();
 
-		if (modConfig.addFuels)
+		if (config.addFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 
@@ -134,7 +134,7 @@ public class VTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
-		if (modConfig.stackSizeTweaks)
+		if (config.stackSizeTweaks)
 			StackTweaks.registerTweaks();
 		ConfigItemParser.parseItems();
 	}

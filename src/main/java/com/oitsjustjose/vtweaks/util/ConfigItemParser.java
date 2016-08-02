@@ -17,7 +17,7 @@ public class ConfigItemParser
 
 		LogHelper.info(">> Running Config Item Parser");
 
-		for (String s : VTweaks.modConfig.challengerMobLootTable)
+		for (String s : VTweaks.config.challengerMobLootTable)
 		{
 			// Splits the string apart by uncommon characters
 			// Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>
@@ -80,7 +80,7 @@ public class ConfigItemParser
 		}
 
 		LogHelper.info(">> Config Item Parsing complete!");
-		VTweaks.modConfig.setChallengerLootTable(stackList);
+		VTweaks.config.setChallengerLootTable(stackList);
 	}
 
 	public static ItemStack findItemStack(String modid, String name)

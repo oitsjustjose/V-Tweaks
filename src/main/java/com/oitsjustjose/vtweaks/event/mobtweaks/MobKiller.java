@@ -23,13 +23,13 @@ public class MobKiller
 	{
 		Entity toKill = event.getEntity();
 
-		if (toKill != null && toKill instanceof EntityBat && VTweaks.modConfig.noBats)
+		if (toKill != null && toKill instanceof EntityBat && VTweaks.config.noBats)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityPigZombie && VTweaks.modConfig.noPigZombies)
+		if (toKill != null && toKill instanceof EntityPigZombie && VTweaks.config.noPigZombies)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityGhast && VTweaks.modConfig.noPigZombies)
+		if (toKill != null && toKill instanceof EntityGhast && VTweaks.config.noPigZombies)
 			if (event.getWorld().rand.nextInt(100) < 95)
 				event.setResult(Result.DENY);
 	}
@@ -39,7 +39,7 @@ public class MobKiller
 	{
 		Entity toKill = event.getEntity();
 
-		if (toKill != null && toKill instanceof EntityWither && VTweaks.modConfig.noOverworldWither)
+		if (toKill != null && toKill instanceof EntityWither && VTweaks.config.noOverworldWither)
 		{
 			EntityWither wither = (EntityWither) toKill;
 			if (wither.worldObj.provider.getDimension() == 0)

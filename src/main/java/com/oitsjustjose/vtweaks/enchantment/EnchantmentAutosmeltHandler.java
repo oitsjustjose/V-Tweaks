@@ -94,7 +94,7 @@ public class EnchantmentAutosmeltHandler
 			if (block.getRegistryName().toString().toLowerCase().contains("ore"))
 				return true;
 			else
-				for (String s : VTweaks.modConfig.autosmeltOverrides)
+				for (String s : VTweaks.config.autosmeltOverrides)
 					if (block.getRegistryName().toString().toLowerCase().contains(s))
 						return true;
 		}

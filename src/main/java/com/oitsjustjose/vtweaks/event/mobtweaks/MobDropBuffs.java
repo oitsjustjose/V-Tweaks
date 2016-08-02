@@ -25,35 +25,35 @@ public class MobDropBuffs
 		if (event.getEntity() == null)
 			return;
 
-		if (event.getEntity() instanceof EntityChicken && VTweaks.modConfig.featherBuff)
+		if (event.getEntity() instanceof EntityChicken && VTweaks.config.featherBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.FEATHER, 1 + random.nextInt(4));
 			EntityItem dropEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
 			event.getDrops().add(dropEntity);
 		}
 
-		else if (event.getEntity() instanceof EntityCow && VTweaks.modConfig.hideBuff)
+		else if (event.getEntity() instanceof EntityCow && VTweaks.config.hideBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.LEATHER, 1 + random.nextInt(3));
 			EntityItem dropEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
 			event.getDrops().add(dropEntity);
 		}
 
-		else if (event.getEntity() instanceof EntitySkeleton && VTweaks.modConfig.boneBuff)
+		else if (event.getEntity() instanceof EntitySkeleton && VTweaks.config.boneBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.BONE, 1 + random.nextInt(2));
 			EntityItem dropEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
 			event.getDrops().add(dropEntity);
 		}
 
-		else if (event.getEntity() instanceof EntitySquid && VTweaks.modConfig.sacBuff)
+		else if (event.getEntity() instanceof EntitySquid && VTweaks.config.sacBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.DYE, 1 + random.nextInt(3));
 			EntityItem dropEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
 			event.getDrops().add(dropEntity);
 		}
 
-		else if (event.getEntity() instanceof EntityEnderman && VTweaks.modConfig.enderpearlBuff)
+		else if (event.getEntity() instanceof EntityEnderman && VTweaks.config.enderpearlBuff)
 		{
 			ItemStack dropStack = new ItemStack(Items.ENDER_PEARL, 1 + random.nextInt(1));
 			EntityItem dropEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);

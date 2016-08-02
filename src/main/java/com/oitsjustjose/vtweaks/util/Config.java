@@ -32,8 +32,8 @@ public class Config
 	public boolean enderpearlBuff;
 	public boolean pluckFeather;
 	public boolean challengers;
-	final String[] CHALLENGER_MOB_DEFAULTS = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
-	public String[] CHALLENGER_MOB_LOOT_TABLE_DEFAULTS = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
+	public String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
+	public String[] challengerMobLootTableDefaults = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
 	public String[] challengerMobs;
 	public String[] challengerMobLootTable;
 	public int challengerMobRarity;
@@ -55,6 +55,8 @@ public class Config
 	public boolean disenchant;
 	// Block Configs
 	public boolean cropHarvest;
+	public String[] cropHarvestBlacklistDefaults = new String[] { "harvestcraft", "tehnut.resourceful.crops" };
+	public String[] cropHarvestBlacklist;
 	public boolean bonemealTweak;
 	public boolean cakeTweak;
 	public boolean toolEffTweaks;
@@ -68,7 +70,7 @@ public class Config
 	public boolean stackSizeTweaks;
 	public boolean lightning;
 	public int foodToolTips;
-	
+
 	public ArrayList<ItemStack> challengerLootTable;
 
 	public Config(File configFile)
@@ -84,7 +86,7 @@ public class Config
 			loadConfiguration();
 		}
 	}
-	
+
 	public void setChallengerLootTable(ArrayList<ItemStack> newList)
 	{
 		this.challengerLootTable = newList;
@@ -159,11 +161,11 @@ public class Config
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Loot Table", CHALLENGER_MOB_LOOT_TABLE_DEFAULTS, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
+		property = config.get(category, "Challenger Mobs Loot Table", challengerMobLootTableDefaults, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
 		challengerMobLootTable = property.getStringList();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs' Prefixes", CHALLENGER_MOB_DEFAULTS, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
+		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaults, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
 		challengerMobs = property.getStringList();
 		propertyOrder.add(property.getName());
 
@@ -190,20 +192,20 @@ public class Config
 		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
 		lumberingID = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
 		property.setComment("Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction");
 		autosmeltOverrides = property.getStringList();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Hypermending XP Cost", 30, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		hypermendingXPCost = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Auto-Smelt XP Cost", 15, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		autosmeltXPCost = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "StepBoost XP Cost", 5, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
 		stepboostXPCost = property.getInt();
 		propertyOrder.add(property.getName());
@@ -231,12 +233,17 @@ public class Config
 		BlockTweaks.setComment("Tweaks for Blocks");
 
 		property = config.get(category, "Easy Crop Harvesting", true).setRequiresMcRestart(true);
-		property.setComment("Allows for right-click-to-harvest on nearly any (including mod) crop. No seeds will be dropped - intended");
+		property.setComment("Allows for right-click-to-harvest on nearly any (including mod) crop");
 		cropHarvest = property.getBoolean();
 		propertyOrder.add(property.getName());
 
+		property = config.get(category, "Easy Crop Harvesting Class Blacklist", cropHarvestBlacklistDefaults).setRequiresMcRestart(true);
+		property.setComment("Objects listed here will not be effected by the Easy Crop Harvesting tweak. These are class names, or parts of class names");
+		cropHarvestBlacklist = property.getStringList();
+		propertyOrder.add(property.getName());
+
 		property = config.get(category, "Enable Bonemeal Tweak", true).setRequiresMcRestart(true);
-		property.setComment("Allows more things to be bonemealed; Nether Wart requires Blaze Powder");
+		property.setComment("Allows more things to be bonemealed");
 		bonemealTweak = property.getBoolean();
 		propertyOrder.add(property.getName());
 

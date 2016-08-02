@@ -1,10 +1,15 @@
+1.4.9.5:
+-Improved: Challenger Mob Equipment / Class Spawning - should be less equipment class meshing
+-Improved: Easy Crop Harvesting method
+-Added: Blacklist for classes which Easy Crop Harvesting should not work for
+-Fixed: Step Boost enchantment doing weird things with step height and Baubles
 1.4.9.4:
--Fixed Step Height Issues. Jesus I'm a tard
+-Fixed: Step Height Issues. Jesus I'm a tard
 1.4.9.3:
 -Officially ported to 1.10.2 (will work on 1.9.4, 1.10 and 1.10.2 though)
--Fixed Challenger Mob config parsing
--Fixed Sheep Dying fix inter-mod compat with BiomesOPlenty
--Fixed Hanging Item Fix doing anything with TiCon Frames
+-Fixed: Challenger Mob config parsing
+-Fixed: Sheep Dying fix inter-mod compat with BiomesOPlenty
+-Fixed: Hanging Item Fix doing anything with TiCon Frames
 1.4.9.2:
 -Removed: Guide Book, Dragon Respawn
 -Added: One-time chat notifier of V-Tweaks wiki link

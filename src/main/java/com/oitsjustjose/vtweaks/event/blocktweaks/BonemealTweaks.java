@@ -3,7 +3,6 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -47,40 +46,6 @@ public class BonemealTweaks
 								--heldItem.stackSize;
 							world.setBlockState(event.getPos().up(), world.getBlockState(event.getPos()), 2);
 						}
-					}
-				}
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void registerTweakNetherwart(RightClickBlock event)
-	{
-		if (event.getWorld().getBlockState(event.getPos()) == null)
-			return;
-
-		EntityPlayer player = event.getEntityPlayer();
-		World world = event.getWorld();
-		Block testFor = world.getBlockState(event.getPos()).getBlock();
-		Random rand = world.rand;
-		int meta = testFor.getMetaFromState(event.getWorld().getBlockState(event.getPos()));
-
-		if (player.getHeldItemMainhand() != null)
-		{
-			ItemStack heldItem = player.getHeldItemMainhand();
-			if (heldItem.getItem() == Items.BLAZE_POWDER)
-			{
-				if (testFor == Blocks.NETHER_WART && meta < 3)
-				{
-					BlockNetherWart nether_wart = (BlockNetherWart) testFor;
-					player.swingArm(EnumHand.MAIN_HAND);
-					for (int i = 0; i < 8; i++)
-						spawnFX(world, rand, testFor, event.getPos());
-					if (!world.isRemote)
-					{
-						if (!player.capabilities.isCreativeMode)
-							--heldItem.stackSize;
-						world.setBlockState(event.getPos(), nether_wart.getStateFromMeta(3), 3);
 					}
 				}
 			}

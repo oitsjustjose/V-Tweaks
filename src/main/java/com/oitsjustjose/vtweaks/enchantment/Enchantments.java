@@ -14,28 +14,28 @@ public class Enchantments
 
 	public static void initialize()
 	{
-		if (VTweaks.modConfig.hypermendingID != 0)
+		if (VTweaks.config.hypermendingID != 0)
 		{
 			hyperMending = new EnchantmentHypermending().setName(VTweaks.MODID + ":hypermending");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.hypermendingID, new ResourceLocation(VTweaks.MODID, "hypermending"), hyperMending);
+			Enchantment.REGISTRY.register(VTweaks.config.hypermendingID, new ResourceLocation(VTweaks.MODID, "hypermending"), hyperMending);
 		}
 
-		if (VTweaks.modConfig.autosmeltID != 0)
+		if (VTweaks.config.autosmeltID != 0)
 		{
 			autosmelt = new EnchantmentAutosmelt().setName(VTweaks.MODID + ":autosmelt");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.autosmeltID, new ResourceLocation(VTweaks.MODID, "autosmelt"), autosmelt);
+			Enchantment.REGISTRY.register(VTweaks.config.autosmeltID, new ResourceLocation(VTweaks.MODID, "autosmelt"), autosmelt);
 		}
 
-		if (VTweaks.modConfig.stepboostID != 0)
+		if (VTweaks.config.stepboostID != 0)
 		{
 			stepboost = new EnchantmentStepboost().setName(VTweaks.MODID + ":stepboost");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.stepboostID, new ResourceLocation(VTweaks.MODID, "stepboost"), stepboost);
+			Enchantment.REGISTRY.register(VTweaks.config.stepboostID, new ResourceLocation(VTweaks.MODID, "stepboost"), stepboost);
 		}
 
-		if (VTweaks.modConfig.lumberingID != 0)
+		if (VTweaks.config.lumberingID != 0)
 		{
 			lumbering = new EnchantmentLumbering().setName(VTweaks.MODID + ":lumbering");
-			Enchantment.REGISTRY.register(VTweaks.modConfig.lumberingID, new ResourceLocation(VTweaks.MODID, "lumbering"), lumbering);
+			Enchantment.REGISTRY.register(VTweaks.config.lumberingID, new ResourceLocation(VTweaks.MODID, "lumbering"), lumbering);
 		}
 	}
 	

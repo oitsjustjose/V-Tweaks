@@ -24,8 +24,8 @@ public class ChallengerMobsDrops
 
 	EntityItem getItem(World world, double x, double y, double z)
 	{
-		int RNG = world.rand.nextInt(VTweaks.modConfig.challengerLootTable.size());
-		ItemStack temp = VTweaks.modConfig.challengerLootTable.get(RNG).copy();
+		int RNG = world.rand.nextInt(VTweaks.config.challengerLootTable.size());
+		ItemStack temp = VTweaks.config.challengerLootTable.get(RNG).copy();
 		return new EntityItem(world, x, y, z, temp.copy());
 	}
 
@@ -35,7 +35,7 @@ public class ChallengerMobsDrops
 		if (n == null)
 			return false;
 
-		String[] preFixes = VTweaks.modConfig.challengerMobs.clone();
+		String[] preFixes = VTweaks.config.challengerMobs.clone();
 		for (int i = 0; i < preFixes.length; i++)
 			if (n.contains(preFixes[i].toLowerCase()))
 				return true;

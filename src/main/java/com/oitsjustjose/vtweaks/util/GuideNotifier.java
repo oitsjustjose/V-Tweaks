@@ -26,7 +26,7 @@ public class GuideNotifier
 		if(entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) entity;
-			NBTTagCompound persistTag = getPlayerPsersistTag(player, VTweaks.MODID);
+			NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 			if(!persistTag.getBoolean(SHOWN_LINK) && !entity.worldObj.isRemote)
 			{
 				Style style = new Style();
@@ -45,7 +45,7 @@ public class GuideNotifier
 		}
 	}
 	
-	public NBTTagCompound getPlayerPsersistTag(EntityPlayer player, String modid)
+	public NBTTagCompound getPlayerPersistTag(EntityPlayer player, String modid)
 	{
 		NBTTagCompound tag = player.getEntityData();
 		NBTTagCompound persistTag = null;
