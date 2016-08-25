@@ -88,6 +88,9 @@ public class EnchantmentAutosmeltHandler
 
 	boolean shouldFortuneSmelt(ItemStack stack)
 	{
+		if (!VTweaks.config.autosmeltFortuneInteraction)
+			return false;
+		
 		if (stack.getItem() instanceof ItemBlock)
 		{
 			Block block = Block.getBlockFromItem(stack.getItem());

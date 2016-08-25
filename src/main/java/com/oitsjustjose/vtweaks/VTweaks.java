@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.event.PingProtection;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
@@ -119,6 +120,10 @@ public class VTweaks
 
 		if (config.pluckFeather)
 			MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
+
+		if (config.pingProtection)
+			MinecraftForge.EVENT_BUS.register(new PingProtection());
+
 	}
 
 	@EventHandler
