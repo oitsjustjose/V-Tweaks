@@ -1,3 +1,7 @@
+1.4.9.6:
+-Added: Organic Sapling Feature; instead of despawning, saplings will try to plant themselves first!
+-Added: Egg Hatching; eggs will hatch (configurable chance) instead of despawning!
+-Added: Despawn Timer Override; disabled by default (mostly meant for debug, but might be helpful!), lets you adjust how long item entities stay in the world
 1.4.9.5:
 -Improved: Challenger Mob Equipment / Class Spawning - should be less equipment class meshing
 -Improved: Easy Crop Harvesting method
