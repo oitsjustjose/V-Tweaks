@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.RealisticDrops;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
@@ -124,6 +125,7 @@ public class VTweaks
 		if (config.pingProtection)
 			MinecraftForge.EVENT_BUS.register(new PingProtection());
 
+		MinecraftForge.EVENT_BUS.register(new RealisticDrops());
 	}
 
 	@EventHandler

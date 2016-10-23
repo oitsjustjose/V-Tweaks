@@ -63,8 +63,13 @@ public class Config
 	public boolean toolEffTweaks;
 	public boolean torchPlacer;
 	public boolean glitchingItemFix;
+	public boolean organicSaplings;
 	// Item Configs
 	public boolean addFuels;
+	public boolean adjustDespawnTimer;
+	public int newDespawnTime;
+	public boolean hatchingEggs;
+	public int eggHatchChance;
 	// Misc Configs
 	public boolean earlyGame;
 	public boolean horseArmor;
@@ -274,6 +279,11 @@ public class Config
 		glitchingItemFix = property.getBoolean();
 		propertyOrder.add(property.getName());
 
+		property = config.get(category, "Sapling Self-Planting", true).setRequiresMcRestart(true);
+		property.setComment("Makes it so that any saplings that fall will automatically plant themselves if they can.");
+		organicSaplings = property.getBoolean();
+		propertyOrder.add(property.getName());
+
 		BlockTweaks.setPropertyOrder(propertyOrder);
 
 		// Item Tweaks
@@ -285,6 +295,24 @@ public class Config
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
 		property.setComment("Adds wooden items to fuel list if they were missing");
 		addFuels = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Adjust Despawn Timer for Items Dropped in the World", false).setRequiresMcRestart(true);
+		property.setComment("Allows for items' despawn timer to be longer or shorter, depending on what your preference is");
+		adjustDespawnTimer = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "New Despawn Timer for Items (if enabled)", 6000, "If the above option is enabled, here you can control how long dropped items last in the world before despawning. -1 means items don't despawn", -1, Integer.MAX_VALUE).setRequiresMcRestart(true);
+		newDespawnTime = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Allow Despawning Eggs to Randomly Hatch", true).setRequiresMcRestart(true);
+		property.setComment("If enabled, when eggs are about to despawn they will have a chance to hatch into a baby chick!");
+		hatchingEggs = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Chance for Eggs to Hatch", 12, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE).setRequiresMcRestart(true);
+		eggHatchChance = property.getInt();
 		propertyOrder.add(property.getName());
 
 		ItemTweaks.setPropertyOrder(propertyOrder);
