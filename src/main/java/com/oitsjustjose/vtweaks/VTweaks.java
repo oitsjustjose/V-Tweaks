@@ -12,6 +12,7 @@ import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
+import com.oitsjustjose.vtweaks.event.blocktweaks.Obsidianify;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
@@ -66,6 +67,8 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
+		MinecraftForge.EVENT_BUS.register(new RealisticDrops());
+		MinecraftForge.EVENT_BUS.register(new Obsidianify());
 		Enchantments.initialize();
 
 		if (config.hypermendingID > 0)
@@ -125,7 +128,6 @@ public class VTweaks
 		if (config.pingProtection)
 			MinecraftForge.EVENT_BUS.register(new PingProtection());
 
-		MinecraftForge.EVENT_BUS.register(new RealisticDrops());
 	}
 
 	@EventHandler
