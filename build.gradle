@@ -1,3 +1,66 @@
+<<<<<<< HEAD
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.4.9.7"
+group= "com.oitsjustjose.vtweaks"
+archivesBaseName = "VTweaks-1.10.x"
+
+minecraft {
+    version = "1.10.2-12.18.2.2102"
+    
+	if (file('../run').exists()){
+	runDir = "../run"
+	} else {
+		runDir = "run"
+	}    
+    useDepAts = true
+    replaceIn "/VTweaks.java"
+    replace "@VERSION@", project.version
+	
+    mappings = "snapshot_20160518"
+}
+
+dependencies {
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'DEV'
+}
+
+artifacts{
+	archives deobfJar
+}
+
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+		expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+=======
 buildscript {
     repositories {
         jcenter()
@@ -59,3 +122,4 @@ processResources
         exclude 'mcmod.info'
     }
 }
+>>>>>>> origin/master

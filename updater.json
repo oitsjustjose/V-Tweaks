@@ -1,26 +1,26 @@
 {
   "homepage": "http://oitsjustjose.github.io/V-Tweaks-Online/",
   "promos": {
-    "1.9.4-latest": "1.4.9.6",
-    "1.9.4-recommended": "1.4.9.6",
-    "1.10-latest": "1.4.9.6",
-    "1.10-recommended": "1.4.9.6",
-    "1.10.2-latest": "1.4.9.6",
-    "1.10.2-recommended": "1.4.9.6"
+    "1.9.4-latest": "1.4.9.7",
+    "1.9.4-recommended": "1.4.9.7",
+    "1.10-latest": "1.4.9.7",
+    "1.10-recommended": "1.4.9.7",
+    "1.10.2-latest": "1.4.9.7",
+    "1.10.2-recommended": "1.4.9.7"
   },
   "1.9.4": {
-    "1.4.9.6": "-Added: Organic Sapling Feature; instead of despawning, saplings will try to plant themselves first! \n
-				-Added: Egg Hatching; eggs will hatch (configurable chance) instead of despawning! \n
-				-Added: Despawn Timer Override; disabled by default (mostly meant for debug, but might be helpful!), lets you adjust how long item entities stay in the world"
+	"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava. \n
+				-Changed: Defaults for egg hatching.... they were far too high. \n
+				-Changed: Defaulted config for egg hatching to OFF. How hard are chicken cookers anyway?"
   },
   "1.10": { 
-	"1.4.9.6": "-Added: Organic Sapling Feature; instead of despawning, saplings will try to plant themselves first! \n
-				-Added: Egg Hatching; eggs will hatch (configurable chance) instead of despawning! \n
-				-Added: Despawn Timer Override; disabled by default (mostly meant for debug, but might be helpful!), lets you adjust how long item entities stay in the world"
+	"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava. \n
+				-Changed: Defaults for egg hatching.... they were far too high. \n
+				-Changed: Defaulted config for egg hatching to OFF. How hard are chicken cookers anyway?"
   },
   "1.10.2": {
-	"1.4.9.6": "-Added: Organic Sapling Feature; instead of despawning, saplings will try to plant themselves first! \n
-				-Added: Egg Hatching; eggs will hatch (configurable chance) instead of despawning! \n
-				-Added: Despawn Timer Override; disabled by default (mostly meant for debug, but might be helpful!), lets you adjust how long item entities stay in the world"
+	"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava. \n
+				-Changed: Defaults for egg hatching.... they were far too high. \n
+				-Changed: Defaulted config for egg hatching to OFF. How hard are chicken cookers anyway?"
   }
 }
