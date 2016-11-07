@@ -1,0 +1,16 @@
+[
+{
+  "modid": "VTweaks",
+  "name": "V-Tweaks",
+  "description": "Small tweaks and features added to Minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://oitsjustjose.github.io/V-Tweaks-Online/",
+  "updateUrl": "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json",
+  "authorList": ["oitsjustjose"],
+  "credits": "",
+  "logoFile": "/assets/vtweaks/logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
