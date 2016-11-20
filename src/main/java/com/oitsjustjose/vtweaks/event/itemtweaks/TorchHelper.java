@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.event.blocktweaks;
+package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +17,7 @@ public class TorchHelper
 	@SubscribeEvent
 	public void registerTweak(RightClickBlock event)
 	{
-		if (event.getEntityPlayer().getHeldItemMainhand().getItem() == null || event.getEntityPlayer().getHeldItemOffhand() != ItemStack.field_190927_a)
+		if (event.getEntityPlayer().getHeldItemMainhand() == ItemStack.field_190927_a || event.getEntityPlayer().getHeldItemOffhand() != ItemStack.field_190927_a)
 			return;
 
 		EntityPlayer player = event.getEntityPlayer();
@@ -34,12 +34,14 @@ public class TorchHelper
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++)
 			{
 				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack.getItem() != null && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
+				if (stack != ItemStack.field_190927_a && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
 				{
 					if (stack.onItemUse(player, event.getWorld(), event.getPos(), EnumHand.MAIN_HAND, event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()) == EnumActionResult.SUCCESS)
 						player.swingArm(EnumHand.MAIN_HAND);
+
 					if (stack.func_190916_E() == 0)
 						player.inventory.setInventorySlotContents(i, new ItemStack((Item) null));
+
 				}
 			}
 		}

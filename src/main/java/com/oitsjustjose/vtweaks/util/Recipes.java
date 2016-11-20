@@ -9,36 +9,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
 
 public class Recipes
 {
-	public static void registerRecipes()
-	{
-		if (VTweaks.config.disenchant && !(Loader.isModLoaded("botania")))
-		{
-			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes());
-			RecipeSorter.register("vtweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
-		}
-	}
-
 	@SubscribeEvent
-	public void registerEvent(AnvilUpdateEvent event)
-	{
-		registerBookRecipes(event);
-
-		if (VTweaks.config.horseArmor)
-			registerHorseArmorRecipes(event);
-	}
-
 	public void registerHorseArmorRecipes(AnvilUpdateEvent event)
 	{
-		if (event.getLeft().getItem() == null || event.getRight().getItem() == null)
+		if (!VTweaks.config.horseArmor || event.getLeft().getItem() == null || event.getRight().getItem() == null)
 			return;
 
 		Item left = event.getLeft().getItem();
@@ -63,6 +42,7 @@ public class Recipes
 		}
 	}
 
+	@SubscribeEvent
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
 		if (VTweaks.config.hypermendingID > 0)

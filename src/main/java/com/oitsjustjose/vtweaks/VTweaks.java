@@ -15,9 +15,9 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
-import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
@@ -135,8 +135,6 @@ public class VTweaks
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		Recipes.registerRecipes();
-
 		if (config.addFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
