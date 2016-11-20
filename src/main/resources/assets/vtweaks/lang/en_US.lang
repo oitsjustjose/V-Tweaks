@@ -1,8 +1,8 @@
 #Enchantment Names
-enchantment.VTweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
-enchantment.VTweaks:autosmelt=§4Auto-Smelt
-enchantment.VTweaks:stepboost=§aStep Boost
-enchantment.VTweaks:lumbering=Lumbering
+enchantment.vtweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
+enchantment.vtweaks:autosmelt=§4Auto-Smelt
+enchantment.vtweaks:stepboost=§aStep Boost
+enchantment.vtweaks:lumbering=Lumbering
 
 #JEI Compat
 jei.desc.ironhorsearmor=Can be crafted by combining two undamaged pairs of Iron Leggings in an anvil.
@@ -21,14 +21,10 @@ chat.message.emerald=§5The Egg§r must be placed centered above a pyramid of §
 chat.message.weird=§2Something weird happens in your inventory!§r
 
 #Tooltips
-VTweaks.tooltip.sneaking=Hold Shift for More Info
-VTweaks.tooltip.netherstar1=§6Combine with a Book & Quill§r
-VTweaks.tooltip.netherstar2=§6in an anvil to get a§r
-VTweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r §6Enchanted Book!§r
-VTweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
-VTweaks.tooltip.autosmelt=§6in an anvil to get an§r
-VTweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r
-
-#Achievements
-achievement.rebirth=§5§lReincarnation§r
-achievement.rebirth.desc=Using a nether star and the Dragon's Egg, birth a new dragon! 
+vtweaks.tooltip.sneaking=Hold Shift for More Info
+vtweaks.tooltip.netherstar1=§6Combine with a Book & Quill§r
+vtweaks.tooltip.netherstar2=§6in an anvil to get a§r
+vtweaks.tooltip.netherstar3=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§r §6Enchanted Book!§r
+vtweaks.tooltip.autosmelt=§6Combine with a Book & Quill§r
+vtweaks.tooltip.autosmelt=§6in an anvil to get an§r
+vtweaks.tooltip.autosmelt=§4Auto-Smelt§r §6Enchanted Book!§r

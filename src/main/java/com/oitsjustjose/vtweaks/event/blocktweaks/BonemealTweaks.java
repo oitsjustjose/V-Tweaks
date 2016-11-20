@@ -43,7 +43,7 @@ public class BonemealTweaks
 						if (!world.isRemote)
 						{
 							if (!player.capabilities.isCreativeMode)
-								--heldItem.stackSize;
+								heldItem.func_190918_g(1);
 							world.setBlockState(event.getPos().up(), world.getBlockState(event.getPos()), 2);
 						}
 					}

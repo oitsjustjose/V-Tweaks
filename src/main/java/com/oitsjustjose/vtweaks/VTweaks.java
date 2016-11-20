@@ -46,7 +46,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.9.4", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
 public class VTweaks
 {
-	public static final String MODID = "VTweaks";
+	public static final String MODID = "vtweaks";
 	public static final String NAME = "V-Tweaks";
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
@@ -64,6 +64,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
+		// TODO: Fix this, not yet working with disenchanting
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
@@ -97,6 +98,7 @@ public class VTweaks
 		if (config.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
+		// TODO: Fix this, why is it decreasing the held stack?
 		if (config.torchPlacer)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
 

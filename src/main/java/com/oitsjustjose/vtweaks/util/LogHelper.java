@@ -7,7 +7,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 
 public class LogHelper
 {
-	private static Logger LOGGER = LogManager.getLogger(VTweaks.MODID);
+	private static Logger LOGGER = LogManager.getLogger(VTweaks.NAME);
 
 	public static void warn(String msg)
 	{

@@ -34,16 +34,15 @@ public class ChallengerMobs
 						return;
 
 					EntityMob monster = (EntityMob) event.getEntity();
-					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, null);
-					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, null);
-					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, null);
-					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, null);
+					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.field_190927_a);
+					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, ItemStack.field_190927_a);
+					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, ItemStack.field_190927_a);
+					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, ItemStack.field_190927_a);
 
 					// Custom Name Tags, and infinite fire resistance to prevent cheesy kills
 					monster.setCustomNameTag(mobClassName(rand, monster));
 					PotionEffect p = new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance")), Integer.MAX_VALUE, 0, true, true);
 					monster.addPotionEffect(p);
-					monster.fireResistance = Integer.MAX_VALUE;
 					// Every challenger mob will have a main hand item. Done before any checks.
 					monster.setHeldItem(EnumHand.MAIN_HAND, toolForMobClass(rand));
 					monster.setDropChance(EntityEquipmentSlot.MAINHAND, Float.MIN_VALUE);
@@ -111,7 +110,7 @@ public class ChallengerMobs
 		if (type <= (r.length - 1))
 			return r[type];
 		else
-			return null;
+			return ItemStack.field_190927_a;
 	}
 
 	public String mobClassName(int type, EntityMob mob)

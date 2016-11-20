@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -16,22 +17,22 @@ public class FeatherFallingTweak
 			return;
 
 		EntityPlayer player = (EntityPlayer) event.getEntity();
+		ItemStack boots = player.inventory.armorInventory.get(0);
 
-		if (player.inventory.armorInventory[0] == null)
+		if (event.getSource() != DamageSource.fall || boots == null)
 			return;
 
-		if (player.inventory.armorInventory[0].getMetadata() > player.inventory.armorInventory[0].getMaxDamage() || player.inventory.armorInventory[0].stackSize != 1)
-			player.inventory.armorInventory[0] = null;
+		if (boots.getMetadata() > boots.getMaxDamage() || boots.func_190916_E() != 1)
+		{
+			player.inventory.armorInventory.set(0, new ItemStack((Item) null));
+		}
 
-		ItemStack boots = player.inventory.armorInventory[0];
-
-		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.getEnchantment("feather_falling"), boots) >= 4)
-			if (event.getSource() == DamageSource.fall)
-			{
-				boots.damageItem((int) event.getAmount(), player);
-				event.setAmount(0.0F);
-				if (boots.getMetadata() > boots.getMaxDamage() || boots.stackSize != 1)
-					player.inventory.armorInventory[0] = null;
-			}
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getEnchantment("feather_falling"), boots) >= 4)
+		{
+			boots.damageItem((int) event.getAmount(), player);
+			event.setAmount(0.0F);
+			if (boots.getMetadata() > boots.getMaxDamage() || boots.func_190916_E() != 1)
+				boots = ItemStack.field_190927_a;
+		}
 	}
 }
