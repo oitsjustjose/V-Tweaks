@@ -18,7 +18,6 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
-import com.oitsjustjose.vtweaks.event.itemtweaks.RealisticDrops;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
@@ -43,10 +42,10 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.9.4", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
+@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.11", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
 public class VTweaks
 {
-	public static final String MODID = "VTweaks";
+	public static final String MODID = "vtweaks";
 	public static final String NAME = "V-Tweaks";
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
@@ -64,10 +63,10 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
+		// TODO: Fix this, not yet working with disenchanting
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
-		MinecraftForge.EVENT_BUS.register(new RealisticDrops());
 		Enchantments.initialize();
 
 		if (config.hypermendingID > 0)
@@ -97,6 +96,7 @@ public class VTweaks
 		if (config.toolEffTweaks)
 			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
 
+		// TODO: Fix this, why is it decreasing the held stack?
 		if (config.torchPlacer)
 			MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
