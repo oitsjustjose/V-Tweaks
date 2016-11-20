@@ -26,7 +26,7 @@ public class SheepDyeFix
 			{
 				if (!(player.getHeldItemMainhand().getItem().getClass().getName().contains("biomesoplenty")))
 				{
-					player.getHeldItemMainhand().func_190918_g(1);
+					--player.getHeldItemMainhand().stackSize;
 					sheep.setFleeceColor(EnumDyeColor.byDyeDamage(getDye(player.getHeldItemMainhand())));
 				}
 			}

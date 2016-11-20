@@ -19,20 +19,21 @@ public class EnchantmentHypermendingHandler
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack heldItem = player.getHeldItemMainhand();
 
-		if (isValidTool(player.getHeldItemMainhand()))
-			if (heldItem.getItemDamage() > 0)
+		if (heldItem != null && isValidTool(player.getHeldItemMainhand()))
+			if (heldItem != null && heldItem.getItemDamage() > 0)
 				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.hyperMending, heldItem) > 0)
 					heldItem.setItemDamage(0);
 
 		if (player.getArmorInventoryList() != null)
 			for (ItemStack stack : player.getArmorInventoryList())
-				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.hyperMending, stack) > 0)
-					stack.setItemDamage(0);
+				if (stack != null)
+					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.hyperMending, stack) > 0)
+						stack.setItemDamage(0);
 	}
 
 	boolean isValidTool(ItemStack itemstack)
 	{
-		if (itemstack.getItem() != null)
+		if (itemstack != null)
 		{
 			if (itemstack.getItem() instanceof ItemTool)
 				return true;

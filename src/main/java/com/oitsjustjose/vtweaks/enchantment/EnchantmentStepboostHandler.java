@@ -16,7 +16,7 @@ public class EnchantmentStepboostHandler
 	{
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
-		ItemStack boots = player.inventory.armorInventory.get(0);
+		ItemStack boots = player.inventory.armorInventory[0];
 		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots);
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
 

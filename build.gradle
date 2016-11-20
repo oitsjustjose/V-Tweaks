@@ -15,10 +15,10 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.4.9.7"
 group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-1.11"
+archivesBaseName = "VTweaks-1.10.x"
 
 minecraft {
-    version = "1.11-13.19.0.2153"
+    version = "1.10.2-12.18.2.2125"
     
 	if (file('../run').exists()){
 	runDir = "../run"
@@ -29,7 +29,7 @@ minecraft {
     replaceIn "/VTweaks.java"
     replace "@VERSION@", project.version
 	
-    mappings = "snapshot_20161111"
+    mappings = "snapshot_20160518"
 }
 
 dependencies {

@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumActionResult;
@@ -17,7 +16,7 @@ public class TorchHelper
 	@SubscribeEvent
 	public void registerTweak(RightClickBlock event)
 	{
-		if (event.getEntityPlayer().getHeldItemMainhand().getItem() == null || event.getEntityPlayer().getHeldItemOffhand() != ItemStack.field_190927_a)
+		if (event.getEntityPlayer().getHeldItemMainhand() == null || event.getEntityPlayer().getHeldItemOffhand() != null)
 			return;
 
 		EntityPlayer player = event.getEntityPlayer();
@@ -27,19 +26,19 @@ public class TorchHelper
 		if (!(player.getHeldItemMainhand().getItem() instanceof ItemTool) || block.hasTileEntity(state))
 			return;
 
-		if (!event.getWorld().isRemote && block.onBlockActivated(event.getWorld(), event.getPos(), state, player, EnumHand.MAIN_HAND, event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
+		if (!event.getWorld().isRemote && block.onBlockActivated(event.getWorld(), event.getPos(), state, player, EnumHand.MAIN_HAND, player.getHeldItemMainhand(), event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
 			event.setCanceled(true);
 		else
 		{
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++)
 			{
 				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack.getItem() != null && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
+				if (stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
 				{
 					if (stack.onItemUse(player, event.getWorld(), event.getPos(), EnumHand.MAIN_HAND, event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()) == EnumActionResult.SUCCESS)
 						player.swingArm(EnumHand.MAIN_HAND);
-					if (stack.func_190916_E() == 0)
-						player.inventory.setInventorySlotContents(i, new ItemStack((Item) null));
+					if (stack.stackSize == 0)
+						player.inventory.setInventorySlotContents(i, null);
 				}
 			}
 		}

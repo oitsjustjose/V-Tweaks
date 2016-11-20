@@ -24,7 +24,7 @@ public class EnchantmentAutosmeltHandler
 	public void register(HarvestDropsEvent event)
 	{
 		EntityPlayer player = event.getHarvester();
-		if (player == null || player.getHeldItemMainhand().getItem() == null)
+		if (player == null || player.getHeldItemMainhand() == null)
 			return;
 
 		World world = event.getWorld();
@@ -41,12 +41,12 @@ public class EnchantmentAutosmeltHandler
 				ItemStack temp = iterator.next().copy();
 				ItemStack newDrop = FurnaceRecipes.instance().getSmeltingResult(temp.copy());
 
-				if (newDrop != ItemStack.field_190927_a)
+				if (newDrop != null)
 				{
 					newDrop = newDrop.copy();
-					newDrop.func_190920_e(temp.func_190916_E());
+					newDrop.stackSize = temp.stackSize;
 					if (event.getFortuneLevel() > 0 && shouldFortuneSmelt(temp))
-						newDrop.func_190920_e((newDrop.func_190916_E() * world.rand.nextInt(event.getFortuneLevel() + 1) + 1));
+						newDrop.stackSize *= world.rand.nextInt(event.getFortuneLevel() + 1) + 1;
 
 					iterator.set(newDrop);
 					spawnXP(event.getWorld(), event.getPos(), newDrop.copy());
@@ -62,7 +62,7 @@ public class EnchantmentAutosmeltHandler
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		int stackSize = itemstack.func_190916_E();
+		int stackSize = itemstack.stackSize;
 		float smeltingXP = FurnaceRecipes.instance().getSmeltingExperience(itemstack);
 		int xpSplit;
 

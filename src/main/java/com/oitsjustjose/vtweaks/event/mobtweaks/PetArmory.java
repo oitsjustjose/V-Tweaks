@@ -30,7 +30,7 @@ public class PetArmory
 					tameable.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
 					tameable.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 
-					player.getHeldItemMainhand().func_190918_g(1);
+					--player.getHeldItemMainhand().stackSize;
 				}
 				else if (player.getHeldItemMainhand().getItem() == Items.GOLDEN_HORSE_ARMOR)
 				{
@@ -39,7 +39,7 @@ public class PetArmory
 					tameable.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.GOLDEN_CHESTPLATE));
 					tameable.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET));
 
-					player.getHeldItemMainhand().func_190918_g(1);
+					--player.getHeldItemMainhand().stackSize;
 				}
 				else if (player.getHeldItemMainhand().getItem() == Items.DIAMOND_HORSE_ARMOR)
 				{
@@ -48,7 +48,7 @@ public class PetArmory
 					tameable.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
 					tameable.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET));
 					
-					player.getHeldItemMainhand().func_190918_g(1);
+					--player.getHeldItemMainhand().stackSize;
 				}
 			}
 		}
