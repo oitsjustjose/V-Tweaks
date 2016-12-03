@@ -55,7 +55,7 @@ public class Recipes
 
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.NETHER_STAR)
 			{
-				if (event.getRight().func_190916_E() == 1)
+				if (event.getRight().getCount() == 1)
 				{
 					event.setCost(VTweaks.config.hypermendingXPCost);
 					event.setOutput(book);
@@ -74,7 +74,7 @@ public class Recipes
 				return;
 
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.LAVA_BUCKET)
-				if (event.getRight().func_190916_E() == 1)
+				if (event.getRight().getCount() == 1)
 				{
 					event.setCost(VTweaks.config.autosmeltXPCost);
 					event.setOutput(book);
@@ -94,7 +94,7 @@ public class Recipes
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() instanceof ItemBlock)
 			{
 				Block inputBlock = Block.getBlockFromItem(event.getRight().getItem());
-				if (inputBlock.getRegistryName().toString().contains("stair") && event.getRight().func_190916_E() == 16)
+				if (inputBlock.getRegistryName().toString().contains("stair") && event.getRight().getCount() == 16)
 				{
 					event.setCost(VTweaks.config.stepboostXPCost);
 					event.setOutput(book);

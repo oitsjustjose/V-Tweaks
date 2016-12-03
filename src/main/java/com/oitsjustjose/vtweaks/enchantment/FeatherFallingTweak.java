@@ -19,10 +19,10 @@ public class FeatherFallingTweak
 		EntityPlayer player = (EntityPlayer) event.getEntity();
 		ItemStack boots = player.inventory.armorInventory.get(0);
 
-		if (event.getSource() != DamageSource.fall || boots == null)
+		if (event.getSource() != DamageSource.FALL || boots == ItemStack.EMPTY)
 			return;
 
-		if (boots.getMetadata() > boots.getMaxDamage() || boots.func_190916_E() != 1)
+		if (boots.getMetadata() > boots.getMaxDamage() || boots.getCount() != 1)
 		{
 			player.inventory.armorInventory.set(0, new ItemStack((Item) null));
 		}
@@ -31,8 +31,8 @@ public class FeatherFallingTweak
 		{
 			boots.damageItem((int) event.getAmount(), player);
 			event.setAmount(0.0F);
-			if (boots.getMetadata() > boots.getMaxDamage() || boots.func_190916_E() != 1)
-				boots = ItemStack.field_190927_a;
+			if (boots.getMetadata() > boots.getMaxDamage() || boots.getCount() != 1)
+				boots = ItemStack.EMPTY;
 		}
 	}
 }

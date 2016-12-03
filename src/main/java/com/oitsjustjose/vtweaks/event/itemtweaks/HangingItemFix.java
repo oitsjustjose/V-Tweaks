@@ -32,32 +32,32 @@ public class HangingItemFix
 
 		if (entity instanceof EntityPainting)
 		{
-			EntityItem paintingItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.PAINTING, 1));
+			EntityItem paintingItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.PAINTING, 1));
 
 			if (!player.inventory.addItemStackToInventory(new ItemStack(Items.PAINTING, 1)))
-				player.worldObj.spawnEntityInWorld(paintingItemEntity);
+				player.world.spawnEntity(paintingItemEntity);
 			entity.setDead();
 		}
 
 		// Ensures compatibility with TiCon
 		if (entity instanceof EntityItemFrame && !(entity.getClass().getName().contains("tconstruct")))
 		{
-			EntityItem itemFrameItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.ITEM_FRAME, 1));
+			EntityItem itemFrameItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.ITEM_FRAME, 1));
 			EntityItemFrame frame = (EntityItemFrame) entity;
 			ItemStack framedStack = frame.getDisplayedItem();
 
 			if (framedStack == null)
 			{
 				if (!player.inventory.addItemStackToInventory(new ItemStack(Items.ITEM_FRAME, 1)))
-					player.worldObj.spawnEntityInWorld(itemFrameItemEntity);
+					player.world.spawnEntity(itemFrameItemEntity);
 				entity.setDead();
 			}
 			else
 			{
-				EntityItem framedItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, framedStack);
+				EntityItem framedItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, framedStack);
 				if (!player.inventory.addItemStackToInventory(framedStack))
 				{
-					player.worldObj.spawnEntityInWorld(framedItemEntity);
+					player.world.spawnEntity(framedItemEntity);
 					frame.setDisplayedItem(null);
 				}
 			}
@@ -87,8 +87,8 @@ public class HangingItemFix
 				world.playBroadcastSound(1005, event.getPos(), 0);
 				world.playRecord(event.getPos(), (SoundEvent) null);
 
-				EntityItem record = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, recordStack);
-				world.spawnEntityInWorld(record);
+				EntityItem record = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, recordStack);
+				world.spawnEntity(record);
 			}
 		}
 	}

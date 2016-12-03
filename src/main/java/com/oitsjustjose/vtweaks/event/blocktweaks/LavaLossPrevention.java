@@ -39,7 +39,7 @@ public class LavaLossPrevention
 				{
 					if (!player.inventory.addItemStackToInventory(drop))
 					{
-						event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), player.posX, player.posY, player.posZ, drop));
+						event.getWorld().spawnEntity(new EntityItem(event.getWorld(), player.posX, player.posY, player.posZ, drop));
 					}
 				}
 			}

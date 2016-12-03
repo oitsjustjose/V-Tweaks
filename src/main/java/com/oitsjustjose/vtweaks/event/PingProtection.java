@@ -13,7 +13,7 @@ public class PingProtection
 	{
 		if (event.getEntity() instanceof EntityPlayerMP)
 		{
-			if (event.getSource() == DamageSource.dragonBreath || event.getSource() == DamageSource.wither || event.getSource() instanceof EntityDamageSource)
+			if (event.getSource() == DamageSource.DRAGON_BREATH || event.getSource() == DamageSource.WITHER || event.getSource() instanceof EntityDamageSource)
 			{
 				EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
 				int ping = player.ping;

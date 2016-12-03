@@ -19,7 +19,7 @@ public class ChallengerMobsDrops
 		if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
 			if (isChallengerMob((EntityMob) event.getEntity()))
 				for (int j = 0; j < 2; j++)
-					event.getDrops().add(getItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ));
+					event.getDrops().add(getItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ));
 	}
 
 	EntityItem getItem(World world, double x, double y, double z)

@@ -35,7 +35,7 @@ public class ConfigItemParser
 						int meta = Integer.parseInt(parts[2]);
 						int qty = Integer.parseInt(parts[3]);
 						temp.setItemDamage(meta);
-						temp.func_190920_e(qty);
+						temp.setCount(qty);
 						stackList.add(temp.copy());
 					}
 					catch (NumberFormatException e)
@@ -53,7 +53,7 @@ public class ConfigItemParser
 					try
 					{
 						int qty = Integer.parseInt(parts[2]);
-						temp.func_190920_e(qty);
+						temp.setCount(qty);
 						stackList.add(temp.copy());
 					}
 					catch (NumberFormatException e)

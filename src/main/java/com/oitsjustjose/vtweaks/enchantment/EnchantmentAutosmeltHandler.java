@@ -41,12 +41,12 @@ public class EnchantmentAutosmeltHandler
 				ItemStack temp = iterator.next().copy();
 				ItemStack newDrop = FurnaceRecipes.instance().getSmeltingResult(temp.copy());
 
-				if (newDrop != ItemStack.field_190927_a)
+				if (!newDrop.isEmpty())
 				{
 					newDrop = newDrop.copy();
-					newDrop.func_190920_e(temp.func_190916_E());
+					newDrop.setCount(temp.getCount());
 					if (event.getFortuneLevel() > 0 && shouldFortuneSmelt(temp))
-						newDrop.func_190920_e((newDrop.func_190916_E() * world.rand.nextInt(event.getFortuneLevel() + 1) + 1));
+						newDrop.setCount((newDrop.getCount() * world.rand.nextInt(event.getFortuneLevel() + 1) + 1));
 
 					iterator.set(newDrop);
 					spawnXP(event.getWorld(), event.getPos(), newDrop.copy());
@@ -62,7 +62,7 @@ public class EnchantmentAutosmeltHandler
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		int stackSize = itemstack.func_190916_E();
+		int stackSize = itemstack.getCount();
 		float smeltingXP = FurnaceRecipes.instance().getSmeltingExperience(itemstack);
 		int xpSplit;
 
@@ -70,9 +70,9 @@ public class EnchantmentAutosmeltHandler
 			stackSize = 0;
 		else if (smeltingXP < 1.0F)
 		{
-			xpSplit = MathHelper.floor_float((float) stackSize * smeltingXP);
+			xpSplit = MathHelper.floor((float) stackSize * smeltingXP);
 
-			if (xpSplit < MathHelper.ceiling_float_int((float) stackSize * smeltingXP) && (float) Math.random() < (float) stackSize * smeltingXP - (float) xpSplit)
+			if (xpSplit < MathHelper.ceil((float) stackSize * smeltingXP) && (float) Math.random() < (float) stackSize * smeltingXP - (float) xpSplit)
 				++xpSplit;
 
 			stackSize = xpSplit;
@@ -82,7 +82,7 @@ public class EnchantmentAutosmeltHandler
 		{
 			xpSplit = EntityXPOrb.getXPSplit(stackSize);
 			stackSize -= xpSplit;
-			world.spawnEntityInWorld(new EntityXPOrb(world, x, y + 0.5, z, xpSplit));
+			world.spawnEntity(new EntityXPOrb(world, x, y + 0.5, z, xpSplit));
 		}
 	}
 

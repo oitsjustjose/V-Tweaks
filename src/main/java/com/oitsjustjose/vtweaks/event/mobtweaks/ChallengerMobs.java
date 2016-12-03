@@ -34,10 +34,10 @@ public class ChallengerMobs
 						return;
 
 					EntityMob monster = (EntityMob) event.getEntity();
-					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.field_190927_a);
-					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, ItemStack.field_190927_a);
-					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, ItemStack.field_190927_a);
-					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, ItemStack.field_190927_a);
+					monster.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
+					monster.setItemStackToSlot(EntityEquipmentSlot.CHEST, ItemStack.EMPTY);
+					monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, ItemStack.EMPTY);
+					monster.setItemStackToSlot(EntityEquipmentSlot.FEET, ItemStack.EMPTY);
 
 					// Custom Name Tags, and infinite fire resistance to prevent cheesy kills
 					monster.setCustomNameTag(mobClassName(rand, monster));
@@ -110,7 +110,7 @@ public class ChallengerMobs
 		if (type <= (r.length - 1))
 			return r[type];
 		else
-			return ItemStack.field_190927_a;
+			return ItemStack.EMPTY;
 	}
 
 	public String mobClassName(int type, EntityMob mob)

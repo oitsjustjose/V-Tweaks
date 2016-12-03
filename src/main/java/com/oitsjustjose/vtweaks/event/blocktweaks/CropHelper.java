@@ -146,6 +146,6 @@ public class CropHelper
 	public void dropItem(World world, BlockPos pos, ItemStack itemstack)
 	{
 		EntityItem drop = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
-		world.spawnEntityInWorld(drop);
+		world.spawnEntity(drop);
 	}
 }

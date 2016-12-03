@@ -42,16 +42,16 @@ public class MobKiller
 		if (toKill != null && toKill instanceof EntityWither && VTweaks.config.noOverworldWither)
 		{
 			EntityWither wither = (EntityWither) toKill;
-			if (wither.worldObj.provider.getDimension() == 0)
+			if (wither.world.provider.getDimension() == 0)
 			{
 				wither.setDead();
-				if (!event.getEntity().worldObj.isRemote)
+				if (!event.getEntity().world.isRemote)
 				{
-					EntityItem soulSand = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Blocks.SOUL_SAND, 2));
-					EntityItem skulls = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.SKULL, 1, 1).setStackDisplayName("No Withers in the Overworld"));
+					EntityItem soulSand = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Blocks.SOUL_SAND, 2));
+					EntityItem skulls = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.SKULL, 1, 1).setStackDisplayName("No Withers in the Overworld"));
 
-					event.getEntity().getEntityWorld().spawnEntityInWorld(soulSand);
-					event.getEntity().getEntityWorld().spawnEntityInWorld(skulls);
+					event.getEntity().getEntityWorld().spawnEntity(soulSand);
+					event.getEntity().getEntityWorld().spawnEntity(skulls);
 				}
 			}
 		}

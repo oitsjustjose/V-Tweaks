@@ -26,11 +26,11 @@ public class FeatherPlucker
 		{
 			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemShears)
 			{
-				if (!player.worldObj.isRemote && chicken.getGrowingAge() == 0)
+				if (!player.world.isRemote && chicken.getGrowingAge() == 0)
 				{
-					EntityItem featherDrop = new EntityItem(player.worldObj, event.getTarget().posX, event.getTarget().posY, event.getTarget().posZ, new ItemStack(Items.FEATHER));
-					player.worldObj.spawnEntityInWorld(featherDrop);
-					chicken.attackEntityFrom(DamageSource.generic, 0.0F);
+					EntityItem featherDrop = new EntityItem(player.world, event.getTarget().posX, event.getTarget().posY, event.getTarget().posZ, new ItemStack(Items.FEATHER));
+					player.world.spawnEntity(featherDrop);
+					chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG());
