@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 1.4.9.7:
 * Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava.
 * Changed: Defaults for egg hatching.... they were far too high.
@@ -188,5 +187,4 @@
 * Changed: Completely rewrote configuration file and in-game mod config. All settings will need to be re-changed.
 * Changed: Many small internal refactors. Affects nothing.
 * Added: Ability to disable Lightning (or technically, thunderstorms). Lightning on my server causes a lot of stupidity.
->>>>>>> origin/master
 * Added: (1.8.8 only) Ability to change Anvil placement sound to the same as a metal block
