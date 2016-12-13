@@ -1,3 +1,8 @@
+1.4.9.8:
+* Changed: Minecraft Version to 1.11
+* Changed: Had to re-write Torch Helper. Hopefully it works as well as it used to!
+* Removed: Item despawning stuff completely. This includes egg hatching and sapling planting
+
 1.4.9.7:
 * Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava.
 * Changed: Defaults for egg hatching.... they were far too high.
