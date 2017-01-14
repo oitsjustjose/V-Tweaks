@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,6 +15,9 @@ public class PetArmory
 	@SubscribeEvent
 	public void registerEvent(EntityInteract event)
 	{
+		if (!VTweaks.config.enablePetArmory)
+			return;
+		
 		if (event.getTarget() == null)
 			return;
 

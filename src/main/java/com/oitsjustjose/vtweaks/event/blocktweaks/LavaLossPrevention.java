@@ -2,6 +2,8 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.List;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +21,8 @@ public class LavaLossPrevention
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerTweak(HarvestDropsEvent event)
 	{
+		if (!VTweaks.config.enableLavaLossPrevention)
+			return;
 		EntityPlayer player = event.getHarvester();
 		if (player == null || event.getState() == null || event.getState().getBlock() == null)
 			return;

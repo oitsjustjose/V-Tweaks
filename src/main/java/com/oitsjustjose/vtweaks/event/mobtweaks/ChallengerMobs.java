@@ -4,6 +4,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Items;
@@ -13,6 +14,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,6 +25,9 @@ public class ChallengerMobs
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerEvent(LivingSpawnEvent event)
 	{
+		if(!VTweaks.config.enableChallengerMobs)
+			return;
+		
 		if (!event.getWorld().isRemote)
 		{
 			if (0 == event.getWorld().rand.nextInt(VTweaks.config.challengerMobRarity))
@@ -64,6 +70,18 @@ public class ChallengerMobs
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void registerEvent(LivingDropsEvent event)
+	{
+		if(!VTweaks.config.enableChallengerMobs)
+			return;
+		
+		if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
+			if (isChallengerMob((EntityMob) event.getEntity()))
+				for (int j = 0; j < 2; j++)
+					event.getDrops().add(getItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ));
 	}
 
 	double getMobSpeed(int type)
@@ -131,6 +149,26 @@ public class ChallengerMobs
 					mobString += nameParts[i];
 			}
 		}
-		return VTweaks.config.challengerMobs[type] + " " + mobString;
+		return VTweaks.config.challengerMobNames[type] + " " + mobString;
+	}
+	
+	EntityItem getItem(World world, double x, double y, double z)
+	{
+		int RNG = world.rand.nextInt(VTweaks.config.challengerLootTable.size());
+		ItemStack temp = VTweaks.config.challengerLootTable.get(RNG).copy();
+		return new EntityItem(world, x, y, z, temp.copy());
+	}
+
+	boolean isChallengerMob(EntityMob entity)
+	{
+		String n = entity.getCustomNameTag().toLowerCase();
+		if (n == null)
+			return false;
+
+		String[] preFixes = VTweaks.config.challengerMobNames.clone();
+		for (int i = 0; i < preFixes.length; i++)
+			if (n.contains(preFixes[i].toLowerCase()))
+				return true;
+		return false;
 	}
 }

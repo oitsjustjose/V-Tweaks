@@ -17,7 +17,7 @@ public class ConfigItemParser
 
 		LogHelper.info(">> Running Config Item Parser");
 
-		for (String s : VTweaks.config.challengerMobLootTable)
+		for (String s : VTweaks.config.challengerMobLoot)
 		{
 			// Splits the string apart by uncommon characters
 			// Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>

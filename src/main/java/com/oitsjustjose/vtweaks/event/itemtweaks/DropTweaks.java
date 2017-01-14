@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class RealisticDrops
+public class DropTweaks
 {
 
 	@SubscribeEvent
@@ -31,9 +31,9 @@ public class RealisticDrops
 		ItemStack stack = entItem.getEntityItem();
 
 		// Handles egg hatching; 1 in 12 chance.
-		if (VTweaks.config.hatchingEggs && stack.getItem() == Items.EGG)
+		if (VTweaks.config.enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
 		{
-			if (world.rand.nextInt(VTweaks.config.eggHatchChance) == 0)
+			if (world.rand.nextInt(VTweaks.config.enableEggHatchChance) == 0)
 			{
 				if (!world.isRemote)
 				{
@@ -45,7 +45,7 @@ public class RealisticDrops
 			}
 		}
 		// Handles sapling replanting; 100% chance
-		else if (VTweaks.config.organicSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockSapling)
+		else if (VTweaks.config.enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockSapling)
 		{
 			BlockPos saplingPos = new BlockPos((int) entItem.posX, (int) entItem.posY, (int) entItem.posZ);
 			// Checks to see if where the sapling *will* be is air
@@ -61,7 +61,7 @@ public class RealisticDrops
 			}
 		}
 		// Only gets run if the config is set to make all items never despawn.
-		else if (VTweaks.config.adjustDespawnTimer && VTweaks.config.newDespawnTime == -1)
+		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.enableNewDespawnTime == -1)
 		{
 			event.setCanceled(true);
 		}
@@ -71,10 +71,10 @@ public class RealisticDrops
 	public void registerTweak(ItemTossEvent event)
 	{
 		// Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
-		if (!VTweaks.config.adjustDespawnTimer || VTweaks.config.newDespawnTime == -1 || event.getEntityItem() == null)
+		if (!VTweaks.config.enableDropTweaksDespawn || VTweaks.config.enableNewDespawnTime == -1 || event.getEntityItem() == null)
 			return;
 
 		EntityItem entItem = event.getEntityItem();
-		entItem.lifespan = VTweaks.config.newDespawnTime;
+		entItem.lifespan = VTweaks.config.enableNewDespawnTime;
 	}
 }

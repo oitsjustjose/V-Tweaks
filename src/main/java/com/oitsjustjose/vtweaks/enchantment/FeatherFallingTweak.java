@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,6 +14,9 @@ public class FeatherFallingTweak
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
+		if(!VTweaks.config.enableFeatherFallingTweak)
+			return;
+		
 		if (!(event.getEntity() instanceof EntityPlayer))
 			return;
 

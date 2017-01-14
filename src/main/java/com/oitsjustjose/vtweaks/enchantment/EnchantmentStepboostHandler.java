@@ -14,6 +14,9 @@ public class EnchantmentStepboostHandler
 	@SubscribeEvent
 	public void register(PlayerEvent event)
 	{
+		if(VTweaks.config.stepboostID <= 0)
+			return;
+		
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 		ItemStack boots = player.inventory.armorInventory[0];

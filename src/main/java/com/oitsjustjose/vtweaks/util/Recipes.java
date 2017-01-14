@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.List;
+
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -10,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,10 +23,25 @@ public class Recipes
 {
 	public static void registerRecipes()
 	{
-		if (VTweaks.config.disenchant && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
+		if (VTweaks.config.enableDisenchantRecipes && !(Loader.isModLoaded("Botania") || Loader.isModLoaded("ThaumicTinkerer")))
 		{
 			CraftingManager.getInstance().getRecipeList().add(new DisenchantRecipes(Items.PAPER));
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
+		}
+	}
+	
+	public static void removeRecipe(ItemStack resultItem)
+	{
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (int i = 0; i < recipes.size(); i++)
+		{
+			if (recipes.get(i) != null)
+			{
+				ItemStack recipeResult = recipes.get(i).getRecipeOutput();
+
+				if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
+					recipes.remove(i--);
+			}
 		}
 	}
 
@@ -32,7 +50,7 @@ public class Recipes
 	{
 		registerBookRecipes(event);
 
-		if (VTweaks.config.horseArmor)
+		if (VTweaks.config.enableRecipeHorseArmor)
 			registerHorseArmorRecipes(event);
 	}
 

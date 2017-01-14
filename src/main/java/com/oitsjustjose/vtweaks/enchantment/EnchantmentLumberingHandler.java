@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,6 +17,9 @@ public class EnchantmentLumberingHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(BreakEvent event)
 	{
+		if(VTweaks.config.lumberingID <= 0)
+			return;
+		
 		if (event.getState().getBlock() == null || event.getWorld() == null || event.getPlayer() == null || event.getPlayer().getHeldItemMainhand() == null)
 			return;
 

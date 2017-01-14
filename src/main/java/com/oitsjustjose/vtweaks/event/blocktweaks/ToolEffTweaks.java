@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockSkull;
@@ -17,6 +19,9 @@ public class ToolEffTweaks
 	@SubscribeEvent
 	public void registerTweak(PlayerEvent.BreakSpeed event)
 	{
+		if(!VTweaks.config.enableToolEffTweaks)
+			return;
+		
 		Block block = event.getState().getBlock();
 		ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 		if (block == null || stack == null)

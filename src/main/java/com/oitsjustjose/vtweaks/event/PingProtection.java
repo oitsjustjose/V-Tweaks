@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
@@ -11,6 +13,8 @@ public class PingProtection
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
+		if (!VTweaks.config.enablePingProtection)
+			return;
 		if (event.getEntity() instanceof EntityPlayerMP)
 		{
 			if (event.getSource() == DamageSource.dragonBreath || event.getSource() == DamageSource.wither || event.getSource() instanceof EntityDamageSource)

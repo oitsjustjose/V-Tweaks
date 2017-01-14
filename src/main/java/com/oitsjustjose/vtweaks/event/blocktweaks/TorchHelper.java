@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +18,9 @@ public class TorchHelper
 	@SubscribeEvent
 	public void registerTweak(RightClickBlock event)
 	{
+		if(!VTweaks.config.enableTorchHelper)
+			return;
+		
 		if (event.getEntityPlayer().getHeldItemMainhand() == null || event.getEntityPlayer().getHeldItemOffhand() != null)
 			return;
 

@@ -2,6 +2,8 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.Random;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +22,9 @@ public class BonemealTweaks
 	@SubscribeEvent
 	public void registerTweakNormal(RightClickBlock event)
 	{
+		if(!VTweaks.config.enableBonemealTweaks)
+			return;
+		
 		if (event.getWorld().getBlockState(event.getPos()) == null)
 			return;
 

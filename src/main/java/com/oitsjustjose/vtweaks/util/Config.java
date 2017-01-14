@@ -24,60 +24,64 @@ public class Config
 	public ConfigCategory MiscFeatures;
 
 	// Mob Configs
-	public boolean petArmory;
-	public boolean featherBuff;
-	public boolean hideBuff;
-	public boolean boneBuff;
-	public boolean sacBuff;
-	public boolean enderpearlBuff;
-	public boolean pluckFeather;
-	public boolean challengers;
-	public String[] challengerMobDefaults = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
-	public String[] challengerMobLootTableDefaults = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
-	public String[] challengerMobs;
-	public String[] challengerMobLootTable;
+	public boolean enablePetArmory;
+	public boolean enableMobDropBuffsChickens;
+	public boolean enableMobDropBuffsCows;
+	public boolean enableMobDropBuffsSkeletons;
+	public boolean enableMobDropBuffsSquids;
+	public boolean enableMobDropBuffsEndermen;
+	public boolean enableFeatherPlucker;
+	public boolean enableChallengerMobs;
+	public String[] challengerMobDefaultNames = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
+	public String[] challengerMobNames;
+	public String[] challengerMobDefaultLoot = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
+	public String[] challengerMobLoot;
 	public int challengerMobRarity;
-	public boolean noBats;
-	public boolean noPigZombies;
-	public boolean noOverworldWither;
+	public boolean disableBats;
+	public boolean disablePigZombies;
+	public boolean disableWitherOverworld;
 
 	// Enchantment Configs
-	public int hypermendingID;
-	public int autosmeltID;
-	public int stepboostID;
-	public int lumberingID;
-	public boolean autosmeltFortuneInteraction;
+	public int     hypermendingID;
+	public int     autosmeltID;
+	public int     stepboostID;
+	public int     lumberingID;
+	public boolean enableAutosmeltFortuneInteraction;
 	public String[] autosmeltOverrides;
-	public int hypermendingXPCost;
-	public int autosmeltXPCost;
-	public int stepboostXPCost;
-	public int lumberingXPCost;
-	public boolean featherFalling;
-	public boolean disenchant;
+	public int     hypermendingXPCost;
+	public int     autosmeltXPCost;
+	public int     stepboostXPCost;
+	public int     lumberingXPCost;
+	public boolean enableFeatherFallingTweak;
+	public boolean enableDisenchantRecipes;
+
 	// Block Configs
-	public boolean cropHarvest;
-	public String[] cropHarvestBlacklistDefaults = new String[] { "harvestcraft", "tehnut.resourceful.crops" };
-	public String[] cropHarvestBlacklist;
-	public boolean bonemealTweak;
-	public boolean cakeTweak;
-	public boolean toolEffTweaks;
-	public boolean torchPlacer;
-	public boolean glitchingItemFix;
-	public boolean organicSaplings;
-	public boolean lavaLossPrevention;
+	public boolean enableCropHelper;
+	public String[] cropHelperBlacklistDefaults = new String[] { "harvestcraft", "tehnut.resourceful.crops" };
+	public String[] cropHelperBlacklist;
+	public boolean enableBonemealTweaks;
+	public boolean enableCakeTweak;
+	public boolean enableToolEffTweaks;
+	public boolean enableTorchHelper;
+	public boolean enableHangingItemFix;
+	public boolean enableDropTweaksSaplings;
+	public boolean enableLavaLossPrevention;
+	
 	// Item Configs
-	public boolean addFuels;
-	public boolean adjustDespawnTimer;
-	public int newDespawnTime;
-	public boolean hatchingEggs;
-	public int eggHatchChance;
+	public boolean enableWoodItemFuelHandler;
+	public boolean enableDropTweaksDespawn;
+	public int     enableNewDespawnTime;
+	public boolean enableDropTweaksEggHatching;
+	public int     enableEggHatchChance;
+	
 	// Misc Configs
-	public boolean earlyGame;
-	public boolean horseArmor;
-	public boolean stackSizeTweaks;
-	public boolean lightning;
-	public boolean pingProtection;
-	public int foodToolTips;
+	public boolean enableGamePlayHandler;
+	public boolean enableRecipeHorseArmor;
+	public boolean enableStackTweaks;
+	public boolean enableStormTweak;
+	public boolean enablePingProtection;
+	public boolean enableDeathPoint;
+	public int     tooltipSetting;
 
 	public ArrayList<ItemStack> challengerLootTable;
 
@@ -110,71 +114,71 @@ public class Config
 		MobTweaks = config.getCategory(category);
 		MobTweaks.setComment("Various Tweaks to Mobs");
 
-		property = config.get(category, "Allow pet armor", true).setRequiresMcRestart(true);
+		property = config.get(category, "Allow pet armor", true);
 		property.setComment("Allows you to R-Click on TAMED pets with horse armor to armor them up!");
-		petArmory = property.getBoolean();
+		enablePetArmory = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Chickens Drop Extra Feathers", true).setRequiresMcRestart(true);
+		property = config.get(category, "Chickens Drop Extra Feathers", true);
 		property.setComment("If set to false, chicken drops will be unchanged");
-		featherBuff = property.getBoolean();
+		enableMobDropBuffsChickens = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Cows Drop Extra Leather", true).setRequiresMcRestart(true);
+		property = config.get(category, "Cows Drop Extra Leather", true);
 		property.setComment("If set to false, cow drops will be unchanged");
-		hideBuff = property.getBoolean();
+		enableMobDropBuffsCows = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Skeletons Drop Extra Bones", true).setRequiresMcRestart(true);
+		property = config.get(category, "Skeletons Drop Extra Bones", true);
 		property.setComment("If set to false, skeleton drops will be unchanged");
-		boneBuff = property.getBoolean();
+		enableMobDropBuffsSkeletons = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Squids Drop Extra Ink Sacs", true).setRequiresMcRestart(true);
+		property = config.get(category, "Squids Drop Extra Ink Sacs", true);
 		property.setComment("If set to false, squid drops will be unchanged");
-		sacBuff = property.getBoolean();
+		enableMobDropBuffsSquids = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Endermen Drop Extra Ender Pearls", true).setRequiresMcRestart(true);
+		property = config.get(category, "Endermen Drop Extra Ender Pearls", true);
 		property.setComment("If set to false, enderman drops will be unchanged");
-		enderpearlBuff = property.getBoolean();
+		enableMobDropBuffsEndermen = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Pluck Feathers from Chickens", true).setRequiresMcRestart(true);
 		property.setComment("Allows chickens to have a feather plucked using shears");
-		pluckFeather = property.getBoolean();
+		enableFeatherPlucker = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Bats", false).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Bats", false);
 		property.setComment("Disables all bat spawns from the world. May prevent irration; side-effects are: difficulties with angel ring acquisition from ExU2");
-		noBats = property.getBoolean();
+		disableBats = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Pig Zombies", false).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Pig Zombies", false);
 		property.setComment("Also balances Ghast spawns");
-		noPigZombies = property.getBoolean();
+		disablePigZombies = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disallow Wither Spawning in the Overworld", false).setRequiresMcRestart(true);
+		property = config.get(category, "Disallow Wither Spawning in the Overworld", false);
 		property.setComment("Special request - only allows the wither to be summoned in non-overworld dimensions");
-		noOverworldWither = property.getBoolean();
+		disableWitherOverworld = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Enabled", true).setRequiresMcRestart(true);
+		property = config.get(category, "Challenger Mobs Enabled", true);
 		property.setComment("Randomly spawns more difficult (but more lootworthy) enemies Applies to ALL enemies");
-		challengers = property.getBoolean();
+		enableChallengerMobs = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE).setRequiresMcRestart(true);
+		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE);
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Loot Table", challengerMobLootTableDefaults, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
-		challengerMobLootTable = property.getStringList();
+		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
+		challengerMobLoot = property.getStringList();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaults, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
-		challengerMobs = property.getStringList();
+		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaultNames, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
+		challengerMobNames = property.getStringList();
 		propertyOrder.add(property.getName());
 
 		MobTweaks.setPropertyOrder(propertyOrder);
@@ -185,25 +189,25 @@ public class Config
 		Enchantments = config.getCategory(category);
 		Enchantments.setComment("Enchantment ID's and Tweaks");
 
-		property = config.get(category, "Hypermending Enchantment ID", 233, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		property = config.get(category, "Hypermending Enchantment ID", 233, "If set to 0, the enchantment is disabled", 0, 255);
 		hypermendingID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255);
 		autosmeltID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255);
 		stepboostID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255).setRequiresMcRestart(true);
+		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255);
 		lumberingID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Autosmelt Fortune Interaction", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Autosmelt Fortune Interaction", true);
 		property.setComment("Setting this to false will completely disable fortune bonuses on Autosmelted blocks");
-		autosmeltFortuneInteraction = property.getBoolean();
+		enableAutosmeltFortuneInteraction = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
@@ -211,30 +215,30 @@ public class Config
 		autosmeltOverrides = property.getStringList();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Hypermending XP Cost", 30, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		property = config.get(category, "Hypermending XP Cost", 30, "The number of levels that crafting this book will require.", 1, 40);
 		hypermendingXPCost = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Auto-Smelt XP Cost", 15, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		property = config.get(category, "Auto-Smelt XP Cost", 15, "The number of levels that crafting this book will require.", 1, 40);
 		autosmeltXPCost = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "StepBoost XP Cost", 5, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		property = config.get(category, "StepBoost XP Cost", 5, "The number of levels that crafting this book will require.", 1, 40);
 		stepboostXPCost = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Lumbering XP Cost", 20, "The number of levels that crafting this book will require.", 1, 40).setRequiresMcRestart(true);
+		property = config.get(category, "Lumbering XP Cost", 20, "The number of levels that crafting this book will require.", 1, 40);
 		lumberingXPCost = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Better Feather Falling", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Better Feather Falling", true);
 		property.setComment("Tweaks Feather Falling IV to negate ALL fall damage");
-		featherFalling = property.getBoolean();
+		enableFeatherFallingTweak = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Item Disenchantment", true).setRequiresMcRestart(true);
 		property.setComment("Allow crafting a piece of paper with an enchanted tool to disenchant said tool");
-		disenchant = property.getBoolean();
+		enableDisenchantRecipes = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		Enchantments.setPropertyOrder(propertyOrder);
@@ -245,49 +249,49 @@ public class Config
 		BlockTweaks = config.getCategory(category);
 		BlockTweaks.setComment("Tweaks for Blocks");
 
-		property = config.get(category, "Easy Crop Harvesting", true).setRequiresMcRestart(true);
+		property = config.get(category, "Easy Crop Harvesting", true);
 		property.setComment("Allows for right-click-to-harvest on nearly any (including mod) crop");
-		cropHarvest = property.getBoolean();
+		enableCropHelper = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Easy Crop Harvesting Class Blacklist", cropHarvestBlacklistDefaults).setRequiresMcRestart(true);
+		property = config.get(category, "Easy Crop Harvesting Class Blacklist", cropHelperBlacklistDefaults);
 		property.setComment("Objects listed here will not be effected by the Easy Crop Harvesting tweak. These are class names, or parts of class names");
-		cropHarvestBlacklist = property.getStringList();
+		cropHelperBlacklist = property.getStringList();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Bonemeal Tweak", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Bonemeal Tweak", true);
 		property.setComment("Allows more things to be bonemealed");
-		bonemealTweak = property.getBoolean();
+		enableBonemealTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Cake Drops", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Cake Drops", true);
 		property.setComment("Uneaten Cakes can be broken and re-acquired");
-		cakeTweak = property.getBoolean();
+		enableCakeTweak = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Tool Efficiency Tweaks", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Tool Efficiency Tweaks", true);
 		property.setComment("Fixes some tools NOT being effective on certain materials");
-		toolEffTweaks = property.getBoolean();
+		enableToolEffTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Tool Torch Placement", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Tool Torch Placement", true);
 		property.setComment("Right clicking with a tool will place a torch from your inventory");
-		torchPlacer = property.getBoolean();
+		enableTorchHelper = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Glitching Item Fix", true).setRequiresMcRestart(true);
+		property = config.get(category, "Glitching Item Fix", true);
 		property.setComment("Fixes common vanilla instances of items spawning and glitching everywhere by bypassing the spawning situation completely");
-		glitchingItemFix = property.getBoolean();
+		enableHangingItemFix = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Sapling Self-Planting", true).setRequiresMcRestart(true);
+		property = config.get(category, "Sapling Self-Planting", true);
 		property.setComment("Makes it so that any saplings that fall will automatically plant themselves if they can");
-		organicSaplings = property.getBoolean();
+		enableDropTweaksSaplings = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Lava Loss Prevention", true).setRequiresMcRestart(true);
+		property = config.get(category, "Lava Loss Prevention", true);
 		property.setComment("Enabling this feature helps prevent Obsidian (and Chisel's Basalt) from being burnt by lava");
-		lavaLossPrevention = property.getBoolean();
+		enableLavaLossPrevention = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		BlockTweaks.setPropertyOrder(propertyOrder);
@@ -300,25 +304,25 @@ public class Config
 
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
 		property.setComment("Adds wooden items to fuel list if they were missing");
-		addFuels = property.getBoolean();
+		enableWoodItemFuelHandler = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Adjust Despawn Timer for Items Dropped in the World", false).setRequiresMcRestart(true);
+		property = config.get(category, "Adjust Despawn Timer for Items Dropped in the World", false);
 		property.setComment("Allows for items' despawn timer to be longer or shorter, depending on what your preference is");
-		adjustDespawnTimer = property.getBoolean();
+		enableDropTweaksDespawn = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "New Despawn Timer for Items (if enabled)", 6000, "If the above option is enabled, here you can control how long dropped items last in the world before despawning. -1 means items don't despawn", -1, Integer.MAX_VALUE).setRequiresMcRestart(true);
-		newDespawnTime = property.getInt();
+		property = config.get(category, "New Despawn Timer for Items (if enabled)", 6000, "If the above option is enabled, here you can control how long dropped items last in the world before despawning. -1 means items don't despawn", -1, Integer.MAX_VALUE);
+		enableNewDespawnTime = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Allow Despawning Eggs to Randomly Hatch", false).setRequiresMcRestart(true);
+		property = config.get(category, "Allow Despawning Eggs to Randomly Hatch", false);
 		property.setComment("If enabled, when eggs are about to despawn they will have a chance to hatch into a baby chick!");
-		hatchingEggs = property.getBoolean();
+		enableDropTweaksEggHatching = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Chance for Eggs to Hatch", 64, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE).setRequiresMcRestart(true);
-		eggHatchChance = property.getInt();
+		property = config.get(category, "Chance for Eggs to Hatch", 64, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE);
+		enableEggHatchChance = property.getInt();
 		propertyOrder.add(property.getName());
 
 		ItemTweaks.setPropertyOrder(propertyOrder);
@@ -331,31 +335,36 @@ public class Config
 
 		property = config.get(category, "Change Base Game Mechanics", false).setRequiresMcRestart(true);
 		property.setComment("This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay");
-		earlyGame = property.getBoolean();
+		enableGamePlayHandler = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Enable Horse Armor Recipes", true).setRequiresMcRestart(true);
+		property = config.get(category, "Enable Horse Armor Recipes", true);
 		property.setComment("Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type");
-		horseArmor = property.getBoolean();
+		enableRecipeHorseArmor = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Stack Size Tweaks", true).setRequiresMcRestart(true);
 		property.setComment("Adjusts Max Stack Sizes of some vanilla items");
-		stackSizeTweaks = property.getBoolean();
+		enableStackTweaks = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Disable Lightning", true).setRequiresMcRestart(true);
+		property = config.get(category, "Disable Lightning", true);
 		property.setComment("Disables lightning from spawning, it can get annoying");
-		lightning = property.getBoolean();
+		enableStormTweak = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Ping Protection", false).setRequiresMcRestart(true);
+		property = config.get(category, "Ping Protection", false);
 		property.setComment("This option lowers the amount of Entity damage taken by players with a bad multiplayer connection. The worse the connection, the less damage they will take");
-		pingProtection = property.getBoolean();
+		enablePingProtection = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Death Point Message", true);
+		property.setComment("Enabling this feature makes it so a chat message appears notifying the player of where they died");
+		enableDeathPoint = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Food Value Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
-		foodToolTips = property.getInt();
+		tooltipSetting = property.getInt();
 		propertyOrder.add(property.getName());
 
 		MiscFeatures.setPropertyOrder(propertyOrder);

@@ -54,6 +54,7 @@ public class ConfigGUI extends GuiConfig
 		}
 
 		@Override
+		@SuppressWarnings("deprecation")
 		public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element)
 		{
 			return null;
