@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
@@ -16,6 +18,9 @@ public class EnchantmentHypermendingHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(PlayerEvent event)
 	{
+		if(VTweaks.config.hypermendingID <= 0)
+			return;
+		
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack heldItem = player.getHeldItemMainhand();
 

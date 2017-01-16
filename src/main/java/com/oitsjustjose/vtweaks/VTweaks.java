@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.event.DeathPoint;
 import com.oitsjustjose.vtweaks.event.PingProtection;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
@@ -15,12 +16,12 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
+import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
-import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobsDrops;
 import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
@@ -59,83 +60,54 @@ public class VTweaks
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		config = new Config(event.getSuggestedConfigurationFile());
+
+		GamePlayHandler.initialize();
 		MinecraftForge.EVENT_BUS.register(config);
+
+		// Mob Tweaks
+		MinecraftForge.EVENT_BUS.register(new PetArmory());
 		MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
+		MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
+		MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
 		MinecraftForge.EVENT_BUS.register(new MobKiller());
-		MinecraftForge.EVENT_BUS.register(new ToolTips());
-		// TODO: Fix this, not yet working with disenchanting
-		MinecraftForge.EVENT_BUS.register(new Recipes());
-		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
-		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
+
+		// Enchantments
 		Enchantments.initialize();
+		MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
+		MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
+		MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
+		MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
+		MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
-		if (config.hypermendingID > 0)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
+		// Block Tweaks
+		MinecraftForge.EVENT_BUS.register(new CropHelper());
+		MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
+		MinecraftForge.EVENT_BUS.register(new CakeTweak());
+		MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
+		MinecraftForge.EVENT_BUS.register(new LavaLossPrevention());
 
-		if (config.autosmeltID > 0)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
+		// Item Tweaks
+		MinecraftForge.EVENT_BUS.register(new DropTweaks());
+		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
+		MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
-		if (config.stepboostID > 0)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
+		// Miscellaneous Features
+		MinecraftForge.EVENT_BUS.register(new ToolTips());
+		MinecraftForge.EVENT_BUS.register(new StormTweak());
+		MinecraftForge.EVENT_BUS.register(new PingProtection());
+		MinecraftForge.EVENT_BUS.register(new DeathPoint());
 
-		if (config.lumberingID > 0)
-			MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
-
-		if (config.cropHarvest)
-			MinecraftForge.EVENT_BUS.register(new CropHelper());
-
-		if (config.bonemealTweak)
-			MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
-
-		if (config.cakeTweak)
-			MinecraftForge.EVENT_BUS.register(new CakeTweak());
-
-		if (config.featherFalling)
-			MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
-
-		if (config.toolEffTweaks)
-			MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
-
-		// TODO: Fix this, why is it decreasing the held stack?
-		if (config.torchPlacer)
-			MinecraftForge.EVENT_BUS.register(new TorchHelper());
-
-		if (config.challengers)
-		{
-			MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
-			MinecraftForge.EVENT_BUS.register(new ChallengerMobsDrops());
-		}
-
-		if (config.earlyGame)
-			GamePlayHandler.init();
-
-		if (config.lightning)
-			MinecraftForge.EVENT_BUS.register(new StormTweak());
-
-		if (config.noPigZombies)
-			Blocks.PORTAL.setResistance(Float.MAX_VALUE);
-
-		if (config.glitchingItemFix)
-			MinecraftForge.EVENT_BUS.register(new HangingItemFix());
-
-		if (config.petArmory)
-			MinecraftForge.EVENT_BUS.register(new PetArmory());
-
-		if (config.pluckFeather)
-			MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
-
-		if (config.pingProtection)
-			MinecraftForge.EVENT_BUS.register(new PingProtection());
-
-		if (config.lavaLossPrevention)
-			MinecraftForge.EVENT_BUS.register(new LavaLossPrevention());
+		// Default Features
+		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
+		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
+		MinecraftForge.EVENT_BUS.register(new Recipes());
 
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		if (config.addFuels)
+		if (config.enableWoodItemFuelHandler)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 
@@ -143,8 +115,10 @@ public class VTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
-		if (config.stackSizeTweaks)
-			StackTweaks.registerTweaks();
+		
+		if (config.enableStackTweaks)
+			StackTweaks.registerTweak();
+		
 		ConfigItemParser.parseItems();
 	}
 }

@@ -4,7 +4,7 @@ import net.minecraft.init.Items;
 
 public class StackTweaks
 {
-	public static void registerTweaks()
+	public static void registerTweak()
 	{
 		Items.BOAT.setMaxStackSize(64);
 		Items.SPRUCE_BOAT.setMaxStackSize(64);

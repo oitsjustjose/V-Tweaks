@@ -30,14 +30,14 @@ public class ToolTips
 			int hunger = food.getHealAmount(stack);
 			float saturation = food.getSaturationModifier(stack) * 10;
 
-			if (VTweaks.config.foodToolTips == 0)
+			if (VTweaks.config.tooltipSetting == 0)
 				return;
-			else if (VTweaks.config.foodToolTips == 1)
+			else if (VTweaks.config.tooltipSetting == 1)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
 			}
-			else if (VTweaks.config.foodToolTips == 2 && shift)
+			else if (VTweaks.config.tooltipSetting == 2 && shift)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));

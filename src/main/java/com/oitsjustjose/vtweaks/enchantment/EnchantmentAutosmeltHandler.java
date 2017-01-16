@@ -23,6 +23,9 @@ public class EnchantmentAutosmeltHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(HarvestDropsEvent event)
 	{
+		if(VTweaks.config.autosmeltID <= 0)
+			return;
+		
 		EntityPlayer player = event.getHarvester();
 		if (player == null || player.getHeldItemMainhand().getItem() == null)
 			return;
@@ -88,7 +91,7 @@ public class EnchantmentAutosmeltHandler
 
 	boolean shouldFortuneSmelt(ItemStack stack)
 	{
-		if (!VTweaks.config.autosmeltFortuneInteraction)
+		if (!VTweaks.config.enableAutosmeltFortuneInteraction)
 			return false;
 
 		if (stack.getItem() instanceof ItemBlock)

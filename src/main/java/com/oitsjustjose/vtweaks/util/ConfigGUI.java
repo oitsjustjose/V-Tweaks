@@ -38,7 +38,7 @@ public class ConfigGUI extends GuiConfig
 		@Override
 		public void initialize(Minecraft minecraftInstance)
 		{
-
+			
 		}
 
 		@Override
@@ -54,6 +54,7 @@ public class ConfigGUI extends GuiConfig
 		}
 
 		@Override
+		@SuppressWarnings("deprecation")
 		public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element)
 		{
 			return null;

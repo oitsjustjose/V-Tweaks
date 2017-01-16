@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.List;
+
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -9,15 +11,32 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Recipes
 {
+	public static void removeRecipe(ItemStack resultItem)
+	{
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (int i = 0; i < recipes.size(); i++)
+		{
+			if (recipes.get(i) != null)
+			{
+				ItemStack recipeResult = recipes.get(i).getRecipeOutput();
+
+				if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
+					recipes.remove(i--);
+			}
+		}
+	}
+	
 	@SubscribeEvent
 	public void registerHorseArmorRecipes(AnvilUpdateEvent event)
 	{
-		if (!VTweaks.config.horseArmor || event.getLeft().getItem() == null || event.getRight().getItem() == null)
+		if (!VTweaks.config.enableRecipeHorseArmor || event.getLeft().getItem() == null || event.getRight().getItem() == null)
 			return;
 
 		Item left = event.getLeft().getItem();

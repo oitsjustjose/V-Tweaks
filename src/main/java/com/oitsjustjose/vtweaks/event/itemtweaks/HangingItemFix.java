@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
 import net.minecraft.block.BlockJukebox.TileEntityJukebox;
@@ -24,6 +26,9 @@ public class HangingItemFix
 	@SubscribeEvent
 	public void registerItemFixes(AttackEntityEvent event)
 	{
+		if(!VTweaks.config.enableHangingItemFix)
+			return;
+		
 		if (event.getTarget() == null || event.getEntityPlayer() == null)
 			return;
 
