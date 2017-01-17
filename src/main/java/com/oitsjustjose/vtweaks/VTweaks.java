@@ -125,8 +125,5 @@ public class VTweaks
 			StackTweaks.registerTweaks();
 
 		ConfigItemParser.parseItems();
-
-		// TODO: REMOVE DEBUG
-		OreDictionary.registerOre("dyeRed", Items.REDSTONE);
 	}
 }
