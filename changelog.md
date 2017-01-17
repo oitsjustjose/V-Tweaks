@@ -1,3 +1,11 @@
+1.4.9.9:
+* Added: Death Point, a small chat message telling you where you died!
+* Added: Config options for Sheep Dye Fix
+* Changed: TONS of huge refactors - nothing that effects players
+* Changed: Players can no longer use the config to change the names of Challenger Mobs
+* Changed: All config options have been tested to see which ones require a restart, and now ONLY the restart-requiring config options have such requirement.
+* Fixed: Right-clicking sheep with empty hand causing crash
+
 1.4.9.8:
 * Changed: Minecraft Version to 1.11
 * Changed: Had to re-write Torch Helper. Hopefully it works as well as it used to!
