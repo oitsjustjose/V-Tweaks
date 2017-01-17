@@ -22,12 +22,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChallengerMobs
 {
+	String[] challengerMobNames = new String[] { "Mighty", "Hungry", "Ranger", "Arcane", "Pyro", "Zestonian", "Reinforced", "Agile" };
+
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerEvent(LivingSpawnEvent event)
 	{
-		if(!VTweaks.config.enableChallengerMobs)
+		if (!VTweaks.config.enableChallengerMobs)
 			return;
-		
+
 		if (!event.getWorld().isRemote)
 		{
 			if (0 == event.getWorld().rand.nextInt(VTweaks.config.challengerMobRarity))
@@ -71,13 +73,13 @@ public class ChallengerMobs
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void registerEvent(LivingDropsEvent event)
 	{
-		if(!VTweaks.config.enableChallengerMobs)
+		if (!VTweaks.config.enableChallengerMobs)
 			return;
-		
+
 		if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
 			if (isChallengerMob((EntityMob) event.getEntity()))
 				for (int j = 0; j < 2; j++)
@@ -149,9 +151,9 @@ public class ChallengerMobs
 					mobString += nameParts[i];
 			}
 		}
-		return VTweaks.config.challengerMobNames[type] + " " + mobString;
+		return challengerMobNames[type] + " " + mobString;
 	}
-	
+
 	EntityItem getItem(World world, double x, double y, double z)
 	{
 		int RNG = world.rand.nextInt(VTweaks.config.challengerLootTable.size());
@@ -165,7 +167,7 @@ public class ChallengerMobs
 		if (n == null)
 			return false;
 
-		String[] preFixes = VTweaks.config.challengerMobNames.clone();
+		String[] preFixes = challengerMobNames.clone();
 		for (int i = 0; i < preFixes.length; i++)
 			if (n.contains(preFixes[i].toLowerCase()))
 				return true;
