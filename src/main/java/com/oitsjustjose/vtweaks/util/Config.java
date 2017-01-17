@@ -32,26 +32,27 @@ public class Config
 	public boolean enableMobDropBuffsEndermen;
 	public boolean enableFeatherPlucker;
 	public boolean enableChallengerMobs;
-	public String[] challengerMobDefaultNames = new String[] { "Tanky", "Hungry", "Ranger", "Mage", "Pyro", "Zestonian", "Resilient", "Hyper" };
-	public String[] challengerMobNames;
 	public String[] challengerMobDefaultLoot = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
 	public String[] challengerMobLoot;
 	public int challengerMobRarity;
 	public boolean disableBats;
 	public boolean disablePigZombies;
 	public boolean disableWitherOverworld;
+	public boolean enableSheepDyeFix;
+	public String[] sheepDyeDefaultBlacklist = new String[] { "net.minecraft.item.ItemDye", "biomesoplenty" };
+	public String[] sheepDyeBlacklist;
 
 	// Enchantment Configs
-	public int     hypermendingID;
-	public int     autosmeltID;
-	public int     stepboostID;
-	public int     lumberingID;
+	public int hypermendingID;
+	public int autosmeltID;
+	public int stepboostID;
+	public int lumberingID;
 	public boolean enableAutosmeltFortuneInteraction;
 	public String[] autosmeltOverrides;
-	public int     hypermendingXPCost;
-	public int     autosmeltXPCost;
-	public int     stepboostXPCost;
-	public int     lumberingXPCost;
+	public int hypermendingXPCost;
+	public int autosmeltXPCost;
+	public int stepboostXPCost;
+	public int lumberingXPCost;
 	public boolean enableFeatherFallingTweak;
 	public boolean enableDisenchantRecipes;
 
@@ -66,14 +67,14 @@ public class Config
 	public boolean enableHangingItemFix;
 	public boolean enableDropTweaksSaplings;
 	public boolean enableLavaLossPrevention;
-	
+
 	// Item Configs
 	public boolean enableWoodItemFuelHandler;
 	public boolean enableDropTweaksDespawn;
-	public int     enableNewDespawnTime;
+	public int enableNewDespawnTime;
 	public boolean enableDropTweaksEggHatching;
-	public int     enableEggHatchChance;
-	
+	public int enableEggHatchChance;
+
 	// Misc Configs
 	public boolean enableGamePlayHandler;
 	public boolean enableRecipeHorseArmor;
@@ -81,7 +82,7 @@ public class Config
 	public boolean enableStormTweak;
 	public boolean enablePingProtection;
 	public boolean enableDeathPoint;
-	public int     tooltipSetting;
+	public int tooltipSetting;
 
 	public ArrayList<ItemStack> challengerLootTable;
 
@@ -164,6 +165,15 @@ public class Config
 		disableWitherOverworld = property.getBoolean();
 		propertyOrder.add(property.getName());
 
+		property = config.get(category, "Fix Ore Dictionary dyes not working to color sheep fleece", true);
+		property.setComment("Enabling this feature lets you use any Ore Dictionary registered dye to recolor sheep");
+		enableSheepDyeFix = property.getBoolean();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Ignored Dyes", sheepDyeDefaultBlacklist, "The class name (or part of it) of the dye you don't want to work with the Sheep Dye Fix");
+		sheepDyeBlacklist = property.getStringList();
+		propertyOrder.add(property.getName());
+
 		property = config.get(category, "Challenger Mobs Enabled", true);
 		property.setComment("Randomly spawns more difficult (but more lootworthy) enemies Applies to ALL enemies");
 		enableChallengerMobs = property.getBoolean();
@@ -175,10 +185,6 @@ public class Config
 
 		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
 		challengerMobLoot = property.getStringList();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Challenger Mobs' Prefixes", challengerMobDefaultNames, "Renaming will not change anything, just their highlighted name").setRequiresMcRestart(false);
-		challengerMobNames = property.getStringList();
 		propertyOrder.add(property.getName());
 
 		MobTweaks.setPropertyOrder(propertyOrder);
@@ -357,7 +363,7 @@ public class Config
 		property.setComment("This option lowers the amount of Entity damage taken by players with a bad multiplayer connection. The worse the connection, the less damage they will take");
 		enablePingProtection = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Death Point Message", true);
 		property.setComment("Enabling this feature makes it so a chat message appears notifying the player of where they died");
 		enableDeathPoint = property.getBoolean();
