@@ -34,7 +34,6 @@ import com.oitsjustjose.vtweaks.util.Recipes;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -43,7 +42,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.11", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
 public class VTweaks
@@ -121,10 +119,6 @@ public class VTweaks
 		if (config.enableStackTweaks)
 			StackTweaks.registerTweak();
 		
-		ConfigItemParser.parseItems();
-		
-		//TODO: REMOVE DEBUG
-		OreDictionary.registerOre("dyeRed", Items.REDSTONE);
-		
+		ConfigItemParser.parseItems();	
 	}
 }

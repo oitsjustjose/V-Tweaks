@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.4.9.9"
 group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-1.11"
+archivesBaseName = "VTweaks-1.11.x"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
