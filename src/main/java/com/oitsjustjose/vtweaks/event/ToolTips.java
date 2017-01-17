@@ -30,18 +30,28 @@ public class ToolTips
 			int hunger = food.getHealAmount(stack);
 			float saturation = food.getSaturationModifier(stack) * 10;
 
-			if (VTweaks.config.tooltipSetting == 0)
+			if (VTweaks.config.foodTooltipSetting == 0)
 				return;
-			else if (VTweaks.config.tooltipSetting == 1)
+			else if (VTweaks.config.foodTooltipSetting == 1)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
 			}
-			else if (VTweaks.config.tooltipSetting == 2 && shift)
+			else if (VTweaks.config.foodTooltipSetting == 2 && shift)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
 			}
+		}
+
+		if (stack.getItem().isDamageable())
+		{
+			if (VTweaks.config.durabilityTooltipSetting == 0)
+				return;
+			else if (VTweaks.config.durabilityTooltipSetting == 1)
+				event.getToolTip().add(getDurabilityString(stack));
+			else if (VTweaks.config.durabilityTooltipSetting == 2 && shift)
+				event.getToolTip().add(getDurabilityString(stack));
 		}
 	}
 
@@ -81,5 +91,34 @@ public class ToolTips
 			return ret += TextFormatting.DARK_PURPLE + "\u25A0";
 		else
 			return ret += TextFormatting.LIGHT_PURPLE + "\u25A0";
+	}
+
+	public String getDurabilityString(ItemStack itemstack)
+	{
+		String ret = "Durability: ";
+		int max = itemstack.getMaxDamage();
+		int damage = itemstack.getItemDamage();
+		float percentage = 1 - ((float) damage / (float) max);
+		if (percentage >= .9)
+			return ret = ret + TextFormatting.LIGHT_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .8)
+			return ret = ret + TextFormatting.DARK_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .7)
+			return ret = ret + TextFormatting.DARK_AQUA + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .6)
+			return ret = ret + TextFormatting.BLUE + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .5)
+			return ret = ret + TextFormatting.GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .4)
+			return ret = ret + TextFormatting.DARK_GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .3)
+			return ret = ret + TextFormatting.YELLOW + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .2)
+			return ret = ret + TextFormatting.GOLD + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .1)
+			return ret = ret + TextFormatting.RED + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage < .1)
+			return ret = ret + TextFormatting.DARK_RED + (max - damage) + " / " + max + TextFormatting.RESET;
+		return ret = ret + (max - damage) + " / " + max;
 	}
 }

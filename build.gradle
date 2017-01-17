@@ -12,9 +12,9 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.9.9"
+version = "1.4.9.10"
 group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-1.10.X"
+archivesBaseName = "VTweaks-1.10.x"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {

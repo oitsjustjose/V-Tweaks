@@ -1,3 +1,6 @@
+1.4.9.10:
+* Added: Durability Tooltips & Config Options
+
 1.4.9.9:
 * Added: Death Point, a small chat message telling you where you died!
 * Added: Config options for Sheep Dye Fix

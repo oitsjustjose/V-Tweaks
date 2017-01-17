@@ -82,7 +82,8 @@ public class Config
 	public boolean enableStormTweak;
 	public boolean enablePingProtection;
 	public boolean enableDeathPoint;
-	public int tooltipSetting;
+	public int foodTooltipSetting;
+	public int durabilityTooltipSetting;
 
 	public ArrayList<ItemStack> challengerLootTable;
 
@@ -370,7 +371,11 @@ public class Config
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Food Value Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2).setRequiresMcRestart(false);
-		tooltipSetting = property.getInt();
+		foodTooltipSetting = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Tool Durability Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2);
+		durabilityTooltipSetting = property.getInt();
 		propertyOrder.add(property.getName());
 
 		MiscFeatures.setPropertyOrder(propertyOrder);
