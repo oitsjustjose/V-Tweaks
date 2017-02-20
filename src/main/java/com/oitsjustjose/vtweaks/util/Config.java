@@ -69,6 +69,7 @@ public class Config
 	public boolean enableLavaLossPrevention;
 
 	// Item Configs
+	public boolean enableAxeLeafBlower;
 	public boolean enableWoodItemFuelHandler;
 	public boolean enableDropTweaksDespawn;
 	public int enableNewDespawnTime;
@@ -170,7 +171,7 @@ public class Config
 		property.setComment("Enabling this feature lets you use any Ore Dictionary registered dye to recolor sheep");
 		enableSheepDyeFix = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Ignored Dyes", sheepDyeDefaultBlacklist, "The class name (or part of it) of the dye you don't want to work with the Sheep Dye Fix");
 		sheepDyeBlacklist = property.getStringList();
 		propertyOrder.add(property.getName());
@@ -309,6 +310,11 @@ public class Config
 		ItemTweaks = config.getCategory(category);
 		ItemTweaks.setComment("Tweaks for Items");
 
+		property = config.get(category, "Axes destroy leaves in a wider area", true);
+		property.setComment("If enabled, when an axe is used to break leaves, many in the area are destroyed");
+		enableAxeLeafBlower = property.getBoolean();
+		propertyOrder.add(property.getName());
+
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
 		property.setComment("Adds wooden items to fuel list if they were missing");
 		enableWoodItemFuelHandler = property.getBoolean();
@@ -373,7 +379,7 @@ public class Config
 		property = config.get(category, "Enable Food Value Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2);
 		foodTooltipSetting = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Tool Durability Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2);
 		durabilityTooltipSetting = property.getInt();
 		propertyOrder.add(property.getName());
