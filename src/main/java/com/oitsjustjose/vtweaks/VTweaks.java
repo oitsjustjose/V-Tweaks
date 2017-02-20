@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
+import com.oitsjustjose.vtweaks.event.itemtweaks.AxeLeafBlower;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
@@ -85,13 +86,13 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
 		MinecraftForge.EVENT_BUS.register(new CakeTweak());
 		MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
-		MinecraftForge.EVENT_BUS.register(new TorchHelper());
-		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
-		MinecraftForge.EVENT_BUS.register(new DropTweaks());
 		MinecraftForge.EVENT_BUS.register(new LavaLossPrevention());
 
 		// Item Tweaks
-		// Intentionally Left Blank
+		MinecraftForge.EVENT_BUS.register(new AxeLeafBlower());
+		MinecraftForge.EVENT_BUS.register(new DropTweaks());
+		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
+		MinecraftForge.EVENT_BUS.register(new TorchHelper());
 
 		// Miscellaneous Features
 		MinecraftForge.EVENT_BUS.register(new ToolTips());

@@ -69,6 +69,7 @@ public class Config
 	public boolean enableLavaLossPrevention;
 
 	// Item Configs
+	public boolean enableAxeLeafBlower;
 	public boolean enableWoodItemFuelHandler;
 	public boolean enableDropTweaksDespawn;
 	public int enableNewDespawnTime;
@@ -308,6 +309,11 @@ public class Config
 		propertyOrder = Lists.newArrayList();
 		ItemTweaks = config.getCategory(category);
 		ItemTweaks.setComment("Tweaks for Items");
+
+		property = config.get(category, "Axes destroy leaves in a wider area", true);
+		property.setComment("If enabled, when an axe is used to break leaves, many in the area are destroyed");
+		enableAxeLeafBlower = property.getBoolean();
+		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
 		property.setComment("Adds wooden items to fuel list if they were missing");

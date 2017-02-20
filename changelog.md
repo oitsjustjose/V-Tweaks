@@ -1,3 +1,6 @@
+1.4.9.11:
+* Added: Axe Leaf Blower features; axes break an AOE of leaves (without consuming extra durability).
+
 1.4.9.10:
 * Added: Durability Tooltips & Config Options
 
