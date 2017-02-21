@@ -22,37 +22,77 @@ public class PocketBed
 
 		if (event.getItemStack() == null || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
 			return;
-		
-		event.setResult(Result.DENY);
 
-		
 		EntityPlayer player = event.getEntityPlayer();
 		World world = event.getWorld();
 
-		if (player.isCreative())
-			return;
-
+		// It's gotta be night time.. hurdur
 		if (!world.isDaytime())
 		{
-			SleepResult result = player.trySleep(event.getPos());
-
-			if (result == SleepResult.OK)
+			// Checking if it's SMP; that's important
+			if (player.getServer().isDedicatedServer())
 			{
-				world.setWorldTime(0);
-				player.wakeUpPlayer(false, true, false);
+				float sleeping = 0;
+
+				// Counts how many online players are sleeping. Is there a better way? I like this well enough tho
+				for (String s : player.getServer().getAllUsernames())
+					if (world.getPlayerEntityByName(s) != null && world.getPlayerEntityByName(s).isPlayerSleeping())
+						sleeping++;
+
+				// Requires that 50% of players are asleep before this works. If it does, the rest is very much like SSP
+				if (sleeping / (float) player.getServer().getCurrentPlayerCount() >= 0.5)
+				{
+					SleepResult result = player.trySleep(event.getPos());
+
+					// If the player CAN sleep, we set the time to 0 (default waking time) and wake up said player
+					if (result == SleepResult.OK)
+					{
+						world.setWorldTime(0);
+						player.wakeUpPlayer(false, true, false);
+					}
+					// Otherwise we warn them
+					else
+					{
+						if (result == SleepResult.NOT_POSSIBLE_NOW)
+							player.addChatComponentMessage(new TextComponentTranslation("tile.bed.noSleep", new Object[0]));
+						else if (result == SleepResult.NOT_SAFE)
+							player.addChatComponentMessage(new TextComponentTranslation("tile.bed.notSafe", new Object[0]));
+					}
+				}
+				// If not enough players are sleeping, they are notified. This translation is brought to you by V-Tweaks :)
+				else if (!world.isRemote)
+				{
+					player.addChatComponentMessage(new TextComponentTranslation("tile.bed.notEnoughSleep", new Object[0]));
+				}
 			}
+			// SSP is a little bit easier.. only somewhat
 			else
 			{
-				if (result == SleepResult.NOT_POSSIBLE_NOW)
-					player.addChatComponentMessage(new TextComponentTranslation("tile.bed.noSleep", new Object[0]));
-				else if (result == SleepResult.NOT_SAFE)
-					player.addChatComponentMessage(new TextComponentTranslation("tile.bed.notSafe", new Object[0]));
+				SleepResult result = player.trySleep(event.getPos());
+
+				// If the player CAN sleep, we set the time to 0 (default waking time) and wake up said player
+				if (result == SleepResult.OK)
+				{
+					world.setWorldTime(0);
+					player.wakeUpPlayer(false, true, false);
+				}
+				// Otherwise we warn them
+				else
+				{
+					if (result == SleepResult.NOT_POSSIBLE_NOW)
+						player.addChatComponentMessage(new TextComponentTranslation("tile.bed.noSleep", new Object[0]));
+					else if (result == SleepResult.NOT_SAFE)
+						player.addChatComponentMessage(new TextComponentTranslation("tile.bed.notSafe", new Object[0]));
+				}
 			}
 		}
+		// And finally - if it's not even night time - they should... know?
 		else if (!world.isRemote)
 			player.addChatComponentMessage(new TextComponentTranslation("tile.bed.noSleep", new Object[0]));
+
 	}
-	
+
+	// A simple "tweak" packaged in with this one that prevents the named bed from being palced
 	@SubscribeEvent
 	public void registerTweak(PlayerInteractEvent event)
 	{
@@ -61,8 +101,9 @@ public class PocketBed
 
 		if (event.getItemStack() == null || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
 			return;
-		
-		event.setCanceled(true);
+		// Assuming it's a bed item named "Sleeping Bag":
+		if (event.isCancelable())
+			event.setCanceled(true);
 		event.setResult(Result.DENY);
 	}
 }
