@@ -340,7 +340,7 @@ public class Config
 		propertyOrder.add(property.getName());
 		
 		property = config.get(category, "Enable Pocket Bed Tweak", true);
-		property.setComment("If enabled, right-clicking with a bed in hand (WITHOUT placing the bed) will let you sleep");
+		property.setComment("If enabled, naming a bed 'Sleeping Bag' and right clicking it makes it work like a sleeping bag");
 		enablePocketBed = property.getBoolean();
 		propertyOrder.add(property.getName());
 
