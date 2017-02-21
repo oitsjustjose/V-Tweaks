@@ -75,6 +75,7 @@ public class Config
 	public int enableNewDespawnTime;
 	public boolean enableDropTweaksEggHatching;
 	public int enableEggHatchChance;
+	public boolean enablePocketBed;
 
 	// Misc Configs
 	public boolean enableGamePlayHandler;
@@ -336,6 +337,11 @@ public class Config
 
 		property = config.get(category, "Chance for Eggs to Hatch", 64, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE);
 		enableEggHatchChance = property.getInt();
+		propertyOrder.add(property.getName());
+		
+		property = config.get(category, "Enable Pocket Bed Tweak", true);
+		property.setComment("If enabled, right-clicking with a bed in hand (WITHOUT placing the bed) will let you sleep");
+		enablePocketBed = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		ItemTweaks.setPropertyOrder(propertyOrder);

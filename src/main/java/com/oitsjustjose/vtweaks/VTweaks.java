@@ -21,6 +21,7 @@ import com.oitsjustjose.vtweaks.event.itemtweaks.AxeLeafBlower;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.PocketBed;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
@@ -93,6 +94,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new DropTweaks());
 		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
 		MinecraftForge.EVENT_BUS.register(new TorchHelper());
+		MinecraftForge.EVENT_BUS.register(new PocketBed());
 
 		// Miscellaneous Features
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
