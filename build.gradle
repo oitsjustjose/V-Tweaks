@@ -12,7 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.9.11"
+version = "1.4.9.12"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.11.x"
 

@@ -11,9 +11,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
@@ -89,7 +87,7 @@ public class SleepingBags
 			player.wakeUpPlayer(false, true, false);
 			world.setBlockToAir(origin);
 			player.bedLocation = origBedLoc;
-			player.sendStatusMessage(new TextComponentString(TextFormatting.GOLD + "Good Morning!"), true);
+			player.sendStatusMessage(new TextComponentTranslation("tile.bed.morning"), true);
 			player.swingArm(EnumHand.MAIN_HAND);
 		}
 		// Otherwise we warn them
@@ -106,7 +104,7 @@ public class SleepingBags
 	{
 		final BlockPos origBedLoc = player.getBedLocation();
 		final BlockPos origin = new BlockPos(0, 0, 0);
-		float sleeping = 0;
+		float sleeping = 1;
 
 		// Counts how many online players are sleeping. Is there a better way? I like this well enough tho
 		for (String s : player.getServer().getPlayerList().getOnlinePlayerNames())
@@ -134,7 +132,7 @@ public class SleepingBags
 				player.wakeUpPlayer(false, true, false);
 				world.setBlockToAir(origin);
 				player.bedLocation = origBedLoc;
-				player.sendStatusMessage(new TextComponentString(TextFormatting.GOLD + "Good Morning!"), true);
+				player.sendStatusMessage(new TextComponentTranslation("tile.bed.morning"), true);
 				player.swingArm(EnumHand.MAIN_HAND);
 			}
 			// Otherwise we warn them
