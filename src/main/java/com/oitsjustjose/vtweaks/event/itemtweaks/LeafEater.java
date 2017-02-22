@@ -13,12 +13,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class AxeLeafBlower
+public class LeafEater
 {
 	@SubscribeEvent
 	public void registerTweak(BreakEvent event)
 	{
-		if (!VTweaks.config.enableAxeLeafBlower || event.getState() == null || event.getState().getBlock() == null || event.getPlayer() == null)
+		if (!VTweaks.config.enableLeafBlower || event.getState() == null || event.getState().getBlock() == null || event.getPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getPlayer();
@@ -28,24 +28,11 @@ public class AxeLeafBlower
 			return;
 
 		if (player.getHeldItemMainhand().getItem() instanceof ItemAxe && event.getState().getMaterial() == Material.LEAVES)
-		{
-			BlockPos tempPos;
 			for (int x = -3; x < 4; x++)
-			{
 				for (int y = -3; y < 4; y++)
-				{
 					for (int z = -3; z < 4; z++)
-					{
-						tempPos = event.getPos().add(x, y, z);
-
-						if (world.getBlockState(tempPos).getBlock().getClass() == event.getState().getBlock().getClass())
-						{
-							breakBlock(world, player, tempPos);
-						}
-					}
-				}
-			}
-		}
+						if (world.getBlockState(event.getPos().add(x, y, z)).getBlock().getClass() == event.getState().getBlock().getClass())
+							breakBlock(world, player, event.getPos().add(x, y, z));
 	}
 
 	void breakBlock(World world, EntityPlayer player, BlockPos pos)

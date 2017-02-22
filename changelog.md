@@ -1,3 +1,7 @@
+1.4.9.12:
+* Added: Sleeping Bags; any bed item renamed "Sleeping Bag" (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.
+* Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :(
+
 1.4.9.11:
 * Added: Axe Leaf Blower features; axes break an AOE of leaves (without consuming extra durability).
 
