@@ -69,12 +69,13 @@ public class Config
 	public boolean enableLavaLossPrevention;
 
 	// Item Configs
-	public boolean enableAxeLeafBlower;
+	public boolean enableLeafEater;
 	public boolean enableWoodItemFuelHandler;
 	public boolean enableDropTweaksDespawn;
 	public int enableNewDespawnTime;
 	public boolean enableDropTweaksEggHatching;
 	public int enableEggHatchChance;
+	public boolean enableSleepingBags;
 
 	// Misc Configs
 	public boolean enableGamePlayHandler;
@@ -312,7 +313,7 @@ public class Config
 
 		property = config.get(category, "Axes destroy leaves in a wider area", true);
 		property.setComment("If enabled, when an axe is used to break leaves, many in the area are destroyed");
-		enableAxeLeafBlower = property.getBoolean();
+		enableLeafEater = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
@@ -336,6 +337,11 @@ public class Config
 
 		property = config.get(category, "Chance for Eggs to Hatch", 64, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE);
 		enableEggHatchChance = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Pocket Bed Tweak", true);
+		property.setComment("If enabled, naming a bed 'Sleeping Bag' and right clicking it makes it work like a sleeping bag");
+		enableSleepingBags = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		ItemTweaks.setPropertyOrder(propertyOrder);
