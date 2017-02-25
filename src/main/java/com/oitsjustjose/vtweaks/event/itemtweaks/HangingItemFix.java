@@ -7,7 +7,6 @@ import net.minecraft.block.BlockJukebox;
 import net.minecraft.block.BlockJukebox.TileEntityJukebox;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -43,30 +42,6 @@ public class HangingItemFix
 				player.world.spawnEntity(paintingItemEntity);
 			entity.setDead();
 		}
-
-		// Ensures compatibility with TiCon
-		if (entity instanceof EntityItemFrame && !(entity.getClass().getName().contains("tconstruct")))
-		{
-			EntityItem itemFrameItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.ITEM_FRAME, 1));
-			EntityItemFrame frame = (EntityItemFrame) entity;
-			ItemStack framedStack = frame.getDisplayedItem();
-
-			if (framedStack == null)
-			{
-				if (!player.inventory.addItemStackToInventory(new ItemStack(Items.ITEM_FRAME, 1)))
-					player.world.spawnEntity(itemFrameItemEntity);
-				entity.setDead();
-			}
-			else
-			{
-				EntityItem framedItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, framedStack);
-				if (!player.inventory.addItemStackToInventory(framedStack))
-				{
-					player.world.spawnEntity(framedItemEntity);
-					frame.setDisplayedItem(null);
-				}
-			}
-		}
 	}
 
 	@SubscribeEvent
@@ -83,14 +58,14 @@ public class HangingItemFix
 			TileEntityJukebox jukebox = (TileEntityJukebox) world.getTileEntity(event.getPos());
 			if (jukebox != null && !world.isRemote)
 			{
-				if (jukebox.getRecord() == null)
+				if (jukebox.getRecord() == ItemStack.EMPTY)
 					return;
 
 				ItemStack recordStack = jukebox.getRecord().copy();
 
-				jukebox.setRecord(null);
-				world.playBroadcastSound(1005, event.getPos(), 0);
-				world.playRecord(event.getPos(), (SoundEvent) null);
+                world.playEvent(1010, event.getPos(), 0);
+                world.playRecord(event.getPos(), (SoundEvent)null);
+				jukebox.setRecord(ItemStack.EMPTY);
 
 				EntityItem record = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, recordStack);
 				world.spawnEntity(record);

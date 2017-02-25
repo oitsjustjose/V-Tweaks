@@ -1,10 +1,11 @@
 1.4.9.12:
 * Added: Sleeping Bags; any bed item renamed "Sleeping Bag" (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.
 * Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :(
+* Fixed: HangingItemFix acting wonky with Jukeboxes, Item Frames and Paintings
 
 1.4.9.11:
 * Added: Axe Leaf Blower feature; axes break an AOE of leaves (without consuming extra durability).
-	
+
 1.4.9.10:
 * Added: Durability Tooltips & Config Options
 
@@ -128,8 +129,8 @@
 * Added: Placement sound for doors (now all sound fixes are generalized in the config)
 * Added: Fix for Light / Heavy Pressure Plate step sounds (see above for config info)
 * Changed: Great optimizations to Easy Crop Harvesting drops
-* Changed: Torch + Tool interaction now supports any item in your inventory with the localized version of 
-	the name "Torch" - this offers multilingual support, so if your language it isn't named "Torch", 
+* Changed: Torch + Tool interaction now supports any item in your inventory with the localized version of
+	the name "Torch" - this offers multilingual support, so if your language it isn't named "Torch",
 	it'll still work
 * Changed: Crop Harvesting now requires an empty hand to activate - temporary fix for weirdness with
 	right-click interaction with your currently equipped item
