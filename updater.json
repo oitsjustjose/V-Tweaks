@@ -10,7 +10,7 @@
     "1.11-latest": "1.4.9.10",
     "1.11-recommended": "1.4.9.10",
     "1.11.2-latest": "1.4.9.10",
-    "1.11.2-recommended": "1.4.9.10",
+    "1.11.2-recommended": "1.4.9.10"
   },
   "1.9.4": {
 	"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the 'Raw' variant only) when it's hovering above a block of lava. \n
