@@ -1,32 +1,30 @@
 {
-  "homepage": "http://oitsjustjose.github.io/V-Tweaks-Online/",
-  "promos": {
-    "1.9.4-latest": "1.4.9.7",
-    "1.9.4-recommended": "1.4.9.7",
-    "1.10-latest": "1.4.9.10",
-    "1.10-recommended": "1.4.9.10",
-    "1.10.2-latest": "1.4.9.10",
-    "1.10.2-recommended": "1.4.9.10",
-    "1.11-latest": "1.4.9.10",
-    "1.11-recommended": "1.4.9.10",
-    "1.11.2-latest": "1.4.9.10",
-    "1.11.2-recommended": "1.4.9.10",
-  },
-  "1.9.4": {
-	"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the "Raw" variant only) when it's hovering above a block of lava. \n
-				-Changed: Defaults for egg hatching.... they were far too high. \n
-				-Changed: Defaulted config for egg hatching to OFF. How hard are chicken cookers anyway?"
-  },
-  "1.10": { 
-	"1.4.9.10": "-Added: Durability Tooltips & Config Options"
-  },
-  "1.10.2": {
-	"1.4.9.10": "-Added: Durability Tooltips & Config Options"
-  },
-  "1.11": {
-	"1.4.9.10": "-Added: Durability Tooltips & Config Options"
-  },
-  "1.11.2": {
-	"1.4.9.10": "Added: Durability Tooltips & Config Options"
-  }
+	"homepage": "http://oitsjustjose.github.io/V-Tweaks-Online/",
+	"promos": {
+		"1.9.4-latest": "1.4.9.7",
+		"1.9.4-recommended": "1.4.9.7",
+		"1.10-latest": "1.4.9.12",
+		"1.10-recommended": "1.4.9.12",
+		"1.10.2-latest": "1.4.9.12",
+		"1.10.2-recommended": "1.4.9.12",
+		"1.11-latest": "1.4.9.12",
+		"1.11-recommended": "1.4.9.12",
+		"1.11.2-latest": "1.4.9.12",
+		"1.11.2-recommended": "1.4.9.12"
+	},
+	"1.9.4": {
+		"1.4.9.7": "-Added: Lava Loss Prevention; makes it safe to mine Obsidian (or Chisel's Basalt, the 'Raw' variant only) when it's hovering above a block of lava.\n-Changed: Defaults for egg hatching.... they were far too high.\n-Changed: Defaulted config for egg hatching to OFF. How hard are chicken cookers anyway?"
+	},
+	"1.10": {
+		"1.4.9.12": "-Added: Sleeping Bags; any bed item renamed 'Sleeping Bag' (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.\n-Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :("
+	},
+	"1.10.2": {
+		"1.4.9.12": "-Added: Sleeping Bags; any bed item renamed 'Sleeping Bag' (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.\n-Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :("
+	},
+	"1.11": {
+		"1.4.9.12": "-Added: Sleeping Bags; any bed item renamed 'Sleeping Bag' (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.\n-Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :("
+	},
+	"1.11.2": {
+		"1.4.9.12": "-Added: Sleeping Bags; any bed item renamed 'Sleeping Bag' (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.\n-Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :("
+	}
 }
