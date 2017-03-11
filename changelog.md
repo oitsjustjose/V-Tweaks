@@ -1,3 +1,9 @@
+1.4.9.13:
+* Added: Config option to disable Welcome Message with Wiki link
+* Added: Config option to require the player to sneak when using the leaf-eater feature
+* Fixed: Sleeping Bags not resetting the weather
+* Fixed: Lumbering not being applicable to some axes (like Psi, ThermalFoundation, etc)
+
 1.4.9.12:
 * Added: Sleeping Bags; any bed item renamed "Sleeping Bag" (capitalization doesn't matter) will allow you to right-click to sleep anywhere! If on Multiplayer, at least 50% of the players (including yourself) must be asleep.
 * Changed: AxeLeafBlower -> LeafEater. Config file has changed too; if you disabled it before you'll have to again under the new name :(
