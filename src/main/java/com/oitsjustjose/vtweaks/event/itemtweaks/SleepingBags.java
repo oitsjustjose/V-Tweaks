@@ -67,7 +67,8 @@ public class SleepingBags
 		// If the player CAN sleep, we set the time to 0 (default waking time) and wake up said player
 		if (result == SleepResult.OK)
 		{
-			world.setWorldTime(0);
+			world.provider.setWorldTime(0);
+			world.provider.resetRainAndThunder();
 			player.wakeUpPlayer(false, true, false);
 			player.swingArm(EnumHand.MAIN_HAND);
 		}
@@ -98,7 +99,8 @@ public class SleepingBags
 			// If the player CAN sleep, we set the time to 0 (default waking time) and wake up said player
 			if (result == SleepResult.OK)
 			{
-				world.setWorldTime(0);
+				world.provider.setWorldTime(0);
+				world.provider.resetRainAndThunder();
 				player.wakeUpPlayer(false, true, false);
 				player.swingArm(EnumHand.MAIN_HAND);
 			}

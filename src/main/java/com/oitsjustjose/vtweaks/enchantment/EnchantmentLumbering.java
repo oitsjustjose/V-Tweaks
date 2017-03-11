@@ -3,14 +3,14 @@ package com.oitsjustjose.vtweaks.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 
 public class EnchantmentLumbering extends Enchantment
 {
 	protected EnchantmentLumbering()
 	{
-		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
+		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 	}
 
 	@Override
@@ -22,7 +22,13 @@ public class EnchantmentLumbering extends Enchantment
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
-		return stack.getItem() instanceof ItemAxe;
+		if (stack.getItem() instanceof ItemTool)
+		{
+			ItemTool candidate = (ItemTool) stack.getItem();
+			if (candidate.getToolClasses(stack).contains("axe"))
+				return true;
+		}
+		return false;
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class LeafEater
 	@SubscribeEvent
 	public void registerTweak(BreakEvent event)
 	{
-		if (!VTweaks.config.enableLeafBlower || event.getState() == null || event.getState().getBlock() == null || event.getPlayer() == null)
+		if (!VTweaks.config.enableLeafEater || event.getState() == null || event.getState().getBlock() == null || event.getPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getPlayer();
@@ -27,7 +27,7 @@ public class LeafEater
 		if (player.getHeldItemMainhand() == null)
 			return;
 
-		if (player.getHeldItemMainhand().getItem() instanceof ItemAxe && event.getState().getMaterial() == Material.LEAVES)
+		if (player.getHeldItemMainhand().getItem() instanceof ItemAxe && event.getState().getMaterial() == Material.LEAVES && shouldAOE(player))
 			for (int x = -3; x < 4; x++)
 				for (int y = -3; y < 4; y++)
 					for (int z = -3; z < 4; z++)
@@ -51,4 +51,8 @@ public class LeafEater
 		world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 0.25F, 0.8F);
 	}
 
+	boolean shouldAOE(EntityPlayer player)
+	{
+		return (VTweaks.config.leafEaterReqSneak && player.isSneaking()) || !VTweaks.config.leafEaterReqSneak;
+	}
 }

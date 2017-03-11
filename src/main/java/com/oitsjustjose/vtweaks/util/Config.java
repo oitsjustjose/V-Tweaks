@@ -69,7 +69,8 @@ public class Config
 	public boolean enableLavaLossPrevention;
 
 	// Item Configs
-	public boolean enableLeafBlower;
+	public boolean enableLeafEater;
+	public boolean leafEaterReqSneak;
 	public boolean enableWoodItemFuelHandler;
 	public boolean enableDropTweaksDespawn;
 	public int enableNewDespawnTime;
@@ -86,6 +87,7 @@ public class Config
 	public boolean enableDeathPoint;
 	public int foodTooltipSetting;
 	public int durabilityTooltipSetting;
+	public boolean enableGuideNotifier;
 
 	public ArrayList<ItemStack> challengerLootTable;
 
@@ -313,7 +315,12 @@ public class Config
 
 		property = config.get(category, "Axes destroy leaves in a wider area", true);
 		property.setComment("If enabled, when an axe is used to break leaves, many in the area are destroyed");
-		enableLeafBlower = property.getBoolean();
+		enableLeafEater = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Require sneaking", false);
+		property.setComment("If above tweak is enabled, you must sneak to enable the AOE effect");
+		leafEaterReqSneak = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Add Missing Items as Fuels", true).setRequiresMcRestart(true);
@@ -338,7 +345,7 @@ public class Config
 		property = config.get(category, "Chance for Eggs to Hatch", 64, "There is a 1 in 'x' chance for an Egg to hatch into a chick, where 'x' is this value", 1, Integer.MAX_VALUE);
 		enableEggHatchChance = property.getInt();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Pocket Bed Tweak", true);
 		property.setComment("If enabled, naming a bed 'Sleeping Bag' and right clicking it makes it work like a sleeping bag");
 		enableSleepingBags = property.getBoolean();
@@ -388,6 +395,11 @@ public class Config
 
 		property = config.get(category, "Enable Tool Durability Tooltips", 2, "0 disables the feature, 1 enables the features all the time, 2 enables the feature only while sneaking", 0, 2);
 		durabilityTooltipSetting = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Welcome Message", true);
+		property.setComment("If enabled, a nice chat message is shown once per world with a link to the Wiki");
+		enableGuideNotifier = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		MiscFeatures.setPropertyOrder(propertyOrder);
