@@ -33,7 +33,7 @@ public class EnchantmentLumbering extends Enchantment
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
-		return stack.getItem() instanceof ItemAxe;
+		return true;
 	}
 
 	@Override
