@@ -32,7 +32,13 @@ public class EnchantmentLumbering extends Enchantment
 	@Override
 	public boolean canApply(ItemStack stack)
 	{
-		return true;
+		if (stack.getItem() instanceof ItemTool)
+		{
+			Set<String> classes = ((ItemTool) stack.getItem()).getToolClasses(stack);
+			return classes.contains("axe");
+		}
+
+		return false;
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class EnchantmentLumbering extends Enchantment
 	@SubscribeEvent
 	public void fixApplication(AnvilUpdateEvent event)
 	{
-		if (event.getLeft() == ItemStack.EMPTY || event.getRight() == ItemStack.EMPTY)
+		if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 			return;
 
 		ItemStack left = event.getLeft();
