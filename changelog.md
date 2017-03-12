@@ -1,4 +1,5 @@
 1.4.9.13:
+* HOTFIX: 1.4.9.13 broke a thing with the lumbering enchant. I strongly suggest downloading it again, it'll be the fixed one
 * Added: Config option to disable Welcome Message with Wiki link
 * Added: Config option to require the player to sneak when using the leaf-eater feature
 * Fixed: Sleeping Bags not resetting the weather
