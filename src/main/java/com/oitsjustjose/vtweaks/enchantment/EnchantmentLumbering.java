@@ -30,6 +30,12 @@ public class EnchantmentLumbering extends Enchantment
 	}
 
 	@Override
+	public boolean canApply(ItemStack stack)
+	{
+		return true;
+	}
+
+	@Override
 	public int getMinEnchantability(int par1)
 	{
 		return 0;
