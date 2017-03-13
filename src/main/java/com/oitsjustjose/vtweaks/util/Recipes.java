@@ -46,17 +46,17 @@ public class Recipes
 
 		if ((left == Items.DIAMOND_LEGGINGS && right == Items.DIAMOND_LEGGINGS) && !damaged)
 		{
-			event.setCost(35);
+			event.setCost(12);
 			event.setOutput(new ItemStack(Items.DIAMOND_HORSE_ARMOR));
 		}
 		if ((left == Items.GOLDEN_LEGGINGS && right == Items.GOLDEN_LEGGINGS) && !damaged)
 		{
-			event.setCost(30);
+			event.setCost(8);
 			event.setOutput(new ItemStack(Items.GOLDEN_HORSE_ARMOR));
 		}
 		if ((left == Items.IRON_LEGGINGS && right == Items.IRON_LEGGINGS) && !damaged)
 		{
-			event.setCost(20);
+			event.setCost(4);
 			event.setOutput(new ItemStack(Items.IRON_HORSE_ARMOR));
 		}
 	}
