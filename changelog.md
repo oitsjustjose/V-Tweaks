@@ -1,3 +1,8 @@
+1.4.9.14:
+* Changed: Internal refactors
+* Changed: Horse Armor XP Costs
+* Fixed: Crashes if Challengers enabled but loot list was empty
+
 1.4.9.13:
 * HOTFIX: 1.4.9.13 broke a thing with the lumbering enchant. I strongly suggest downloading it again, it'll be the fixed one
 * Added: Config option to disable Welcome Message with Wiki link
