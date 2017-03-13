@@ -1,5 +1,6 @@
 1.4.9.14:
 * Changed: Internal refactors
+* Changed: Horse Armor XP Costs
 * Fixed: Crashes if Challengers enabled but loot list was empty
 
 1.4.9.13:
