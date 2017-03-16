@@ -1,3 +1,7 @@
+1.4.9.15:
+* Added: JEI Support for Anvil Recipes! (Many thanks to mezz and gigaherz for a code base to help me remember how the API works)
+* Added: New Mob Drop "Buff" for Horses regarding melting them...
+
 1.4.9.14:
 * Changed: Internal refactors
 * Changed: Horse Armor XP Costs
