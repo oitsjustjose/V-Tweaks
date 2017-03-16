@@ -22,14 +22,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerRepair;
 import net.minecraft.item.ItemStack;
 
-/**
- * 
- * @author mezz
- * 
- *         90% of this code has been ripped from 1.11 JEI
- *
- */
-
 @JEIPlugin
 public class JEICompat implements IModPlugin
 {
@@ -47,6 +39,7 @@ public class JEICompat implements IModPlugin
 	@Override
 	public void register(IModRegistry registry)
 	{
+		// The majority of the code below is not mine - it's based off of gigaherz's
 		IJeiHelpers jeiHelp = registry.getJeiHelpers();
 		IGuiHelper guiHelp = jeiHelp.getGuiHelper();
 

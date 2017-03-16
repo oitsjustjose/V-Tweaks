@@ -66,7 +66,6 @@ public class MobDropBuffs
 
 		else if (event.getEntity() instanceof EntityHorse && VTweaks.config.enableHorseGlue && random.nextInt(4 - event.getLootingLevel()) == 0)
 		{
-			System.out.println("Got this far");
 			if (event.getSource().getEntity() instanceof EntityPlayer && EnchantmentHelper.getFireAspectModifier((EntityPlayer) event.getSource().getEntity()) > 0)
 			{
 				ItemStack dropStack = new ItemStack(Items.SLIME_BALL);
