@@ -18,7 +18,7 @@ repositories {
   }
 }
 
-version = "1.4.9.14"
+version = "1.4.9.15"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.11.x"
 

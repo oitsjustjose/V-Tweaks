@@ -1,3 +1,6 @@
+1.4.9.15:
+* Added: JEI Support for Anvil Recipes!
+
 1.4.9.14:
 * Changed: Internal refactors
 * Changed: Horse Armor XP Costs
