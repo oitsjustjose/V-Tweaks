@@ -18,7 +18,7 @@ repositories {
   }
 }
 
-version = minecraft_version
+version = mod_version
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.10.x"
 
