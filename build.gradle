@@ -12,7 +12,13 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.4.9.14"
+repositories {
+  maven {
+    url = "http://dvs1.progwml6.com/files/maven"
+  }
+}
+
+version = "1.4.9.15"
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.10.x"
 
@@ -38,6 +44,8 @@ minecraft {
 }
 
 dependencies {
+  deobfCompile "mezz.jei:jei_1.10.2:3.14.7.416:api"
+  runtime "mezz.jei:jei_1.10.2:3.14.7.416"
 }
 
 task deobfJar(type: Jar) {

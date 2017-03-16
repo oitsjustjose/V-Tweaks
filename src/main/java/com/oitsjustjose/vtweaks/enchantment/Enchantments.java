@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.enchantment;
 import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,6 +38,19 @@ public class Enchantments
 		{
 			lumbering = new EnchantmentLumbering().setName(VTweaks.MODID + ":lumbering");
 		}
+	}
+
+	/**
+	 * 
+	 * @param ench
+	 *            The enchantment which a book is needed
+	 * @return an ItemStack containing an enchanted book STORING the enchantment
+	 */
+	public static ItemStack getEnchantedBook(Enchantment ench)
+	{
+		ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
+		Items.ENCHANTED_BOOK.addEnchantment(retBook, new EnchantmentData(ench, 1));
+		return retBook;
 	}
 
 	/**

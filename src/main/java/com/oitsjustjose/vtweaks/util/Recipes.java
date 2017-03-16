@@ -29,7 +29,7 @@ public class Recipes
 			RecipeSorter.register("VTweaks:disenchanting", DisenchantRecipes.class, Category.SHAPELESS, "");
 		}
 	}
-	
+
 	public static void removeRecipe(ItemStack resultItem)
 	{
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
@@ -120,8 +120,8 @@ public class Recipes
 				else
 					event.setOutput(null);
 		}
-		
-		if(VTweaks.config.stepboostID > 0)
+
+		if (VTweaks.config.stepboostID > 0)
 		{
 			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
 			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));
