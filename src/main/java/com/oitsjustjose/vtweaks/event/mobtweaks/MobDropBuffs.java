@@ -4,14 +4,18 @@ import java.util.Random;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -58,6 +62,16 @@ public class MobDropBuffs
 			ItemStack dropStack = new ItemStack(Items.ENDER_PEARL, 1 + random.nextInt(1));
 			EntityItem dropEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
 			event.getDrops().add(dropEntity);
+		}
+		else if (event.getEntity() instanceof EntityHorse && VTweaks.config.enableHorseGlue && random.nextInt(4 - event.getLootingLevel()) == 0)
+		{
+			if (event.getSource().getEntity() instanceof EntityPlayer && EnchantmentHelper.getFireAspectModifier((EntityPlayer) event.getSource().getEntity()) > 0)
+			{
+				ItemStack dropStack = new ItemStack(Items.SLIME_BALL);
+				dropStack.setStackDisplayName(TextFormatting.RESET + "Glue Ball");
+				EntityItem dropEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, dropStack);
+				event.getDrops().add(dropEntity);
+			}
 		}
 	}
 }

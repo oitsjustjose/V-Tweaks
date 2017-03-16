@@ -18,7 +18,7 @@ repositories {
   }
 }
 
-version = "1.4.9.15"
+version = mod_version
 group= "com.oitsjustjose.vtweaks"
 archivesBaseName = "VTweaks-1.11.x"
 
@@ -28,7 +28,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2237"
+  version = "${minecraft_version}-${forge_version}"
 
 	if (file('../run').exists()){
 	runDir = "../run"
@@ -38,14 +38,14 @@ minecraft {
 
   useDepAts = true
   replaceIn "/VTweaks.java"
-  replace "@VERSION@", project.version
+  replace "@VERSION@", mod_version
 
   mappings = "snapshot_20170114"
 }
 
 dependencies {
-  deobfCompile "mezz.jei:jei_1.11.2:4.2.9.245:api"
-  runtime "mezz.jei:jei_1.11.2:4.2.9.245"
+  deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
+  runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
 }
 
 task deobfJar(type: Jar) {

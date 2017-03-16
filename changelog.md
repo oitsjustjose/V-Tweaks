@@ -1,5 +1,6 @@
 1.4.9.15:
 * Added: JEI Support for Anvil Recipes!
+* Added: New Mob Drop "Buff" for Horses regarding melting them...
 
 1.4.9.14:
 * Changed: Internal refactors
