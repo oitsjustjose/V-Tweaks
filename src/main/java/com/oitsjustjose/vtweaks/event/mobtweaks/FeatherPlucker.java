@@ -41,8 +41,8 @@ public class FeatherPlucker
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG());
-					player.swingArm(EnumHand.MAIN_HAND);
 				}
+				player.swingArm(EnumHand.MAIN_HAND);
 			}
 		}
 	}
