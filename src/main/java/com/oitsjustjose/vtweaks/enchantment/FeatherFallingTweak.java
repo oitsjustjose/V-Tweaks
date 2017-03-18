@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,29 +15,28 @@ public class FeatherFallingTweak
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
-		if(!VTweaks.config.enableFeatherFallingTweak)
+		// Check if enchantment is disabled
+		if (!VTweaks.config.enableFeatherFallingTweak)
 			return;
-		
-		if (!(event.getEntity() instanceof EntityPlayer))
+		// Ensures we're working on a player entity AND we're working with fall damage
+		if (!(event.getEntity() instanceof EntityPlayer) || event.getSource() != DamageSource.fall)
 			return;
 
 		EntityPlayer player = (EntityPlayer) event.getEntity();
 
+		// Checks if boots are worn
 		if (player.inventory.armorInventory[0] == null)
 			return;
 
-		if (player.inventory.armorInventory[0].getMetadata() > player.inventory.armorInventory[0].getMaxDamage() || player.inventory.armorInventory[0].stackSize != 1)
-			player.inventory.armorInventory[0] = null;
-
 		ItemStack boots = player.inventory.armorInventory[0];
-
-		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.getEnchantment("feather_falling"), boots) >= 4)
-			if (event.getSource() == DamageSource.fall)
-			{
-				boots.damageItem((int) event.getAmount(), player);
-				event.setAmount(0.0F);
-				if (boots.getMetadata() > boots.getMaxDamage() || boots.stackSize != 1)
-					player.inventory.armorInventory[0] = null;
-			}
+		// Checks if FeatherFalling IV or higher is on the boots
+		if (EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "feather_falling"), boots) >= 4)
+		{
+			boots.damageItem((int) event.getAmount(), player);
+			event.setAmount(0.0F);
+			// Normalizes armor inventory stack when damaged
+			if (boots.getMetadata() > boots.getMaxDamage() || boots.stackSize != 1)
+				player.inventory.armorInventory[0] = null;
+		}
 	}
 }

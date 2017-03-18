@@ -14,9 +14,10 @@ public class CakeTweak
 	@SubscribeEvent
 	public void registerTweak(BlockEvent.HarvestDropsEvent event)
 	{
-		if(!VTweaks.config.enableCakeTweak)
+		// Checks to see if feature is enabled
+		if (!VTweaks.config.enableCakeTweak)
 			return;
-		
+
 		Block block = event.getState().getBlock();
 		if (event.getHarvester() != null && block instanceof BlockCake && block.getMetaFromState(event.getState()) == 0)
 		{

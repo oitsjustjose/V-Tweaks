@@ -1,9 +1,9 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public class ConfigGUI extends GuiConfig
 
 	private static List<IConfigElement> getConfigElements()
 	{
-		List<IConfigElement> list = Lists.newArrayList();
+		ArrayList<IConfigElement> list = new ArrayList<IConfigElement>();
 
 		list.add(new ConfigElement(VTweaks.config.MobTweaks));
 		list.add(new ConfigElement(VTweaks.config.Enchantments));

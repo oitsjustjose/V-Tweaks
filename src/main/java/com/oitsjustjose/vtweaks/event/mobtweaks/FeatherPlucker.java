@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,9 +20,10 @@ public class FeatherPlucker
 	@SubscribeEvent
 	public void registerEvent(EntityInteract event)
 	{
+		// Checks that the feature is enabled
 		if (!VTweaks.config.enableFeatherPlucker)
 			return;
-		
+
 		if (event.getTarget() == null || !(event.getTarget() instanceof EntityChicken))
 			return;
 
@@ -39,6 +41,7 @@ public class FeatherPlucker
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG());
+					player.swingArm(EnumHand.MAIN_HAND);
 				}
 			}
 		}

@@ -17,9 +17,10 @@ public class SheepDyeFix
 	@SubscribeEvent
 	public void registerEvent(EntityInteract event)
 	{
+		// Checks that the feature is enabled
 		if (!VTweaks.config.enableSheepDyeFix)
 			return;
-
+		// Checks that the entity is a sheep
 		if (event.getTarget() == null || !(event.getTarget() instanceof EntitySheep))
 			return;
 
@@ -44,7 +45,7 @@ public class SheepDyeFix
 		}
 	}
 
-	int getDye(ItemStack itemstack)
+	private int getDye(ItemStack itemstack)
 	{
 		// Checks if it's a blacklisted dye class first
 		if (ignore(itemstack))
@@ -66,7 +67,7 @@ public class SheepDyeFix
 		return -1;
 	}
 
-	public boolean ignore(ItemStack itemstack)
+	private boolean ignore(ItemStack itemstack)
 	{
 		Item stackItem = itemstack.getItem();
 		for (String s : VTweaks.config.sheepDyeBlacklist)

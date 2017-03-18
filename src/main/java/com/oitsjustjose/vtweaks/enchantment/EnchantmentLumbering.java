@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.enchantment;
 import java.util.Set;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -63,7 +64,7 @@ public class EnchantmentLumbering extends Enchantment
 		ItemStack left = event.getLeft();
 		ItemStack right = event.getRight();
 
-		if (!Enchantments.bookHasEnchantment(right, this) || !(left.getItem() instanceof ItemTool))
+		if (!HelperFunctions.bookHasEnchantment(right, this) || !(left.getItem() instanceof ItemTool))
 			return;
 
 		Set<String> classes = ((ItemTool) left.getItem()).getToolClasses(left);

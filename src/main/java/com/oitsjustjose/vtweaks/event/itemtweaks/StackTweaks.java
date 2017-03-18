@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.event.blocktweaks;
+package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import net.minecraft.init.Items;
 

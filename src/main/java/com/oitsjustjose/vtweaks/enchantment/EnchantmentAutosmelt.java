@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -11,8 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentAutosmelt extends Enchantment
 {
-
-	protected EnchantmentAutosmelt()
+	public EnchantmentAutosmelt()
 	{
 		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		Enchantment.REGISTRY.register(VTweaks.config.autosmeltID, new ResourceLocation(VTweaks.MODID, "autosmelt"), this);
@@ -21,7 +21,7 @@ public class EnchantmentAutosmelt extends Enchantment
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment)
 	{
-		if (enchantment == Enchantments.getEnchantment("silk_touch"))
+		if (enchantment == HelperFunctions.getEnchantment("minecraft", "silk_touch"))
 			return false;
 		return true;
 	}

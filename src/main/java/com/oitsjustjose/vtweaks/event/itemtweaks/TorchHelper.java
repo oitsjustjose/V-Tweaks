@@ -1,11 +1,10 @@
-package com.oitsjustjose.vtweaks.event.blocktweaks;
+package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumActionResult;
@@ -18,9 +17,9 @@ public class TorchHelper
 	@SubscribeEvent
 	public void registerTweak(RightClickBlock event)
 	{
-		if(!VTweaks.config.enableTorchHelper)
+		if (!VTweaks.config.enableTorchHelper)
 			return;
-		
+
 		if (event.getEntityPlayer().getHeldItemMainhand() == null || event.getEntityPlayer().getHeldItemOffhand() != null)
 			return;
 
@@ -32,13 +31,15 @@ public class TorchHelper
 			return;
 
 		if (!event.getWorld().isRemote && block.onBlockActivated(event.getWorld(), event.getPos(), state, player, EnumHand.MAIN_HAND, player.getHeldItemMainhand(), event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
+		{
 			event.setCanceled(true);
+		}
 		else
 		{
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++)
 			{
 				ItemStack stack = player.inventory.getStackInSlot(i);
-				if (stack != null && stack.getDisplayName().toLowerCase().matches(Blocks.TORCH.getLocalizedName().toLowerCase()))
+				if (stack != null && stack.getDisplayName().toLowerCase().contains("torch"))
 				{
 					if (stack.onItemUse(player, event.getWorld(), event.getPos(), EnumHand.MAIN_HAND, event.getFace(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()) == EnumActionResult.SUCCESS)
 						player.swingArm(EnumHand.MAIN_HAND);

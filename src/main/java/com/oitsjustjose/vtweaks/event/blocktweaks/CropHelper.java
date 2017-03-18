@@ -19,17 +19,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CropHelper
 {
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void registerVanilla(RightClickBlock event)
+	@SubscribeEvent
+	public void registerTweak(RightClickBlock event)
 	{
-		if(!VTweaks.config.enableCropHelper)
+		if (!VTweaks.config.enableCropHelper)
 			return;
-		
+
 		if (event.getWorld().getBlockState(event.getPos()) == null || event.getEntityPlayer() == null || event.getHand() != EnumHand.MAIN_HAND)
 			return;
 

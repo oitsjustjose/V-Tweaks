@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
@@ -91,12 +92,12 @@ public class JEICompat implements IModPlugin
 		// Hypermending Compatibility
 		if (VTweaks.config.hypermendingID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), Enchantments.getEnchantedBook(Enchantments.hyperMending), VTweaks.config.hypermendingXPCost);
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(Enchantments.hypermending), VTweaks.config.hypermendingXPCost);
 		}
 		// Autosmelt Compatibility
 		if (VTweaks.config.autosmeltID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), Enchantments.getEnchantedBook(Enchantments.autosmelt), VTweaks.config.autosmeltXPCost);
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(Enchantments.autosmelt), VTweaks.config.autosmeltXPCost);
 		}
 		// Stepboost Compatibility
 		if (VTweaks.config.stepboostID > 0)
@@ -115,12 +116,12 @@ public class JEICompat implements IModPlugin
 				}
 			}
 
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), stairs, Enchantments.getEnchantedBook(Enchantments.stepboost), VTweaks.config.stepboostXPCost);
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), stairs, HelperFunctions.getEnchantedBook(Enchantments.stepboost), VTweaks.config.stepboostXPCost);
 		}
 		// Lumbering Compatibility
 		if (VTweaks.config.lumberingID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), Enchantments.getEnchantedBook(Enchantments.lumbering), VTweaks.config.lumberingXPCost);
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(Enchantments.lumbering), VTweaks.config.lumberingXPCost);
 		}
 	}
 

@@ -1,11 +1,11 @@
 package com.oitsjustjose.vtweaks;
 
-import com.oitsjustjose.vtweaks.enchantment.EnchantmentAutosmeltHandler;
-import com.oitsjustjose.vtweaks.enchantment.EnchantmentHypermendingHandler;
-import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumberingHandler;
-import com.oitsjustjose.vtweaks.enchantment.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentAutosmeltHandler;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentHypermendingHandler;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
 import com.oitsjustjose.vtweaks.event.PingProtection;
 import com.oitsjustjose.vtweaks.event.StormTweak;
@@ -14,14 +14,13 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
-import com.oitsjustjose.vtweaks.event.blocktweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
-import com.oitsjustjose.vtweaks.event.blocktweaks.TorchHelper;
-import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
+import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
+import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
@@ -62,8 +61,7 @@ public class VTweaks
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		config = new Config(event.getSuggestedConfigurationFile());
-
-		GamePlayHandler.initialize();
+		
 		MinecraftForge.EVENT_BUS.register(config);
 
 		// Mob Tweaks

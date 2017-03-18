@@ -24,15 +24,18 @@ public class ToolTips
 		ItemStack stack = event.getItemStack();
 		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 
+		// Food tooltip
 		if (stack.getItem() instanceof ItemFood)
 		{
+			// Checks to see if feature is enabled
+			if (VTweaks.config.foodTooltipSetting == 0)
+				return;
+
 			ItemFood food = (ItemFood) stack.getItem();
 			int hunger = food.getHealAmount(stack);
 			float saturation = food.getSaturationModifier(stack) * 10;
 
-			if (VTweaks.config.foodTooltipSetting == 0)
-				return;
-			else if (VTweaks.config.foodTooltipSetting == 1)
+			if (VTweaks.config.foodTooltipSetting == 1)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
@@ -46,16 +49,22 @@ public class ToolTips
 
 		if (stack.getItem().isDamageable())
 		{
+			// Checks to see if feature is enabled
 			if (VTweaks.config.durabilityTooltipSetting == 0)
 				return;
-			else if (VTweaks.config.durabilityTooltipSetting == 1)
+
+			if (VTweaks.config.durabilityTooltipSetting == 1)
+			{
 				event.getToolTip().add(getDurabilityString(stack));
+			}
 			else if (VTweaks.config.durabilityTooltipSetting == 2 && shift)
+			{
 				event.getToolTip().add(getDurabilityString(stack));
+			}
 		}
 	}
 
-	public static String getHungerString(int hunger)
+	private String getHungerString(int hunger)
 	{
 		String ret = TextFormatting.GRAY + "Hunger:";
 
@@ -67,7 +76,7 @@ public class ToolTips
 		return ret;
 	}
 
-	public static String getSaturationString(float saturation)
+	private String getSaturationString(float saturation)
 	{
 		String ret = TextFormatting.GRAY + "Saturation:";
 
@@ -80,20 +89,20 @@ public class ToolTips
 		if (saturation <= 4)
 			return ret += TextFormatting.YELLOW + "\u25A0";
 		if (saturation <= 5)
-			return ret += TextFormatting.DARK_GREEN + "\u25A0";
-		if (saturation <= 6)
 			return ret += TextFormatting.GREEN + "\u25A0";
+		if (saturation <= 6)
+			return ret += TextFormatting.DARK_GREEN + "\u25A0";
 		if (saturation <= 7)
-			return ret += TextFormatting.BLUE + "\u25A0";
-		if (saturation <= 8)
 			return ret += TextFormatting.DARK_AQUA + "\u25A0";
+		if (saturation <= 8)
+			return ret += TextFormatting.BLUE + "\u25A0";
 		if (saturation <= 9)
 			return ret += TextFormatting.DARK_PURPLE + "\u25A0";
 		else
 			return ret += TextFormatting.LIGHT_PURPLE + "\u25A0";
 	}
 
-	public String getDurabilityString(ItemStack itemstack)
+	private String getDurabilityString(ItemStack itemstack)
 	{
 		String ret = "Durability: ";
 		int max = itemstack.getMaxDamage();
@@ -104,13 +113,13 @@ public class ToolTips
 		if (percentage >= .8)
 			return ret = ret + TextFormatting.DARK_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET;
 		if (percentage >= .7)
-			return ret = ret + TextFormatting.DARK_AQUA + (max - damage) + " / " + max + TextFormatting.RESET;
-		if (percentage >= .6)
 			return ret = ret + TextFormatting.BLUE + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .6)
+			return ret = ret + TextFormatting.DARK_AQUA + (max - damage) + " / " + max + TextFormatting.RESET;
 		if (percentage >= .5)
-			return ret = ret + TextFormatting.GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
-		if (percentage >= .4)
 			return ret = ret + TextFormatting.DARK_GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
+		if (percentage >= .4)
+			return ret = ret + TextFormatting.GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
 		if (percentage >= .3)
 			return ret = ret + TextFormatting.YELLOW + (max - damage) + " / " + max + TextFormatting.RESET;
 		if (percentage >= .2)
