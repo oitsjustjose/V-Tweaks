@@ -82,7 +82,7 @@ public class HelperFunctions
 	// An easier builder function for Item Entities
 	public static EntityItem createItemEntity(World world, BlockPos pos, ItemStack itemstack)
 	{
-		return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
+		return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
 	}
 
 	// An easier builder function for Item Entities

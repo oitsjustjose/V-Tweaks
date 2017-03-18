@@ -1,3 +1,16 @@
+1.4.9.16:
+* Added: Cacti to the "easier for axes to break" list
+* Removed: Gameplay handler (not fitting and unused by majority)
+* Removed: A useless class I forgot to delete
+* Changed: Torch Helper is more generic on what is considered a "torch" for mod compatibility
+* Changed: Internal Code - a lot. Many, MANY code improvements
+* Changed: More tool compatibility for "axe" and "pickaxe" requiring features
+* Changed: RGB scale for durability and food values
+* Improved: Pet Armory - now makes a sound and requires the equipper to own the pet
+* Improved: Hypermending - now keeps all tools anywhere in inventory repaired
+* Improved: Overworld Wither Blacklisting - now drops proper amounts of resources
+* Improved: Feather Plucker - now has arm swinging animation!
+
 1.4.9.15:
 * Added: JEI Support for Anvil Recipes! (Many thanks to mezz and gigaherz for a code base to help me remember how the API works)
 * Added: New Mob Drop "Buff" for Horses regarding melting them...

@@ -10,6 +10,7 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -49,7 +50,7 @@ public class MobKiller
 		if (!event.getWorld().isRemote)
 		{
 			EntityItem sSand = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Blocks.SOUL_SAND, 4));
-			EntityItem skulls = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Blocks.SKULL, 3, 1));
+			EntityItem skulls = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Items.SKULL, 3, 1));
 
 			event.getWorld().spawnEntityInWorld(sSand);
 			event.getWorld().spawnEntityInWorld(skulls);
