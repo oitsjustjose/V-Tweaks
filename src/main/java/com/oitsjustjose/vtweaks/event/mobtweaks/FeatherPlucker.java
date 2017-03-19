@@ -1,14 +1,15 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemShears;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,9 +20,10 @@ public class FeatherPlucker
 	@SubscribeEvent
 	public void registerEvent(EntityInteract event)
 	{
-		if(!VTweaks.config.enableFeatherPlucker)
+		// Checks if feature is enabled
+		if (!VTweaks.config.enableFeatherPlucker)
 			return;
-		
+
 		if (event.getTarget() == null || !(event.getTarget() instanceof EntityChicken))
 			return;
 
@@ -29,17 +31,18 @@ public class FeatherPlucker
 		EntityPlayer player = event.getEntityPlayer();
 		if (!chicken.isChild())
 		{
-			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemShears)
+			if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ItemShears)
 			{
 				if (!player.world.isRemote && chicken.getGrowingAge() == 0)
 				{
-					EntityItem featherDrop = new EntityItem(player.world, event.getTarget().posX, event.getTarget().posY, event.getTarget().posZ, new ItemStack(Items.FEATHER));
+					EntityItem featherDrop = HelperFunctions.createItemEntity(player.world, event.getTarget().getPosition(), Items.FEATHER);
 					player.world.spawnEntity(featherDrop);
 					chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG());
 				}
+				player.swingArm(EnumHand.MAIN_HAND);
 			}
 		}
 	}

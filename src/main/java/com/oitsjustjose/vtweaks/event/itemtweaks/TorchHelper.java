@@ -24,6 +24,7 @@ public class TorchHelper
 	@SubscribeEvent
 	public void registerTweak(RightClickBlock event)
 	{
+		// Checks if feature is enabled
 		if (!VTweaks.config.enableTorchHelper)
 			return;
 
@@ -54,7 +55,7 @@ public class TorchHelper
 		}
 	}
 
-	public EnumActionResult placeTorch(World world, EntityPlayer player, BlockPos pos, EnumFacing face, ItemStack itemstack)
+	private EnumActionResult placeTorch(World world, EntityPlayer player, BlockPos pos, EnumFacing face, ItemStack itemstack)
 	{
 		BlockPos posToCheck = pos;
 

@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -27,14 +27,14 @@ public enum ChallengerMobType
 		ItemStack[] toolList = new ItemStack[] { new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW), new ItemStack(Items.STICK), new ItemStack(Items.FIREWORKS), new ItemStack(Items.SIGN), ItemStack.EMPTY, ItemStack.EMPTY };
 
 		toolList[0].setItemDamage(toolList[0].getMaxDamage() / 8);
-		toolList[0].addEnchantment(Enchantments.getEnchantment("sharpness"), 3);
-		toolList[1].addEnchantment(Enchantments.getEnchantment("sharpness"), 10);
-		toolList[2].addEnchantment(Enchantments.getEnchantment("punch"), 2);
-		toolList[2].addEnchantment(Enchantments.getEnchantment("power"), 3);
-		toolList[3].addEnchantment(Enchantments.getEnchantment("fire_aspect"), 1);
-		toolList[3].addEnchantment(Enchantments.getEnchantment("knockback"), 2);
-		toolList[4].addEnchantment(Enchantments.getEnchantment("fire_aspect"), 5);
-		toolList[5].addEnchantment(Enchantments.getEnchantment("knockback"), 10);
+		toolList[0].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 3);
+		toolList[1].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 10);
+		toolList[2].addEnchantment(HelperFunctions.getEnchantment("minecraft", "punch"), 2);
+		toolList[2].addEnchantment(HelperFunctions.getEnchantment("minecraft", "power"), 3);
+		toolList[3].addEnchantment(HelperFunctions.getEnchantment("minecraft", "fire_aspect"), 1);
+		toolList[3].addEnchantment(HelperFunctions.getEnchantment("minecraft", "knockback"), 2);
+		toolList[4].addEnchantment(HelperFunctions.getEnchantment("minecraft", "fire_aspect"), 5);
+		toolList[5].addEnchantment(HelperFunctions.getEnchantment("minecraft", "knockback"), 10);
 
 		return toolList[type];
 	}

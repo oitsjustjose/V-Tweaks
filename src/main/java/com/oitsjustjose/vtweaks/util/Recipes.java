@@ -6,7 +6,6 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -66,10 +65,9 @@ public class Recipes
 	{
 		if (VTweaks.config.hypermendingID > 0)
 		{
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.hyperMending, 1));
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.hypermending);
 
-			if (event.getLeft().getItem() == null || event.getRight().getItem() == null)
+			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
 
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.NETHER_STAR)
@@ -86,10 +84,9 @@ public class Recipes
 
 		if (VTweaks.config.autosmeltID > 0)
 		{
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.autosmelt, 1));
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.autosmelt);
 
-			if (event.getLeft().getItem() == null || event.getRight().getItem() == null)
+			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
 
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.LAVA_BUCKET)
@@ -104,10 +101,9 @@ public class Recipes
 
 		if (VTweaks.config.stepboostID > 0)
 		{
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.stepboost, 1));
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.stepboost);
 
-			if (event.getLeft().getItem() == null || event.getRight().getItem() == null)
+			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
 
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() instanceof ItemBlock)
@@ -125,10 +121,9 @@ public class Recipes
 
 		if (VTweaks.config.lumberingID > 0)
 		{
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, 1, 0);
-			Items.ENCHANTED_BOOK.addEnchantment(book, new EnchantmentData(Enchantments.lumbering, 1));
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.lumbering);
 
-			if (event.getLeft().getItem() == null || event.getRight().getItem() == null)
+			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
 
 			boolean damaged = event.getRight().getItemDamage() > 0;

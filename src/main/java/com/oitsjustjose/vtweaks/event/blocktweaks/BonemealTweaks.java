@@ -20,11 +20,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class BonemealTweaks
 {
 	@SubscribeEvent
-	public void registerTweakNormal(RightClickBlock event)
+	public void registerTweak(RightClickBlock event)
 	{
-		if(!VTweaks.config.enableBonemealTweaks)
+		// Checks if feature is enabled
+		if (!VTweaks.config.enableBonemealTweaks)
 			return;
-		
+
 		if (event.getWorld().getBlockState(event.getPos()) == null)
 			return;
 

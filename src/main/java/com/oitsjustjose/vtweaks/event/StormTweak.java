@@ -10,9 +10,10 @@ public class StormTweak
 	@SubscribeEvent
 	public void registerTweak(WorldEvent event)
 	{
-		if(!VTweaks.config.enableStormTweak)
+		// Check if feature is enabled
+		if (!VTweaks.config.enableStormTweak)
 			return;
-		
+		// Converts storms to regular rain
 		if (event.getWorld().isRaining())
 			if (event.getWorld().getWorldInfo().isThundering())
 				event.getWorld().getWorldInfo().setThundering(false);

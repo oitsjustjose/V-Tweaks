@@ -80,7 +80,6 @@ public class Config
 	public boolean enableSleepingBags;
 
 	// Misc Configs
-	public boolean enableGamePlayHandler;
 	public boolean enableRecipeHorseArmor;
 	public boolean enableStackTweaks;
 	public boolean enableStormTweak;
@@ -364,11 +363,6 @@ public class Config
 		propertyOrder = Lists.newArrayList();
 		MiscFeatures = config.getCategory(category);
 		MiscFeatures.setComment("Other Tweaks");
-
-		property = config.get(category, "Change Base Game Mechanics", false).setRequiresMcRestart(true);
-		property.setComment("This config allows for flint and gravel to be a reasonably heavy part of crafting / early-game gameplay");
-		enableGamePlayHandler = property.getBoolean();
-		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Horse Armor Recipes", true);
 		property.setComment("Combining two pairs of undamaged leggings in an anvil will get you horse armor of that type");

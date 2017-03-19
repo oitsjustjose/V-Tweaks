@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -62,7 +62,7 @@ public class ChallengerMobs
 					{
 						ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
 						pants.setStackDisplayName("Man Pants");
-						pants.addEnchantment(Enchantments.getEnchantment("blast_protection"), 5);
+						pants.addEnchantment(HelperFunctions.getEnchantment("minecraft", "blast_protection"), 5);
 						monster.setItemStackToSlot(EntityEquipmentSlot.LEGS, pants);
 					}
 				}

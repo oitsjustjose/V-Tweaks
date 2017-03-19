@@ -1,8 +1,9 @@
-package com.oitsjustjose.vtweaks.enchantment;
+package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import java.util.ListIterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -23,35 +24,38 @@ public class EnchantmentAutosmeltHandler
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(HarvestDropsEvent event)
 	{
-		if(VTweaks.config.autosmeltID <= 0)
+		// Check if enchantment is disabled
+		if (VTweaks.config.autosmeltID <= 0)
 			return;
-		
+		// Check if the player is null
+		if (event.getHarvester() == null || event.getHarvester().getHeldItemMainhand() == null)
+			return;
+
+		// Some local variables
 		EntityPlayer player = event.getHarvester();
-		if (player == null || player.getHeldItemMainhand().getItem() == null)
-			return;
-
 		World world = event.getWorld();
-
 		ItemStack heldItem = player.getHeldItemMainhand();
 		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.autosmelt, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
-			ListIterator<ItemStack> iterator = event.getDrops().listIterator();
-
-			while (iterator.hasNext())
+			ListIterator<ItemStack> iter = event.getDrops().listIterator();
+			// Goes through every drop in the drop list
+			while (iter.hasNext())
 			{
-				ItemStack temp = iterator.next().copy();
+				ItemStack temp = iter.next().copy();
 				ItemStack newDrop = FurnaceRecipes.instance().getSmeltingResult(temp.copy());
-
+				// Check if current item in the iterator has a smelting result
 				if (!newDrop.isEmpty())
 				{
+					// Compensates for stack sizes depending on normal drop qty & fortune
 					newDrop = newDrop.copy();
 					newDrop.setCount(temp.getCount());
 					if (event.getFortuneLevel() > 0 && shouldFortuneSmelt(temp))
 						newDrop.setCount((newDrop.getCount() * world.rand.nextInt(event.getFortuneLevel() + 1) + 1));
-
-					iterator.set(newDrop);
+					// Replaces the drop
+					iter.set(newDrop);
+					// Spawns XP from smelting the item in a furnace
 					spawnXP(event.getWorld(), event.getPos(), newDrop.copy());
 				}
 			}
@@ -61,16 +65,17 @@ public class EnchantmentAutosmeltHandler
 
 	void spawnXP(World world, BlockPos pos, ItemStack itemstack)
 	{
+		// Extract x, y and z for spawning
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-
 		int stackSize = itemstack.getCount();
 		float smeltingXP = FurnaceRecipes.instance().getSmeltingExperience(itemstack);
 		int xpSplit;
-
+		// Prevents XP spawning if none should spawn
 		if (smeltingXP == 0.0F)
 			stackSize = 0;
+		// Divies up the XP if it's too much (preventing lag)
 		else if (smeltingXP < 1.0F)
 		{
 			xpSplit = MathHelper.floor((float) stackSize * smeltingXP);
@@ -80,7 +85,7 @@ public class EnchantmentAutosmeltHandler
 
 			stackSize = xpSplit;
 		}
-
+		// Spawns the proper XP amounts
 		while (stackSize > 0)
 		{
 			xpSplit = EntityXPOrb.getXPSplit(stackSize);

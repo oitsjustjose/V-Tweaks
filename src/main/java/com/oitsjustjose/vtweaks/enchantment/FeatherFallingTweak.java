@@ -1,10 +1,10 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -15,27 +15,26 @@ public class FeatherFallingTweak
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
-		if(!VTweaks.config.enableFeatherFallingTweak)
+		// Check if enchantment is disabled
+		if (!VTweaks.config.enableFeatherFallingTweak)
 			return;
-		
-		if (!(event.getEntity() instanceof EntityPlayer))
+		// Ensures we're working on a player entity AND we're working with fall damage
+		if (!(event.getEntity() instanceof EntityPlayer) || event.getSource() != DamageSource.FALL)
 			return;
 
 		EntityPlayer player = (EntityPlayer) event.getEntity();
-		ItemStack boots = player.inventory.armorInventory.get(0);
 
-		if (event.getSource() != DamageSource.FALL || boots == ItemStack.EMPTY)
+		// Checks if boots are worn
+		if (player.inventory.armorInventory.get(0).isEmpty())
 			return;
 
-		if (boots.getMetadata() > boots.getMaxDamage() || boots.getCount() != 1)
-		{
-			player.inventory.armorInventory.set(0, new ItemStack((Item) null));
-		}
-
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getEnchantment("feather_falling"), boots) >= 4)
+		ItemStack boots = player.inventory.armorInventory.get(0);
+		// Checks if FeatherFalling IV or higher is on the boots
+		if (EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "feather_falling"), boots) >= 4)
 		{
 			boots.damageItem((int) event.getAmount(), player);
 			event.setAmount(0.0F);
+			// Normalizes armor inventory stack when damaged
 			if (boots.getMetadata() > boots.getMaxDamage() || boots.getCount() != 1)
 				boots = ItemStack.EMPTY;
 		}

@@ -1,11 +1,11 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import java.util.List;
+import java.util.Iterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -18,43 +18,48 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LavaLossPrevention
 {
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void registerTweak(HarvestDropsEvent event)
 	{
-		if(!VTweaks.config.enableLavaLossPrevention)
+		// Checks to see if feature is enabled
+		if (!VTweaks.config.enableLavaLossPrevention)
 			return;
-		
-		EntityPlayer player = event.getHarvester();
-		if (player == null || event.getState() == null || event.getState().getBlock() == null)
+		// Confirming that player exists
+		if (event.getHarvester() == null || event.getState() == null || event.getState().getBlock() == null)
 			return;
 
+		EntityPlayer player = event.getHarvester();
 		Block chiselBasalt = Block.REGISTRY.getObject(new ResourceLocation("chisel", "basaltextra"));
 		Block blockBroken = event.getState().getBlock();
 
+		// Checks if the block broken is what I consider "valuable"
 		if (blockBroken == Blocks.OBSIDIAN || (blockBroken == chiselBasalt && chiselBasalt.getMetaFromState(event.getState()) == 7))
 		{
+			// Confirms if it's above lava
 			if (isAboveLava(event.getWorld(), event.getPos()))
 			{
-
-				List<ItemStack> list = event.getDrops();
-				final ItemStack drop = list.get(0);
-				list.clear();
-
-				if (!event.getWorld().isRemote)
+				// Captures all drops
+				Iterator<ItemStack> iter = event.getDrops().iterator();
+				while (iter.hasNext())
 				{
-					if (!player.inventory.addItemStackToInventory(drop))
+					ItemStack drop = iter.next().copy();
+					if (!event.getWorld().isRemote)
 					{
-						event.getWorld().spawnEntity(new EntityItem(event.getWorld(), player.posX, player.posY, player.posZ, drop));
+						// And attempts to put them in inventory
+						if (!player.inventory.addItemStackToInventory(drop))
+						{
+							// Otherwise player's feet it is
+							event.getWorld().spawnEntity(HelperFunctions.createItemEntity(event.getWorld(), player.getPosition(), drop));
+						}
 					}
+					iter.remove();
 				}
 			}
 		}
 	}
 
-	boolean isAboveLava(World world, BlockPos pos)
+	private boolean isAboveLava(World world, BlockPos pos)
 	{
-		if (world.getBlockState(pos.down()).getBlock() == Blocks.LAVA || world.getBlockState(pos.down()).getBlock() == Blocks.FLOWING_LAVA)
-			return true;
-		return false;
+		return (world.getBlockState(pos.down()).getBlock() == Blocks.LAVA || world.getBlockState(pos.down()).getBlock() == Blocks.FLOWING_LAVA);
 	}
 }

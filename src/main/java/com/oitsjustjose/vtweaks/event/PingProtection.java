@@ -13,9 +13,10 @@ public class PingProtection
 	@SubscribeEvent
 	public void registerTweak(LivingHurtEvent event)
 	{
-		if(!VTweaks.config.enablePingProtection)
+		// Check if feature is enabled
+		if (!VTweaks.config.enablePingProtection)
 			return;
-		
+
 		if (event.getEntity() instanceof EntityPlayerMP)
 		{
 			if (event.getSource() == DamageSource.DRAGON_BREATH || event.getSource() == DamageSource.WITHER || event.getSource() instanceof EntityDamageSource)

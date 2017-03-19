@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
@@ -11,7 +12,7 @@ import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,25 +36,25 @@ public class MobKiller
 	}
 
 	@SubscribeEvent
-	public void registerWitherTweak(EntityEvent event)
+	public void registerWitherTweak(EntityJoinWorldEvent event)
 	{
-		Entity toKill = event.getEntity();
+		// Checks to see if feature is enabled
+		if (!VTweaks.config.disableWitherOverworld)
+			return;
+		// Typecast checking
+		if (!(event.getEntity() instanceof EntityWither))
+			return;
 
-		if (toKill != null && toKill instanceof EntityWither && VTweaks.config.disableWitherOverworld)
+		EntityWither wither = (EntityWither) event.getEntity();
+
+		if (!event.getWorld().isRemote)
 		{
-			EntityWither wither = (EntityWither) toKill;
-			if (wither.world.provider.getDimension() == 0)
-			{
-				wither.setDead();
-				if (!event.getEntity().world.isRemote)
-				{
-					EntityItem soulSand = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Blocks.SOUL_SAND, 2));
-					EntityItem skulls = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.SKULL, 1, 1).setStackDisplayName("No Withers in the Overworld"));
+			EntityItem sSand = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Blocks.SOUL_SAND, 4));
+			EntityItem skulls = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Items.SKULL, 3, 1));
 
-					event.getEntity().getEntityWorld().spawnEntity(soulSand);
-					event.getEntity().getEntityWorld().spawnEntity(skulls);
-				}
-			}
+			event.getWorld().spawnEntity(sSand);
+			event.getWorld().spawnEntity(skulls);
 		}
+		wither.setDead();
 	}
 }

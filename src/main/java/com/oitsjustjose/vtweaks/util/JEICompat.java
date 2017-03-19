@@ -40,18 +40,18 @@ public class JEICompat implements IModPlugin
 		}
 		if (VTweaks.config.hypermendingID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), Enchantments.getEnchantedBook(Enchantments.hyperMending));
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(Enchantments.hypermending));
 		}
 		if (VTweaks.config.autosmeltID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), Enchantments.getEnchantedBook(Enchantments.autosmelt));
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(Enchantments.autosmelt));
 		}
 		// Stepboost Compatibility
 		if (VTweaks.config.stepboostID > 0)
 		{
 			ArrayList<ItemStack> stairs = new ArrayList<ItemStack>();
 			ArrayList<ItemStack> output = new ArrayList<ItemStack>();
-			output.add(Enchantments.getEnchantedBook(Enchantments.stepboost));
+			output.add(HelperFunctions.getEnchantedBook(Enchantments.stepboost));
 
 			for (int i = 0; i < Block.REGISTRY.getKeys().size(); i++)
 			{
@@ -68,7 +68,7 @@ public class JEICompat implements IModPlugin
 		}
 		if (VTweaks.config.lumberingID > 0)
 		{
-			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), Enchantments.getEnchantedBook(Enchantments.lumbering));
+			addAnvilRecipe(registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(Enchantments.lumbering));
 		}
 	}
 

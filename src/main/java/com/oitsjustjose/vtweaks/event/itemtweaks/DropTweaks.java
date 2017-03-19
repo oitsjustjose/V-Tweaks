@@ -30,7 +30,7 @@ public class DropTweaks
 		World world = entItem.getEntityWorld();
 		ItemStack stack = entItem.getEntityItem();
 
-		// Handles egg hatching; 1 in 12 chance.
+		// Handles egg hatching; configurable chance.
 		if (VTweaks.config.enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
 		{
 			if (world.rand.nextInt(VTweaks.config.enableEggHatchChance) == 0)

@@ -14,9 +14,10 @@ public class DeathPoint
 	@SubscribeEvent
 	public void registerTweak(LivingDeathEvent event)
 	{
-		if(!VTweaks.config.enableDeathPoint)
+		// Check if feature is enabled
+		if (!VTweaks.config.enableDeathPoint)
 			return;
-		
+		// Are you human?
 		if (!(event.getEntity() instanceof EntityPlayer))
 			return;
 
@@ -24,7 +25,8 @@ public class DeathPoint
 		player.sendMessage(getCoordMessage(event.getEntity().getPosition()));
 	}
 
-	TextComponentString getCoordMessage(BlockPos pos)
+	// Coincidentally compatible with Journeymap :D
+	private TextComponentString getCoordMessage(BlockPos pos)
 	{
 		String message = "Your most recent death was at: " + TextFormatting.YELLOW + "[X: " + pos.getX() + ", Y: " + pos.getY() + ", Z: " + pos.getZ() + "]";
 		return new TextComponentString(message);

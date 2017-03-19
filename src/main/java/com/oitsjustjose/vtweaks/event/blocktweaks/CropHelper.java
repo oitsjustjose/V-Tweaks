@@ -27,9 +27,10 @@ public class CropHelper
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void registerVanilla(RightClickBlock event)
 	{
-		if(!VTweaks.config.enableCropHelper)
+		// Checks if feature is enabled
+		if (!VTweaks.config.enableCropHelper)
 			return;
-		
+
 		if (event.getWorld().getBlockState(event.getPos()) == null || event.getEntityPlayer() == null || event.getHand() != EnumHand.MAIN_HAND)
 			return;
 

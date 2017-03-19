@@ -1,6 +1,7 @@
-package com.oitsjustjose.vtweaks.enchantment;
+package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +15,10 @@ public class EnchantmentStepboostHandler
 	@SubscribeEvent
 	public void register(PlayerEvent event)
 	{
-		if(VTweaks.config.stepboostID <= 0)
+		// Check if enchantment is disabled
+		if (VTweaks.config.stepboostID <= 0)
 			return;
-		
+		// Local Variables
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 		ItemStack boots = player.inventory.armorInventory.get(0);
@@ -38,7 +40,7 @@ public class EnchantmentStepboostHandler
 		}
 	}
 
-	public NBTTagCompound getPlayerPersistTag(EntityPlayer player, String modid)
+	private NBTTagCompound getPlayerPersistTag(EntityPlayer player, String modid)
 	{
 		NBTTagCompound tag = player.getEntityData();
 		NBTTagCompound persistTag = null;

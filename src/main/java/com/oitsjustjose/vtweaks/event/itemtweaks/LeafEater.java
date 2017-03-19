@@ -6,8 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,24 +19,40 @@ public class LeafEater
 	@SubscribeEvent
 	public void registerTweak(BreakEvent event)
 	{
-		if (!VTweaks.config.enableLeafEater || event.getState() == null || event.getState().getBlock() == null || event.getPlayer() == null)
+		// Checks if feature is enabled
+		if (!VTweaks.config.enableLeafEater)
+			return;
+		// Confirms state and player exist
+		if (event.getState() == null || event.getPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getPlayer();
 		World world = event.getWorld();
-
-		if (player.getHeldItemMainhand() == ItemStack.EMPTY)
+		// Confirms player is holding a tool
+		if (player.getHeldItemMainhand().isEmpty() || !(player.getHeldItemMainhand().getItem() instanceof ItemTool))
 			return;
+		ItemTool tool = (ItemTool) player.getHeldItemMainhand().getItem();
 
-		if (player.getHeldItemMainhand().getItem() instanceof ItemAxe && event.getState().getMaterial() == Material.LEAVES && shouldAOE(player))
+		// Confirms that tool is an axe
+		if (tool.getToolClasses(player.getHeldItemMainhand()).contains("axe") && event.getState().getMaterial() == Material.LEAVES && shouldAOE(player))
+		{
 			for (int x = -3; x < 4; x++)
+			{
 				for (int y = -3; y < 4; y++)
+				{
 					for (int z = -3; z < 4; z++)
+					{
 						if (world.getBlockState(event.getPos().add(x, y, z)).getBlock().getClass() == event.getState().getBlock().getClass())
+						{
 							breakBlock(world, player, event.getPos().add(x, y, z));
+						}
+					}
+				}
+			}
+		}
 	}
 
-	void breakBlock(World world, EntityPlayer player, BlockPos pos)
+	private void breakBlock(World world, EntityPlayer player, BlockPos pos)
 	{
 		Block block = world.getBlockState(pos).getBlock();
 		IBlockState state = world.getBlockState(pos);
@@ -52,9 +68,8 @@ public class LeafEater
 		world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 0.25F, 0.8F);
 	}
 
-	boolean shouldAOE(EntityPlayer player)
+	private boolean shouldAOE(EntityPlayer player)
 	{
 		return (VTweaks.config.leafEaterReqSneak && player.isSneaking()) || !VTweaks.config.leafEaterReqSneak;
 	}
-
 }
