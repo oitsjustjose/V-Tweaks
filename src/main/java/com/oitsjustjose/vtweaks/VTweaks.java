@@ -15,10 +15,9 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
-import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.event.itemtweaks.GamePlayHandler;
 import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
 import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
@@ -63,7 +62,6 @@ public class VTweaks
 	{
 		config = new Config(event.getSuggestedConfigurationFile());
 
-		GamePlayHandler.initialize();
 		MinecraftForge.EVENT_BUS.register(config);
 
 		// Mob Tweaks
