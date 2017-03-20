@@ -17,7 +17,7 @@ public class ConfigGUI extends GuiConfig
 {
 	public ConfigGUI(GuiScreen guiScreen)
 	{
-		super(guiScreen, getConfigElements(), VTweaks.MODID, false, false, GuiConfig.getAbridgedConfigPath(VTweaks.config.config.toString()));
+		super(guiScreen, getConfigElements(), VTweaks.MODID, false, false, "V-Tweaks Configuration");
 	}
 
 	private static List<IConfigElement> getConfigElements()

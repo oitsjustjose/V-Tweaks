@@ -16,7 +16,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.GlitchingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
 import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
@@ -90,7 +90,7 @@ public class VTweaks
 		// Item Tweaks
 		MinecraftForge.EVENT_BUS.register(new LeafEater());
 		MinecraftForge.EVENT_BUS.register(new DropTweaks());
-		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
+		MinecraftForge.EVENT_BUS.register(new GlitchingItemFix());
 		MinecraftForge.EVENT_BUS.register(new TorchHelper());
 		MinecraftForge.EVENT_BUS.register(new SleepingBags());
 
@@ -109,7 +109,7 @@ public class VTweaks
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		if (config.enableWoodItemFuelHandler)
+		if (config.enableExtraFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 

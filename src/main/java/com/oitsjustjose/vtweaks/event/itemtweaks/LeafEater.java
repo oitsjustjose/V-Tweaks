@@ -70,6 +70,6 @@ public class LeafEater
 
 	private boolean shouldAOE(EntityPlayer player)
 	{
-		return (VTweaks.config.leafEaterReqSneak && player.isSneaking()) || !VTweaks.config.leafEaterReqSneak;
+		return (VTweaks.config.enableLeafEaterSneak && player.isSneaking()) || !VTweaks.config.enableLeafEaterSneak;
 	}
 }

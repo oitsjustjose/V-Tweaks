@@ -33,7 +33,7 @@ public class DropTweaks
 		// Handles egg hatching; configurable chance.
 		if (VTweaks.config.enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
 		{
-			if (world.rand.nextInt(VTweaks.config.enableEggHatchChance) == 0)
+			if (world.rand.nextInt(VTweaks.config.dropTweaksEggHatchingChance) == 0)
 			{
 				if (!world.isRemote)
 				{
@@ -61,7 +61,7 @@ public class DropTweaks
 			}
 		}
 		// Only gets run if the config is set to make all items never despawn.
-		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.enableNewDespawnTime == -1)
+		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.dropTweaksNewDespawnTime == -1)
 		{
 			event.setCanceled(true);
 		}
@@ -71,10 +71,10 @@ public class DropTweaks
 	public void registerTweak(ItemTossEvent event)
 	{
 		// Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
-		if (!VTweaks.config.enableDropTweaksDespawn || VTweaks.config.enableNewDespawnTime == -1 || event.getEntityItem() == null)
+		if (!VTweaks.config.enableDropTweaksDespawn || VTweaks.config.dropTweaksNewDespawnTime == -1 || event.getEntityItem() == null)
 			return;
 
 		EntityItem entItem = event.getEntityItem();
-		entItem.lifespan = VTweaks.config.enableNewDespawnTime;
+		entItem.lifespan = VTweaks.config.dropTweaksNewDespawnTime;
 	}
 }

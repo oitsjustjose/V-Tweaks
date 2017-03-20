@@ -17,7 +17,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class HangingItemFix
+public class GlitchingItemFix
 {
 	/*
 	 * Idea borrowed from maruohon Execution is completely different and unique, however
@@ -25,7 +25,7 @@ public class HangingItemFix
 	@SubscribeEvent
 	public void registerItemFixes(AttackEntityEvent event)
 	{
-		if(!VTweaks.config.enableHangingItemFix)
+		if(!VTweaks.config.enableGlitchingItemFix)
 			return;
 		
 		if (event.getTarget() == null || event.getEntityPlayer() == null)
