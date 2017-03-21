@@ -47,12 +47,13 @@ public class AnvilRecipeWrapper extends BlankRecipeWrapper
 		outputs.add(output);
 	}
 
-	public AnvilRecipeWrapper(List<ItemStack> leftInput, List<ItemStack> output, int xpCost)
+	public AnvilRecipeWrapper(ItemStack leftInput, ItemStack output, int xpCost)
 	{
 		this.xpCost = xpCost;
 		this.inputs = Lists.newArrayList();
-		this.inputs.add(leftInput);
-		this.outputs = output;
+		this.inputs.add(Collections.singletonList(leftInput));
+		this.outputs = Lists.newArrayList();
+		outputs.add(output);
 	}
 
 	@Override
