@@ -16,7 +16,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.event.itemtweaks.HangingItemFix;
+import com.oitsjustjose.vtweaks.event.itemtweaks.GlitchingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
 import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
 import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
@@ -39,18 +39,18 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.9.4", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
+@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, updateJSON = VTweaks.UPDATER)
 public class VTweaks
 {
 	public static final String MODID = "VTweaks";
 	public static final String NAME = "V-Tweaks";
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
+	public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json";
 
 	public static Config config;
 
@@ -61,7 +61,7 @@ public class VTweaks
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		config = new Config(event.getSuggestedConfigurationFile());
-		
+
 		MinecraftForge.EVENT_BUS.register(config);
 
 		// Mob Tweaks
@@ -90,7 +90,7 @@ public class VTweaks
 		// Item Tweaks
 		MinecraftForge.EVENT_BUS.register(new LeafEater());
 		MinecraftForge.EVENT_BUS.register(new DropTweaks());
-		MinecraftForge.EVENT_BUS.register(new HangingItemFix());
+		MinecraftForge.EVENT_BUS.register(new GlitchingItemFix());
 		MinecraftForge.EVENT_BUS.register(new TorchHelper());
 		MinecraftForge.EVENT_BUS.register(new SleepingBags());
 
@@ -104,14 +104,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new GuideNotifier());
 		MinecraftForge.EVENT_BUS.register(new Recipes());
 
-	}
-
-	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{
-		Recipes.registerRecipes();
-
-		if (config.enableWoodItemFuelHandler)
+		if (config.enableExtraFuels)
 			GameRegistry.registerFuelHandler(new WoodItemFuelHandler());
 	}
 
