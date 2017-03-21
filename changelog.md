@@ -1,7 +1,9 @@
 1.4.9.16:
 * Added: Cacti to the "easier for axes to break" list
 * Removed: Gameplay handler (not fitting and unused by majority)
+* Removed: Disenchanting feature (not fitting, over-implemented)
 * Removed: A useless class I forgot to delete
+* Changed: Config overhaul: You'll want to delete them and start again ;)
 * Changed: Torch Helper is more generic on what is considered a "torch" for mod compatibility
 * Changed: Internal Code - a lot. Many, MANY code improvements
 * Changed: More tool compatibility for "axe" and "pickaxe" requiring features
