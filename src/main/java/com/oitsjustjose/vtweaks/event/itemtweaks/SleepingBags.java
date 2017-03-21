@@ -4,7 +4,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
-import net.minecraft.item.ItemBed;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -22,7 +22,7 @@ public class SleepingBags
 		if (!VTweaks.config.enableSleepingBags)
 			return;
 
-		if (event.getItemStack() == null || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack() == null || !isSleepingBag(event.getItemStack()) || event.getEntityPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getEntityPlayer();
@@ -51,7 +51,7 @@ public class SleepingBags
 		if (!VTweaks.config.enableSleepingBags)
 			return;
 
-		if (event.getItemStack() == null || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack() == null || !isSleepingBag(event.getItemStack()) || event.getEntityPlayer() == null)
 			return;
 		// Assuming it's a bed item named "Sleeping Bag":
 		if (event.isCancelable())
@@ -60,7 +60,7 @@ public class SleepingBags
 		event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
 	}
 
-	void sleepSingleplayer(World world, EntityPlayer player, BlockPos pos)
+	private void sleepSingleplayer(World world, EntityPlayer player, BlockPos pos)
 	{
 		SleepResult result = player.trySleep(pos);
 
@@ -82,7 +82,7 @@ public class SleepingBags
 		}
 	}
 
-	void sleepMultiplayer(World world, EntityPlayer player, BlockPos pos)
+	private void sleepMultiplayer(World world, EntityPlayer player, BlockPos pos)
 	{
 		float sleeping = 1;
 
@@ -118,5 +118,11 @@ public class SleepingBags
 		{
 			player.addChatComponentMessage(new TextComponentTranslation("tile.bed.notEnoughSleep", new Object[0]));
 		}
+	}
+
+	// Ensures Quark compatibility!
+	private boolean isSleepingBag(ItemStack itemstack)
+	{
+		return (itemstack.getItem().getClass().getName().contains("Bed")) && itemstack.getDisplayName().equalsIgnoreCase("sleeping bag");
 	}
 }

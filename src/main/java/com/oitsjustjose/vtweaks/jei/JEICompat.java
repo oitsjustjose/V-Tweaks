@@ -21,6 +21,7 @@ import net.minecraft.client.gui.GuiRepair;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerRepair;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
@@ -60,27 +61,30 @@ public class JEICompat implements IModPlugin
 	{
 	}
 
-	void addAnvilRecipe(IModRegistry registry, ItemStack inputLeft, ItemStack inputRight, ItemStack output, int xp)
+	private void addAnvilRecipe(IModRegistry registry, ItemStack inputLeft, ItemStack inputRight, ItemStack output, int xp)
 	{
 		ArrayList<ItemStack> rightTemp = new ArrayList<ItemStack>();
 		ArrayList<AnvilRecipeWrapper> wrapTemp = new ArrayList<AnvilRecipeWrapper>();
-
 		rightTemp.add(inputRight);
 		wrapTemp.add(new AnvilRecipeWrapper(inputLeft, rightTemp, output, xp));
-
 		registry.addRecipes(wrapTemp);
 	}
 
-	void addAnvilRecipe(IModRegistry registry, ItemStack inputLeft, List<ItemStack> inputRight, ItemStack output, int xp)
+	private void addAnvilRecipe(IModRegistry registry, ItemStack inputLeft, List<ItemStack> inputRight, ItemStack output, int xp)
 	{
 		ArrayList<AnvilRecipeWrapper> wrapTemp = new ArrayList<AnvilRecipeWrapper>();
-
 		wrapTemp.add(new AnvilRecipeWrapper(inputLeft, inputRight, output, xp));
-
 		registry.addRecipes(wrapTemp);
 	}
 
-	void registerVTweaksRecipes(IModRegistry registry)
+	private void addAnvilRecipe(IModRegistry registry, List<ItemStack> inputLeft, List<ItemStack> output, int xp)
+	{
+		ArrayList<AnvilRecipeWrapper> wrapTemp = new ArrayList<AnvilRecipeWrapper>();
+		wrapTemp.add(new AnvilRecipeWrapper(inputLeft, output, xp));
+		registry.addRecipes(wrapTemp);
+	}
+
+	private void registerVTweaksRecipes(IModRegistry registry)
 	{
 		// Horse Armor Compatibility
 		if (VTweaks.config.enableRecipeHorseArmor)
@@ -88,6 +92,20 @@ public class JEICompat implements IModPlugin
 			addAnvilRecipe(registry, new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_HORSE_ARMOR), 4);
 			addAnvilRecipe(registry, new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_HORSE_ARMOR), 8);
 			addAnvilRecipe(registry, new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_HORSE_ARMOR), 12);
+
+			ArrayList<ItemStack> beds = new ArrayList<ItemStack>();
+			ArrayList<ItemStack> bedsOut = new ArrayList<ItemStack>();
+			for (int i = 0; i < Item.REGISTRY.getKeys().size(); i++)
+			{
+				Item temp = Item.getItemById(i);
+				if (temp != null && temp.getClass().getName().contains("Bed"))
+				{
+					beds.add(new ItemStack(temp));
+					bedsOut.add(new ItemStack(temp).setStackDisplayName("Sleeping Bag"));
+				}
+			}
+
+			addAnvilRecipe(registry, beds, bedsOut, 1);
 		}
 		// Hypermending Compatibility
 		if (VTweaks.config.hypermendingID > 0)

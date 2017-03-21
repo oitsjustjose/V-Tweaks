@@ -36,7 +36,6 @@ public class AnvilRecipeWrapper extends BlankRecipeWrapper
 	@Nullable
 	private ItemStack lastRightStack;
 	private int lastCost;
-	
 
 	public AnvilRecipeWrapper(ItemStack leftInput, List<ItemStack> rightInputs, ItemStack output, int xpCost)
 	{
@@ -46,6 +45,14 @@ public class AnvilRecipeWrapper extends BlankRecipeWrapper
 		this.inputs.add(rightInputs);
 		this.outputs = Lists.newArrayList();
 		outputs.add(output);
+	}
+
+	public AnvilRecipeWrapper(List<ItemStack> leftInput, List<ItemStack> output, int xpCost)
+	{
+		this.xpCost = xpCost;
+		this.inputs = Lists.newArrayList();
+		this.inputs.add(leftInput);
+		this.outputs = output;
 	}
 
 	@Override
@@ -58,11 +65,6 @@ public class AnvilRecipeWrapper extends BlankRecipeWrapper
 
 		ItemStack newLeftStack = currentIngredients.get(0).getDisplayedIngredient();
 		ItemStack newRightStack = currentIngredients.get(1).getDisplayedIngredient();
-
-		if (newLeftStack == null || newRightStack == null)
-		{
-			return;
-		}
 
 		if (lastLeftStack == null || lastRightStack == null || !ItemStack.areItemStacksEqual(lastLeftStack, newLeftStack) || !ItemStack.areItemStacksEqual(lastRightStack, newRightStack))
 		{
