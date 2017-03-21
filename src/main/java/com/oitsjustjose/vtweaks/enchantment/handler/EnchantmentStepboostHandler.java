@@ -26,7 +26,7 @@ public class EnchantmentStepboostHandler
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
 
 		// Boots are ON and have the enchantment
-		if (boots != null && EnchantmentLevelArmor != 0)
+		if (!boots.isEmpty() && EnchantmentLevelArmor != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
 			if (player.stepHeight < 1.0F)

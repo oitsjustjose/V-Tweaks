@@ -23,7 +23,7 @@ public class DropTweaks
 	@SuppressWarnings("deprecation")
 	public void registerTweak(ItemExpireEvent event)
 	{
-		if (event.getEntityItem() == null || event.getEntityItem().getEntityItem() == null)
+		if (event.getEntityItem() == null || event.getEntityItem().getEntityItem().isEmpty())
 			return;
 
 		EntityItem entItem = event.getEntityItem();

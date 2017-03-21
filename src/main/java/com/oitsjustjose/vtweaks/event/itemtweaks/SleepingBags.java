@@ -28,7 +28,7 @@ public class SleepingBags
 			return;
 
 		// Checks if the held item is a Bed with the name "sleeping bag"
-		if (event.getItemStack() == ItemStack.EMPTY || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack().isEmpty()|| !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getEntityPlayer();
@@ -55,7 +55,7 @@ public class SleepingBags
 		if (!VTweaks.config.enableSleepingBags)
 			return;
 
-		if (event.getItemStack() == ItemStack.EMPTY || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack().isEmpty() || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
 			return;
 		// Assuming it's a bed item named "Sleeping Bag":
 		if (event.isCancelable())

@@ -1,12 +1,12 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
 import net.minecraft.block.BlockJukebox.TileEntityJukebox;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -25,9 +25,9 @@ public class GlitchingItemFix
 	@SubscribeEvent
 	public void registerItemFixes(AttackEntityEvent event)
 	{
-		if(!VTweaks.config.enableGlitchingItemFix)
+		if (!VTweaks.config.enableGlitchingItemFix)
 			return;
-		
+
 		if (event.getTarget() == null || event.getEntityPlayer() == null)
 			return;
 
@@ -36,10 +36,8 @@ public class GlitchingItemFix
 
 		if (entity instanceof EntityPainting)
 		{
-			EntityItem paintingItemEntity = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.PAINTING, 1));
-
 			if (!player.inventory.addItemStackToInventory(new ItemStack(Items.PAINTING, 1)))
-				player.world.spawnEntity(paintingItemEntity);
+				player.world.spawnEntity(HelperFunctions.createItemEntity(event.getEntity().world, event.getEntity().getPosition(), Items.PAINTING));
 			entity.setDead();
 		}
 	}
@@ -63,12 +61,11 @@ public class GlitchingItemFix
 
 				ItemStack recordStack = jukebox.getRecord().copy();
 
-                world.playEvent(1010, event.getPos(), 0);
-                world.playRecord(event.getPos(), (SoundEvent)null);
+				world.playEvent(1010, event.getPos(), 0);
+				world.playRecord(event.getPos(), (SoundEvent) null);
 				jukebox.setRecord(ItemStack.EMPTY);
 
-				EntityItem record = new EntityItem(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, recordStack);
-				world.spawnEntity(record);
+				world.spawnEntity(HelperFunctions.createItemEntity(event.getEntity().world, event.getEntity().getPosition(), recordStack));
 			}
 		}
 	}

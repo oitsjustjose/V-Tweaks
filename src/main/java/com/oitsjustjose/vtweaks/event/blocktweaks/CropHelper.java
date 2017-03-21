@@ -4,13 +4,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -149,7 +149,6 @@ public class CropHelper
 
 	public void dropItem(World world, BlockPos pos, ItemStack itemstack)
 	{
-		EntityItem drop = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
-		world.spawnEntity(drop);
+		world.spawnEntity(HelperFunctions.createItemEntity(world, pos, itemstack));
 	}
 }

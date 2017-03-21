@@ -34,7 +34,7 @@ public class BonemealTweaks
 		Block testFor = world.getBlockState(event.getPos()).getBlock();
 		Random rand = world.rand;
 
-		if (player.getHeldItemMainhand() != null)
+		if (!player.getHeldItemMainhand().isEmpty())
 		{
 			ItemStack heldItem = player.getHeldItemMainhand();
 			if (heldItem.getItemDamage() == 15 && heldItem.getItem() == Items.DYE)

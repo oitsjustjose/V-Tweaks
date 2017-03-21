@@ -29,7 +29,7 @@ public class EnchantmentHypermendingHandler
 		fullInventory.addAll(player.inventory.armorInventory);
 		// Keeps entire inventory of tools constantly repaired
 		for (ItemStack stack : fullInventory)
-			if (stack != null && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(Enchantments.hypermending, stack) > 0)
+			if (!stack.isEmpty() && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(Enchantments.hypermending, stack) > 0)
 				stack.setItemDamage(0);
 	}
 }

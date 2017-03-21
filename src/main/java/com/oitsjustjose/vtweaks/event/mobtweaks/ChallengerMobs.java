@@ -85,7 +85,7 @@ public class ChallengerMobs
 		}
 	}
 
-	public String mobClassName(ChallengerMobType type, EntityMob mob)
+	private String mobClassName(ChallengerMobType type, EntityMob mob)
 	{
 		String mobString = mob.toString().substring(0, mob.toString().indexOf("["));
 		String[] nameParts = mobString.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
@@ -111,14 +111,13 @@ public class ChallengerMobs
 		return type.getPrefix() + " " + mobString;
 	}
 
-	EntityItem getItem(World world, BlockPos pos)
+	private EntityItem getItem(World world, BlockPos pos)
 	{
 		int RNG = world.rand.nextInt(VTweaks.config.challengerLootTable.size());
-		ItemStack temp = VTweaks.config.challengerLootTable.get(RNG).copy();
-		return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), temp.copy());
+		return HelperFunctions.createItemEntity(world, pos, VTweaks.config.challengerLootTable.get(RNG));
 	}
 
-	boolean isChallengerMob(EntityMob entity)
+	private boolean isChallengerMob(EntityMob entity)
 	{
 
 		String n = entity.getCustomNameTag();
