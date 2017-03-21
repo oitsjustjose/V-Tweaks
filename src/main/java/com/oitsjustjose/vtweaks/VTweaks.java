@@ -44,13 +44,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, acceptedMinecraftVersions = "1.11", updateJSON = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json")
+@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, guiFactory = VTweaks.GUIFACTORY, updateJSON = VTweaks.UPDATER)
 public class VTweaks
 {
 	public static final String MODID = "vtweaks";
 	public static final String NAME = "V-Tweaks";
 	public static final String VERSION = "@VERSION@";
 	public static final String GUIFACTORY = "com.oitsjustjose.vtweaks.util.ConfigGUI$GUIFactory";
+	public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json";
 
 	public static Config config;
 
@@ -117,10 +118,10 @@ public class VTweaks
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
-		
+
 		if (config.enableStackTweaks)
 			StackTweaks.registerTweak();
-		
-		ConfigItemParser.parseItems();	
+
+		ConfigItemParser.parseItems();
 	}
 }
