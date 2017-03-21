@@ -5,7 +5,6 @@ import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityBat;
@@ -49,11 +48,8 @@ public class MobKiller
 
 		if (!event.getWorld().isRemote)
 		{
-			EntityItem sSand = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Blocks.SOUL_SAND, 4));
-			EntityItem skulls = HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Items.SKULL, 3, 1));
-
-			event.getWorld().spawnEntityInWorld(sSand);
-			event.getWorld().spawnEntityInWorld(skulls);
+			event.getWorld().spawnEntityInWorld(HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Blocks.SOUL_SAND, 4)));
+			event.getWorld().spawnEntityInWorld(HelperFunctions.createItemEntity(event.getWorld(), event.getEntity().getPosition(), new ItemStack(Items.SKULL, 3, 1)));
 		}
 		wither.setDead();
 	}

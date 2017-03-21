@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
@@ -18,7 +19,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class HangingItemFix
+public class GlitchingItemFix
 {
 	/*
 	 * Idea borrowed from maruohon Execution is completely different and unique, however
@@ -26,9 +27,9 @@ public class HangingItemFix
 	@SubscribeEvent
 	public void registerItemFixes(AttackEntityEvent event)
 	{
-		if (!VTweaks.config.enableHangingItemFix)
+		if (!VTweaks.config.enableGlitchingItemFix)
 			return;
-		
+
 		if (event.getTarget() == null || event.getEntityPlayer() == null)
 			return;
 
@@ -37,7 +38,7 @@ public class HangingItemFix
 
 		if (entity instanceof EntityPainting)
 		{
-			EntityItem paintingItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.PAINTING, 1));
+			EntityItem paintingItemEntity = HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), Items.PAINTING);
 
 			if (!player.inventory.addItemStackToInventory(new ItemStack(Items.PAINTING, 1)))
 				player.worldObj.spawnEntityInWorld(paintingItemEntity);
@@ -47,22 +48,21 @@ public class HangingItemFix
 		// Ensures compatibility with TiCon
 		if (entity instanceof EntityItemFrame && !(entity.getClass().getName().contains("tconstruct")))
 		{
-			EntityItem itemFrameItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(Items.ITEM_FRAME, 1));
+
 			EntityItemFrame frame = (EntityItemFrame) entity;
 			ItemStack framedStack = frame.getDisplayedItem();
 
 			if (framedStack == null)
 			{
 				if (!player.inventory.addItemStackToInventory(new ItemStack(Items.ITEM_FRAME, 1)))
-					player.worldObj.spawnEntityInWorld(itemFrameItemEntity);
+					player.worldObj.spawnEntityInWorld(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), Items.ITEM_FRAME));
 				entity.setDead();
 			}
 			else
 			{
-				EntityItem framedItemEntity = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, framedStack);
 				if (!player.inventory.addItemStackToInventory(framedStack))
 				{
-					player.worldObj.spawnEntityInWorld(framedItemEntity);
+					player.worldObj.spawnEntityInWorld(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), framedStack));
 					frame.setDisplayedItem(null);
 				}
 			}
@@ -92,7 +92,7 @@ public class HangingItemFix
 				world.playBroadcastSound(1005, event.getPos(), 0);
 				world.playRecord(event.getPos(), (SoundEvent) null);
 
-				EntityItem record = new EntityItem(event.getEntity().worldObj, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, recordStack);
+				EntityItem record = HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), recordStack);
 				world.spawnEntityInWorld(record);
 			}
 		}

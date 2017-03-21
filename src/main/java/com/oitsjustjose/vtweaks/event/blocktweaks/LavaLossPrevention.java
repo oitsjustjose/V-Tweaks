@@ -3,9 +3,9 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 import java.util.Iterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -49,7 +49,7 @@ public class LavaLossPrevention
 						if (!player.inventory.addItemStackToInventory(drop))
 						{
 							// Otherwise player's feet it is
-							event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), player.posX, player.posY, player.posZ, drop));
+							event.getWorld().spawnEntityInWorld(HelperFunctions.createItemEntity(event.getWorld(), player.getPosition(), drop));
 						}
 					}
 					iter.remove();

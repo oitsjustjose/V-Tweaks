@@ -1,13 +1,12 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemShears;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -35,8 +34,7 @@ public class FeatherPlucker
 			{
 				if (!player.worldObj.isRemote && chicken.getGrowingAge() == 0)
 				{
-					EntityItem featherDrop = new EntityItem(player.worldObj, event.getTarget().posX, event.getTarget().posY, event.getTarget().posZ, new ItemStack(Items.FEATHER));
-					player.worldObj.spawnEntityInWorld(featherDrop);
+					event.getWorld().spawnEntityInWorld(HelperFunctions.createItemEntity(event.getWorld(), chicken.getPosition(), Items.FEATHER));
 					chicken.attackEntityFrom(DamageSource.generic, 0.0F);
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
