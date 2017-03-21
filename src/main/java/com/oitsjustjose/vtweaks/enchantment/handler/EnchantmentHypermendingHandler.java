@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
@@ -11,11 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import scala.actors.threadpool.Arrays;
 
 public class EnchantmentHypermendingHandler
 {
-	@SuppressWarnings("unchecked")
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void register(PlayerEvent event)
 	{
