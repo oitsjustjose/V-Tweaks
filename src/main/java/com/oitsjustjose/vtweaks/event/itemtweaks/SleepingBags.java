@@ -5,7 +5,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBed;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
@@ -27,7 +27,7 @@ public class SleepingBags
 			return;
 
 		// Checks if the held item is a Bed with the name "sleeping bag"
-		if (event.getItemStack().isEmpty() || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack().isEmpty() || !isSleepingBag(event.getItemStack()) || event.getEntityPlayer() == null)
 			return;
 
 		EntityPlayer player = event.getEntityPlayer();
@@ -54,7 +54,7 @@ public class SleepingBags
 		if (!VTweaks.config.enableSleepingBags)
 			return;
 
-		if (event.getItemStack().isEmpty() || !(event.getItemStack().getItem() instanceof ItemBed) || !(event.getItemStack().getDisplayName().equalsIgnoreCase("sleeping bag")) || event.getEntityPlayer() == null)
+		if (event.getItemStack().isEmpty() || !isSleepingBag(event.getItemStack()) || event.getEntityPlayer() == null)
 			return;
 		// Assuming it's a bed item named "Sleeping Bag":
 		if (event.isCancelable())
@@ -63,7 +63,7 @@ public class SleepingBags
 		event.getEntityPlayer().swingArm(EnumHand.MAIN_HAND);
 	}
 
-	void sleepSingleplayer(World world, EntityPlayer player, BlockPos pos)
+	private void sleepSingleplayer(World world, EntityPlayer player, BlockPos pos)
 	{
 		final BlockPos origBedLoc = player.getBedLocation();
 		final BlockPos origin = new BlockPos(0, 0, 0);
@@ -100,7 +100,7 @@ public class SleepingBags
 		}
 	}
 
-	void sleepMultiplayer(World world, EntityPlayer player, BlockPos pos)
+	private void sleepMultiplayer(World world, EntityPlayer player, BlockPos pos)
 	{
 		final BlockPos origBedLoc = player.getBedLocation();
 		final BlockPos origin = new BlockPos(0, 0, 0);
@@ -150,5 +150,11 @@ public class SleepingBags
 		{
 			player.sendStatusMessage(new TextComponentTranslation("tile.bed.notEnoughSleep", new Object[0]), true);
 		}
+	}
+
+	// Ensures Quark compatibility!
+	private boolean isSleepingBag(ItemStack itemstack)
+	{
+		return (itemstack.getItem().getClass().getName().contains("Bed")) && itemstack.getDisplayName().equalsIgnoreCase("sleeping bag");
 	}
 }
