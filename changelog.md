@@ -1,3 +1,6 @@
+1.4.9.17:
+* Changed: Sapling planter has been overhauled!
+
 1.4.9.16:
 * Added: Cacti to the "easier for axes to break" list
 * Added: Quark compatibility for Sleeping Bags
