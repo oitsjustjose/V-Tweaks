@@ -1,17 +1,20 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
+import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
 import com.oitsjustjose.vtweaks.VTweaks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +23,6 @@ public class DropTweaks
 {
 
 	@SubscribeEvent
-	@SuppressWarnings("deprecation")
 	public void registerTweak(ItemExpireEvent event)
 	{
 		if (event.getEntityItem() == null || event.getEntityItem().getEntityItem().isEmpty())
@@ -45,20 +47,21 @@ public class DropTweaks
 			}
 		}
 		// Handles sapling replanting; 100% chance
-		else if (VTweaks.config.enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockSapling)
+		else if (VTweaks.config.enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
 		{
-			BlockPos saplingPos = new BlockPos((int) entItem.posX, (int) entItem.posY, (int) entItem.posZ);
+			BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
 			// Checks to see if where the sapling *will* be is air
 			if (world.isAirBlock(saplingPos))
 			{
-				// Checks to see if the block below it is ground
-				Material blockMat = world.getBlockState(saplingPos.down()).getMaterial();
-				if (blockMat == Material.GRASS || blockMat == Material.GROUND)
-				{
-					IBlockState state = Block.getBlockFromItem(stack.getItem()).getStateFromMeta(stack.getItemDamage());
-					world.setBlockState(saplingPos, state);
-				}
+				FakePlayer fake = new FakePlayer(world.getMinecraftServer().worldServerForDimension(world.provider.getDimension()), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
+				fake.setHeldItem(EnumHand.MAIN_HAND, stack);
+				stack.onItemUse(fake, world, saplingPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
 			}
+		}
+		// Only gets run if the config is set to make all items never despawn.
+		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.dropTweaksNewDespawnTime == -1)
+		{
+			event.setCanceled(true);
 		}
 		// Only gets run if the config is set to make all items never despawn.
 		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.dropTweaksNewDespawnTime == -1)
@@ -76,5 +79,13 @@ public class DropTweaks
 
 		EntityItem entItem = event.getEntityItem();
 		entItem.lifespan = VTweaks.config.dropTweaksNewDespawnTime;
+	}
+
+	private BlockPos fromDouble(double xIn, double yIn, double zIn)
+	{
+		int x = (xIn % 1) >= .5 ? (int) Math.ceil(xIn) : (int) Math.floor(xIn);
+		int y = (yIn % 1) >= .5 ? (int) Math.ceil(yIn) : (int) Math.floor(yIn);
+		int z = (zIn % 1) >= .5 ? (int) Math.ceil(zIn) : (int) Math.floor(zIn);
+		return new BlockPos(x, y, z);
 	}
 }
