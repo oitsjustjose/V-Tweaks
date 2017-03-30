@@ -7,12 +7,11 @@ import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LavaLossPrevention
@@ -57,9 +56,7 @@ public class LavaLossPrevention
 
 	private boolean shouldSnag(World world, BlockPos pos)
 	{
-		Fluid fluid = FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock());
-		System.out.println("Fluid null=" + (fluid == null));
-		return fluid != null ? fluid.getTemperature() > 1000 : false;
+		return world.getBlockState(pos.down()).getBlock() == Blocks.LAVA || world.getBlockState(pos.down()).getBlock() == Blocks.FLOWING_LAVA;
 	}
 
 	private boolean shouldPreventLoss(IBlockState state)
