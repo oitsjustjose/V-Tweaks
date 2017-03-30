@@ -125,7 +125,7 @@ public class ConfigParser
 					}
 					else
 					{
-						LOGGER.info("Could not add entry " + parts[0] + ":" + parts[1]);
+						LOGGER.info("Could not add entry " + parts[0] + ":" + parts[1] + ":" + parts[2]);
 					}
 				}
 				catch (NumberFormatException e)
