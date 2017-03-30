@@ -117,5 +117,6 @@ public class VTweaks
 			StackTweaks.registerTweaks();
 
 		ConfigParser.parseItems();
+		ConfigParser.parseBlocks();
 	}
 }
