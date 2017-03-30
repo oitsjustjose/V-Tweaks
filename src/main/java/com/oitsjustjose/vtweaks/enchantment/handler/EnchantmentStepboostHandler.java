@@ -29,8 +29,10 @@ public class EnchantmentStepboostHandler
 		if (boots != null && EnchantmentLevelArmor != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
-			if (player.stepHeight < 1.0F)
+			if (player.stepHeight < 1.0F && !player.isSneaking())
 				player.stepHeight += 0.5F;
+			if (player.stepHeight >= 1.0F && player.isSneaking())
+				player.stepHeight -= 0.5F;
 		}
 		// No boots OR no enchantment, checks if the tag thought you did at one point have it
 		else if (persistTag.getBoolean(VTWEAKS_STEP_BOOST))
