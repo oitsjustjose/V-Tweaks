@@ -9,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -29,11 +28,9 @@ public class LavaLossPrevention
 			return;
 
 		EntityPlayer player = event.getHarvester();
-		Block chiselBasalt = Block.REGISTRY.getObject(new ResourceLocation("chisel", "basaltextra"));
-		Block blockBroken = event.getState().getBlock();
 
 		// Checks if the block broken is what I consider "valuable"
-		if (blockBroken == Blocks.OBSIDIAN || (blockBroken == chiselBasalt && chiselBasalt.getMetaFromState(event.getState()) == 7))
+		if (shouldPreventLoss(event.getState().getBlock(), event.getState().getBlock().getMetaFromState(event.getState())))
 		{
 			// Confirms if it's above lava
 			if (isAboveLava(event.getWorld(), event.getPos()))
@@ -61,5 +58,10 @@ public class LavaLossPrevention
 	private boolean isAboveLava(World world, BlockPos pos)
 	{
 		return (world.getBlockState(pos.down()).getBlock() == Blocks.LAVA || world.getBlockState(pos.down()).getBlock() == Blocks.FLOWING_LAVA);
+	}
+
+	private boolean shouldPreventLoss(Block block, int meta)
+	{
+		return VTweaks.config.lavaLossBlockList.contains(new ItemStack(block, 1, meta));
 	}
 }
