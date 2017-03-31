@@ -61,8 +61,11 @@ public class LavaLossPrevention
 
 	private boolean shouldPreventLoss(IBlockState state)
 	{
+		// Creates an itemstack from the passed state
 		ItemStack compare = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+		// Loops through every block in the list
 		for (ItemStack i : VTweaks.config.lavaLossBlockList)
+			// If the items "match", then it should be prevented
 			if (i.getItem() == compare.getItem() && i.getMetadata() == compare.getMetadata())
 				return true;
 
