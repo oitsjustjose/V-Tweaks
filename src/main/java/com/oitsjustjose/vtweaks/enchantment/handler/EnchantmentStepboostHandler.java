@@ -34,8 +34,10 @@ public class EnchantmentStepboostHandler
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
 			persistTag.setBoolean(JUMPBOOST_SETTING, Minecraft.getMinecraft().gameSettings.autoJump);
 			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
-			if (player.stepHeight < 1.0F)
+			if (player.stepHeight < 1.0F && !player.isSneaking())
 				player.stepHeight += 0.5F;
+			if (player.stepHeight >= 1.0F && player.isSneaking())
+				player.stepHeight -= 0.5F;
 		}
 		// No boots OR no enchantment, checks if the tag thought you did at one point have it
 		else if (persistTag.getBoolean(VTWEAKS_STEP_BOOST))

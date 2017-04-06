@@ -95,11 +95,6 @@ public class Config
 
 	public Config(File configFile)
 	{
-		this.init(configFile);
-	}
-
-	void init(File configFile)
-	{
 		if (config == null)
 		{
 			config = new Configuration(configFile, null, true);
@@ -109,12 +104,14 @@ public class Config
 
 	public void setChallengerLootTable(ArrayList<ItemStack> newList)
 	{
-		this.challengerLootTable = newList;
+		this.challengerLootTable = new ArrayList<ItemStack>();
+		this.challengerLootTable.addAll(newList);
 	}
 
 	public void setLavaLossBlockList(ArrayList<ItemStack> newList)
 	{
-		this.lavaLossBlockList = newList;
+		this.lavaLossBlockList = new ArrayList<ItemStack>();
+		this.lavaLossBlockList.addAll(newList);
 	}
 
 	void loadConfiguration()
@@ -200,7 +197,7 @@ public class Config
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>").setRequiresMcRestart(true);
+		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>");
 		challengerMobLoot = property.getStringList();
 		propertyOrder.add(property.getName());
 
@@ -412,13 +409,19 @@ public class Config
 		MiscFeatures.setPropertyOrder(propertyOrder);
 
 		if (config.hasChanged())
+		{
 			config.save();
+		}
 	}
 
 	@SubscribeEvent
 	public void update(OnConfigChangedEvent event)
 	{
 		if (event.getModID().equals(VTweaks.MODID))
+		{
 			loadConfiguration();
+			ConfigParser.parseItems();
+			ConfigParser.parseBlocks();
+		}
 	}
 }
