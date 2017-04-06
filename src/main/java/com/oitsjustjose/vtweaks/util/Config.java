@@ -95,11 +95,6 @@ public class Config
 
 	public Config(File configFile)
 	{
-		this.init(configFile);
-	}
-
-	void init(File configFile)
-	{
 		if (config == null)
 		{
 			config = new Configuration(configFile, null, true);
@@ -109,12 +104,14 @@ public class Config
 
 	public void setChallengerLootTable(ArrayList<ItemStack> newList)
 	{
-		this.challengerLootTable = newList;
+		this.challengerLootTable = new ArrayList<ItemStack>();
+		this.challengerLootTable.addAll(newList);
 	}
 
 	public void setLavaLossBlockList(ArrayList<ItemStack> newList)
 	{
-		this.lavaLossBlockList = newList;
+		this.lavaLossBlockList = new ArrayList<ItemStack>();
+		this.lavaLossBlockList.addAll(newList);
 	}
 
 	void loadConfiguration()
@@ -414,8 +411,6 @@ public class Config
 		if (config.hasChanged())
 		{
 			config.save();
-			ConfigParser.parseItems();
-			ConfigParser.parseBlocks();
 		}
 	}
 
@@ -423,6 +418,10 @@ public class Config
 	public void update(OnConfigChangedEvent event)
 	{
 		if (event.getModID().equals(VTweaks.MODID))
+		{
 			loadConfiguration();
+			ConfigParser.parseItems();
+			ConfigParser.parseBlocks();
+		}
 	}
 }
