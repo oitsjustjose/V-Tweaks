@@ -126,6 +126,6 @@ public class HelperFunctions
 			if (Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)) != null)
 				return new ItemStack(Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)), 1);
 
-		return null;
+		return ItemStack.EMPTY;
 	}
 }

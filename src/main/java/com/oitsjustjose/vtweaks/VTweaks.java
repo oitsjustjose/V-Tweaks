@@ -29,7 +29,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.MobKiller;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
 import com.oitsjustjose.vtweaks.util.Config;
-import com.oitsjustjose.vtweaks.util.ConfigItemParser;
+import com.oitsjustjose.vtweaks.util.ConfigParser;
 import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
@@ -122,6 +122,6 @@ public class VTweaks
 		if (config.enableStackTweaks)
 			StackTweaks.registerTweak();
 
-		ConfigItemParser.parseItems();
+		ConfigParser.parseItems();
 	}
 }

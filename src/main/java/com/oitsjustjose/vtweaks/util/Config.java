@@ -63,6 +63,8 @@ public class Config
 	public boolean enableBonemealTweaks;
 	public boolean enableCakeTweak;
 	public boolean enableLavaLossPrevention;
+	public String[] lavaLossWhitelistDefault = new String[] { "minecraft:obsidian", "chisel:basaltextra:7" };
+	public String[] lavaLossWhitelist;
 	public boolean enableToolEffTweaks;
 
 	// Item Configs
@@ -89,6 +91,7 @@ public class Config
 	public boolean enableGuideNotifier;
 
 	public ArrayList<ItemStack> challengerLootTable;
+	public ArrayList<ItemStack> lavaLossBlockList;
 
 	public Config(File configFile)
 	{
@@ -107,6 +110,11 @@ public class Config
 	public void setChallengerLootTable(ArrayList<ItemStack> newList)
 	{
 		this.challengerLootTable = newList;
+	}
+
+	public void setLavaLossBlockList(ArrayList<ItemStack> newList)
+	{
+		this.lavaLossBlockList = newList;
 	}
 
 	void loadConfiguration()
@@ -282,6 +290,11 @@ public class Config
 		property = config.get(category, "Enable Lava Loss Prevention", true);
 		property.setComment("Enabling this feature helps prevent Obsidian (and Chisel's Basalt) from being burnt by lava");
 		enableLavaLossPrevention = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Loss Prevented Blocks", lavaLossWhitelistDefault);
+		property.setComment("Blocks listed here are \"Protected\" from lava. Formatted as <modid>:<block>:<metadata> or <modid>:<block>");
+		lavaLossWhitelist = property.getStringList();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Tool Efficiency Tweaks", true);

@@ -3,6 +3,8 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,11 +26,14 @@ public class EnchantmentStepboostHandler
 		ItemStack boots = player.inventory.armorInventory.get(0);
 		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots);
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
+		final String JUMPBOOST_SETTING = "VTweaksJumpboostSetting";
 
 		// Boots are ON and have the enchantment
 		if (!boots.isEmpty() && EnchantmentLevelArmor != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
+			persistTag.setBoolean(JUMPBOOST_SETTING, Minecraft.getMinecraft().gameSettings.autoJump);
+			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
 			if (player.stepHeight < 1.0F)
 				player.stepHeight += 0.5F;
 		}
@@ -36,6 +41,7 @@ public class EnchantmentStepboostHandler
 		else if (persistTag.getBoolean(VTWEAKS_STEP_BOOST))
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, false);
+			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, Boolean.valueOf(persistTag.getBoolean(JUMPBOOST_SETTING)).compareTo(false));
 			player.stepHeight -= 0.5F;
 		}
 	}
