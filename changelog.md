@@ -1,3 +1,11 @@
+1.4.10.0:
+* Added: Config option for blocks to be protected by LavaLoss Protection
+* Added: Cactus Loss Prevention: all cactus entity items are invulnerable as a result!
+* Changed: Step-Boost Enchantment works better with Auto-Jump
+* Changed: Step-Boost disables itself when sneaking
+* Changed: Internal Code regarding Item Parsing; this isn't a big deal, items will parse twice on first run however.
+
+
 1.4.9.16:
 * Added: Cacti to the "easier for axes to break" list
 * Removed: Gameplay handler (not fitting and unused by majority)
