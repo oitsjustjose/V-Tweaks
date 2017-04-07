@@ -13,7 +13,7 @@ import com.oitsjustjose.vtweaks.event.ToolTips;
 import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.event.blocktweaks.LavaLossPrevention;
+import com.oitsjustjose.vtweaks.event.blocktweaks.LossPrevention;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GlitchingItemFix;
@@ -86,7 +86,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
 		MinecraftForge.EVENT_BUS.register(new CakeTweak());
 		MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
-		MinecraftForge.EVENT_BUS.register(new LavaLossPrevention());
+		MinecraftForge.EVENT_BUS.register(new LossPrevention());
 
 		// Item Tweaks
 		MinecraftForge.EVENT_BUS.register(new LeafEater());
