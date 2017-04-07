@@ -4,6 +4,7 @@
 * Changed: Step-Boost Enchantment works better with Auto-Jump
 * Changed: Step-Boost disables itself when sneaking
 * Changed: Internal Code regarding Item Parsing; this isn't a big deal, items will parse twice on first run however.
+* Changed: Sapling planter has been overhauled!
 
 
 1.4.9.16:
