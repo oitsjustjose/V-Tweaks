@@ -7,15 +7,11 @@ import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -33,7 +29,7 @@ public class LossPrevention
 
 		EntityPlayer player = event.getHarvester();
 
-		if (shouldPreventLoss(event.getState()) && dangerousPos(event.getWorld(), event.getPos(), new Block[] { Blocks.LAVA, Blocks.FLOWING_LAVA }))
+		if (shouldPreventLoss(event.getState()) && dangerousPos(event.getWorld(), event.getPos(), Blocks.LAVA, Blocks.FLOWING_LAVA))
 		{
 			Iterator<ItemStack> iter = event.getDrops().iterator();
 			while (iter.hasNext())
@@ -51,56 +47,39 @@ public class LossPrevention
 		}
 	}
 
-	/**
-	 * @SubscribeEvent public void registerCactusTweak(EntityJoinWorldEvent event) { // Checks to see if feature is enabled if (!VTweaks.config.enableCactusLossPrevention) return; // Confirming that player exists if (event.getEntity() == null || !(event.getEntity() instanceof EntityItem)) return;
-	 * 
-	 *                 EntityItem entItem = (EntityItem) event.getEntity();
-	 * 
-	 *                 if (entItem.getEntityItem().getItem() == Item.getItemFromBlock(Blocks.CACTUS)) entItem.setEntityInvulnerable(true); }
-	 **/
-
 	@SubscribeEvent
-	public void registerCactusTweak(ItemEvent event)
+	public void registerCactusTweak(HarvestDropsEvent event)
 	{
+		// Checks to see if feature is enabled
 		if (!VTweaks.config.enableCactusLossPrevention)
 			return;
-
-		if (event.getEntityItem() == null || event.getEntityItem().getEntityItem().isEmpty())
+		// Confirming that player exists
+		if (event.getHarvester() == null || event.getState() == null || event.getState().getBlock() == null)
 			return;
 
-		if (event.getEntityItem().getEntityItem().getItem() == Item.getItemFromBlock(Blocks.CACTUS))
+		EntityPlayer player = event.getHarvester();
+
+		if (shouldPreventLoss(event.getState()) && dangerousPos(event.getWorld(), event.getPos(), Blocks.CACTUS))
 		{
-			final double x = event.getEntity().posX;
-			final double y = event.getEntity().posY;
-			final double z = event.getEntity().posZ;
-			EntityItem cactus = new EntityItem(event.getEntityItem().getEntityWorld(), x, y, z, event.getEntityItem().getEntityItem())
+			Iterator<ItemStack> iter = event.getDrops().iterator();
+			while (iter.hasNext())
 			{
-				@Override
-				public boolean attackEntityFrom(DamageSource source, float amount)
+				ItemStack drop = iter.next().copy();
+				if (!event.getWorld().isRemote)
 				{
-					if (source == DamageSource.CACTUS)
+					if (!player.inventory.addItemStackToInventory(drop))
 					{
-						this.setPositionAndUpdate(x, y, z);
-						return false;
+						event.getWorld().spawnEntity(HelperFunctions.createItemEntity(event.getWorld(), player.getPosition(), drop));
 					}
-					return super.attackEntityFrom(source, amount);
 				}
-			};
-
-			cactus.setDefaultPickupDelay();
-			cactus.setVelocity(event.getEntityItem().motionX, event.getEntityItem().motionY, event.getEntityItem().motionZ);
-			if (event.isCancelable())
-				event.setCanceled(true);
-			if (!event.getEntityItem().getEntityWorld().isRemote)
-				event.getEntityItem().getEntityWorld().spawnEntity(cactus);
-			event.getEntityItem().setDead();
+				iter.remove();
+			}
 		}
-
 	}
 
-	private boolean dangerousPos(World world, BlockPos pos, Block... blocks)
+	private boolean dangerousPos(World world, BlockPos pos, Block... dangerBlocks)
 	{
-		for (Block b : blocks)
+		for (Block b : dangerBlocks)
 			if (world.getBlockState(pos.down()).getBlock() == b)
 				return true;
 		return false;
@@ -112,6 +91,8 @@ public class LossPrevention
 		for (ItemStack i : VTweaks.config.lavaLossBlockList)
 			if (i.getItem() == compare.getItem() && i.getMetadata() == compare.getMetadata())
 				return true;
+		
+		// Special case for if it's a cactus; saves code
 		return state.getBlock() == Blocks.CACTUS;
 	}
 }
