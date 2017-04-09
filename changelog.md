@@ -5,6 +5,7 @@
 * Changed: Step-Boost disables itself when sneaking
 * Changed: Internal Code regarding Item Parsing; this isn't a big deal, items will parse twice on first run however.
 * Changed: Sapling planter has been overhauled!
+* Fixed: Sleeping Bags no longer reset day to 0 / prevent moon cycles
 
 1.4.9.16:
 * Added: Cacti to the "easier for axes to break" list
