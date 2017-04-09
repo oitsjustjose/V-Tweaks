@@ -63,6 +63,7 @@ public class Config
 	public boolean enableBonemealTweaks;
 	public boolean enableCakeTweak;
 	public boolean enableLavaLossPrevention;
+	public boolean enableCactusLossPrevention;
 	public String[] lavaLossWhitelistDefault = new String[] { "minecraft:obsidian", "chisel:basaltextra:7" };
 	public String[] lavaLossWhitelist;
 	public boolean enableToolEffTweaks;
@@ -287,6 +288,11 @@ public class Config
 		property = config.get(category, "Enable Lava Loss Prevention", true);
 		property.setComment("Enabling this feature helps prevent Obsidian (and Chisel's Basalt) from being burnt by lava");
 		enableLavaLossPrevention = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Cactus Loss Prevention", true);
+		property.setComment("Enabling this feature helps prevent Cactus item entities from being destroyed by other cactus");
+		enableCactusLossPrevention = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Loss Prevented Blocks", lavaLossWhitelistDefault);
