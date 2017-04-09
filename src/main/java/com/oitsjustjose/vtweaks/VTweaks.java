@@ -18,7 +18,6 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GlitchingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
-import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
 import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
