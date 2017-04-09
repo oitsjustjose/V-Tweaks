@@ -82,7 +82,7 @@ public class SleepingBags
 			player.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObjectById(15), 40, 40, false, false));
 			player.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObjectById(2), 40, 3, false, false));
 			player.bedLocation = pos;
-			world.provider.setWorldTime(0);
+			world.provider.setWorldTime((world.getWorldTime() / 24000) * 24000 + 24000);
 			world.provider.resetRainAndThunder();
 			player.wakeUpPlayer(false, true, false);
 			world.setBlockToAir(origin);
@@ -128,7 +128,7 @@ public class SleepingBags
 				player.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObjectById(15), 40, 40, false, false));
 				player.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObjectById(2), 40, 3, false, false));
 				player.bedLocation = pos;
-				world.provider.setWorldTime(0);
+				world.provider.setWorldTime((world.getWorldTime() / 24000) * 24000 + 24000);
 				world.provider.resetRainAndThunder();
 				player.wakeUpPlayer(false, true, false);
 				world.setBlockToAir(origin);
