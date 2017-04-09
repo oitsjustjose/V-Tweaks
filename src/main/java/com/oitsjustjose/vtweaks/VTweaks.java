@@ -92,7 +92,6 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new DropTweaks());
 		MinecraftForge.EVENT_BUS.register(new GlitchingItemFix());
 		MinecraftForge.EVENT_BUS.register(new TorchHelper());
-		MinecraftForge.EVENT_BUS.register(new SleepingBags());
 
 		// Miscellaneous Features
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
