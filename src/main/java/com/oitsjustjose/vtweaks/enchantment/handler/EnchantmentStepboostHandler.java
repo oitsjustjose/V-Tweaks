@@ -7,8 +7,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent.Close;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,15 +26,12 @@ public class EnchantmentStepboostHandler
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 		ItemStack boots = player.inventory.armorInventory[0];
-		int EnchantmentLevelArmor = EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots);
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
-		final String JUMPBOOST_SETTING = "VTweaksJumpboostSetting";
 
 		// Boots are ON and have the enchantment
-		if (boots != null && EnchantmentLevelArmor != 0)
+		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots) != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
-			persistTag.setBoolean(JUMPBOOST_SETTING, Minecraft.getMinecraft().gameSettings.field_189989_R);
 			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
 			if (player.stepHeight < 1.0F && !player.isSneaking())
 				player.stepHeight += 0.5F;
@@ -43,8 +42,25 @@ public class EnchantmentStepboostHandler
 		else if (persistTag.getBoolean(VTWEAKS_STEP_BOOST))
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, false);
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, Boolean.valueOf(persistTag.getBoolean(JUMPBOOST_SETTING)).compareTo(false));
 			player.stepHeight -= 0.5F;
+		}
+	}
+	
+	@SubscribeEvent
+	public void register(Close event)
+	{
+		// Check if enchantment is disabled
+		if (VTweaks.config.stepboostID <= 0)
+			return;
+		// Drops out if the player isn't closing their inventory or if auto-jump is already off
+		if (event.getContainer() == null || !(event.getContainer() instanceof ContainerPlayer) || !Minecraft.getMinecraft().gameSettings.field_189989_R)
+			return;
+
+		ItemStack boots = event.getEntityPlayer().inventory.armorInventory[0];
+
+		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots) > 0)
+		{
+			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
 		}
 	}
 
