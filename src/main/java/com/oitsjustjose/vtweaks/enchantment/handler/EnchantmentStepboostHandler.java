@@ -32,7 +32,6 @@ public class EnchantmentStepboostHandler
 		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots) != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
 			if (player.stepHeight < 1.0F && !player.isSneaking())
 				player.stepHeight += 0.5F;
 			if (player.stepHeight >= 1.0F && player.isSneaking())
@@ -45,7 +44,7 @@ public class EnchantmentStepboostHandler
 			player.stepHeight -= 0.5F;
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void register(Close event)
 	{
