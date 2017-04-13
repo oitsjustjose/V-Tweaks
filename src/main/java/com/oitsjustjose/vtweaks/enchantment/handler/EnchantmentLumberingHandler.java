@@ -23,7 +23,7 @@ public class EnchantmentLumberingHandler
 		if (VTweaks.config.lumberingID <= 0)
 			return;
 		// Check that state, world, player or player's held item all exist
-		if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null || !event.getPlayer().getHeldItemMainhand().isEmpty())
+		if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null || event.getPlayer().getHeldItemMainhand().isEmpty())
 			return;
 		// Local variables
 		World world = event.getWorld();
