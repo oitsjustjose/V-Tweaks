@@ -1,3 +1,7 @@
+1.4.10.1:
+* Fixed: Lumbering Dorp
+* Removed: Auto-Jump Stepboost coexistence. It's just not a thing. Turn it off yourself.
+
 1.4.10.0:
 * Added: Config option for blocks to be protected by LavaLoss Protection
 * Added: Cactus Loss Prevention: all cactus entity items are invulnerable as a result!
