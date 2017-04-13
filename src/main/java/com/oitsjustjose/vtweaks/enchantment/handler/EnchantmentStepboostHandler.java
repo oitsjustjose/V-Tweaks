@@ -3,14 +3,10 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent.Close;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -42,24 +38,6 @@ public class EnchantmentStepboostHandler
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, false);
 			player.stepHeight -= 0.5F;
-		}
-	}
-
-	@SubscribeEvent
-	public void register(Close event)
-	{
-		// Check if enchantment is disabled
-		if (VTweaks.config.stepboostID <= 0)
-			return;
-		// Drops out if the player isn't closing their inventory or if auto-jump is already off
-		if (event.getContainer() == null || !(event.getContainer() instanceof ContainerPlayer) || !Minecraft.getMinecraft().gameSettings.field_189989_R)
-			return;
-
-		ItemStack boots = event.getEntityPlayer().inventory.armorInventory[0];
-
-		if (boots != null && EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots) > 0)
-		{
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.AUTO_JUMP, 0);
 		}
 	}
 

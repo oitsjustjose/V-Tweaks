@@ -41,20 +41,19 @@ public class EnchantmentLumbering extends Enchantment
 
 		return false;
 	}
-	
+
 	@Override
 	public int getMinEnchantability(int par1)
 	{
 		return 0;
 	}
 
-	
 	@Override
 	public int getMaxEnchantability(int par1)
 	{
 		return 0;
 	}
-	
+
 	@SubscribeEvent
 	public void fixApplication(AnvilUpdateEvent event)
 	{
