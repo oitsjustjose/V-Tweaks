@@ -198,7 +198,7 @@ public class Config
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>");
+		property = config.get(category, "Challenger Mobs Loot Table", challengerMobDefaultLoot, "Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>:<metadata>, or <modid>:<item>");
 		challengerMobLoot = property.getStringList();
 		propertyOrder.add(property.getName());
 
