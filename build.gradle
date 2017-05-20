@@ -40,7 +40,7 @@ minecraft {
   replaceIn "/VTweaks.java"
   replace "@VERSION@", mod_version
 
-  mappings = "snapshot_20170114"
+  mappings = "${mappings_version}"
 }
 
 dependencies {
