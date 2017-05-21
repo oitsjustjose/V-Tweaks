@@ -1,8 +1,9 @@
 #Enchantment Names
 enchantment.vtweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
 enchantment.vtweaks:autosmelt=§4Auto-Smelt
-enchantment.vtweaks:stepboost=§aStep Boost
+enchantment.vtweaks:stepboost=Step Boost
 enchantment.vtweaks:lumbering=Lumbering
+enchantment.vtweaks:imperishable=Imperishable
 
 tile.bed.notEnoughSleep=Not Enough Players Sleeping!
 tile.bed.morning=§6Good Morning!

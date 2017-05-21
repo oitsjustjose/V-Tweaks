@@ -4,6 +4,7 @@ import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentAutosmeltHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentHypermendingHandler;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentStepboostHandler;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
@@ -79,6 +80,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
+		MinecraftForge.EVENT_BUS.register(new EnchantmentImperishableHandler());
 		MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
 
 		// Block Tweaks
