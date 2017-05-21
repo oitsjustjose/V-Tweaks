@@ -105,7 +105,7 @@ public class ToolTips
 	private String getDurabilityString(ItemStack itemstack)
 	{
 		String ret = "Durability: ";
-		int max = itemstack.getMaxDamage();
+		int max = itemstack.getMaxDamage() + 1;
 		int damage = itemstack.getItemDamage();
 		float percentage = 1 - ((float) damage / (float) max);
 		if (percentage >= .9)
