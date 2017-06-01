@@ -2,12 +2,24 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CombatRules;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryItem;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.SetCount;
+import net.minecraft.world.storage.loot.functions.SetNBT;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -46,10 +58,10 @@ public class EnchantmentImperishableHandler
 		if (VTweaks.config.imperishableID <= 0)
 			return;
 
-		if (event.getEntityLiving() == null || event.getSource() == null || event.getSource().getEntity() == null)
+		if (event.getEntityLiving() == null || event.getSource() == null)
 			return;
-
-		if (event.getSource().getEntity() instanceof EntityPlayer)
+		// For the case where a player hurts an entity
+		if (event.getSource().getEntity() != null && event.getSource().getEntity() instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
 			ItemStack stack = player.getHeldItemMainhand();
@@ -70,6 +82,7 @@ public class EnchantmentImperishableHandler
 				}
 			}
 		}
+		// For the case where an entity hurts a player
 		else if (event.getEntityLiving() instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
@@ -79,7 +92,6 @@ public class EnchantmentImperishableHandler
 			for (ItemStack stack : player.getEquipmentAndArmor())
 			{
 
-				
 				if (stack.isEmpty() || !(stack.getItem() instanceof ItemArmor))
 					continue;
 
@@ -88,7 +100,6 @@ public class EnchantmentImperishableHandler
 				{
 					if (stack.getItemDamage() >= stack.getMaxDamage())
 					{
-						System.out.println(event.getAmount());
 						stack.attemptDamageItem(-1, player.getRNG());
 						continue;
 					}
@@ -101,6 +112,29 @@ public class EnchantmentImperishableHandler
 
 			float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
 			event.setAmount(damage);
+		}
+	}
+
+	// This event is for the generation of teh lewtz
+	@SubscribeEvent
+	public void lootLoad(LootTableLoadEvent event)
+	{
+		if (VTweaks.config.imperishableID <= 0)
+			return;
+
+		LootCondition[] none = new LootCondition[0];
+		LootPool pool = event.getTable().getPool("main");
+		if (pool == null)
+		{
+			pool = new LootPool(new LootEntry[0], none, new RandomValueRange(5, 10), new RandomValueRange(0), "main");
+			event.getTable().addPool(pool);
+		}
+
+		if (LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName()))
+		{
+			LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(Enchantments.imperishable, 1));
+			LootFunction quantity = new SetCount(none, new RandomValueRange(1));
+			pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[] { enchantment, quantity }, none, VTweaks.MODID + ":imperishable_book"));
 		}
 	}
 }

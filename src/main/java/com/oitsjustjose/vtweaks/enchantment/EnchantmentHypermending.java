@@ -11,7 +11,7 @@ public class EnchantmentHypermending extends Enchantment
 {
 	protected EnchantmentHypermending()
 	{
-		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
 		Enchantment.REGISTRY.register(VTweaks.config.hypermendingID, new ResourceLocation(VTweaks.MODID, "hypermending"), this);
 	}
 
