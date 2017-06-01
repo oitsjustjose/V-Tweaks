@@ -1,3 +1,8 @@
+1.4.11.0:
+* Added: Imperishable enchantment! Keeps tools and armor from being broken when down to 1 durability
+* Added: Imperishable spawns (**only**) in Nether Fortress Chests. This is the only way of obtaining them.
+* Fixed: Durability tooltip being 1 damage off
+
 1.4.10.1:
 * Auto-Jump Stepboost coexistence. It's just not a thing. Turn it off yourself.
 
