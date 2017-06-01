@@ -5,6 +5,7 @@ import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Items;
@@ -48,7 +49,9 @@ public class ChallengerMobs
 
 					// Custom Name Tags, and infinite fire resistance to prevent cheesy kills
 					monster.setCustomNameTag(mobClassName(VARIANT, monster));
-					monster.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance")), Integer.MAX_VALUE, 0, true, true));
+					// Specifically keeps creepers from spawning with fire resistance to prevent funny business
+					if (!(monster instanceof EntityCreeper))
+						monster.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance")), Integer.MAX_VALUE, 0, true, true));
 					// Every challenger mob will have a main hand item. Done before any checks.
 					monster.setHeldItem(EnumHand.MAIN_HAND, VARIANT.getEquipment());
 					monster.setDropChance(EntityEquipmentSlot.MAINHAND, Float.MIN_VALUE);
