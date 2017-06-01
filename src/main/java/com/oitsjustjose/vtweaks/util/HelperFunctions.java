@@ -54,6 +54,27 @@ public class HelperFunctions
 		return false;
 	}
 
+	/**
+	 * @param bookStack
+	 *            ItemStack containing the enchantetd book
+	 * @param enchantment
+	 *            The enchantment being matched
+	 * @return true if the book has said enchantment, false otherwise
+	 */
+	public static NBTTagCompound getEnchantedBookNBT(Enchantment enchantment, int level)
+	{
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setTag("StoredEnchantments", new NBTTagList());
+
+		NBTTagList nbttaglist = tag.getTagList("StoredEnchantments", 10);
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		nbttagcompound.setShort("id", (short) Enchantment.getEnchantmentID(enchantment));
+		nbttagcompound.setShort("lvl", (short) level);
+		nbttaglist.appendTag(nbttagcompound);
+
+		return tag;
+	}
+
 	// Same as before but with simplified form
 	public static boolean bookHasEnchantment(ItemStack bookStack, String modid, String enchName)
 	{

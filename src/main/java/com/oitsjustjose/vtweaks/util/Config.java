@@ -48,6 +48,7 @@ public class Config
 	public int autosmeltID;
 	public int stepboostID;
 	public int lumberingID;
+	public int imperishableID;
 	public boolean enableAutosmeltFortuneInteraction;
 	public String[] autosmeltOverrides;
 	public int hypermendingXPCost;
@@ -224,6 +225,10 @@ public class Config
 
 		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255);
 		lumberingID = property.getInt();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Imperishable Enchantment ID", 237, "If set to 0, the enchantment is disabled", 0, 255);
+		imperishableID = property.getInt();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Autosmelt Fortune Interaction", true);
