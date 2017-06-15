@@ -20,7 +20,7 @@ repositories {
 
 version = mod_version
 group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-${mod_version}"
+archivesBaseName = "VTweaks-${minecraft_version}"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
