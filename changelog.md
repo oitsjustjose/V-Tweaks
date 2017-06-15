@@ -1,3 +1,8 @@
+1.4.11.1:
+* **The 1.11.x branch is now only under a "as-needed" updating basis; my current code focus is 1.10.2 and 1.12**
+* Added: 1.12 version! Most things work short of JEI integration (pending)
+* Removed: Sleeping Bags. Dumb feature, didn't work well, and wasn't done well by me. "Sleeping Bag" beds should work as plain beds.
+
 1.4.11.0:
 * Added: Imperishable enchantment! Keeps tools and armor from being broken when down to 1 durability
 * Added: Imperishable spawns (**only**) in Nether Fortress Chests. This is the only way of obtaining them.
