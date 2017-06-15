@@ -51,7 +51,7 @@ public class EnchantmentLumberingHandler
 						BlockPos newPos = new BlockPos(xPos, yPos, zPos);
 						if (world.getBlockState(newPos).getBlock().isWood(world, newPos))
 						{
-							if (player.getHeldItemMainhand().attemptDamageItem(1, world.rand))
+							if (player.getHeldItemMainhand().attemptDamageItem(1, world.rand, null))
 								return;
 							breakBlock(world, player, newPos);
 						}

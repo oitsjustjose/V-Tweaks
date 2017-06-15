@@ -38,7 +38,7 @@ public class FeatherPlucker
 					chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
 					chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
 					if (!player.capabilities.isCreativeMode)
-						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG());
+						player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
 				}
 				player.swingArm(EnumHand.MAIN_HAND);
 			}

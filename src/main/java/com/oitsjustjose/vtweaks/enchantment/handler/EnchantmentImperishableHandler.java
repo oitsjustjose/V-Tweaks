@@ -73,7 +73,7 @@ public class EnchantmentImperishableHandler
 			{
 				if (stack.getItemDamage() >= stack.getMaxDamage())
 				{
-					stack.attemptDamageItem(-1, player.getRNG());
+					stack.attemptDamageItem(-1, player.getRNG(), null);
 
 					if (event.isCancelable())
 						event.setCanceled(true);
@@ -100,7 +100,7 @@ public class EnchantmentImperishableHandler
 				{
 					if (stack.getItemDamage() >= stack.getMaxDamage())
 					{
-						stack.attemptDamageItem(-1, player.getRNG());
+						stack.attemptDamageItem(-1, player.getRNG(), null);
 						continue;
 					}
 				}
