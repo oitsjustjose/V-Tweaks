@@ -18,7 +18,7 @@ public class EnchantmentHypermendingHandler
 	public void register(PlayerEvent event)
 	{
 		// Check if enchantment is disabled
-		if (VTweaks.config.hypermendingID <= 0)
+		if (VTweaks.config.hypermendingID <= 0 || event.getEntityPlayer() == null)
 			return;
 		// Local variables
 		EntityPlayer player = event.getEntityPlayer();

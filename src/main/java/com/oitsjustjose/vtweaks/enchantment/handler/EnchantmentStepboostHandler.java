@@ -16,7 +16,7 @@ public class EnchantmentStepboostHandler
 	public void register(PlayerEvent event)
 	{
 		// Check if enchantment is disabled
-		if (VTweaks.config.stepboostID <= 0)
+		if (VTweaks.config.stepboostID <= 0 || event.getEntityPlayer() == null)
 			return;
 		// Local Variables
 		EntityPlayer player = event.getEntityPlayer();
