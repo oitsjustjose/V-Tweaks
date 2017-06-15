@@ -19,7 +19,6 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.GlitchingItemFix;
 import com.oitsjustjose.vtweaks.event.itemtweaks.LeafEater;
-import com.oitsjustjose.vtweaks.event.itemtweaks.SleepingBags;
 import com.oitsjustjose.vtweaks.event.itemtweaks.StackTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.TorchHelper;
 import com.oitsjustjose.vtweaks.event.itemtweaks.WoodItemFuelHandler;
@@ -95,7 +94,6 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new DropTweaks());
 		MinecraftForge.EVENT_BUS.register(new GlitchingItemFix());
 		MinecraftForge.EVENT_BUS.register(new TorchHelper());
-		MinecraftForge.EVENT_BUS.register(new SleepingBags());
 
 		// Miscellaneous Features
 		MinecraftForge.EVENT_BUS.register(new ToolTips());
