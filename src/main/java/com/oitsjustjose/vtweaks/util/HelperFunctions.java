@@ -6,6 +6,7 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -18,7 +19,7 @@ public class HelperFunctions
 	public static ItemStack getEnchantedBook(Enchantment ench)
 	{
 		ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
-		Items.ENCHANTED_BOOK.addEnchantment(retBook, new EnchantmentData(ench, 1));
+		ItemEnchantedBook.addEnchantment(retBook, new EnchantmentData(ench, 1));
 		return retBook;
 	}
 
