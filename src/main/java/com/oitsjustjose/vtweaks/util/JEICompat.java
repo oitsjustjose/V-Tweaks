@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.util;
 
 import java.util.ArrayList;
 
+import com.google.common.collect.ImmutableList;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -13,6 +14,7 @@ import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IVanillaRecipeFactory;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -38,17 +40,17 @@ public class JEICompat implements IModPlugin
 		
 		if (VTweaks.config.enableRecipeHorseArmor)
 		{
-			addMirroredAnvilRecipe(factory, new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_HORSE_ARMOR));
-			addMirroredAnvilRecipe(factory, new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_HORSE_ARMOR));
-			addMirroredAnvilRecipe(factory, new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_HORSE_ARMOR));
+			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_HORSE_ARMOR));
+			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_HORSE_ARMOR));
+			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_HORSE_ARMOR));
 		}
 		if (VTweaks.config.hypermendingID > 0)
 		{
-			addAnvilRecipe(factory, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(Enchantments.hypermending));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(Enchantments.hypermending));
 		}
 		if (VTweaks.config.autosmeltID > 0)
 		{
-			addAnvilRecipe(factory, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(Enchantments.autosmelt));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(Enchantments.autosmelt));
 		}
 		// Stepboost Compatibility
 		if (VTweaks.config.stepboostID > 0)
@@ -68,11 +70,11 @@ public class JEICompat implements IModPlugin
 					}
 				}
 			}
-			factory.createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK), stairs, output);
+			registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK), stairs, output)), VanillaRecipeCategoryUid.ANVIL);
 		}
 		if (VTweaks.config.lumberingID > 0)
 		{
-			addAnvilRecipe(factory, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(Enchantments.lumbering));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(Enchantments.lumbering));
 		}
 	}
 
@@ -81,21 +83,21 @@ public class JEICompat implements IModPlugin
 	{
 	}
 
-	void addMirroredAnvilRecipe(IVanillaRecipeFactory factory, ItemStack input, ItemStack output)
+	void addMirroredAnvilRecipe(IVanillaRecipeFactory factory, IModRegistry registry, ItemStack input, ItemStack output)
 	{
 		ArrayList<ItemStack> inputTemp = new ArrayList<ItemStack>();
 		ArrayList<ItemStack> outputTemp = new ArrayList<ItemStack>();
 		inputTemp.add(input);
 		outputTemp.add(output);
-		factory.createAnvilRecipe(input, inputTemp, outputTemp);
+		registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(input, inputTemp, outputTemp)), VanillaRecipeCategoryUid.ANVIL);
 	}
 
-	void addAnvilRecipe(IVanillaRecipeFactory factory, ItemStack inputLeft, ItemStack inputRight, ItemStack output)
+	void addAnvilRecipe(IVanillaRecipeFactory factory, IModRegistry registry, ItemStack inputLeft, ItemStack inputRight, ItemStack output)
 	{
 		ArrayList<ItemStack> rightTemp = new ArrayList<ItemStack>();
 		ArrayList<ItemStack> outputTemp = new ArrayList<ItemStack>();
 		rightTemp.add(inputRight);
 		outputTemp.add(output);
-		factory.createAnvilRecipe(inputLeft, rightTemp, outputTemp);
+		registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(inputLeft, rightTemp, outputTemp)), VanillaRecipeCategoryUid.ANVIL);
 	}
 }
