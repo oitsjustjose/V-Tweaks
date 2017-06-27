@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.Iterator;
-import java.util.List;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
@@ -16,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -72,9 +72,9 @@ public class CropHelper
 		{
 			if (!world.isRemote)
 			{
-				final List<ItemStack> drops = crop.getDrops(world, pos, state, 0);
+				final NonNullList<ItemStack> drops = NonNullList.create();
 				final Item mainDrop = crop.getItemDropped(state, world.rand, 0);
-
+				crop.getDrops(drops, world, pos, state, 0);
 				// An iterator to remove a seed or potato / carrot
 				if (mainDrop != null)
 				{
@@ -104,7 +104,8 @@ public class CropHelper
 	public boolean harvestNetherWart(World world, BlockPos pos, IBlockState state, EntityPlayer player)
 	{
 		BlockNetherWart wart = (BlockNetherWart) state.getBlock();
-		final List<ItemStack> drops = wart.getDrops(world, pos, state, 0);
+		final NonNullList<ItemStack> drops = NonNullList.create();
+		wart.getDrops(drops, world, pos, state, 0);
 		// This is how I'm determining the crop is grown
 		if (drops.size() > 1)
 		{
@@ -127,7 +128,8 @@ public class CropHelper
 	public boolean harvestCocoaPod(World world, BlockPos pos, IBlockState state, EntityPlayer player)
 	{
 		BlockCocoa cocoa = (BlockCocoa) state.getBlock();
-		final List<ItemStack> drops = cocoa.getDrops(world, pos, state, 0);
+		final NonNullList<ItemStack> drops = NonNullList.create();
+		cocoa.getDrops(drops, world, pos, state, 0);
 		// This is how I'm determining the crop is grown
 		if (drops.size() > 1)
 		{

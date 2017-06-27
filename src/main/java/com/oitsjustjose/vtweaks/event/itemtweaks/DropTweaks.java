@@ -25,12 +25,12 @@ public class DropTweaks
 	@SubscribeEvent
 	public void registerTweak(ItemExpireEvent event)
 	{
-		if (event.getEntityItem() == null || event.getEntityItem().getEntityItem().isEmpty())
+		if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty())
 			return;
 
 		EntityItem entItem = event.getEntityItem();
 		World world = entItem.getEntityWorld();
-		ItemStack stack = entItem.getEntityItem();
+		ItemStack stack = entItem.getItem();
 
 		// Handles egg hatching; configurable chance.
 		if (VTweaks.config.enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
@@ -53,7 +53,7 @@ public class DropTweaks
 			// Checks to see if where the sapling *will* be is air
 			if (world.isAirBlock(saplingPos))
 			{
-				FakePlayer fake = new FakePlayer(world.getMinecraftServer().worldServerForDimension(world.provider.getDimension()), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
+				FakePlayer fake = new FakePlayer(world.getMinecraftServer().getWorld((world.provider.getDimension())), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
 				fake.setHeldItem(EnumHand.MAIN_HAND, stack);
 				stack.onItemUse(fake, world, saplingPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
 			}

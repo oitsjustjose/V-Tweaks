@@ -60,7 +60,7 @@ public class MobDropBuffs
 		}
 		else if (event.getEntity() instanceof EntityHorse && VTweaks.config.enableHorseGlue && random.nextInt(4 - event.getLootingLevel()) == 0)
 		{
-			if (event.getSource().getEntity() instanceof EntityPlayer && EnchantmentHelper.getFireAspectModifier((EntityPlayer) event.getSource().getEntity()) > 0)
+			if (event.getSource().getTrueSource() instanceof EntityPlayer && EnchantmentHelper.getFireAspectModifier((EntityPlayer) event.getSource().getTrueSource()) > 0)
 			{
 				ItemStack dropStack = new ItemStack(Items.SLIME_BALL).setStackDisplayName(TextFormatting.RESET + "Glue Ball");
 				event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
