@@ -3,7 +3,6 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 import java.util.ArrayList;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +17,7 @@ public class EnchantmentHypermendingHandler
 	public void register(PlayerEvent event)
 	{
 		// Check if enchantment is disabled
-		if (VTweaks.config.hypermendingID <= 0 || event.getEntityPlayer() == null)
+		if (!VTweaks.config.enableEnchHypermending || event.getEntityPlayer() == null)
 			return;
 		// Local variables
 		EntityPlayer player = event.getEntityPlayer();
@@ -29,7 +28,7 @@ public class EnchantmentHypermendingHandler
 		fullInventory.addAll(player.inventory.armorInventory);
 		// Keeps entire inventory of tools constantly repaired
 		for (ItemStack stack : fullInventory)
-			if (!stack.isEmpty() && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(Enchantments.hypermending, stack) > 0)
+			if (!stack.isEmpty() && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.hypermending, stack) > 0)
 				stack.setItemDamage(0);
 	}
 }

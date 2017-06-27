@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +15,7 @@ public class EnchantmentStepboostHandler
 	public void register(PlayerEvent event)
 	{
 		// Check if enchantment is disabled
-		if (VTweaks.config.stepboostID <= 0 || event.getEntityPlayer() == null)
+		if (!VTweaks.config.enableEnchStepboost || event.getEntityPlayer() == null)
 			return;
 		// Local Variables
 		EntityPlayer player = event.getEntityPlayer();
@@ -25,7 +24,7 @@ public class EnchantmentStepboostHandler
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
 
 		// Boots are ON and have the enchantment
-		if (!boots.isEmpty() && EnchantmentHelper.getEnchantmentLevel(Enchantments.stepboost, boots) != 0)
+		if (!boots.isEmpty() && EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.stepboost, boots) != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
 			if (player.stepHeight < 1.0F && !player.isSneaking())

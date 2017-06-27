@@ -12,7 +12,8 @@ public class EnchantmentStepboost extends Enchantment
 	protected EnchantmentStepboost()
 	{
 		super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
-		Enchantment.REGISTRY.register(VTweaks.config.stepboostID, new ResourceLocation(VTweaks.MODID, "stepboost"), this);
+		this.setRegistryName(new ResourceLocation(VTweaks.MODID, "stepboost"));
+		this.setName(new ResourceLocation(VTweaks.MODID, "stepboost").toString());
 
 	}
 

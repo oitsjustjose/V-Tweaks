@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +30,7 @@ public class EnchantmentImperishableHandler
 	@SubscribeEvent
 	public void register(PlayerInteractEvent event)
 	{
-		if (VTweaks.config.imperishableID <= 0)
+		if (!VTweaks.config.enableEnchImperishable)
 			return;
 
 		if (event.getItemStack().isEmpty() || event.getEntityPlayer() == null)
@@ -39,7 +38,7 @@ public class EnchantmentImperishableHandler
 
 		ItemStack stack = event.getItemStack();
 
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+		if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 		{
 			if (stack.getItemDamage() >= stack.getMaxDamage())
 			{
@@ -55,21 +54,21 @@ public class EnchantmentImperishableHandler
 	@SubscribeEvent
 	public void register(LivingHurtEvent event)
 	{
-		if (VTweaks.config.imperishableID <= 0)
+		if (!VTweaks.config.enableEnchImperishable)
 			return;
 
 		if (event.getEntityLiving() == null || event.getSource() == null)
 			return;
 		// For the case where a player hurts an entity
-		if (event.getSource().getEntity() != null && event.getSource().getEntity() instanceof EntityPlayer)
+		if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer)
 		{
-			EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
+			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 			ItemStack stack = player.getHeldItemMainhand();
 
 			if (stack.isEmpty())
 				return;
 
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+			if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 			{
 				if (stack.getItemDamage() >= stack.getMaxDamage())
 				{
@@ -96,7 +95,7 @@ public class EnchantmentImperishableHandler
 					continue;
 
 				// How much the player is ACTUALLY getting hurt
-				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+				if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 				{
 					if (stack.getItemDamage() >= stack.getMaxDamage())
 					{
@@ -119,7 +118,7 @@ public class EnchantmentImperishableHandler
 	@SubscribeEvent
 	public void lootLoad(LootTableLoadEvent event)
 	{
-		if (VTweaks.config.imperishableID <= 0)
+		if (!VTweaks.config.enableEnchImperishable)
 			return;
 
 		LootCondition[] none = new LootCondition[0];
@@ -132,7 +131,7 @@ public class EnchantmentImperishableHandler
 
 		if (LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName()))
 		{
-			LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(Enchantments.imperishable, 1));
+			LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(VTweaks.enchantments.imperishable, 1));
 			LootFunction quantity = new SetCount(none, new RandomValueRange(1));
 			pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[] { enchantment, quantity }, none, VTweaks.MODID + ":imperishable_book"));
 		}

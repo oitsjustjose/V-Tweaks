@@ -44,11 +44,11 @@ public class Config
 	public String[] sheepDyeBlacklist;
 
 	// Enchantment Configs
-	public int hypermendingID;
-	public int autosmeltID;
-	public int stepboostID;
-	public int lumberingID;
-	public int imperishableID;
+	public boolean enableEnchHypermending;
+	public boolean enableEnchAutosmelt;
+	public boolean enableEnchStepboost;
+	public boolean enableEnchLumbering;
+	public boolean enableEnchImperishable;
 	public boolean enableAutosmeltFortuneInteraction;
 	public String[] autosmeltOverrides;
 	public int hypermendingXPCost;
@@ -211,30 +211,32 @@ public class Config
 		Enchantments = config.getCategory(category);
 		Enchantments.setComment("Enchantment ID's and Tweaks");
 
-		property = config.get(category, "Hypermending Enchantment ID", 233, "If set to 0, the enchantment is disabled", 0, 255);
-		hypermendingID = property.getInt();
+		property = config.get(category, "Enable Hypermending Enchantment", true);
+		enableEnchHypermending = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get(category, "Autosmelt Enchantment ID", 234, "If set to 0, the enchantment is disabled", 0, 255);
-		autosmeltID = property.getInt();
+		property = config.get(category, "Enable Autosmelt Enchantment", true);
+		enableEnchAutosmelt = property.getBoolean();
 		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Step Boost Enchantment ID", 235, "If set to 0, the enchantment is disabled", 0, 255);
-		stepboostID = property.getInt();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Lumbering Enchantment ID", 236, "If set to 0, the enchantment is disabled", 0, 255);
-		lumberingID = property.getInt();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Imperishable Enchantment ID", 237, "If set to 0, the enchantment is disabled", 0, 255);
-		imperishableID = property.getInt();
-		propertyOrder.add(property.getName());
-
+		
 		property = config.get(category, "Enable Autosmelt Fortune Interaction", true);
 		property.setComment("Setting this to false will completely disable fortune bonuses on Autosmelted blocks");
 		enableAutosmeltFortuneInteraction = property.getBoolean();
 		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Step Boost Enchantment", true);
+		enableEnchStepboost = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Lumbering Enchantment", true);
+		enableEnchLumbering = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable Imperishable Enchantment", true);
+		enableEnchImperishable = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+
 
 		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
 		property.setComment("Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction");

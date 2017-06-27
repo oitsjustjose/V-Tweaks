@@ -12,8 +12,8 @@ public class EnchantmentImperishable extends Enchantment
 	protected EnchantmentImperishable()
 	{
 		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
-		Enchantment.REGISTRY.register(VTweaks.config.imperishableID, new ResourceLocation(VTweaks.MODID, "imperishable"), this);
-	}
+		this.setRegistryName(new ResourceLocation(VTweaks.MODID, "imperishable"));
+		this.setName(new ResourceLocation(VTweaks.MODID, "imperishable").toString());	}
 
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment)

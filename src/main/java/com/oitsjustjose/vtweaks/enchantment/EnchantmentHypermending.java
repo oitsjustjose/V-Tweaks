@@ -12,7 +12,8 @@ public class EnchantmentHypermending extends Enchantment
 	protected EnchantmentHypermending()
 	{
 		super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
-		Enchantment.REGISTRY.register(VTweaks.config.hypermendingID, new ResourceLocation(VTweaks.MODID, "hypermending"), this);
+		this.setRegistryName(new ResourceLocation(VTweaks.MODID, "hypermending"));
+		this.setName(new ResourceLocation(VTweaks.MODID, "hypermending").toString());
 	}
 
 	@Override

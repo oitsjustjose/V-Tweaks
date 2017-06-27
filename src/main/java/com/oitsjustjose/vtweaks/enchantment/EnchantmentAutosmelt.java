@@ -16,7 +16,8 @@ public class EnchantmentAutosmelt extends Enchantment
 	protected EnchantmentAutosmelt()
 	{
 		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		Enchantment.REGISTRY.register(VTweaks.config.autosmeltID, new ResourceLocation(VTweaks.MODID, "autosmelt"), this);
+		this.setRegistryName(new ResourceLocation(VTweaks.MODID, "autosmelt"));
+		this.setName(new ResourceLocation(VTweaks.MODID, "autosmelt").toString());
 	}
 
 	@Override

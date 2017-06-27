@@ -11,7 +11,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,8 +19,8 @@ public class EnchantmentLumbering extends Enchantment
 	protected EnchantmentLumbering()
 	{
 		super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		Enchantment.REGISTRY.register(VTweaks.config.lumberingID, new ResourceLocation(VTweaks.MODID, "lumbering"), this);
-		MinecraftForge.EVENT_BUS.register(this);
+		this.setRegistryName(new ResourceLocation(VTweaks.MODID, "lumbering"));
+		this.setName(new ResourceLocation(VTweaks.MODID, "lumbering").toString());
 	}
 
 	@Override

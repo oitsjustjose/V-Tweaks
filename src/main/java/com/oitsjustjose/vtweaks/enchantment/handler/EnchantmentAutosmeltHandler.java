@@ -3,7 +3,6 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 import java.util.ListIterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -25,7 +24,7 @@ public class EnchantmentAutosmeltHandler
 	public void register(HarvestDropsEvent event)
 	{
 		// Check if enchantment is disabled
-		if (VTweaks.config.autosmeltID <= 0)
+		if (!VTweaks.config.enableEnchAutosmelt)
 			return;
 		// Check if the player is null
 		if (event.getHarvester() == null || event.getHarvester().getHeldItemMainhand() == null)
@@ -35,7 +34,7 @@ public class EnchantmentAutosmeltHandler
 		EntityPlayer player = event.getHarvester();
 		World world = event.getWorld();
 		ItemStack heldItem = player.getHeldItemMainhand();
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.autosmelt, heldItem);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.autosmelt, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
