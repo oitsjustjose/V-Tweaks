@@ -74,14 +74,6 @@ public class ChallengerMobs
 		}
 	}
 
-	private boolean isBlackListed(Entity entity)
-	{
-		for (String s : VTweaks.config.challengerMobEntityBlacklist)
-			if (entity.getClass().getName().toLowerCase().contains(s.toLowerCase()))
-				return true;
-		return false;
-	}
-
 	@SubscribeEvent
 	public void registerEvent(LivingDropsEvent event)
 	{
@@ -95,6 +87,14 @@ public class ChallengerMobs
 		{
 			event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
 		}
+	}
+	
+	private boolean isBlackListed(Entity entity)
+	{
+		for (String s : VTweaks.config.challengerMobEntityBlacklist)
+			if (entity.getClass().getName().toLowerCase().contains(s.toLowerCase()))
+				return true;
+		return false;
 	}
 
 	private String mobClassName(ChallengerMobType type, EntityMob mob)
