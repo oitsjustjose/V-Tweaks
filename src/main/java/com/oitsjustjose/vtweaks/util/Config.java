@@ -79,7 +79,6 @@ public class Config
 	public boolean enableGlitchingItemFix;
 	public boolean enableLeafEater;
 	public boolean enableLeafEaterSneak;
-	public boolean enableSleepingBags;
 	public boolean enableStackTweaks;
 	public boolean enableTorchHelper;
 	public boolean enableExtraFuels;
@@ -359,11 +358,6 @@ public class Config
 		property = config.get(category, "Leaf Eater Req. Sneak", false);
 		property.setComment("If above tweak is enabled, you must sneak to enable the AOE effect");
 		enableLeafEaterSneak = property.getBoolean();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Enable Sleeping Bags", true);
-		property.setComment("If enabled, naming a bed 'Sleeping Bag' and right clicking it makes it work like a sleeping bag");
-		enableSleepingBags = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Enable Stack Tweaks", true).setRequiresMcRestart(true);
