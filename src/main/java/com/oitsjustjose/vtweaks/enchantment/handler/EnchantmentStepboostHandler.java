@@ -17,7 +17,6 @@ public class EnchantmentStepboostHandler
 		// Check if enchantment is disabled
 		if (!VTweaks.config.enableEnchStepboost || event.getEntityPlayer() == null)
 			return;
-		// Local Variables
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
 		ItemStack boots = player.inventory.armorInventory.get(0);
@@ -27,10 +26,8 @@ public class EnchantmentStepboostHandler
 		if (!boots.isEmpty() && EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.stepboost, boots) != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
-			if (player.stepHeight < 1.0F && !player.isSneaking())
+			if (player.stepHeight < 1.0F)
 				player.stepHeight += 0.5F;
-			if (player.stepHeight >= 1.0F && player.isSneaking())
-				player.stepHeight -= 0.5F;
 		}
 		// No boots OR no enchantment, checks if the tag thought you did at one point have it
 		else if (persistTag.getBoolean(VTWEAKS_STEP_BOOST))
