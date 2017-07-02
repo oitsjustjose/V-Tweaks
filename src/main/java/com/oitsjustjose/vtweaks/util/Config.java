@@ -33,6 +33,7 @@ public class Config
 	public boolean enableHorseGlue;
 	public boolean enableFeatherPlucker;
 	public boolean enableChallengerMobs;
+	public String[] challengerMobEntityBlacklist;
 	public String[] challengerMobDefaultLoot = new String[] { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald", "minecraft:experience_bottle", "minecraft:record_13", "minecraft:record_cat", "minecraft:record_blocks", "minecraft:record_chirp", "minecraft:record_far", "minecraft:record_mall", "minecraft:record_mellohi", "minecraft:record_stal", "minecraft:record_strad", "minecraft:record_ward", "minecraft:record_11", "minecraft:record_wait" };
 	public String[] challengerMobLoot;
 	public int challengerMobRarity;
@@ -195,6 +196,10 @@ public class Config
 		enableChallengerMobs = property.getBoolean();
 		propertyOrder.add(property.getName());
 
+		property = config.get(category, "Challenger Mob Entity Blacklist", new String[] {}, "The class name (or part of it) of any entities that should not be turned to challenger mobs");
+		challengerMobEntityBlacklist = property.getStringList();
+		propertyOrder.add(property.getName());
+
 		property = config.get(category, "Challenger Mobs Rarity", 75, "There is a 1 in 'x' chance for Challenger mobs to spawn, this is 'x'", 1, Short.MAX_VALUE);
 		challengerMobRarity = property.getInt();
 		propertyOrder.add(property.getName());
@@ -218,7 +223,7 @@ public class Config
 		property = config.get(category, "Enable Autosmelt Enchantment", true);
 		enableEnchAutosmelt = property.getBoolean();
 		propertyOrder.add(property.getName());
-		
+
 		property = config.get(category, "Enable Autosmelt Fortune Interaction", true);
 		property.setComment("Setting this to false will completely disable fortune bonuses on Autosmelted blocks");
 		enableAutosmeltFortuneInteraction = property.getBoolean();
@@ -235,8 +240,6 @@ public class Config
 		property = config.get(category, "Enable Imperishable Enchantment", true);
 		enableEnchImperishable = property.getBoolean();
 		propertyOrder.add(property.getName());
-
-
 
 		property = config.get(category, "Autosmelt Fortune Interaction Overrides", new String[] {});
 		property.setComment("Registry Names (or part of a registry name) that you want to have Autosmelt + Fortune interaction");
