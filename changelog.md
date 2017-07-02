@@ -1,3 +1,9 @@
+1.4.11.2:
+* Added: Config option for blacklisting entities for Challenger Mobs.
+* Fixed: Stepboost sometimes not working (see below):
+* Removed: Stepboost sneak toggle. It's not something I could necessarily get working. PR's accepted if you propose a fix
+* Removed: Unused Sleeping Bag config
+
 1.4.11.1:
 * **The 1.11.x branch is now only under a "as-needed" updating basis; my current code focus is 1.10.2 and 1.12**
 * Added: 1.12 version! Most things work short of JEI integration (pending)
