@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -39,7 +38,7 @@ public class EnchantmentImperishableHandler
 
 		ItemStack stack = event.getItemStack();
 
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+		if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 		{
 			if (stack.getItemDamage() >= stack.getMaxDamage())
 			{
@@ -69,7 +68,7 @@ public class EnchantmentImperishableHandler
 			if (stack == null)
 				return;
 
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+			if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 			{
 				if (stack.getItemDamage() >= stack.getMaxDamage())
 				{
@@ -96,7 +95,7 @@ public class EnchantmentImperishableHandler
 					continue;
 
 				// How much the player is ACTUALLY getting hurt
-				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.imperishable, stack) > 0)
+				if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.imperishable, stack) > 0)
 				{
 					if (stack.getItemDamage() >= stack.getMaxDamage())
 					{
@@ -132,7 +131,7 @@ public class EnchantmentImperishableHandler
 
 		if (LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName()))
 		{
-			LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(Enchantments.imperishable, 1));
+			LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(VTweaks.enchantments.imperishable, 1));
 			LootFunction quantity = new SetCount(none, new RandomValueRange(1));
 			pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[] { enchantment, quantity }, none, VTweaks.MODID + ":imperishable_book"));
 		}

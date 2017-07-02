@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +28,7 @@ public class EnchantmentLumberingHandler
 		World world = event.getWorld();
 		EntityPlayer player = event.getPlayer();
 		// Checks if the axe has lumbering
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.lumbering, player.getHeldItemMainhand()) > 0)
+		if (EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.lumbering, player.getHeldItemMainhand()) > 0)
 		{
 			chopTree(world, player, event.getPos());
 		}

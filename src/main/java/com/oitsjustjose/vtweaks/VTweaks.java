@@ -53,6 +53,7 @@ public class VTweaks
 	public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json";
 
 	public static Config config;
+	public static Enchantments enchantments;
 
 	@Instance(MODID)
 	public static VTweaks instance;
@@ -61,7 +62,7 @@ public class VTweaks
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		config = new Config(event.getSuggestedConfigurationFile());
-
+		
 		MinecraftForge.EVENT_BUS.register(config);
 
 		// Mob Tweaks
@@ -73,7 +74,7 @@ public class VTweaks
 		MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
 
 		// Enchantments
-		Enchantments.initialize();
+		enchantments = new Enchantments();
 		MinecraftForge.EVENT_BUS.register(new EnchantmentHypermendingHandler());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentAutosmeltHandler());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentStepboostHandler());

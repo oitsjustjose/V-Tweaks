@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.util;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -46,7 +45,7 @@ public class Recipes
 	{
 		if (VTweaks.config.hypermendingID > 0)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.hypermending);
+			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.hypermending);
 
 			if (event.getLeft() == null || event.getRight() == null)
 				return;
@@ -65,7 +64,7 @@ public class Recipes
 
 		if (VTweaks.config.autosmeltID > 0)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.autosmelt);
+			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.autosmelt);
 			
 			if (event.getLeft() == null || event.getRight() == null)
 				return;
@@ -82,7 +81,7 @@ public class Recipes
 
 		if (VTweaks.config.stepboostID > 0)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.stepboost);
+			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.stepboost);
 
 			if (event.getLeft() == null || event.getRight() == null)
 				return;
@@ -102,7 +101,7 @@ public class Recipes
 
 		if (VTweaks.config.lumberingID > 0)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.lumbering);
+			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.lumbering);
 
 			if (event.getLeft() == null || event.getRight() == null)
 				return;

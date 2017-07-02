@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +29,7 @@ public class EnchantmentHypermendingHandler
 		fullInventory.addAll(Arrays.asList(player.inventory.armorInventory));
 		// Keeps entire inventory of tools constantly repaired
 		for (ItemStack stack : fullInventory)
-			if (stack != null && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(Enchantments.hypermending, stack) > 0)
+			if (stack != null && stack.isItemStackDamageable() && stack.isItemDamaged() && EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.hypermending, stack) > 0)
 				stack.setItemDamage(0);
 	}
 }

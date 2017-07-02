@@ -6,13 +6,18 @@ import net.minecraft.enchantment.Enchantment;
 
 public class Enchantments
 {
-	public static Enchantment hypermending;
-	public static Enchantment autosmelt;
-	public static Enchantment stepboost;
-	public static Enchantment lumbering;
-	public static Enchantment imperishable;
+	public Enchantment hypermending;
+	public Enchantment autosmelt;
+	public Enchantment stepboost;
+	public Enchantment lumbering;
+	public Enchantment imperishable;
 
-	public static void initialize()
+	public Enchantments()
+	{
+		init();
+	}
+	
+	public void init()
 	{
 		if (VTweaks.config.hypermendingID != 0)
 		{
