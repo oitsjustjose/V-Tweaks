@@ -1,9 +1,12 @@
-1.4.11.2:
+1.4.11.3:
 * Added: Config option for blacklisting entities for Challenger Mobs.
 * Fixed: Stepboost sometimes not working (see below):
 * Removed: Stepboost sneak toggle. It's not something I could necessarily get working. PR's accepted if you propose a fix
 * Removed: Unused Sleeping Bag config
 * Internal: Overall Enchantment system restructure. No user-visible changes.
+
+1.4.11.2:
+* Change everything to the new Forge Registry system
 
 1.4.11.1:
 * **The 1.11.x branch is now only under a "as-needed" updating basis; my current code focus is 1.10.2 and 1.12**
