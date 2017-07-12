@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -38,7 +39,7 @@ public class ChallengerMobs
 
 				if (event.getEntity() != null && event.getEntity() instanceof EntityMob)
 				{
-					if (event.getEntity() instanceof EntityPigZombie)
+					if (event.getEntity() instanceof EntityPigZombie || isBlackListed(event.getEntity()))
 						return;
 
 					EntityMob monster = (EntityMob) event.getEntity();
@@ -86,6 +87,14 @@ public class ChallengerMobs
 		{
 			event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
 		}
+	}
+	
+	private boolean isBlackListed(Entity entity)
+	{
+		for (String s : VTweaks.config.challengerMobEntityBlacklist)
+			if (entity.getClass().getName().toLowerCase().contains(s.toLowerCase()))
+				return true;
+		return false;
 	}
 
 	private String mobClassName(ChallengerMobType type, EntityMob mob)
