@@ -70,9 +70,9 @@ public class LossPrevention
 					if (!player.inventory.addItemStackToInventory(drop))
 					{
 						event.getWorld().spawnEntity(HelperFunctions.createItemEntity(event.getWorld(), player.getPosition(), drop));
+						iter.remove();
 					}
 				}
-				iter.remove();
 			}
 		}
 	}
