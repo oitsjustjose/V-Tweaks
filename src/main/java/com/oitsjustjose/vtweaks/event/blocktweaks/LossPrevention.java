@@ -40,9 +40,9 @@ public class LossPrevention
 					if (!player.inventory.addItemStackToInventory(drop))
 					{
 						event.getWorld().spawnEntity(HelperFunctions.createItemEntity(event.getWorld(), player.getPosition(), drop));
+						iter.remove();
 					}
 				}
-				iter.remove();
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public class LossPrevention
 		for (ItemStack i : VTweaks.config.lavaLossBlockList)
 			if (i.getItem() == compare.getItem() && i.getMetadata() == compare.getMetadata())
 				return true;
-		
+
 		// Special case for if it's a cactus; saves code
 		return state.getBlock() == Blocks.CACTUS;
 	}
