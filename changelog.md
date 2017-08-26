@@ -1,3 +1,7 @@
+1.4.11.4:
+* **The 1.10.x branch is now only under a "as-needed" updating basis; only widespread game-crashing bugs will be fixed**
+* Fixed: Loss-prevented blocks not being picked up by fake-player type breaking blocks.
+
 1.4.11.3:
 * Added: Config option for blacklisting entities for Challenger Mobs.
 * Fixed: Stepboost sometimes not working (see below):
