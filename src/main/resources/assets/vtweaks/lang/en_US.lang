@@ -4,6 +4,6 @@ enchantment.vtweaks:autosmelt=§4Auto-Smelt
 enchantment.vtweaks:stepboost=Step Boost
 enchantment.vtweaks:lumbering=Lumbering
 enchantment.vtweaks:imperishable=Imperishable
+enchantment.vtweaks:multifaceted=Multifaceted
 
-tile.bed.notEnoughSleep=Not Enough Players Sleeping!
-tile.bed.morning=§6Good Morning!
+recipe.multifaceted.name=Created by throwing an undamaged §b§nDiamond Pickaxe§r, §b§nDiamond Shovel§r, and §b§nBook & Quill§r on the ground within the radius of an §4explosion§r.

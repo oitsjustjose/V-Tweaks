@@ -43,6 +43,7 @@ public class EnchantmentMultifacetedHandler
     @SubscribeEvent
     public void register(BreakSpeed event)
     {
+        acceptedMaterials.add(Material.WEB);
         if (event.getEntityPlayer() == null || event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND).isEmpty())
             return;
 
@@ -50,7 +51,7 @@ public class EnchantmentMultifacetedHandler
         {
             if(shouldTrigger(event.getState()))
             {
-                event.setNewSpeed(event.getOriginalSpeed() * 5 + (5 * EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "efficiency"), event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND))));
+                event.setNewSpeed(event.getOriginalSpeed() * 3 + (5 * EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "efficiency"), event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND))));
             }
         }
     }

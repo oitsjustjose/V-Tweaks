@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.enchantment.handler.*;
 import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.util.MultifacetedCrafting;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -83,6 +84,7 @@ public class Enchantments
             multifaceted = new EnchantmentMultifaceted();
             registerEnchantment(multifaceted);
             MinecraftForge.EVENT_BUS.register(new EnchantmentMultifacetedHandler());
+            MinecraftForge.EVENT_BUS.register(new MultifacetedCrafting());
         }
 
         if (Config.getInstance().enableFeatherFallingTweak)
