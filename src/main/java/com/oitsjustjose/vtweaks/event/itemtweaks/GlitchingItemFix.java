@@ -62,7 +62,7 @@ public class GlitchingItemFix
 				ItemStack recordStack = jukebox.getRecord().copy();
 
 				world.playEvent(1010, event.getPos(), 0);
-				world.playRecord(event.getPos(), (SoundEvent) null);
+				world.playRecord(event.getPos(), null);
 				jukebox.setRecord(ItemStack.EMPTY);
 
 				world.spawnEntity(HelperFunctions.createItemEntity(event.getEntity().world, event.getEntity().getPosition(), recordStack));

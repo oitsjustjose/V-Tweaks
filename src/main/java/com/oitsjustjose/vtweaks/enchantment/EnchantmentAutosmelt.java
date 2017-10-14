@@ -23,10 +23,8 @@ public class EnchantmentAutosmelt extends Enchantment
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment)
 	{
-		if (enchantment == HelperFunctions.getEnchantment("minecraft", "silk_touch"))
-			return false;
-		return true;
-	}
+        return enchantment != HelperFunctions.getEnchantment("minecraft", "silk_touch");
+    }
 
 	@Override
 	public boolean canApply(ItemStack stack)

@@ -64,6 +64,6 @@ public class BonemealTweaks
 		double d0 = rand.nextGaussian() * 0.02D;
 		double d1 = rand.nextGaussian() * 0.02D;
 		double d2 = rand.nextGaussian() * 0.02D;
-		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + rand.nextFloat()), (double) pos.getY() + (double) rand.nextFloat() * state.getBoundingBox(world, pos).maxY, (double) ((float) pos.getZ() + rand.nextFloat()), d0, d1, d2, new int[0]);
+		world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + rand.nextFloat()), (double) pos.getY() + (double) rand.nextFloat() * state.getBoundingBox(world, pos).maxY, (double) ((float) pos.getZ() + rand.nextFloat()), d0, d1, d2);
 	}
 }

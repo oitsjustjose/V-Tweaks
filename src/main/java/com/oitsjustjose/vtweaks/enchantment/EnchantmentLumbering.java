@@ -34,7 +34,7 @@ public class EnchantmentLumbering extends Enchantment
 	{
 		if (stack.getItem() instanceof ItemTool)
 		{
-			Set<String> classes = ((ItemTool) stack.getItem()).getToolClasses(stack);
+			Set<String> classes = stack.getItem().getToolClasses(stack);
 			return classes.contains("axe");
 		}
 
@@ -65,7 +65,7 @@ public class EnchantmentLumbering extends Enchantment
 		if (!HelperFunctions.bookHasEnchantment(right, this) || !(left.getItem() instanceof ItemTool))
 			return;
 
-		Set<String> classes = ((ItemTool) left.getItem()).getToolClasses(left);
+		Set<String> classes = left.getItem().getToolClasses(left);
 		if (!classes.contains("axe"))
 		{
 			event.setCost(0);

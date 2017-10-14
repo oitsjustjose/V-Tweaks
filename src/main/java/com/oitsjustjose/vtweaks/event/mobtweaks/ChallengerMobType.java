@@ -14,7 +14,7 @@ public enum ChallengerMobType
 	private final ItemStack heldItem;
 	private final String commonName;
 
-	private ChallengerMobType(double speed, float health, String name)
+	ChallengerMobType(double speed, float health, String name)
 	{
 		this.mobSpeed = speed;
 		this.mobHealth = health;
