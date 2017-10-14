@@ -2,6 +2,8 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,7 @@ public class EnchantmentStepboostHandler
 	public void register(PlayerEvent event)
 	{
 		// Check if enchantment is disabled
-		if (!VTweaks.config.enableEnchStepboost || event.getEntityPlayer() == null)
+		if (!Config.getInstance().enableEnchStepboost || event.getEntityPlayer() == null)
 			return;
 		EntityPlayer player = event.getEntityPlayer();
 		NBTTagCompound persistTag = getPlayerPersistTag(player, VTweaks.MODID);
@@ -23,7 +25,7 @@ public class EnchantmentStepboostHandler
 		final String VTWEAKS_STEP_BOOST = "VTweaksStepBoost";
 
 		// Boots are ON and have the enchantment
-		if (!boots.isEmpty() && EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.stepboost, boots) != 0)
+		if (!boots.isEmpty() && EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().stepboost, boots) != 0)
 		{
 			persistTag.setBoolean(VTWEAKS_STEP_BOOST, true);
 			if (player.stepHeight < 1.0F)

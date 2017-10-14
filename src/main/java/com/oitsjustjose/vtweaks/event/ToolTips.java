@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.event;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import org.lwjgl.input.Keyboard;
 
 import com.oitsjustjose.vtweaks.VTweaks;
@@ -28,19 +29,19 @@ public class ToolTips
 		if (stack.getItem() instanceof ItemFood)
 		{
 			// Checks to see if feature is enabled
-			if (VTweaks.config.foodTooltipSetting == 0)
+			if (Config.getInstance().foodTooltipSetting == 0)
 				return;
 
 			ItemFood food = (ItemFood) stack.getItem();
 			int hunger = food.getHealAmount(stack);
 			float saturation = food.getSaturationModifier(stack) * 10;
 
-			if (VTweaks.config.foodTooltipSetting == 1)
+			if (Config.getInstance().foodTooltipSetting == 1)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
 			}
-			else if (VTweaks.config.foodTooltipSetting == 2 && shift)
+			else if (Config.getInstance().foodTooltipSetting == 2 && shift)
 			{
 				event.getToolTip().add(getHungerString(hunger));
 				event.getToolTip().add(getSaturationString(saturation));
@@ -50,14 +51,14 @@ public class ToolTips
 		if (stack.getItem().isDamageable())
 		{
 			// Checks to see if feature is enabled
-			if (VTweaks.config.durabilityTooltipSetting == 0)
+			if (Config.getInstance().durabilityTooltipSetting == 0)
 				return;
 
-			if (VTweaks.config.durabilityTooltipSetting == 1)
+			if (Config.getInstance().durabilityTooltipSetting == 1)
 			{
 				event.getToolTip().add(getDurabilityString(stack));
 			}
-			else if (VTweaks.config.durabilityTooltipSetting == 2 && shift)
+			else if (Config.getInstance().durabilityTooltipSetting == 2 && shift)
 			{
 				event.getToolTip().add(getDurabilityString(stack));
 			}

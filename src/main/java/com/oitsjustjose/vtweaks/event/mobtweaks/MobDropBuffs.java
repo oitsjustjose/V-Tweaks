@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 import java.util.Random;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -29,36 +30,36 @@ public class MobDropBuffs
 		if (event.getEntity() == null)
 			return;
 
-		if (event.getEntity() instanceof EntityChicken && VTweaks.config.enableMobDropBuffsChickens)
+		if (event.getEntity() instanceof EntityChicken && Config.getInstance().enableMobDropBuffsChickens)
 		{
 			ItemStack dropStack = new ItemStack(Items.FEATHER, 1 + random.nextInt(4));
 			event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
 		}
 
-		else if (event.getEntity() instanceof EntityCow && VTweaks.config.enableMobDropBuffsCows)
+		else if (event.getEntity() instanceof EntityCow && Config.getInstance().enableMobDropBuffsCows)
 		{
 			ItemStack dropStack = new ItemStack(Items.LEATHER, 1 + random.nextInt(3));
 			event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
 		}
 
-		else if (event.getEntity() instanceof EntitySkeleton && VTweaks.config.enableMobDropBuffsSkeletons)
+		else if (event.getEntity() instanceof EntitySkeleton && Config.getInstance().enableMobDropBuffsSkeletons)
 		{
 			ItemStack dropStack = new ItemStack(Items.BONE, 1 + random.nextInt(2));
 			event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
 		}
 
-		else if (event.getEntity() instanceof EntitySquid && VTweaks.config.enableMobDropBuffsSquids)
+		else if (event.getEntity() instanceof EntitySquid && Config.getInstance().enableMobDropBuffsSquids)
 		{
 			ItemStack dropStack = new ItemStack(Items.DYE, 1 + random.nextInt(3));
 			event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
 		}
 
-		else if (event.getEntity() instanceof EntityEnderman && VTweaks.config.enableMobDropBuffsEndermen)
+		else if (event.getEntity() instanceof EntityEnderman && Config.getInstance().enableMobDropBuffsEndermen)
 		{
 			ItemStack dropStack = new ItemStack(Items.ENDER_PEARL, 1 + random.nextInt(1));
 			event.getDrops().add(HelperFunctions.createItemEntity(event.getEntity().getEntityWorld(), event.getEntity().getPosition(), dropStack));
 		}
-		else if (event.getEntity() instanceof EntityHorse && VTweaks.config.enableHorseGlue && random.nextInt(4 - event.getLootingLevel()) == 0)
+		else if (event.getEntity() instanceof EntityHorse && Config.getInstance().enableHorseGlue && random.nextInt(4 - event.getLootingLevel()) == 0)
 		{
 			if (event.getSource().getTrueSource() instanceof EntityPlayer && EnchantmentHelper.getFireAspectModifier((EntityPlayer) event.getSource().getTrueSource()) > 0)
 			{

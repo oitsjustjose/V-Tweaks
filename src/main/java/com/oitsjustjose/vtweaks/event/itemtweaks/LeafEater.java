@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +21,7 @@ public class LeafEater
 	public void registerTweak(BreakEvent event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableLeafEater)
+		if (!Config.getInstance().enableLeafEater)
 			return;
 		// Confirms state and player exist
 		if (event.getState() == null || event.getPlayer() == null)
@@ -70,6 +71,6 @@ public class LeafEater
 
 	private boolean shouldAOE(EntityPlayer player)
 	{
-		return !VTweaks.config.enableLeafEaterSneak || player.isSneaking();
+		return !Config.getInstance().enableLeafEaterSneak || player.isSneaking();
 	}
 }

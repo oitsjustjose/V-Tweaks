@@ -1,10 +1,8 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
-import java.util.UUID;
-
 import com.mojang.authlib.GameProfile;
 import com.oitsjustjose.vtweaks.VTweaks;
-
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -18,6 +16,8 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.UUID;
 
 public class DropTweaks
 {
@@ -33,9 +33,9 @@ public class DropTweaks
 		ItemStack stack = entItem.getItem();
 
 		// Handles egg hatching; configurable chance.
-		if (VTweaks.config.enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
+		if (Config.getInstance().enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
 		{
-			if (world.rand.nextInt(VTweaks.config.dropTweaksEggHatchingChance) == 0)
+			if (world.rand.nextInt(Config.getInstance().dropTweaksEggHatchingChance) == 0)
 			{
 				if (!world.isRemote)
 				{
@@ -47,7 +47,7 @@ public class DropTweaks
 			}
 		}
 		// Handles sapling replanting; 100% chance
-		else if (VTweaks.config.enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
+		else if (Config.getInstance().enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
 		{
 			BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
 			// Checks to see if where the sapling *will* be is air
@@ -59,12 +59,12 @@ public class DropTweaks
 			}
 		}
 		// Only gets run if the config is set to make all items never despawn.
-		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.dropTweaksNewDespawnTime == -1)
+		else if (Config.getInstance().enableDropTweaksDespawn && Config.getInstance().dropTweaksNewDespawnTime == -1)
 		{
 			event.setCanceled(true);
 		}
 		// Only gets run if the config is set to make all items never despawn.
-		else if (VTweaks.config.enableDropTweaksDespawn && VTweaks.config.dropTweaksNewDespawnTime == -1)
+		else if (Config.getInstance().enableDropTweaksDespawn && Config.getInstance().dropTweaksNewDespawnTime == -1)
 		{
 			event.setCanceled(true);
 		}
@@ -74,11 +74,11 @@ public class DropTweaks
 	public void registerTweak(ItemTossEvent event)
 	{
 		// Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
-		if (!VTweaks.config.enableDropTweaksDespawn || VTweaks.config.dropTweaksNewDespawnTime == -1 || event.getEntityItem() == null)
+		if (!Config.getInstance().enableDropTweaksDespawn || Config.getInstance().dropTweaksNewDespawnTime == -1 || event.getEntityItem() == null)
 			return;
 
 		EntityItem entItem = event.getEntityItem();
-		entItem.lifespan = VTweaks.config.dropTweaksNewDespawnTime;
+		entItem.lifespan = Config.getInstance().dropTweaksNewDespawnTime;
 	}
 
 	private BlockPos fromDouble(double xIn, double yIn, double zIn)

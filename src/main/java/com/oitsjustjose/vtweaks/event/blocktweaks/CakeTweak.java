@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCake;
 import net.minecraft.init.Items;
@@ -15,7 +16,7 @@ public class CakeTweak
 	public void registerTweak(BlockEvent.HarvestDropsEvent event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableCakeTweak)
+		if (!Config.getInstance().enableCakeTweak)
 			return;
 
 		Block block = event.getState().getBlock();

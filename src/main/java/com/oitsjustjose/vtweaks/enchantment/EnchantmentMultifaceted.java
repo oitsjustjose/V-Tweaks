@@ -4,18 +4,17 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.Set;
-
-public class EnchantmentLumbering extends Enchantment
+public class EnchantmentMultifaceted extends Enchantment
 {
-    protected EnchantmentLumbering()
+    public EnchantmentMultifaceted()
     {
         super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
-        this.setRegistryName(new ResourceLocation(VTweaks.MODID, "lumbering"));
-        this.setName(new ResourceLocation(VTweaks.MODID, "lumbering").toString());
+        this.setRegistryName(new ResourceLocation(VTweaks.MODID, "multifaceted"));
+        this.setName(new ResourceLocation(VTweaks.MODID, "multifaceted").toString());
     }
 
     @Override
@@ -27,8 +26,7 @@ public class EnchantmentLumbering extends Enchantment
     @Override
     public boolean canApply(ItemStack stack)
     {
-        Set<String> classes = stack.getItem().getToolClasses(stack);
-        return classes.contains("axe");
+        return stack.getItem() instanceof ItemPickaxe;
     }
 
     @Override

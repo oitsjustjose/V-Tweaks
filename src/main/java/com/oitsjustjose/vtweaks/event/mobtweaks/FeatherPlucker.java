@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.passive.EntityChicken;
@@ -20,7 +21,7 @@ public class FeatherPlucker
 	public void registerEvent(EntityInteract event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableFeatherPlucker)
+		if (!Config.getInstance().enableFeatherPlucker)
 			return;
 
 		if (event.getTarget() == null || !(event.getTarget() instanceof EntityChicken))

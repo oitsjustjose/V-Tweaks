@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.Entity;
@@ -23,13 +24,13 @@ public class MobKiller
 	{
 		Entity toKill = event.getEntity();
 
-		if (toKill != null && toKill instanceof EntityBat && VTweaks.config.disableBats)
+		if (toKill != null && toKill instanceof EntityBat && Config.getInstance().disableBats)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityPigZombie && VTweaks.config.disablePigZombies)
+		if (toKill != null && toKill instanceof EntityPigZombie && Config.getInstance().disablePigZombies)
 			event.setResult(Result.DENY);
 
-		if (toKill != null && toKill instanceof EntityGhast && VTweaks.config.disablePigZombies)
+		if (toKill != null && toKill instanceof EntityGhast && Config.getInstance().disablePigZombies)
 			if (event.getWorld().rand.nextInt(100) < 95)
 				event.setResult(Result.DENY);
 	}
@@ -38,7 +39,7 @@ public class MobKiller
 	public void registerWitherTweak(EntityJoinWorldEvent event)
 	{
 		// Checks to see if feature is enabled
-		if (!VTweaks.config.disableWitherOverworld)
+		if (!Config.getInstance().disableWitherOverworld)
 			return;
 		// Typecast checking
 		if (!(event.getEntity() instanceof EntityWither))

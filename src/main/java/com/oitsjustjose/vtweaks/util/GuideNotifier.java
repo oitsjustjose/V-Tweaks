@@ -18,7 +18,7 @@ public class GuideNotifier
 	@SubscribeEvent
 	public void registerEvent(EntityJoinWorldEvent event)
 	{
-		if (!VTweaks.config.enableGuideNotifier)
+		if (!Config.getInstance().enableGuideNotifier)
 			return;
 
 		final Entity entity = event.getEntity();

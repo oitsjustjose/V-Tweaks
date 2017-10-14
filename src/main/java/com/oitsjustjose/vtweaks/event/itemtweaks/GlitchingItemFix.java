@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
@@ -25,7 +26,7 @@ public class GlitchingItemFix
 	@SubscribeEvent
 	public void registerItemFixes(AttackEntityEvent event)
 	{
-		if (!VTweaks.config.enableGlitchingItemFix)
+		if (!Config.getInstance().enableGlitchingItemFix)
 			return;
 
 		if (event.getTarget() == null || event.getEntityPlayer() == null)

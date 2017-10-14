@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.common.collect.ImmutableList;
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
@@ -37,26 +38,26 @@ public class JEICompat implements IModPlugin
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
 		IVanillaRecipeFactory factory = jeiHelpers.getVanillaRecipeFactory();
 		
-		if (VTweaks.config.enableRecipeHorseArmor)
+		if (Config.getInstance().enableRecipeHorseArmor)
 		{
 			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_HORSE_ARMOR));
 			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_HORSE_ARMOR));
 			addMirroredAnvilRecipe(factory, registry, new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_HORSE_ARMOR));
 		}
-		if (VTweaks.config.enableEnchHypermending)
+		if (Config.getInstance().enableEnchHypermending)
 		{
-			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(VTweaks.enchantments.hypermending));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.NETHER_STAR), HelperFunctions.getEnchantedBook(Enchantments.getInstance().hypermending));
 		}
-		if (VTweaks.config.enableEnchAutosmelt)
+		if (Config.getInstance().enableEnchAutosmelt)
 		{
-			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(VTweaks.enchantments.autosmelt));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.LAVA_BUCKET), HelperFunctions.getEnchantedBook(Enchantments.getInstance().autosmelt));
 		}
 		// Stepboost Compatibility
-		if (VTweaks.config.enableEnchStepboost)
+		if (Config.getInstance().enableEnchStepboost)
 		{
 			ArrayList<ItemStack> stairs = new ArrayList<ItemStack>();
 			ArrayList<ItemStack> output = new ArrayList<ItemStack>();
-			final ItemStack stepboostBook = HelperFunctions.getEnchantedBook(VTweaks.enchantments.stepboost);
+			final ItemStack stepboostBook = HelperFunctions.getEnchantedBook(Enchantments.getInstance().stepboost);
 			for (int i = 0; i < Block.REGISTRY.getKeys().size(); i++)
 			{
 				Block b = Block.REGISTRY.getObjectById(i);
@@ -71,9 +72,9 @@ public class JEICompat implements IModPlugin
 			}
 			registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK), stairs, output)), VanillaRecipeCategoryUid.ANVIL);
 		}
-		if (VTweaks.config.enableEnchLumbering)
+		if (Config.getInstance().enableEnchLumbering)
 		{
-			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(VTweaks.enchantments.lumbering));
+			addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.GOLDEN_AXE), HelperFunctions.getEnchantedBook(Enchantments.getInstance().lumbering));
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
@@ -14,7 +15,7 @@ public class PingProtection
 	public void registerTweak(LivingHurtEvent event)
 	{
 		// Check if feature is enabled
-		if (!VTweaks.config.enablePingProtection)
+		if (!Config.getInstance().enablePingProtection)
 			return;
 
 		if (event.getEntity() instanceof EntityPlayerMP)

@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,7 +19,7 @@ public class PetArmory
 	public void registerEvent(EntityInteract event)
 	{
 		// Checks that the feature is enabled
-		if (!VTweaks.config.enablePetArmory)
+		if (!Config.getInstance().enablePetArmory)
 			return;
 		// Confirms there's a target
 		if (event.getTarget() == null)

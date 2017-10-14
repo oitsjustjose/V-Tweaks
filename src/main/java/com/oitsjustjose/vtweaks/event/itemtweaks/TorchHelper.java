@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ public class TorchHelper
 	public void registerTweak(RightClickBlock event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableTorchHelper)
+		if (!Config.getInstance().enableTorchHelper)
 			return;
 
 		if (event.getEntityPlayer().getHeldItemMainhand().isEmpty() || !event.getEntityPlayer().getHeldItemOffhand().isEmpty())

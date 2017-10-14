@@ -16,14 +16,14 @@ public class ConfigParser
 	public static void parseItems()
 	{
 		LOGGER.info(">> Running Config Item Parser");
-		VTweaks.config.setChallengerLootTable(parse(VTweaks.config.challengerMobLoot, true));
+		Config.getInstance().setChallengerLootTable(parse(Config.getInstance().challengerMobLoot, true));
 		LOGGER.info(">> Config Item Parsing complete!");
 	}
 
 	public static void parseBlocks()
 	{
 		LOGGER.info(">> Running Config Block Parser");
-		VTweaks.config.setLavaLossBlockList(parse(VTweaks.config.lavaLossWhitelist, false));
+		Config.getInstance().setLavaLossBlockList(parse(Config.getInstance().lavaLossWhitelist, false));
 		LOGGER.info(">> Config Block Parsing complete!");
 	}
 

@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,7 +17,7 @@ public class FeatherFallingTweak
 	public void registerTweak(LivingHurtEvent event)
 	{
 		// Check if enchantment is disabled
-		if (!VTweaks.config.enableFeatherFallingTweak)
+		if (!Config.getInstance().enableFeatherFallingTweak)
 			return;
 		// Ensures we're working on a player entity AND we're working with fall damage
 		if (!(event.getEntity() instanceof EntityPlayer) || event.getSource() != DamageSource.FALL)

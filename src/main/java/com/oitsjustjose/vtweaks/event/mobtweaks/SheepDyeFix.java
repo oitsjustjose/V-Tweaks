@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,7 +19,7 @@ public class SheepDyeFix
 	public void registerEvent(EntityInteract event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableSheepDyeFix)
+		if (!Config.getInstance().enableSheepDyeFix)
 			return;
 		// Checks that the entity is a sheep
 		if (event.getTarget() == null || !(event.getTarget() instanceof EntitySheep))
@@ -70,7 +71,7 @@ public class SheepDyeFix
 	private boolean ignore(ItemStack itemstack)
 	{
 		Item stackItem = itemstack.getItem();
-		for (String s : VTweaks.config.sheepDyeBlacklist)
+		for (String s : Config.getInstance().sheepDyeBlacklist)
 			if (stackItem.getClass().getName().contains(s))
 				return true;
 

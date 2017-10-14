@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -15,7 +16,7 @@ public class DeathPoint
 	public void registerTweak(LivingDeathEvent event)
 	{
 		// Check if feature is enabled
-		if (!VTweaks.config.enableDeathPoint)
+		if (!Config.getInstance().enableDeathPoint)
 			return;
 		// Are you human?
 		if (!(event.getEntity() instanceof EntityPlayer))

@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 import java.util.Iterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.block.Block;
@@ -21,7 +22,7 @@ public class LossPrevention
 	public void registerLavaTweak(HarvestDropsEvent event)
 	{
 		// Checks to see if feature is enabled
-		if (!VTweaks.config.enableLavaLossPrevention)
+		if (!Config.getInstance().enableLavaLossPrevention)
 			return;
 		// Confirming that player exists
 		if (event.getHarvester() == null || event.getState() == null || event.getState().getBlock() == null)
@@ -51,7 +52,7 @@ public class LossPrevention
 	public void registerCactusTweak(HarvestDropsEvent event)
 	{
 		// Checks to see if feature is enabled
-		if (!VTweaks.config.enableCactusLossPrevention)
+		if (!Config.getInstance().enableCactusLossPrevention)
 			return;
 		// Confirming that player exists
 		if (event.getHarvester() == null || event.getState() == null || event.getState().getBlock() == null)
@@ -88,7 +89,7 @@ public class LossPrevention
 	private boolean shouldPreventLoss(IBlockState state)
 	{
 		ItemStack compare = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
-		for (ItemStack i : VTweaks.config.lavaLossBlockList)
+		for (ItemStack i : Config.getInstance().lavaLossBlockList)
 			if (i.getItem() == compare.getItem() && i.getMetadata() == compare.getMetadata())
 				return true;
 

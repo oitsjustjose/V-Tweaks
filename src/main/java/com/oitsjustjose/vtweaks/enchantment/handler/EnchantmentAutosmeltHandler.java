@@ -4,6 +4,8 @@ import java.util.ListIterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -24,7 +26,7 @@ public class EnchantmentAutosmeltHandler
 	public void register(HarvestDropsEvent event)
 	{
 		// Check if enchantment is disabled
-		if (!VTweaks.config.enableEnchAutosmelt)
+		if (!Config.getInstance().enableEnchAutosmelt)
 			return;
 		// Check if the player is null
 		if (event.getHarvester() == null || event.getHarvester().getHeldItemMainhand() == null)
@@ -34,7 +36,7 @@ public class EnchantmentAutosmeltHandler
 		EntityPlayer player = event.getHarvester();
 		World world = event.getWorld();
 		ItemStack heldItem = player.getHeldItemMainhand();
-		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(VTweaks.enchantments.autosmelt, heldItem);
+		int autosmeltLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().autosmelt, heldItem);
 
 		if (autosmeltLevel > 0)
 		{
@@ -95,7 +97,7 @@ public class EnchantmentAutosmeltHandler
 
 	boolean shouldFortuneSmelt(ItemStack stack)
 	{
-		if (!VTweaks.config.enableAutosmeltFortuneInteraction)
+		if (!Config.getInstance().enableAutosmeltFortuneInteraction)
 			return false;
 
 		if (stack.getItem() instanceof ItemBlock)
@@ -104,7 +106,7 @@ public class EnchantmentAutosmeltHandler
 			if (block.getRegistryName().toString().toLowerCase().contains("ore"))
 				return true;
 			else
-				for (String s : VTweaks.config.autosmeltOverrides)
+				for (String s : Config.getInstance().autosmeltOverrides)
 					if (block.getRegistryName().toString().toLowerCase().contains(s))
 						return true;
 		}

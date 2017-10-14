@@ -1,10 +1,7 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import java.util.Iterator;
-
-import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
@@ -22,13 +19,15 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Iterator;
+
 public class CropHelper
 {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void registerVanilla(RightClickBlock event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableCropHelper)
+		if (!Config.getInstance().enableCropHelper)
 			return;
 
 		if (event.getWorld().getBlockState(event.getPos()) == null || event.getEntityPlayer() == null || event.getHand() != EnumHand.MAIN_HAND)
@@ -38,7 +37,7 @@ public class CropHelper
 		Block harvestable = state.getBlock();
 
 		// Checks the class blacklist from the config
-		for (String blackList : VTweaks.config.cropHelperBlacklist)
+		for (String blackList : Config.getInstance().cropHelperBlacklist)
 			if (harvestable.getClass().getName().toLowerCase().contains(blackList.toLowerCase()))
 				return;
 

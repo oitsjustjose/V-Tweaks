@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +24,7 @@ public class BonemealTweaks
 	public void registerTweak(RightClickBlock event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableBonemealTweaks)
+		if (!Config.getInstance().enableBonemealTweaks)
 			return;
 
 		if (event.getWorld().getBlockState(event.getPos()) == null)

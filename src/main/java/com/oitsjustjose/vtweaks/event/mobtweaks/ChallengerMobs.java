@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Config;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.Entity;
@@ -28,12 +29,12 @@ public class ChallengerMobs
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void registerEvent(LivingSpawnEvent event)
 	{
-		if (!VTweaks.config.enableChallengerMobs)
+		if (!Config.getInstance().enableChallengerMobs)
 			return;
 
 		if (!event.getWorld().isRemote)
 		{
-			if (event.getWorld().rand.nextInt(VTweaks.config.challengerMobRarity) == 0)
+			if (event.getWorld().rand.nextInt(Config.getInstance().challengerMobRarity) == 0)
 			{
 				final ChallengerMobType VARIANT = ChallengerMobType.values()[event.getWorld().rand.nextInt(8)];
 
@@ -77,7 +78,7 @@ public class ChallengerMobs
 	@SubscribeEvent
 	public void registerEvent(LivingDropsEvent event)
 	{
-		if (!VTweaks.config.enableChallengerMobs || VTweaks.config.challengerMobLoot.length <= 0)
+		if (!Config.getInstance().enableChallengerMobs || Config.getInstance().challengerMobLoot.length <= 0)
 			return;
 
 		if (event.getEntity() == null || !(event.getEntity() instanceof EntityMob) || !isChallengerMob((EntityMob) event.getEntity()))
@@ -91,7 +92,7 @@ public class ChallengerMobs
 	
 	private boolean isBlackListed(Entity entity)
 	{
-		for (String s : VTweaks.config.challengerMobEntityBlacklist)
+		for (String s : Config.getInstance().challengerMobEntityBlacklist)
 			if (entity.getClass().getName().toLowerCase().contains(s.toLowerCase()))
 				return true;
 		return false;
@@ -125,8 +126,8 @@ public class ChallengerMobs
 
 	private EntityItem getItem(World world, BlockPos pos)
 	{
-		int RNG = world.rand.nextInt(VTweaks.config.challengerLootTable.size());
-		return HelperFunctions.createItemEntity(world, pos, VTweaks.config.challengerLootTable.get(RNG));
+		int RNG = world.rand.nextInt(Config.getInstance().challengerLootTable.size());
+		return HelperFunctions.createItemEntity(world, pos, Config.getInstance().challengerLootTable.get(RNG));
 	}
 
 	private boolean isChallengerMob(EntityMob entity)

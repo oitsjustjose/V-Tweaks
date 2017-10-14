@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.util.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockSkull;
@@ -19,7 +20,7 @@ public class ToolEffTweaks
 	public void registerTweak(BreakSpeed event)
 	{
 		// Checks if feature is enabled
-		if (!VTweaks.config.enableToolEffTweaks)
+		if (!Config.getInstance().enableToolEffTweaks)
 			return;
 		// Checks that neither the block nor the held item are null
 		if (event.getState().getBlock() == null || event.getEntityPlayer().getHeldItemMainhand().isEmpty())

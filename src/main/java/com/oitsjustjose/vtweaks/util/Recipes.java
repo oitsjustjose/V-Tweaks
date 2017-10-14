@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.util;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ public class Recipes
 	@SubscribeEvent
 	public void registerHorseArmorRecipes(AnvilUpdateEvent event)
 	{
-		if (!VTweaks.config.enableRecipeHorseArmor || event.getLeft().isEmpty() || event.getRight().isEmpty())
+		if (!Config.getInstance().enableRecipeHorseArmor || event.getLeft().isEmpty() || event.getRight().isEmpty())
 			return;
 
 		Item left = event.getLeft().getItem();
@@ -43,9 +44,9 @@ public class Recipes
 	@SubscribeEvent
 	public void registerBookRecipes(AnvilUpdateEvent event)
 	{
-		if (VTweaks.config.enableEnchHypermending)
+		if (Config.getInstance().enableEnchHypermending)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.hypermending);
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().hypermending);
 
 			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
@@ -54,7 +55,7 @@ public class Recipes
 			{
 				if (event.getRight().getCount() == 1)
 				{
-					event.setCost(VTweaks.config.hypermendingXPCost);
+					event.setCost(Config.getInstance().hypermendingXPCost);
 					event.setOutput(book);
 				}
 				else
@@ -62,9 +63,9 @@ public class Recipes
 			}
 		}
 
-		if (VTweaks.config.enableEnchAutosmelt)
+		if (Config.getInstance().enableEnchAutosmelt)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.autosmelt);
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().autosmelt);
 
 			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
@@ -72,16 +73,16 @@ public class Recipes
 			if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == Items.LAVA_BUCKET)
 				if (event.getRight().getCount() == 1)
 				{
-					event.setCost(VTweaks.config.autosmeltXPCost);
+					event.setCost(Config.getInstance().autosmeltXPCost);
 					event.setOutput(book);
 				}
 				else
 					event.setOutput(ItemStack.EMPTY);
 		}
 
-		if (VTweaks.config.enableEnchStepboost)
+		if (Config.getInstance().enableEnchStepboost)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.stepboost);
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().stepboost);
 
 			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
@@ -91,7 +92,7 @@ public class Recipes
 				Block inputBlock = Block.getBlockFromItem(event.getRight().getItem());
 				if (inputBlock.getRegistryName().toString().contains("stair") && event.getRight().getCount() == 16)
 				{
-					event.setCost(VTweaks.config.stepboostXPCost);
+					event.setCost(Config.getInstance().stepboostXPCost);
 					event.setOutput(book);
 				}
 				else
@@ -99,9 +100,9 @@ public class Recipes
 			}
 		}
 
-		if (VTweaks.config.enableEnchLumbering)
+		if (Config.getInstance().enableEnchLumbering)
 		{
-			ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.enchantments.lumbering);
+			ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().lumbering);
 
 			if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 				return;
@@ -112,7 +113,7 @@ public class Recipes
 			{
 				if (!damaged)
 				{
-					event.setCost(VTweaks.config.lumberingXPCost);
+					event.setCost(Config.getInstance().lumberingXPCost);
 					event.setOutput(book);
 				}
 				else

@@ -24,11 +24,11 @@ public class ConfigGUI extends GuiConfig
 	{
 		ArrayList<IConfigElement> list = new ArrayList<IConfigElement>();
 
-		list.add(new ConfigElement(VTweaks.config.MobTweaks));
-		list.add(new ConfigElement(VTweaks.config.Enchantments));
-		list.add(new ConfigElement(VTweaks.config.BlockTweaks));
-		list.add(new ConfigElement(VTweaks.config.ItemTweaks));
-		list.add(new ConfigElement(VTweaks.config.MiscFeatures));
+		list.add(new ConfigElement(Config.getInstance().MobTweaks));
+		list.add(new ConfigElement(Config.getInstance().Enchantments));
+		list.add(new ConfigElement(Config.getInstance().BlockTweaks));
+		list.add(new ConfigElement(Config.getInstance().ItemTweaks));
+		list.add(new ConfigElement(Config.getInstance().MiscFeatures));
 
 		return list;
 	}
