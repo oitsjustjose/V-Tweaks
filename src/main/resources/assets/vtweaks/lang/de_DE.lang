@@ -1,7 +1,9 @@
 #Enchantment Names
-enchantment.VTweaks:hypermending=§cH§6y§ep§ae§2r§br§3e§9p§1a§5r§da§ct§6u§er
-enchantment.VTweaks:autosmelt=§4Auto-Schmelzen
-enchantment.VTweaks:stepboost=§aSchritt-Boost
-enchantment.VTweaks:lumbering=Holzfällen
+enchantment.vtweaks:hypermending=§cH§6y§ep§ae§2r§br§3e§9p§1a§5r§da§ct§6u§er
+enchantment.vtweaks:autosmelt=§4Auto-Schmelzen
+enchantment.vtweaks:stepboost=§aSchrittschub
+enchantment.vtweaks:lumbering=Holzfällen
+enchantment.vtweaks:imperishable=Widerstandsfähig
+enchantment.vtweaks:multifaceted=Vielseitig
 
-tile.bed.notEnoughSleep=Nicht genügend Spieler schlafend!
+recipe.multifaceted.name=Wird hergestellt, wenn sich eine unbeschädigte §b§nDiamantspitzhacke§r, §b§nDiamantschaufel§r, und §b§nBuch & Feder§r auf dem Boden innerhalb des Radius' einer §4Explosion§r befindet.
