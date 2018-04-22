@@ -1,9 +1,3 @@
 #Enchantment Names
-enchantment.vtweaks:hypermending=§cH§6y§ep§ae§2r§bm§3e§9n§1d§5i§dn§cg§6
-enchantment.vtweaks:autosmelt=§4Auto-Smelt
-enchantment.vtweaks:stepboost=Step Boost
 enchantment.vtweaks:lumbering=Lumbering
-enchantment.vtweaks:imperishable=Imperishable
 enchantment.vtweaks:multifaceted=Multifaceted
-
-recipe.multifaceted.name=Created by throwing an undamaged §b§nDiamond Pickaxe§r, §b§nDiamond Shovel§r, and §b§nBook & Quill§r on the ground within the radius of an §4explosion§r.
