@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.event.itemtweaks;
 
 import com.mojang.authlib.GameProfile;
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.util.Config;
+import com.oitsjustjose.vtweaks.util.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -22,70 +22,64 @@ import java.util.UUID;
 public class DropTweaks
 {
 
-	@SubscribeEvent
-	public void registerTweak(ItemExpireEvent event)
-	{
-		if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty())
-			return;
+    @SubscribeEvent
+    public void registerTweak(ItemExpireEvent event)
+    {
+        if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty())
+        {
+            return;
+        }
 
-		EntityItem entItem = event.getEntityItem();
-		World world = entItem.getEntityWorld();
-		ItemStack stack = entItem.getItem();
+        EntityItem entItem = event.getEntityItem();
+        World world = entItem.getEntityWorld();
+        ItemStack stack = entItem.getItem();
 
-		// Handles egg hatching; configurable chance.
-		if (Config.getInstance().enableDropTweaksEggHatching && stack.getItem() == Items.EGG)
-		{
-			if (world.rand.nextInt(Config.getInstance().dropTweaksEggHatchingChance) == 0)
-			{
-				if (!world.isRemote)
-				{
-					EntityChicken chick = new EntityChicken(world);
-					chick.setGrowingAge(-24000);
-					chick.setLocationAndAngles(entItem.posX, entItem.posY, entItem.posZ, entItem.rotationYaw, 0.0F);
-					world.spawnEntity(chick);
-				}
-			}
-		}
-		// Handles sapling replanting; 100% chance
-		else if (Config.getInstance().enableDropTweaksSaplings && Block.getBlockFromItem(stack.getItem()) != null && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
-		{
-			BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
-			// Checks to see if where the sapling *will* be is air
-			if (world.isAirBlock(saplingPos))
-			{
-				FakePlayer fake = new FakePlayer(world.getMinecraftServer().getWorld((world.provider.getDimension())), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
-				fake.setHeldItem(EnumHand.MAIN_HAND, stack);
-				stack.onItemUse(fake, world, saplingPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
-			}
-		}
-		// Only gets run if the config is set to make all items never despawn.
-		else if (Config.getInstance().enableDropTweaksDespawn && Config.getInstance().dropTweaksNewDespawnTime == -1)
-		{
-			event.setCanceled(true);
-		}
-		// Only gets run if the config is set to make all items never despawn.
-		else if (Config.getInstance().enableDropTweaksDespawn && Config.getInstance().dropTweaksNewDespawnTime == -1)
-		{
-			event.setCanceled(true);
-		}
-	}
+        // Handles egg hatching; configurable chance.
+        if (ModConfig.itemTweaks.enableEggHatching && stack.getItem() == Items.EGG)
+        {
+            if (world.rand.nextInt(ModConfig.itemTweaks.eggHatchingChance) == 0)
+            {
+                if (!world.isRemote)
+                {
+                    EntityChicken chick = new EntityChicken(world);
+                    chick.setGrowingAge(-24000);
+                    chick.setLocationAndAngles(entItem.posX, entItem.posY, entItem.posZ, entItem.rotationYaw, 0.0F);
+                    world.spawnEntity(chick);
+                }
+            }
+        }
+        // Handles sapling replanting; 100% chance
+        else if (ModConfig.itemTweaks.enableSaplingPlanting && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
+        {
+            BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
+            // Checks to see if where the sapling *will* be is air
+            if (world.isAirBlock(saplingPos))
+            {
+                FakePlayer fake = new FakePlayer(world.getMinecraftServer().getWorld((world.provider.getDimension())), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
+                fake.setHeldItem(EnumHand.MAIN_HAND, stack);
+                stack.onItemUse(fake, world, saplingPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
+            }
+        }
+    }
 
-	@SubscribeEvent
-	public void registerTweak(ItemTossEvent event)
-	{
-		// Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
-		if (!Config.getInstance().enableDropTweaksDespawn || Config.getInstance().dropTweaksNewDespawnTime == -1 || event.getEntityItem() == null)
-			return;
+    @SubscribeEvent
+    public void registerTweak(ItemTossEvent event)
+    {
+        // Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
+        if (ModConfig.itemTweaks.despawnTimeSetting == -1 || event.getEntityItem() == null)
+        {
+            return;
+        }
 
-		EntityItem entItem = event.getEntityItem();
-		entItem.lifespan = Config.getInstance().dropTweaksNewDespawnTime;
-	}
+        EntityItem entItem = event.getEntityItem();
+        entItem.lifespan = ModConfig.itemTweaks.despawnTimeSetting;
+    }
 
-	private BlockPos fromDouble(double xIn, double yIn, double zIn)
-	{
-		int x = (xIn % 1) >= .5 ? (int) Math.ceil(xIn) : (int) Math.floor(xIn);
-		int y = (yIn % 1) >= .5 ? (int) Math.ceil(yIn) : (int) Math.floor(yIn);
-		int z = (zIn % 1) >= .5 ? (int) Math.ceil(zIn) : (int) Math.floor(zIn);
-		return new BlockPos(x, y, z);
-	}
+    private BlockPos fromDouble(double xIn, double yIn, double zIn)
+    {
+        int x = (xIn % 1) >= .5 ? (int) Math.ceil(xIn) : (int) Math.floor(xIn);
+        int y = (yIn % 1) >= .5 ? (int) Math.ceil(yIn) : (int) Math.floor(yIn);
+        int z = (zIn % 1) >= .5 ? (int) Math.ceil(zIn) : (int) Math.floor(zIn);
+        return new BlockPos(x, y, z);
+    }
 }
