@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks;
 
+import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
@@ -42,7 +43,11 @@ public class VTweaks
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        MinecraftForge.EVENT_BUS.register(new ModConfig());
+        MinecraftForge.EVENT_BUS.register(new ModConfig.EventHandler());
+
+        // Enchantments
+        MinecraftForge.EVENT_BUS.register(Enchantments.getInstance());
+
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
         MinecraftForge.EVENT_BUS.register(new MobDropBuffs());

@@ -20,7 +20,6 @@ public class Enchantments
     private Enchantments()
     {
         init();
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static Enchantments getInstance()
@@ -34,7 +33,6 @@ public class Enchantments
 
     private void init()
     {
-
         if (ModConfig.enchantments.enableLumbering)
         {
             lumbering = new EnchantmentLumbering();
