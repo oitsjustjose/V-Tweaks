@@ -6,11 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
 @Config(modid = VTweaks.MODID)
+@Mod.EventBusSubscriber
 public class ModConfig
 {
     @Config.Name("Enchantments")
@@ -31,9 +33,11 @@ public class ModConfig
     public static class Enchantments
     {
         @Config.Name("Enable Lumbering")
+        @Config.RequiresMcRestart
         public boolean enableLumbering = true;
 
         @Config.Name("Enable Imperishable")
+        @Config.RequiresMcRestart
         public boolean enableImperishable = true;
 
         @Config.Name("Enable Feather Falling Tweak")
@@ -69,6 +73,9 @@ public class ModConfig
         @Config.Name("Challenger Mobs")
         public ChallengerMobs challengerMobs = new ChallengerMobs();
 
+        @Config.Name("Peaceful Surface")
+        @Config.Comment("Prevents enemies on the surface, except for nights of a new moon")
+        public boolean enablePeacefulSurface = true;
 
         public static class DropBuffs
         {
@@ -205,15 +212,18 @@ public class ModConfig
 
     }
 
-
-    @SubscribeEvent
-    public void onChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    @Mod.EventBusSubscriber(modid = VTweaks.MODID)
+    public static class EventHandler
     {
-        System.out.println("Changed");
-        if (event.getModID().equalsIgnoreCase(VTweaks.MODID))
+        @SubscribeEvent
+        public void onChanged(ConfigChangedEvent.OnConfigChangedEvent event)
         {
-            ConfigManager.sync(VTweaks.MODID, Config.Type.INSTANCE);
-            ConfigParser.parseItems();
+            System.out.println("Changed");
+            if (event.getModID().equalsIgnoreCase(VTweaks.MODID))
+            {
+                ConfigManager.sync(VTweaks.MODID, Config.Type.INSTANCE);
+                ConfigParser.parseItems();
+            }
         }
     }
 
