@@ -1,3 +1,19 @@
+2.0.0:
+
+**This is the "Cleanup" update; it removes a lot of features that were weird, useless, or just didn't flow right with MC or Modded MC**
+**You'll need to re-generate your config file**
+
+* Removed: Multifaceted, Hypermending, Autosmelt and Stepboost enchantments
+* Removed: Loss prevention features (the ones where obisidian / cactus / others would just *pop* into your inventory)
+* Removed: Stack Tweaks
+* Removed: Leaf Eater
+* Removed: Glitching Item Fixes
+* Removed: Mob Killer (For pigmen, bats, overworld withers)
+* Removed: Extra smeltables
+* Removed: Torch Helper
+* Removed: Ping Damage Protection
+* Added: Peaceful Surface: prevents enemies from spawning on the surface, except for nights of a new moon
+
 1.4.11.4:
 * **The 1.10.x branch is now only under a "as-needed" updating basis; only widespread game-crashing bugs will be fixed**
 * Fixed: Loss-prevented blocks not being picked up by fake-player type breaking blocks.
