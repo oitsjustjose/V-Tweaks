@@ -15,7 +15,7 @@ public class FeatherFallingTweak
     public void registerTweak(LivingHurtEvent event)
     {
         // Check if enchantment is disabled
-        if (ModConfig.enchantments.enableFeatherFallTweak)
+        if (!ModConfig.enchantments.enableFeatherFallTweak)
         {
             return;
         }
