@@ -226,7 +226,6 @@ public class ModConfig
         @SubscribeEvent
         public void onChanged(ConfigChangedEvent.OnConfigChangedEvent event)
         {
-            System.out.println("Changed");
             if (event.getModID().equalsIgnoreCase(VTweaks.MODID))
             {
                 ConfigManager.sync(VTweaks.MODID, Config.Type.INSTANCE);
