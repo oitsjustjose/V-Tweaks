@@ -32,7 +32,7 @@ public class GuideNotifier
             if (!persistTag.getBoolean(SHOWN_LINK) && !entity.world.isRemote)
             {
                 Style style = new Style();
-                String wikiURL = "https://oitsjustjose.github.io/Mods/vtweaks.html";
+                String wikiURL = "http://oitsjustjose.com/Mods/V-Tweaks/";
                 style.setColor(TextFormatting.BLUE);
                 style.setBold(true);
                 style.setUnderlined(true);

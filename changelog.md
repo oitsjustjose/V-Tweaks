@@ -12,6 +12,7 @@
 * Removed: Extra smeltables
 * Removed: Torch Helper
 * Removed: Ping Damage Protection
+* Changed: Challenger Mobs now only drop *one* item - Not sure what ever convinced me they should drop two...
 * Added: Peaceful Surface: prevents enemies from spawning on the surface, except for nights of a new moon
 
 1.4.11.4:

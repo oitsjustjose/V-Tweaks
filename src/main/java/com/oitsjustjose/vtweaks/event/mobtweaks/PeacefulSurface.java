@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.util.ModConfig;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,13 +15,11 @@ public class PeacefulSurface
         {
             return;
         }
-        
-        Entity toKill = event.getEntity();
-        if (toKill == null)
+        if (event.getEntity() == null || !(event.getEntity() instanceof EntityMob))
         {
             return;
         }
-        if (event.getWorld().getMoonPhase() != 4 && toKill.getPosition().getY() >= event.getWorld().getTopSolidOrLiquidBlock(toKill.getPosition()).getY())
+        if (event.getWorld().getMoonPhase() != 4 && event.getEntity().getPosition().getY() >= event.getWorld().getTopSolidOrLiquidBlock(event.getEntity().getPosition()).getY())
         {
             event.setResult(Event.Result.DENY);
         }

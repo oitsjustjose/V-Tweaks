@@ -34,10 +34,12 @@ public class ModConfig
     {
         @Config.Name("Enable Lumbering")
         @Config.RequiresMcRestart
+        @Config.Comment("Enable the Lumbering enchantment for Axes")
         public boolean enableLumbering = true;
 
         @Config.Name("Enable Imperishable")
         @Config.RequiresMcRestart
+        @Config.Comment("Enable the Imperishable enchantment for any breakable item")
         public boolean enableImperishable = true;
 
         @Config.Name("Enable Feather Falling Tweak")
@@ -46,6 +48,7 @@ public class ModConfig
 
         @Config.Name("Lumbering Recipe XP Cost")
         @Config.RangeInt(min = 1, max = 40)
+        @Config.Comment("Number of levels Lumbering costs to create in an anvil")
         public int lumberingCost = 16;
     }
 
@@ -56,7 +59,6 @@ public class ModConfig
         public boolean enablePetArmory = true;
 
         @Config.Name("Drop Buffs")
-        @Config.Comment("Additional drops to various mobs")
         public DropBuffs dropBuffs = new DropBuffs();
 
         @Config.Name("Enable \"glue\" drops")
@@ -147,7 +149,8 @@ public class ModConfig
         @Config.Comment("Allows more plants to be bonemealed")
         public boolean enableBonemealTweak = true;
 
-        @Config.Name("Enable Cake Drop if uneaten")
+        @Config.Name("Enable Cake Tweak")
+        @Config.Comment("Allows you to break cake if it's uneaten!")
         public boolean enableCakeDrop = true;
 
         @Config.Name("Enable Effective Tool Tweaks")
@@ -177,6 +180,7 @@ public class ModConfig
         public int eggHatchingChance = 256;
 
         @Config.Name("Enable Sapling Self-Planting")
+        @Config.Comment("Instead of de-spawning, saplings will attempt to plant themselves")
         public boolean enableSaplingPlanting = true;
 
         @Config.Name("Adjust Item Despawn Time (in ticks: 20 ticks in a second)")
@@ -189,12 +193,15 @@ public class ModConfig
     public static class Misc
     {
         @Config.Name("Enable Horse Armor Recipes")
+        @Config.Comment("Allows you to craft horse armor in an anvil")
         public boolean enableHorseArmorRecipes = true;
 
         @Config.Name("Disable Lightning In Storms")
+        @Config.Comment("Prevents glitched lighting as a result of lightning - plus other side-effects")
         public boolean enableStormTweak = true;
 
         @Config.Name("Enable Death Point Message")
+        @Config.Comment("Prints your death point in chat (compatible with JourneyMap)")
         public boolean enableDeathPoint = true;
 
         @Config.Name("Food Tooltips")
@@ -208,6 +215,7 @@ public class ModConfig
         public int durabilityTooltipSetting = 2;
 
         @Config.Name("Enable Welcome Message")
+        @Config.Comment("Shows a welcome message in chat when joining a world for the first time")
         public boolean enableGuideNotifier = true;
 
     }
