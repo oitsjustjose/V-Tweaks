@@ -72,15 +72,15 @@ public class ToolTips
 
     private String getHungerString(int hunger)
     {
-        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger:");
+        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger: ");
 
         for (int i = 0; i < (hunger / 2); i++)
         {
-            ret.append(TextFormatting.DARK_RED).append("\u25A0");
+            ret.append(gradient[hunger / 2]).append("\u2588");
         }
         if (hunger % 2 != 0)
         {
-            ret.append(TextFormatting.RED).append("\u25A0");
+            ret.append(gradient[hunger / 2]).append("\u258C");
         }
 
         return ret.toString();
@@ -88,7 +88,18 @@ public class ToolTips
 
     private String getSaturationString(float saturation)
     {
-        return "Saturation: " + gradient[(int) saturation - 1];
+        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Sat: ");
+
+        for (int i = 0; i < (saturation / 2); i++)
+        {
+            ret.append(gradient[(int) (saturation / 2)]).append("\u2588");
+        }
+        if (saturation % 2 != 0)
+        {
+            ret.append(gradient[(int) (saturation / 2)]).append("\u258C");
+        }
+
+        return ret.toString();
     }
 
     private String getDurabilityString(ItemStack itemstack)
@@ -96,9 +107,7 @@ public class ToolTips
         StringBuilder ret = new StringBuilder("Durability: ");
         int max = itemstack.getMaxDamage() + 1;
         int damage = itemstack.getItemDamage();
-        int index = (int) (1 - ((float) damage / (float) max)) * 10;
-        TextFormatting color = gradient[index];
-
-        return ret.append(color).append(max - damage).append("/").append(max).append(TextFormatting.RESET).toString();
+        int index = 9 - (int) (((float) damage / (float) max) * 10);
+        return ret.append(gradient[index]).append(max - damage).append("/").append(max).append(TextFormatting.RESET).toString();
     }
 }
