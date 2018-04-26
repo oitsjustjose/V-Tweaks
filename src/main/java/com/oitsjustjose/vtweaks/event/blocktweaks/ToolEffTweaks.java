@@ -18,7 +18,7 @@ public class ToolEffTweaks
     public void registerTweak(BreakSpeed event)
     {
         // Checks if feature is enabled
-        if (ModConfig.blockTweaks.enableToolEffTweaks)
+        if (!ModConfig.blockTweaks.enableToolEffTweaks)
         {
             return;
         }
