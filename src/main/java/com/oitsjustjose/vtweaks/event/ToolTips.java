@@ -12,8 +12,6 @@ import org.lwjgl.input.Keyboard;
 
 public class ToolTips
 {
-    private TextFormatting[] gradient = new TextFormatting[]{TextFormatting.DARK_RED, TextFormatting.RED, TextFormatting.GOLD, TextFormatting.YELLOW, TextFormatting.GREEN, TextFormatting.DARK_GREEN, TextFormatting.DARK_AQUA, TextFormatting.BLUE, TextFormatting.DARK_PURPLE, TextFormatting.LIGHT_PURPLE};
-
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void registerTweak(ItemTooltipEvent event)
@@ -72,42 +70,105 @@ public class ToolTips
 
     private String getHungerString(int hunger)
     {
-        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger: ");
+        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger:");
 
         for (int i = 0; i < (hunger / 2); i++)
         {
-            ret.append(gradient[hunger / 2]).append("\u2588");
+            ret.append(TextFormatting.DARK_RED).append("\u2588");
         }
         if (hunger % 2 != 0)
         {
-            ret.append(gradient[hunger / 2]).append("\u258C");
+            ret.append(TextFormatting.DARK_RED).append("\u258C");
         }
-
         return ret.toString();
     }
 
     private String getSaturationString(float saturation)
     {
-        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Sat: ");
-
-        for (int i = 0; i < (saturation / 2); i++)
+        if (saturation <= 1)
         {
-            ret.append(gradient[(int) (saturation / 2)]).append("\u2588");
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_RED + "\u2588";
         }
-        if (saturation % 2 != 0)
+        if (saturation <= 2)
         {
-            ret.append(gradient[(int) (saturation / 2)]).append("\u258C");
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.RED + "\u2588";
         }
-
-        return ret.toString();
+        if (saturation <= 3)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.GOLD + "\u2588";
+        }
+        if (saturation <= 4)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.YELLOW + "\u2588";
+        }
+        if (saturation <= 5)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.GREEN + "\u2588";
+        }
+        if (saturation <= 6)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_GREEN + "\u2588";
+        }
+        if (saturation <= 7)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_AQUA + "\u2588";
+        }
+        if (saturation <= 8)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.BLUE + "\u2588";
+        }
+        if (saturation <= 9)
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_PURPLE + "\u2588";
+        }
+        else
+        {
+            return TextFormatting.GRAY + "Saturation:" + TextFormatting.LIGHT_PURPLE + "\u2588";
+        }
     }
 
     private String getDurabilityString(ItemStack itemstack)
     {
-        StringBuilder ret = new StringBuilder("Durability: ");
+        String ret = "Durability: ";
         int max = itemstack.getMaxDamage() + 1;
         int damage = itemstack.getItemDamage();
-        int index = 9 - (int) (((float) damage / (float) max) * 10);
-        return ret.append(gradient[index]).append(max - damage).append("/").append(max).append(TextFormatting.RESET).toString();
+        float percentage = 1 - ((float) damage / (float) max);
+        if (percentage >= .9)
+        {
+            return ret + TextFormatting.LIGHT_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .8)
+        {
+            return ret + TextFormatting.DARK_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .7)
+        {
+            return ret + TextFormatting.BLUE + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .6)
+        {
+            return ret + TextFormatting.DARK_AQUA + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .5)
+        {
+            return ret + TextFormatting.DARK_GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .4)
+        {
+            return ret + TextFormatting.GREEN + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .3)
+        {
+            return ret + TextFormatting.YELLOW + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .2)
+        {
+            return ret + TextFormatting.GOLD + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        if (percentage >= .1)
+        {
+            return ret + TextFormatting.RED + (max - damage) + " / " + max + TextFormatting.RESET;
+        }
+        return ret + TextFormatting.DARK_RED + (max - damage) + " / " + max + TextFormatting.RESET;
     }
 }
