@@ -40,12 +40,12 @@ public class ToolTips
             if (ModConfig.misc.foodTooltipSetting == 1)
             {
                 event.getToolTip().add(getHungerString(hunger));
-                event.getToolTip().add(getSaturationString(saturation));
+                event.getToolTip().add(getSaturationString((int) saturation));
             }
             else if (ModConfig.misc.foodTooltipSetting == 2 && shift)
             {
                 event.getToolTip().add(getHungerString(hunger));
-                event.getToolTip().add(getSaturationString(saturation));
+                event.getToolTip().add(getSaturationString((int) saturation));
             }
         }
 
@@ -83,48 +83,18 @@ public class ToolTips
         return ret.toString();
     }
 
-    private String getSaturationString(float saturation)
+    private String getSaturationString(int saturation)
     {
-        if (saturation <= 1)
+        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Sat:");
+        for (int i = 0; i < saturation / 2; i++)
         {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_RED + "\u2588";
+            ret.append(TextFormatting.RED).append("\u2588");
         }
-        if (saturation <= 2)
+        if (saturation % 2 != 0)
         {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.RED + "\u2588";
+            ret.append(TextFormatting.RED).append("\u258C");
         }
-        if (saturation <= 3)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.GOLD + "\u2588";
-        }
-        if (saturation <= 4)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.YELLOW + "\u2588";
-        }
-        if (saturation <= 5)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.GREEN + "\u2588";
-        }
-        if (saturation <= 6)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_GREEN + "\u2588";
-        }
-        if (saturation <= 7)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_AQUA + "\u2588";
-        }
-        if (saturation <= 8)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.BLUE + "\u2588";
-        }
-        if (saturation <= 9)
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.DARK_PURPLE + "\u2588";
-        }
-        else
-        {
-            return TextFormatting.GRAY + "Saturation:" + TextFormatting.LIGHT_PURPLE + "\u2588";
-        }
+        return ret.toString();
     }
 
     private String getDurabilityString(ItemStack itemstack)
