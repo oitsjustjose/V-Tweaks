@@ -1,3 +1,6 @@
+2.0.0b:
+* Fix crash on dedicated server with Peaceful Surface feature.
+
 2.0.0:
 
 **This is the "Cleanup" update; it removes a lot of features that were weird, useless, or just didn't flow right with MC or Modded MC**
