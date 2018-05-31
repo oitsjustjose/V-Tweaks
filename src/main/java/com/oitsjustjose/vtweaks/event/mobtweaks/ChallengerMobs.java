@@ -22,6 +22,8 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Objects;
+
 public class ChallengerMobs
 {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -56,7 +58,7 @@ public class ChallengerMobs
                     // Specifically keeps creepers from spawning with fire resistance to prevent funny business
                     if (!(monster instanceof EntityCreeper))
                     {
-                        monster.addPotionEffect(new PotionEffect(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance")), Integer.MAX_VALUE, 0, true, true));
+                        monster.addPotionEffect(new PotionEffect(Objects.requireNonNull(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance"))), Integer.MAX_VALUE, 0, true, true));
                     }
                     // Every challenger mob will have a main hand item. Done before any checks.
                     monster.setHeldItem(EnumHand.MAIN_HAND, VARIANT.getEquipment());

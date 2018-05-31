@@ -30,6 +30,12 @@ public class ModConfig
     @Config.Name("Miscellaneous")
     public static Misc misc = new Misc();
 
+    public static void setChallengerLootTable(ArrayList<ItemStack> newList)
+    {
+        MobTweaks.ChallengerMobs.challengerLootTable = new ArrayList<>();
+        MobTweaks.ChallengerMobs.challengerLootTable.addAll(newList);
+    }
+
     public static class Enchantments
     {
         @Config.Name("Enable Lumbering")
@@ -232,11 +238,5 @@ public class ModConfig
                 ConfigParser.parseItems();
             }
         }
-    }
-
-    public static void setChallengerLootTable(ArrayList<ItemStack> newList)
-    {
-        MobTweaks.ChallengerMobs.challengerLootTable = new ArrayList<>();
-        MobTweaks.ChallengerMobs.challengerLootTable.addAll(newList);
     }
 }

@@ -1,3 +1,6 @@
+2.0.0c:
+* Peaceful Surface feature now does a better guesstimate at what's the 'surface' of a world 
+
 2.0.0b:
 * Fix crash on dedicated server with Peaceful Surface feature.
 
