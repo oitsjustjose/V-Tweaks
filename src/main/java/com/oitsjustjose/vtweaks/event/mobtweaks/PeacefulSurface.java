@@ -19,7 +19,7 @@ public class PeacefulSurface
         {
             return;
         }
-        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4 && event.getEntity().getPosition().getY() + 16 >= event.getWorld().getTopSolidOrLiquidBlock(event.getEntity().getPosition()).getY())
+        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4 && event.getEntity().getPosition().getY() >= event.getWorld().provider.getAverageGroundLevel())
         {
             event.setResult(Event.Result.DENY);
         }
