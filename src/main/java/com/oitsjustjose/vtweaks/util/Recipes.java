@@ -4,8 +4,14 @@ import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.Objects;
 
 public class Recipes
 {
@@ -40,6 +46,7 @@ public class Recipes
     @SubscribeEvent
     public void registerBookRecipes(AnvilUpdateEvent event)
     {
+
         if (ModConfig.enchantments.enableLumbering)
         {
             ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().lumbering);
@@ -57,7 +64,29 @@ public class Recipes
                     event.setOutput(book);
                 }
                 else
+                {
                     event.setOutput(ItemStack.EMPTY);
+                }
+            }
+            else if (Loader.isModLoaded("toolbox"))
+            {
+                Item toolboxAxe = Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation("toolbox", "axe")));
+                if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == toolboxAxe)
+                {
+                    if (event.getRight().hasTagCompound() && event.getRight().getTagCompound() != null)
+                    {
+                        NBTTagCompound comp = event.getRight().getTagCompound();
+                        if (comp.getString("Head").equals("gold") && event.getRight().getItemDamage() == 0)
+                        {
+                            event.setCost(ModConfig.enchantments.lumberingCost);
+                            event.setOutput(book);
+                        }
+                        else
+                        {
+                            event.setOutput(ItemStack.EMPTY);
+                        }
+                    }
+                }
             }
         }
     }
