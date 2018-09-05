@@ -82,8 +82,7 @@ public class ModConfig
         public ChallengerMobs challengerMobs = new ChallengerMobs();
 
         @Config.Name("Peaceful Surface")
-        @Config.Comment("Prevents enemies on the surface, except for nights of a new moon")
-        public boolean enablePeacefulSurface = true;
+        public PeacefulSurface peacefulSurface = new PeacefulSurface();
 
         public static class DropBuffs
         {
@@ -142,6 +141,20 @@ public class ModConfig
             @Config.Name("Entity Blacklist")
             @Config.Comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
             public String[] blacklist = new String[]{};
+        }
+
+        public static class PeacefulSurface
+        {
+            @Config.Name("Peaceful Surface")
+            @Config.Comment("Prevents enemies on the surface, except for nights of a new moon")
+            public boolean enabled = true;
+
+            @Config.Name("Minimum Y for Peaceful Surface feature")
+            @Config.Comment("If Peaceful Surface is enabled, enemies can spawn below this Y-level:")
+            public int minY = 64;
+
+            @Config.Name("Peaceful Surface Dimension Blacklist")
+            public int[] blacklist = new int[]{-1, 1, 7};
         }
     }
 

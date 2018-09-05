@@ -6,12 +6,14 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Arrays;
+
 public class PeacefulSurface
 {
     @SubscribeEvent
     public void registerTweak(LivingSpawnEvent event)
     {
-        if (!ModConfig.mobTweaks.enablePeacefulSurface)
+        if (!ModConfig.mobTweaks.peacefulSurface.enabled)
         {
             return;
         }
@@ -19,7 +21,14 @@ public class PeacefulSurface
         {
             return;
         }
-        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4 && event.getEntity().getPosition().getY() >= event.getWorld().provider.getAverageGroundLevel())
+        for (int i : ModConfig.mobTweaks.peacefulSurface.blacklist)
+        {
+            if (i == event.getWorld().provider.getDimension())
+            {
+                return;
+            }
+        }
+        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4 && event.getEntity().getPosition().getY() >= ModConfig.mobTweaks.peacefulSurface.minY)
         {
             event.setResult(Event.Result.DENY);
         }
