@@ -20,7 +20,8 @@ public class ConfigParser
 
     /**
      * @param input       A string array gathered from a config file
-     * @param includesQty true if strings in the array include quantities of the itemstack
+     * @param includesQty true if strings in the array include quantities of the
+     *                    itemstack
      * @return an ArrayList containing parsed ItemStacks of these
      */
     private static ArrayList<ItemStack> parse(String[] input, boolean includesQty)
@@ -46,7 +47,8 @@ public class ConfigParser
                     }
                     else if (parts.length == 4 && includesQty)
                     {
-                        tempStack = new ItemStack(tempStack.getItem(), Integer.parseInt(parts[3]), Integer.parseInt(parts[2]));
+                        tempStack = new ItemStack(tempStack.getItem(), Integer.parseInt(parts[3]),
+                                Integer.parseInt(parts[2]));
                         ret.add(tempStack.copy());
                     }
                     else

@@ -144,9 +144,11 @@ public class EnchantmentImperishableHandler
 
         if (LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName()))
         {
-            LootFunction enchantment = new SetNBT(none, HelperFunctions.getEnchantedBookNBT(Enchantments.getInstance().imperishable, 1));
+            LootFunction enchantment = new SetNBT(none,
+                    HelperFunctions.getEnchantedBookNBT(Enchantments.getInstance().imperishable, 1));
             LootFunction quantity = new SetCount(none, new RandomValueRange(1));
-            pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]{enchantment, quantity}, none, VTweaks.MODID + ":imperishable_book"));
+            pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]
+            { enchantment, quantity }, none, VTweaks.MODID + ":imperishable_book"));
         }
     }
 }

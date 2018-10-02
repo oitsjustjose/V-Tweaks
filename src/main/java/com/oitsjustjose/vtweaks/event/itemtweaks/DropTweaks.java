@@ -49,13 +49,15 @@ public class DropTweaks
             }
         }
         // Handles sapling replanting; 100% chance
-        else if (ModConfig.itemTweaks.enableSaplingPlanting && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
+        else if (ModConfig.itemTweaks.enableSaplingPlanting
+                && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
         {
             BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
             // Checks to see if where the sapling *will* be is air
             if (world.isAirBlock(saplingPos))
             {
-                FakePlayer fake = new FakePlayer(world.getMinecraftServer().getWorld((world.provider.getDimension())), new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
+                FakePlayer fake = new FakePlayer(world.getMinecraftServer().getWorld((world.provider.getDimension())),
+                        new GameProfile(UUID.nameUUIDFromBytes(VTweaks.MODID.getBytes()), "VTweaksFake"));
                 fake.setHeldItem(EnumHand.MAIN_HAND, stack);
                 stack.onItemUse(fake, world, saplingPos, EnumHand.MAIN_HAND, EnumFacing.UP, 0, 0, 0);
             }
@@ -65,7 +67,8 @@ public class DropTweaks
     @SubscribeEvent
     public void registerTweak(ItemTossEvent event)
     {
-        // Checks to see if the despawn time is -1. If it is, items won't despawn, so nothing to do here.
+        // Checks to see if the despawn time is -1. If it is, items won't despawn, so
+        // nothing to do here.
         if (ModConfig.itemTweaks.despawnTimeSetting == -1 || event.getEntityItem() == null)
         {
             return;

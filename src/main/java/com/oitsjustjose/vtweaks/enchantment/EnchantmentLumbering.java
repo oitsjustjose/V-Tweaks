@@ -13,7 +13,8 @@ public class EnchantmentLumbering extends Enchantment
 {
     protected EnchantmentLumbering()
     {
-        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]
+        { EntityEquipmentSlot.MAINHAND });
         this.setRegistryName(new ResourceLocation(VTweaks.MODID, "lumbering"));
         this.setName(new ResourceLocation(VTweaks.MODID, "lumbering").toString());
     }

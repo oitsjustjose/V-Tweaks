@@ -35,7 +35,8 @@ public class FeatherFallingTweak
 
         ItemStack boots = player.inventory.armorInventory.get(0);
         // Checks if FeatherFalling IV or higher is on the boots
-        if (EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "feather_falling"), boots) >= 4)
+        if (EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "feather_falling"),
+                boots) >= 4)
         {
             boots.damageItem((int) event.getAmount(), player);
             event.setAmount(0.0F);

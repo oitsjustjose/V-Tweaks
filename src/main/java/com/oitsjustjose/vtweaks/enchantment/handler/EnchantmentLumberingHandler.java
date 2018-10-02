@@ -24,7 +24,8 @@ public class EnchantmentLumberingHandler
             return;
         }
         // Check that state, world, player or player's held item all exist
-        if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null || event.getPlayer().getHeldItemMainhand().isEmpty())
+        if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null
+                || event.getPlayer().getHeldItemMainhand().isEmpty())
         {
             return;
         }
@@ -32,7 +33,8 @@ public class EnchantmentLumberingHandler
         World world = event.getWorld();
         EntityPlayer player = event.getPlayer();
         // Checks if the axe has lumbering
-        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering, player.getHeldItemMainhand()) > 0)
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
+                player.getHeldItemMainhand()) > 0)
         {
             chopTree(world, player, event.getPos());
         }
@@ -79,6 +81,7 @@ public class EnchantmentLumberingHandler
             block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
         }
         world.setBlockToAir(pos);
-        world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS, 0.25F, 0.8F);
+        world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS,
+                0.25F, 0.8F);
     }
 }

@@ -31,7 +31,8 @@ public class DeathPoint
     // Coincidentally compatible with Journeymap :D
     private TextComponentString getCoordMessage(BlockPos pos)
     {
-        String message = "Your most recent death was at: " + TextFormatting.YELLOW + "[X: " + pos.getX() + ", Y: " + pos.getY() + ", Z: " + pos.getZ() + "]";
+        String message = "Your most recent death was at: " + TextFormatting.YELLOW + "[X: " + pos.getX() + ", Y: "
+                + pos.getY() + ", Z: " + pos.getZ() + "]";
         return new TextComponentString(message);
     }
 }

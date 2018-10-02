@@ -28,7 +28,8 @@ public class PeacefulSurface
                 return;
             }
         }
-        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4 && event.getEntity().getPosition().getY() >= ModConfig.mobTweaks.peacefulSurface.minY)
+        if (event.getWorld().provider.getMoonPhase(event.getWorld().getWorldTime()) != 4
+                && event.getEntity().getPosition().getY() >= ModConfig.mobTweaks.peacefulSurface.minY)
         {
             event.setResult(Event.Result.DENY);
         }

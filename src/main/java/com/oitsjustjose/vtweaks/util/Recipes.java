@@ -70,7 +70,8 @@ public class Recipes
             }
             else if (Loader.isModLoaded("toolbox"))
             {
-                Item toolboxAxe = Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation("toolbox", "axe")));
+                Item toolboxAxe = Objects
+                        .requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation("toolbox", "axe")));
                 if (event.getLeft().getItem() == Items.WRITABLE_BOOK && event.getRight().getItem() == toolboxAxe)
                 {
                     if (event.getRight().hasTagCompound() && event.getRight().getTagCompound() != null)

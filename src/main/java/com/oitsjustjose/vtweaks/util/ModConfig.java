@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.util;
 
-
 import com.oitsjustjose.vtweaks.VTweaks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Config;
@@ -110,7 +109,8 @@ public class ModConfig
 
             @Config.Name("Blacklisted Dyes")
             @Config.Comment("The class name (or part of it) of the dye you don't want to work with the Sheep Dye Fix")
-            public String[] blacklist = new String[]{"net.minecraft.item.ItemDye", "biomesoplenty"};
+            public String[] blacklist = new String[]
+            { "net.minecraft.item.ItemDye", "biomesoplenty" };
         }
 
         public static class ChallengerMobs
@@ -127,20 +127,15 @@ public class ModConfig
 
             @Config.Name("Loot Table")
             @Config.Comment("Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>")
-            public String[] loot = new String[]{
-                    "minecraft:gold_ingot",
-                    "minecraft:gold_nugget*15",
-                    "minecraft:diamond",
-                    "minecraft:emerald",
-                    "minecraft:ghast_tear",
-                    "minecraft:ender_pearl",
-                    "minecraft:emerald",
-                    "minecraft:experience_bottle"
-            };
+            public String[] loot = new String[]
+            { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald",
+                    "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald",
+                    "minecraft:experience_bottle" };
 
             @Config.Name("Entity Blacklist")
             @Config.Comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-            public String[] blacklist = new String[]{};
+            public String[] blacklist = new String[]
+            {};
         }
 
         public static class PeacefulSurface
@@ -154,7 +149,8 @@ public class ModConfig
             public int minY = 64;
 
             @Config.Name("Peaceful Surface Dimension Blacklist")
-            public int[] blacklist = new int[]{-1, 1, 7};
+            public int[] blacklist = new int[]
+            { -1, 1, 7 };
         }
     }
 
@@ -183,7 +179,8 @@ public class ModConfig
 
             @Config.Name("Blacklisted Crops")
             @Config.Comment("Objects listed here will not be effected by the Easy Crop Harvesting tweak. These are class names, or parts of class names")
-            public String[] blacklist = new String[]{"harvestcraft", "tehnut.resourceful.crops", "actuallyadditions"};
+            public String[] blacklist = new String[]
+            { "harvestcraft", "tehnut.resourceful.crops", "actuallyadditions" };
         }
     }
 

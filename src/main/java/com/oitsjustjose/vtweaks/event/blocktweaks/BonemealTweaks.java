@@ -39,7 +39,8 @@ public class BonemealTweaks
             {
                 if (testFor == Blocks.CACTUS || testFor == Blocks.REEDS)
                 {
-                    if (world.getBlockState(event.getPos().down(2)).getBlock() != testFor && world.isAirBlock(event.getPos().up()))
+                    if (world.getBlockState(event.getPos().down(2)).getBlock() != testFor
+                            && world.isAirBlock(event.getPos().up()))
                     {
                         player.swingArm(EnumHand.MAIN_HAND);
                         for (int i = 0; i < 8; i++)
@@ -66,6 +67,8 @@ public class BonemealTweaks
         double d0 = rand.nextGaussian() * 0.02D;
         double d1 = rand.nextGaussian() * 0.02D;
         double d2 = rand.nextGaussian() * 0.02D;
-        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + rand.nextFloat()), (double) pos.getY() + (double) rand.nextFloat() * state.getBoundingBox(world, pos).maxY, (double) ((float) pos.getZ() + rand.nextFloat()), d0, d1, d2);
+        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + rand.nextFloat()),
+                (double) pos.getY() + (double) rand.nextFloat() * state.getBoundingBox(world, pos).maxY,
+                (double) ((float) pos.getZ() + rand.nextFloat()), d0, d1, d2);
     }
 }

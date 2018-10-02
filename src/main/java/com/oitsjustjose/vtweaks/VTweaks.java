@@ -31,7 +31,6 @@ public class VTweaks
     public static final String VERSION = "@VERSION@";
     public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/1.12/updater.json";
 
-
     @Instance(MODID)
     public static VTweaks instance;
 

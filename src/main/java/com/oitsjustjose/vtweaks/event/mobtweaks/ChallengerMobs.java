@@ -55,10 +55,14 @@ public class ChallengerMobs
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
                     monster.setCustomNameTag(mobClassName(VARIANT, monster));
-                    // Specifically keeps creepers from spawning with fire resistance to prevent funny business
+                    // Specifically keeps creepers from spawning with fire resistance to prevent
+                    // funny business
                     if (!(monster instanceof EntityCreeper))
                     {
-                        monster.addPotionEffect(new PotionEffect(Objects.requireNonNull(Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance"))), Integer.MAX_VALUE, 0, true, true));
+                        monster.addPotionEffect(new PotionEffect(
+                                Objects.requireNonNull(
+                                        Potion.REGISTRY.getObject(new ResourceLocation("fire_resistance"))),
+                                Integer.MAX_VALUE, 0, true, true));
                     }
                     // Every challenger mob will have a main hand item. Done before any checks.
                     monster.setHeldItem(EnumHand.MAIN_HAND, VARIANT.getEquipment());
@@ -89,7 +93,8 @@ public class ChallengerMobs
             return;
         }
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof EntityMob) || !isChallengerMob((EntityMob) event.getEntity()))
+        if (event.getEntity() == null || !(event.getEntity() instanceof EntityMob)
+                || !isChallengerMob((EntityMob) event.getEntity()))
         {
             return;
         }
@@ -134,7 +139,8 @@ public class ChallengerMobs
     private EntityItem getItem(World world, BlockPos pos)
     {
         int RNG = world.rand.nextInt(ModConfig.MobTweaks.ChallengerMobs.challengerLootTable.size());
-        return HelperFunctions.createItemEntity(world, pos, ModConfig.MobTweaks.ChallengerMobs.challengerLootTable.get(RNG));
+        return HelperFunctions.createItemEntity(world, pos,
+                ModConfig.MobTweaks.ChallengerMobs.challengerLootTable.get(RNG));
     }
 
     private boolean isChallengerMob(EntityMob entity)

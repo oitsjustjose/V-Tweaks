@@ -6,7 +6,9 @@ import net.minecraft.item.ItemStack;
 
 public enum ChallengerMobType
 {
-    MIGHTY(0.18D, 80F, "Mighty"), HUNGRY(0.25D, 40F, "Hungry"), RANGER(0.25D, 40F, "Ranger"), ARCANE(0.25D, 40F, "Arcane"), PYRO(0.25D, 40F, "Pyro"), ZESTONIAN(0.25D, 40F, "Zestonian"), REINFORCED(0.25D, 160F, "Reinforced"), AGILE(0.6D, 10F, "Agile");
+    MIGHTY(0.18D, 80F, "Mighty"), HUNGRY(0.25D, 40F, "Hungry"), RANGER(0.25D, 40F, "Ranger"),
+    ARCANE(0.25D, 40F, "Arcane"), PYRO(0.25D, 40F, "Pyro"), ZESTONIAN(0.25D, 40F, "Zestonian"),
+    REINFORCED(0.25D, 160F, "Reinforced"), AGILE(0.6D, 10F, "Agile");
 
     private final double mobSpeed;
     private final float mobHealth;
@@ -23,7 +25,10 @@ public enum ChallengerMobType
 
     ItemStack toolForMobClass(int type)
     {
-        ItemStack[] toolList = new ItemStack[]{new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW), new ItemStack(Items.STICK), new ItemStack(Items.FIREWORKS), new ItemStack(Items.SIGN), ItemStack.EMPTY, ItemStack.EMPTY};
+        ItemStack[] toolList = new ItemStack[]
+        { new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW),
+                new ItemStack(Items.STICK), new ItemStack(Items.FIREWORKS), new ItemStack(Items.SIGN), ItemStack.EMPTY,
+                ItemStack.EMPTY };
 
         toolList[0].setItemDamage(toolList[0].getMaxDamage() / 8);
         toolList[0].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 3);
