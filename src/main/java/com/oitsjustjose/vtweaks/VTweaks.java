@@ -29,7 +29,7 @@ public class VTweaks
     public static final String MODID = "vtweaks";
     public static final String NAME = "V-Tweaks";
     public static final String VERSION = "@VERSION@";
-    public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/master/updater.json";
+    public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/1.12/updater.json";
 
 
     @Instance(MODID)
