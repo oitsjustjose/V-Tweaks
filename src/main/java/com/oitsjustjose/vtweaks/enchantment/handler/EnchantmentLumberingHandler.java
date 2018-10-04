@@ -26,7 +26,7 @@ public class EnchantmentLumberingHandler
         }
         // Check that state, world, player or player's held item all exist
         if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null
-                || event.getPlayer().getHeldItemMainhand().isEmpty())
+                || event.getPlayer().getHeldItemMainhand().isEmpty() || event.getPlayer().capabilities.isCreativeMode)
         {
             return;
         }
@@ -37,33 +37,53 @@ public class EnchantmentLumberingHandler
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
                 player.getHeldItemMainhand()) > 0)
         {
-            chopTree(world, player, event.getPos());
+            if (player.isSneaking())
+            {
+                if (event.getState().getBlock().isWood(world, event.getPos()))
+                {
+                    chopTree(world, player, event.getPos());
+                    world.playSound(
+                            null, event.getPos(), event.getState().getBlock()
+                                    .getSoundType(event.getState(), world, event.getPos(), player).getBreakSound(),
+                            SoundCategory.BLOCKS, 0.25F, 0.8F);
+                }
+            }
         }
     }
 
-    // Simple function that chops an 11w x 11l x 32h range of logs down
-    // Does not do any actual tree detection. Not I'm not that good.
+    /**
+     * A recursive chop-tree function (I made this myself! :D)
+     * 
+     * @param world
+     * @param state
+     * @param player
+     * @param pos
+     */
     private void chopTree(World world, EntityPlayer player, BlockPos pos)
     {
-        // Checks if player is sneaking, and block (and block above) are log blocks
-        if (player.isSneaking() && world.getBlockState(pos).getBlock().isWood(world, pos))
+        for (int mod_x = -1; mod_x <= 1; mod_x++)
         {
-            for (int xPos = pos.getX() - 5; xPos <= pos.getX() + 5; xPos++)
+            for (int mod_y = -1; mod_y <= 1; mod_y++)
             {
-                for (int yPos = pos.getY() - 1; yPos <= pos.getY() + 32; yPos++)
+                for (int mod_z = -1; mod_z <= 1; mod_z++)
                 {
-                    for (int zPos = pos.getZ() - 5; zPos <= pos.getZ() + 5; zPos++)
+                    BlockPos iterPos = pos.add(mod_x, mod_y, mod_z);
+                    if (iterPos != pos)
                     {
-                        BlockPos newPos = new BlockPos(xPos, yPos, zPos);
-                        if (world.getBlockState(newPos).getBlock().isWood(world, newPos))
+                        if (world.getBlockState(iterPos).getBlock().isWood(world, iterPos))
                         {
-                            if (player.getHeldItemMainhand().attemptDamageItem(1, world.rand, null))
+                            chopTree(world, player, iterPos);
+                        }
+                        else if (ModConfig.enchantments.lumberingCutsLeaves)
+                        {
+                            if (world.getBlockState(iterPos).getBlock().isLeaves(world.getBlockState(iterPos), world,
+                                    iterPos))
                             {
-                                return;
+                                chopTree(world, player, iterPos);
                             }
-                            breakBlock(world, player, newPos);
                         }
                     }
+                    breakBlock(world, player, pos);
                 }
             }
         }
@@ -82,7 +102,5 @@ public class EnchantmentLumberingHandler
             block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
         }
         world.setBlockToAir(pos);
-        world.playSound(null, pos, block.getSoundType(state, world, pos, player).getBreakSound(), SoundCategory.BLOCKS,
-                0.25F, 0.8F);
     }
 }

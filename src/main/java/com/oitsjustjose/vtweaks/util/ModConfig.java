@@ -56,6 +56,10 @@ public class ModConfig
         @Config.RangeInt(min = 1, max = 40)
         @Config.Comment("Number of levels Lumbering costs to create in an anvil")
         public int lumberingCost = 16;
+
+        @Config.Name("Lumbering Cuts Leaves")
+        @Config.Comment("True makes it so lumbering a tree cuts leaves, false doesn't")
+        public boolean lumberingCutsLeaves = true;
     }
 
     public static class MobTweaks
