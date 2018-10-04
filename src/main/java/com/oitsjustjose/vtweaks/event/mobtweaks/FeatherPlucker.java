@@ -45,7 +45,7 @@ public class FeatherPlucker
                     if (!player.capabilities.isCreativeMode)
                     {
                         player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
-                    }Ô
+                    }
                 }
                 player.swingArm(EnumHand.MAIN_HAND);
             }
