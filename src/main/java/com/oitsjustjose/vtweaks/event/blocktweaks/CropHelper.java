@@ -1,7 +1,10 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import java.util.Iterator;
+
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
@@ -18,8 +21,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.Iterator;
 
 public class CropHelper
 {

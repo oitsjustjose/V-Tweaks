@@ -1,14 +1,15 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.ArrayList;
+
 import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.ArrayList;
 
 @Config(modid = VTweaks.MODID)
 @Mod.EventBusSubscriber

@@ -9,11 +9,17 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.event.mobtweaks.*;
+import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
+import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
+import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
+import com.oitsjustjose.vtweaks.event.mobtweaks.PeacefulSurface;
+import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
+import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
 import com.oitsjustjose.vtweaks.util.ConfigParser;
 import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 import com.oitsjustjose.vtweaks.util.Recipes;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;

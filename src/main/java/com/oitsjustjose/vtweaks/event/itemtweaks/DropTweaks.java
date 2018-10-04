@@ -1,8 +1,11 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
+import java.util.UUID;
+
 import com.mojang.authlib.GameProfile;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -16,8 +19,6 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.UUID;
 
 public class DropTweaks
 {

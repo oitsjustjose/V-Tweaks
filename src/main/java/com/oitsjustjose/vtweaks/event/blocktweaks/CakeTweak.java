@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCake;
 import net.minecraft.init.Items;

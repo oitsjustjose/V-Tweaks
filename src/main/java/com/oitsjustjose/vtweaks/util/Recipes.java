@@ -1,6 +1,9 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.Objects;
+
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,8 +13,6 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-
-import java.util.Objects;
 
 public class Recipes
 {

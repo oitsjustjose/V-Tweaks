@@ -1,13 +1,14 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import java.util.Set;
+
 import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
-import java.util.Set;
 
 public class EnchantmentLumbering extends Enchantment
 {

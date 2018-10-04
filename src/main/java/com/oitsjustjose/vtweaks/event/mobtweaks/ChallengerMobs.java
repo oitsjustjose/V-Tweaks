@@ -1,7 +1,10 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
+import java.util.Objects;
+
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -21,8 +24,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.Objects;
 
 public class ChallengerMobs
 {

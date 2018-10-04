@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.event;
 
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

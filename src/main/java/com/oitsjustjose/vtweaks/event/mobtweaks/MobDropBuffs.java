@@ -1,7 +1,10 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
+import java.util.Random;
+
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -15,8 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.Random;
 
 public class MobDropBuffs
 {

@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.util;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

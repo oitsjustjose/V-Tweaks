@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -44,7 +45,7 @@ public class FeatherPlucker
                     if (!player.capabilities.isCreativeMode)
                     {
                         player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
-                    }
+                    }Ô
                 }
                 player.swingArm(EnumHand.MAIN_HAND);
             }

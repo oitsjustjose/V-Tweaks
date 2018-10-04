@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;

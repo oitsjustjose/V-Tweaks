@@ -1,8 +1,17 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import com.google.common.collect.ImmutableList;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
-import mezz.jei.api.*;
+
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IJeiRuntime;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.ISubtypeRegistry;
+import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IVanillaRecipeFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
@@ -12,9 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 @JEIPlugin
 public class JEICompat implements IModPlugin

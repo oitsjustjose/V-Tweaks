@@ -1,14 +1,15 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
+import java.util.ArrayList;
+
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.ArrayList;
 
 public class Enchantments
 {

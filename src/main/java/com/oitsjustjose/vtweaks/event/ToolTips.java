@@ -1,6 +1,9 @@
 package com.oitsjustjose.vtweaks.event;
 
 import com.oitsjustjose.vtweaks.util.ModConfig;
+
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -8,7 +11,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 
 public class ToolTips
 {

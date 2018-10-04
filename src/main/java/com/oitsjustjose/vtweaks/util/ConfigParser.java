@@ -1,11 +1,13 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.ArrayList;
+
 import com.oitsjustjose.vtweaks.VTweaks;
-import net.minecraft.item.ItemStack;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import net.minecraft.item.ItemStack;
 
 public class ConfigParser
 {
