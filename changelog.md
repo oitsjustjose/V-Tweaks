@@ -1,3 +1,11 @@
+2.0.2:
+
+* ADDED: Config option for PeacefulSurface Y requirements
+* CHANGED: Lumbering wood-chopping algorithm:
+	* It now cuts down all of ***most*** trees! No more static pattern, now uses recursion to detect trees better
+	* ADDED: Config for whether or not lumbering chops down leaves with the tree
+* FIXED: Updater URL (for the Mods GUI screen)
+
 2.0.1:
 
 * ADDED: Adventurer's Toolbox compat to Lumbering recipe
