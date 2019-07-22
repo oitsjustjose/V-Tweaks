@@ -209,6 +209,8 @@ public class ModConfig
         @Config.RangeInt(min = -1)
         public int despawnTimeSetting = -1;
 
+        @Config.Name("Convert Concrete Powder to Concrete when the item is thrown into water.")
+        public boolean enableConreteTweaks = true;
     }
 
     public static class Misc

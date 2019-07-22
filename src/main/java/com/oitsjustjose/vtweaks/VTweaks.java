@@ -8,6 +8,7 @@ import com.oitsjustjose.vtweaks.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.event.blocktweaks.ToolEffTweaks;
+import com.oitsjustjose.vtweaks.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
@@ -20,8 +21,11 @@ import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -64,6 +68,7 @@ public class VTweaks
 
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
+        MinecraftForge.EVENT_BUS.register(new ConcreteTweaks());
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -74,6 +79,8 @@ public class VTweaks
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
         MinecraftForge.EVENT_BUS.register(new Recipes());
 
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Item.getItemFromBlock(Blocks.CONCRETE_POWDER),
+                ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
     }
 
     @EventHandler
