@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.event.itemtweaks;
 
-import com.oitsjustjose.vtweaks.entity.EntityItemConcrete;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.block.Block;
@@ -14,8 +13,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConcreteTweaks
@@ -23,13 +24,10 @@ public class ConcreteTweaks
     @SubscribeEvent
     public void registerTweak(ItemTossEvent event)
     {
-        // Checks to see if the despawn time is -1. If it is, items won't despawn, so
-        // nothing to do here.
         if (!ModConfig.itemTweaks.enableConreteTweaks)
         {
             return;
         }
-
         EntityItem entItem = event.getEntityItem();
         if (entItem.getItem().getItem() instanceof ItemBlock)
         {
@@ -40,13 +38,52 @@ public class ConcreteTweaks
                 EntityItemConcrete concrete = new EntityItemConcrete(entItem);
                 if (!concrete.getEntityWorld().isRemote)
                 {
+                    event.getPlayer()
+                            .sendStatusMessage(new TextComponentString("Replaced item with EntityItemConcrete"), true);
                     concrete.getEntityWorld().spawnEntity(concrete);
                 }
+                event.setResult(Event.Result.DENY);
+                event.setCanceled(true);
                 entItem.setDead();
             }
         }
     }
 
+    /**
+     * A Custom EntityItem that replaces concrete powder with concrete when in water
+     */
+    public static class EntityItemConcrete extends EntityItem
+    {
+
+        public EntityItemConcrete(World worldIn, double x, double y, double z, ItemStack stack)
+        {
+            super(worldIn, x, y, z, stack);
+            this.setPickupDelay(40);
+        }
+
+        public EntityItemConcrete(EntityItem item)
+        {
+            super(item.getEntityWorld(), item.posX, item.posY, item.posZ, item.getItem());
+            this.motionX = item.motionX;
+            this.motionY = item.motionY;
+            this.motionZ = item.motionZ;
+            this.setPickupDelay(40);
+        }
+
+        @Override
+        public void onUpdate()
+        {
+            if (this.inWater)
+            {
+                this.setItem(new ItemStack(Blocks.CONCRETE, this.getItem().getCount(), this.getItem().getMetadata()));
+            }
+            super.onUpdate();
+        }
+    }
+
+    /**
+     * Describes custom Dispenser functionality for concrete powder blocks
+     */
     public static final IBehaviorDispenseItem CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new BehaviorDefaultDispenseItem()
     {
         @Override
@@ -95,6 +132,8 @@ public class ConcreteTweaks
             entityitem.motionX += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
             entityitem.motionY += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
             entityitem.motionZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
+            // Dispensed items have no pickup delay so.....
+            entityitem.setNoPickupDelay();
             worldIn.spawnEntity(entityitem);
         }
     };
