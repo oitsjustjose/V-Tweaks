@@ -1,3 +1,7 @@
+2.0.3:
+
+* ADDED: ConcreteTweaks: Throwing a concrete powder item from your inventory into water will turn it into a concrete block! This also works with dispensers.
+
 2.0.2:
 
 * ADDED: Config option for PeacefulSurface Y requirements
