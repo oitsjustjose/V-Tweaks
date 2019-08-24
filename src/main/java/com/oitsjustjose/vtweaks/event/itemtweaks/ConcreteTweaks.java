@@ -38,8 +38,6 @@ public class ConcreteTweaks
                 EntityItemConcrete concrete = new EntityItemConcrete(entItem);
                 if (!concrete.getEntityWorld().isRemote)
                 {
-                    event.getPlayer()
-                            .sendStatusMessage(new TextComponentString("Replaced item with EntityItemConcrete"), true);
                     concrete.getEntityWorld().spawnEntity(concrete);
                 }
                 event.setResult(Event.Result.DENY);
