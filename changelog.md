@@ -1,3 +1,8 @@
+2.0.4:
+
+* FIXED: Crash if ChallengerMobs Rarity less than or equal to 0
+* FIXED: Debug output when throwing concrete powder with ConcreteTweaks enabled
+
 2.0.3:
 
 * ADDED: ConcreteTweaks: Throwing a concrete powder item from your inventory into water will turn it into a concrete block! This also works with dispensers.
