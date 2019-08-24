@@ -127,7 +127,6 @@ public class ModConfig
             public boolean enabled = true;
 
             @Config.Name("Rarity")
-            @Config.Comment("")
             public int chance = 100;
 
             @Config.Name("Loot Table")
