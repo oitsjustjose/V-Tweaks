@@ -30,7 +30,7 @@ public class ChallengerMobs
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent event)
     {
-        if (!ModConfig.mobTweaks.challengerMobs.enabled)
+        if (!ModConfig.mobTweaks.challengerMobs.enabled || ModConfig.mobTweaks.challengerMobs.chance <= 0)
         {
             return;
         }
