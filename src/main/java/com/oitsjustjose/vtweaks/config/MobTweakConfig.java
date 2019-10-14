@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class MobTweakConfig
 {
 
-    public static ArrayList<Item> challengerMobDrops = new ArrayList<>();
+    public static ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
 
     private static String CATEGORY_MOB_TWEAKS = "mob tweaks";
 
@@ -48,10 +49,19 @@ public class MobTweakConfig
                             if (itemRaw instanceof String)
                             {
                                 String itemName = (String) itemRaw;
-                                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
+                                String[] parts = itemName.split("[\\W]");
+                                
+                                if (parts.length != 2 && parts.length != 3)
+                                {
+                                    return false;
+                                }
+                                
+                                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts[0], parts[1]));
+                                
                                 if (item != null)
                                 {
-                                    challengerMobDrops.add(item);
+                                    challengerMobDrops.add(
+                                            new ItemStack(item, parts.length == 3 ? Integer.parseInt(parts[2]) : 1));
                                     return true;
                                 }
                             }
