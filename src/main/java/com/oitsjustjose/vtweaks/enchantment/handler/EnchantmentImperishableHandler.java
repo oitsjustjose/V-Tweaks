@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -38,7 +39,7 @@ public class EnchantmentImperishableHandler
         }
         ToolItem tool = (ToolItem) stack.getItem();
 
-        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
         {
             if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
             {
@@ -77,7 +78,7 @@ public class EnchantmentImperishableHandler
 
             ToolItem tool = (ToolItem) stack.getItem();
 
-            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
+            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
             {
                 if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
                 {
@@ -110,7 +111,7 @@ public class EnchantmentImperishableHandler
 
                 ArmorItem armor = (ArmorItem) stack.getItem();
                 // How much the player is ACTUALLY getting hurt
-                if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
+                if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
                 {
                     if (armor.getDamage(stack) >= armor.getMaxDamage(stack))
                     {
@@ -144,7 +145,7 @@ public class EnchantmentImperishableHandler
         // if (LootTables.CHESTS_NETHER_BRIDGE.toString().equals(event.getName().toString()))
         // {
         // LootFunction enchantment = new SetNBT(none,
-        // HelperFunctions.getEnchantedBookNBT(Enchantments.getInstance().imperishable, 1));
+        // HelperFunctions.getEnchantedBookNBT(VTweaks.imperishable, 1));
         // LootFunction quantity = new SetCount(none, new RandomValueRange(1));
         // pool.addEntry(new LootPool(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]
         // { enchantment, quantity }, none, Constants.MODID + ":imperishable_book"));

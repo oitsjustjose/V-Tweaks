@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
@@ -34,8 +35,7 @@ public class EnchantmentLumberingHandler
         IWorld world = event.getWorld();
         PlayerEntity player = event.getPlayer();
         // Checks if the axe has lumbering
-        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
-                player.getHeldItemMainhand()) > 0)
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0)
         {
             if (player.isSneaking())
             {
@@ -76,8 +76,7 @@ public class EnchantmentLumberingHandler
                         }
                         else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get())
                         {
-                            if (world.getBlockState(iterPos).getBlock().isFoliage(world.getBlockState(iterPos), world,
-                                    iterPos))
+                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock()))
                             {
                                 chopTree(world, player, iterPos);
                             }

@@ -13,7 +13,7 @@ import net.minecraftforge.common.ToolType;
 
 public class EnchantmentLumbering extends Enchantment
 {
-    protected EnchantmentLumbering()
+    public EnchantmentLumbering()
     {
         super(Rarity.VERY_RARE, EnchantmentType.DIGGER, new EquipmentSlotType[]
         { EquipmentSlotType.MAINHAND });

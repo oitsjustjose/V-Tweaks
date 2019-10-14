@@ -50,7 +50,7 @@
 
 //         if (ModConfig.enchantments.enableLumbering)
 //         {
-//             ItemStack book = HelperFunctions.getEnchantedBook(Enchantments.getInstance().lumbering);
+//             ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.lumbering);
 
 //             if (event.getLeft().isEmpty() || event.getRight().isEmpty())
 //                 return;

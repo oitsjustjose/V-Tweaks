@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentImperishable extends Enchantment
 {
-    protected EnchantmentImperishable()
+    public EnchantmentImperishable()
     {
         super(Rarity.UNCOMMON, EnchantmentType.BREAKABLE, EquipmentSlotType.values());
         this.setRegistryName(new ResourceLocation(Constants.MODID, "imperishable"));

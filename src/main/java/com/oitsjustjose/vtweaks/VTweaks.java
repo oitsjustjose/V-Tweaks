@@ -1,7 +1,13 @@
 package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.config.CommonConfig;
+import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentImperishable;
+import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumbering;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentImperishableHandler;
+import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
 import com.oitsjustjose.vtweaks.event.StormTweak;
 import com.oitsjustjose.vtweaks.event.ToolTips;
@@ -22,7 +28,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -36,11 +45,15 @@ public class VTweaks
     private static VTweaks instance;
     public Logger LOGGER = LogManager.getLogger();
 
+    public static Enchantment lumbering = new EnchantmentLumbering();
+    public static Enchantment imperishable = new EnchantmentImperishable();
+
     public VTweaks()
     {
         instance = this;
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        MinecraftForge.EVENT_BUS.register(this);
 
         this.configSetup();
     }
@@ -53,7 +66,7 @@ public class VTweaks
     public void setup(final FMLCommonSetupEvent event)
     {
         // Enchantments
-        MinecraftForge.EVENT_BUS.register(Enchantments.getInstance());
+        MinecraftForge.EVENT_BUS.register(new Enchantments());
 
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
@@ -81,13 +94,38 @@ public class VTweaks
 
         // Default Features
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
-
     }
 
     private void configSetup()
     {
         ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_CONFIG);
         CommonConfig.loadConfig(CommonConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-common.toml"));
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class RegistryEvents
+    {
+        @SubscribeEvent
+        public static void registerEnchantments(final RegistryEvent.Register<Enchantment> enchantmentRegistryEvent)
+        {
+
+            if (EnchantmentConfig.ENABLE_LUMBERING.get())
+            {
+                enchantmentRegistryEvent.getRegistry().register(VTweaks.lumbering);
+                MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
+            }
+
+            if (EnchantmentConfig.ENABLE_IMPERISHABLE.get())
+            {
+                enchantmentRegistryEvent.getRegistry().register(VTweaks.imperishable);
+                MinecraftForge.EVENT_BUS.register(new EnchantmentImperishableHandler());
+            }
+
+            if (EnchantmentConfig.ENABLE_FF_TWEAK.get())
+            {
+                MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
+            }
+        }
     }
 
 }

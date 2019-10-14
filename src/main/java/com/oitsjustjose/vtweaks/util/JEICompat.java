@@ -74,7 +74,7 @@
 //                 }
 //             }
 //             addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), axes,
-//                     HelperFunctions.getEnchantedBook(Enchantments.getInstance().lumbering));
+//                     HelperFunctions.getEnchantedBook(VTweaks.lumbering));
 //         }
 //     }
 
