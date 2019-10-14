@@ -16,10 +16,12 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ConcreteTweaks
 {
@@ -89,8 +91,12 @@ public class ConcreteTweaks
         {
             if (this.inWater)
             {
-                int index = powderBlocks.indexOf(this.getItem().getItem());
-                this.setItem(new ItemStack(concreteBlocks.get(index), this.getItem().getCount()));
+                String target = this.getItem().getItem().getRegistryName().toString().replace("_powder", "");
+                Item replacement = ForgeRegistries.ITEMS.getValue(new ResourceLocation(target));
+                if (replacement != null)
+                {
+                    this.setItem(new ItemStack(replacement, this.getItem().getCount()));
+                }
             }
             super.tick();
         }
