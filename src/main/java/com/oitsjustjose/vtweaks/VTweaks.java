@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks;
 
-import com.electronwill.nightconfig.core.io.ConfigParser;
 import com.oitsjustjose.vtweaks.config.CommonConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
@@ -22,9 +21,7 @@ import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -42,7 +39,9 @@ public class VTweaks
     public VTweaks()
     {
         instance = this;
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
         this.configSetup();
     }
 
