@@ -78,6 +78,7 @@ public class CropHelper
                 }
             }
         }
+
     }
 
     public boolean harvestGenericCrop(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
@@ -85,7 +86,7 @@ public class CropHelper
         CropsBlock crop = (CropsBlock) state.getBlock();
         if (crop.isMaxAge(state))
         {
-            if (!world.isRemote)
+            if (!world.isRemote())
             {
                 List<ItemStack> drops = Block.getDrops(state, world, pos, null);
 
@@ -93,13 +94,12 @@ public class CropHelper
                     if (stack.getCount() > 1)
                     {
                         stack.shrink(1);
-                        dropItem(world, player.getPosition(), stack);
                     }
+                    dropItem(world, player.getPosition(), stack);
                 });
 
                 world.setBlockState(pos, crop.withAge(0));
             }
-            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
@@ -121,7 +121,6 @@ public class CropHelper
                 }
                 world.setBlockState(pos, wart.getDefaultState());
             }
-            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
@@ -142,7 +141,6 @@ public class CropHelper
                 }
                 world.setBlockState(pos, state.with(CocoaBlock.AGE, Integer.valueOf(0)));
             }
-            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
