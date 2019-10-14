@@ -10,8 +10,9 @@
       "cwd": "${workspaceFolder}/run",
       "vmArgs": "-Dforge.logging.console.level\u003ddebug -XstartOnFirstThread -Xss1M",
       "args": "",
+      "console": "internalConsole",
       "env": {
-        "MOD_CLASSES": "geolosys%%${workspaceFolder}/bin/main:geolosys%%${workspaceFolder}/bin/main",
+        "MOD_CLASSES": "vtweaks%%${workspaceFolder}/bin/main:vtweaks%%${workspaceFolder}/bin/main",
         "MCP_MAPPINGS": "snapshot_20191014-1.14.3",
         "MCP_VERSION": "20190829.143755",
         "FORGE_VERSION": "28.1.47",
@@ -21,8 +22,7 @@
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevclient",
         "MC_VERSION": "1.14.4"
-      },
-      "console": "internalConsole"
+      }
     },
     {
       "type": "java",
@@ -33,16 +33,16 @@
       "cwd": "${workspaceFolder}/run",
       "vmArgs": "-Dforge.logging.console.level\u003ddebug",
       "args": "",
+      "console": "internalConsole",
       "env": {
-        "MOD_CLASSES": "geolosys%%${workspaceFolder}/bin/main:geolosys%%${workspaceFolder}/bin/main",
+        "MOD_CLASSES": "vtweaks%%${workspaceFolder}/bin/main:vtweaks%%${workspaceFolder}/bin/main",
         "MCP_MAPPINGS": "snapshot_20191014-1.14.3",
         "MCP_VERSION": "20190829.143755",
         "FORGE_VERSION": "28.1.47",
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevserver",
         "MC_VERSION": "1.14.4"
-      },
-      "console": "internalConsole"
+      }
     }
   ]
 }
