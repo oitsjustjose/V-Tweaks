@@ -1,17 +1,18 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import com.oitsjustjose.vtweaks.util.ModConfig;
+import com.oitsjustjose.vtweaks.config.BlockTweakConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLever;
-import net.minecraft.block.BlockSkull;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeverBlock;
+import net.minecraft.block.SkullBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.ShearsItem;
+import net.minecraft.item.ToolItem;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ToolEffTweaks
 {
@@ -19,32 +20,28 @@ public class ToolEffTweaks
     public void registerTweak(BreakSpeed event)
     {
         // Checks if feature is enabled
-        if (!ModConfig.blockTweaks.enableToolEffTweaks)
+        if (!BlockTweakConfig.ENABLE_TOOL_EFF_TWEAKS.get())
         {
             return;
         }
         // Checks that neither the block nor the held item are null
-        event.getState().getBlock();
-        if (event.getEntityPlayer().getHeldItemMainhand().isEmpty())
+
+        if (event.getState() == null || event.getEntityLiving().getHeldItemMainhand().isEmpty())
         {
             return;
         }
 
         Block block = event.getState().getBlock();
-        ItemStack heldItem = event.getEntityPlayer().getHeldItemMainhand();
+        ItemStack heldItem = event.getEntityLiving().getHeldItemMainhand();
 
         // Checks that the held item is a tool
-        if (heldItem.getItem() instanceof ItemTool)
+        if (heldItem.getItem() instanceof ToolItem)
         {
-            ItemTool tool = (ItemTool) heldItem.getItem();
+            ToolItem tool = (ToolItem) heldItem.getItem();
 
             // Checks for axe-ing capabilities
-            if (tool.getToolClasses(heldItem).contains("axe"))
+            if (tool.getToolTypes(heldItem).contains(ToolType.AXE))
             {
-                if (block == Blocks.MELON_BLOCK)
-                {
-                    event.setNewSpeed(event.getOriginalSpeed() * 4);
-                }
                 if (block.getDefaultState().getMaterial() == Material.LEAVES)
                 {
                     event.setNewSpeed(event.getOriginalSpeed() * 6);
@@ -63,7 +60,7 @@ public class ToolEffTweaks
                 }
             }
             // Checks for pickaxe-ing capabilities
-            if (tool.getToolClasses(heldItem).contains("pickaxe"))
+            if (tool.getToolTypes(heldItem).contains(ToolType.PICKAXE))
             {
                 if (block.getDefaultState().getMaterial() == Material.GLASS)
                 {
@@ -73,11 +70,11 @@ public class ToolEffTweaks
                 {
                     event.setNewSpeed(event.getOriginalSpeed() * 5);
                 }
-                if (block instanceof BlockSkull)
+                if (block instanceof SkullBlock)
                 {
                     event.setNewSpeed(event.getOriginalSpeed() * 4);
                 }
-                if (block instanceof BlockLever)
+                if (block instanceof LeverBlock)
                 {
                     event.setNewSpeed(event.getOriginalSpeed() * 4);
                 }
@@ -88,7 +85,7 @@ public class ToolEffTweaks
             }
         }
 
-        if (heldItem.getItem() instanceof ItemShears)
+        if (heldItem.getItem() instanceof ShearsItem)
         {
             if (block == Blocks.HAY_BLOCK)
             {

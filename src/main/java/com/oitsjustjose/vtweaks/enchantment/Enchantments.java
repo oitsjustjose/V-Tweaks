@@ -2,14 +2,14 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import java.util.ArrayList;
 
+import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
-import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class Enchantments
 {
@@ -34,21 +34,21 @@ public class Enchantments
 
     private void init()
     {
-        if (ModConfig.enchantments.enableLumbering)
+        if (EnchantmentConfig.ENABLE_LUMBERING.get())
         {
             lumbering = new EnchantmentLumbering();
             registerEnchantment(lumbering);
             MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
         }
 
-        if (ModConfig.enchantments.enableImperishable)
+        if (EnchantmentConfig.ENABLE_IMPERISHABLE.get())
         {
             imperishable = new EnchantmentImperishable();
             registerEnchantment(imperishable);
             MinecraftForge.EVENT_BUS.register(new EnchantmentImperishableHandler());
         }
 
-        if (ModConfig.enchantments.enableFeatherFallTweak)
+        if (EnchantmentConfig.ENABLE_FF_TWEAK.get())
         {
             MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
         }

@@ -1,13 +1,13 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import com.oitsjustjose.vtweaks.util.ModConfig;
+import com.oitsjustjose.vtweaks.config.BlockTweakConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCake;
-import net.minecraft.init.Items;
+import net.minecraft.block.CakeBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CakeTweak
 {
@@ -15,16 +15,23 @@ public class CakeTweak
     public void registerTweak(BlockEvent.HarvestDropsEvent event)
     {
         // Checks if feature is enabled
-        if (!ModConfig.blockTweaks.enableCakeDrop)
+        if (!BlockTweakConfig.ENABLE_CAKE_DROP.get())
         {
             return;
         }
 
         Block block = event.getState().getBlock();
-        if (event.getHarvester() != null && block instanceof BlockCake && block.getMetaFromState(event.getState()) == 0)
+        if (event.getHarvester() != null && block instanceof CakeBlock)
         {
-            event.getDrops().clear();
-            event.getDrops().add(new ItemStack(Items.CAKE));
+            if (event.getState().has(CakeBlock.BITES))
+            {
+                int bites = event.getState().get(CakeBlock.BITES);
+                if (bites == 0)
+                {
+                    event.getDrops().clear();
+                    event.getDrops().add(new ItemStack(Items.CAKE));
+                }
+            }
         }
     }
 }

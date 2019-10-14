@@ -1,67 +1,145 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-repositories {
-  maven {
-    url = "http://dvs1.progwml6.com/files/maven"
-  }
-}
+group = 'com.oitsjustjose.geolosys' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Geolosys-${game_version}"
 
-version = mod_version
-group= "com.oitsjustjose.vtweaks"
-archivesBaseName = "VTweaks-${minecraft_version}"
-
-sourceCompatibility = targetCompatibility = "1.8"
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
-    runDir = "run"
+    mappings channel: "snapshot", version: "${mappings_version}-1.14.3"
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    useDepAts = true
-    replaceIn "/VTweaks.java"
-    replace "@VERSION@", mod_version
+            // Recommended logging data for a userdev environment
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
-    mappings = "${mappings_version}"
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                geolosys {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                geolosys {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 dependencies {
-  deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
-  runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
+
+    // You may put jars on which you depend on in ./libs or you may define them like so..
+    // compile "some.group:artifact:version:classifier"
+    // compile "some.group:artifact:version"
+
+    // Real examples
+    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // These dependencies get remapped to your current MCP mappings
+    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // For more info...
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+}
+
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "geolosys",
+            "Specification-Vendor": "oitsjustjose.com",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${mod_version}",
+            "Implementation-Vendor" :"oitsjustjose.com",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    classifier = 'DEV'
+    classifier = 'Deobf'
 }
 
-artifacts{
-	archives deobfJar
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'Sources'
+    from sourceSets.main.allSource
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+processResources {
+    version = "${mod_version}"
+    from(sourceSets.main.resources) {
+        include '**/mods.toml'
+        expand 'version': version
     }
+}
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+build.dependsOn processResources
+
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
     }
 }

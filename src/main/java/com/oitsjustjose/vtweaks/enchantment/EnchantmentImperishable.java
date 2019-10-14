@@ -1,19 +1,19 @@
 package com.oitsjustjose.vtweaks.enchantment;
 
-import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Constants;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentImperishable extends Enchantment
 {
     protected EnchantmentImperishable()
     {
-        super(Rarity.UNCOMMON, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
-        this.setRegistryName(new ResourceLocation(VTweaks.MODID, "imperishable"));
-        this.setName(new ResourceLocation(VTweaks.MODID, "imperishable").toString());
+        super(Rarity.UNCOMMON, EnchantmentType.BREAKABLE, EquipmentSlotType.values());
+        this.setRegistryName(new ResourceLocation(Constants.MODID, "imperishable"));
+        this.name = this.getRegistryName().toString();
     }
 
     @Override

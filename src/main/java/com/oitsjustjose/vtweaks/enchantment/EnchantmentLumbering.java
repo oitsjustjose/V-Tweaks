@@ -2,22 +2,23 @@ package com.oitsjustjose.vtweaks.enchantment;
 
 import java.util.Set;
 
-import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.util.Constants;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ToolType;
 
 public class EnchantmentLumbering extends Enchantment
 {
     protected EnchantmentLumbering()
     {
-        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]
-        { EntityEquipmentSlot.MAINHAND });
-        this.setRegistryName(new ResourceLocation(VTweaks.MODID, "lumbering"));
-        this.setName(new ResourceLocation(VTweaks.MODID, "lumbering").toString());
+        super(Rarity.VERY_RARE, EnchantmentType.DIGGER, new EquipmentSlotType[]
+        { EquipmentSlotType.MAINHAND });
+        this.setRegistryName(new ResourceLocation(Constants.MODID, "lumbering"));
+        this.name = this.getRegistryName().toString();
     }
 
     @Override
@@ -29,8 +30,8 @@ public class EnchantmentLumbering extends Enchantment
     @Override
     public boolean canApply(ItemStack stack)
     {
-        Set<String> classes = stack.getItem().getToolClasses(stack);
-        return classes.contains("axe");
+        Set<ToolType> classes = stack.getItem().getToolTypes(stack);
+        return classes.contains(ToolType.AXE);
     }
 
     @Override

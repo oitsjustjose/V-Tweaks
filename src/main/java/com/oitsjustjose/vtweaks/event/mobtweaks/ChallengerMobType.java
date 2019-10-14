@@ -2,8 +2,8 @@ package com.oitsjustjose.vtweaks.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public enum ChallengerMobType
 {
@@ -28,10 +28,10 @@ public enum ChallengerMobType
     {
         ItemStack[] toolList = new ItemStack[]
         { new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW),
-                new ItemStack(Items.STICK), new ItemStack(Items.FIREWORKS), new ItemStack(Items.SIGN), ItemStack.EMPTY,
+                new ItemStack(Items.STICK), new ItemStack(Items.FIREWORK_ROCKET), new ItemStack(Items.OAK_SIGN), ItemStack.EMPTY,
                 ItemStack.EMPTY };
 
-        toolList[0].setItemDamage(toolList[0].getMaxDamage() / 8);
+        toolList[0].setDamage(toolList[0].getMaxDamage() / 8);
         toolList[0].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 3);
         toolList[1].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 10);
         toolList[2].addEnchantment(HelperFunctions.getEnchantment("minecraft", "punch"), 2);

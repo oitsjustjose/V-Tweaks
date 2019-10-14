@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
+import com.electronwill.nightconfig.core.io.ConfigParser;
+import com.oitsjustjose.vtweaks.config.CommonConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.event.DeathPoint;
 import com.oitsjustjose.vtweaks.event.StormTweak;
@@ -12,52 +14,52 @@ import com.oitsjustjose.vtweaks.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.FeatherPlucker;
-import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
-import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
-import com.oitsjustjose.vtweaks.util.ConfigParser;
+import com.oitsjustjose.vtweaks.util.Constants;
 import com.oitsjustjose.vtweaks.util.GuideNotifier;
-import com.oitsjustjose.vtweaks.util.ModConfig;
-import com.oitsjustjose.vtweaks.util.Recipes;
 
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.config.ModConfig.Type;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 
-@Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, updateJSON = VTweaks.UPDATER)
+@Mod(Constants.MODID)
 public class VTweaks
 {
-    public static final String MODID = "vtweaks";
-    public static final String NAME = "V-Tweaks";
-    public static final String VERSION = "@VERSION@";
-    public static final String UPDATER = "https://raw.githubusercontent.com/oitsjustjose/V-Tweaks/1.12/updater.json";
+    private static VTweaks instance;
+    public Logger LOGGER = LogManager.getLogger();
 
-    @Instance(MODID)
-    public static VTweaks instance;
-
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    public VTweaks()
     {
-        MinecraftForge.EVENT_BUS.register(new ModConfig.EventHandler());
+        instance = this;
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        this.configSetup();
+    }
 
+    public static VTweaks getInstance()
+    {
+        return instance;
+    }
+
+    public void setup(final FMLCommonSetupEvent event)
+    {
         // Enchantments
         MinecraftForge.EVENT_BUS.register(Enchantments.getInstance());
 
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
-        MinecraftForge.EVENT_BUS.register(new MobDropBuffs());
         MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
         MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
-        MinecraftForge.EVENT_BUS.register(new SheepDyeFix());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
 
         // Block Tweaks
@@ -69,6 +71,9 @@ public class VTweaks
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
         MinecraftForge.EVENT_BUS.register(new ConcreteTweaks());
+        ConcreteTweaks.powderBlocks.forEach((item) -> {
+            DispenserBlock.registerDispenseBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
+        });
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -77,16 +82,13 @@ public class VTweaks
 
         // Default Features
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
-        MinecraftForge.EVENT_BUS.register(new Recipes());
 
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Item.getItemFromBlock(Blocks.CONCRETE_POWDER),
-                ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
     }
 
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
+    private void configSetup()
     {
-        Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
-        ConfigParser.parseItems();
+        ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_CONFIG);
+        CommonConfig.loadConfig(CommonConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-common.toml"));
     }
+
 }

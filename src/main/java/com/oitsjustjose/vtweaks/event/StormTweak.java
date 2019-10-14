@@ -1,9 +1,9 @@
 package com.oitsjustjose.vtweaks.event;
 
-import com.oitsjustjose.vtweaks.util.ModConfig;
+import com.oitsjustjose.vtweaks.config.CommonConfig;
 
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class StormTweak
 {
@@ -11,12 +11,12 @@ public class StormTweak
     public void registerTweak(WorldEvent event)
     {
         // Check if feature is enabled
-        if (!ModConfig.misc.enableStormTweak)
+        if (!CommonConfig.DISABLE_THUNDER_STORMS.get())
         {
             return;
         }
         // Converts storms to regular rain
-        if (event.getWorld().isRaining())
+        if (event.getWorld().getWorld().isRaining())
         {
             if (event.getWorld().getWorldInfo().isThundering())
             {

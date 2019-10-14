@@ -1,25 +1,28 @@
 package com.oitsjustjose.vtweaks.util;
 
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class HelperFunctions
 {
     public static ItemStack getEnchantedBook(Enchantment ench)
     {
         ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
-        ItemEnchantedBook.addEnchantment(retBook, new EnchantmentData(ench, 1));
+        EnchantedBookItem.addEnchantment(retBook, new EnchantmentData(ench, 1));
         return retBook;
     }
 
@@ -30,7 +33,7 @@ public class HelperFunctions
      */
     public static Enchantment getEnchantment(String modid, String enchName)
     {
-        return Enchantment.REGISTRY.getObject(new ResourceLocation(modid, enchName));
+        return ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(modid, enchName));
     }
 
     /**
@@ -40,23 +43,12 @@ public class HelperFunctions
      */
     public static boolean bookHasEnchantment(ItemStack bookStack, Enchantment enchantment)
     {
-        int id = Enchantment.getEnchantmentID(enchantment);
-
-        if (bookStack.getItem() == Items.ENCHANTED_BOOK)
+        Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
+        for (Enchantment ench : bookEnchs.keySet())
         {
-            NBTTagCompound comp = bookStack.serializeNBT();
-            if (comp != null)
+            if (ench.getName().equalsIgnoreCase(enchantment.getName()))
             {
-                comp = comp.getCompoundTag("tag");
-                final NBTTagList list = comp.getTagList("StoredEnchantments", 10);
-                for (int i = 0; i < list.tagCount(); i++)
-                {
-                    comp = (NBTTagCompound) list.get(i);
-                    if (comp.getInteger("id") == id && comp.getInteger("lvl") > 0)
-                    {
-                        return true;
-                    }
-                }
+                return true;
             }
         }
         return false;
@@ -67,18 +59,9 @@ public class HelperFunctions
      * @param enchantment The enchantment being matched
      * @return true if the book has said enchantment, false otherwise
      */
-    public static NBTTagCompound getEnchantedBookNBT(Enchantment enchantment, int level)
+    public static CompoundNBT getEnchantedBookNBT(Enchantment enchantment, int level)
     {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setTag("StoredEnchantments", new NBTTagList());
-
-        NBTTagList nbttaglist = tag.getTagList("StoredEnchantments", 10);
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        nbttagcompound.setShort("id", (short) Enchantment.getEnchantmentID(enchantment));
-        nbttagcompound.setShort("lvl", (short) level);
-        nbttaglist.appendTag(nbttagcompound);
-
-        return tag;
+        return EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchantment, level)).getTag();
     }
 
     /**
@@ -89,55 +72,41 @@ public class HelperFunctions
      */
     public static boolean bookHasEnchantment(ItemStack bookStack, String modid, String enchName)
     {
-        int id = Enchantment.getEnchantmentID(Enchantment.REGISTRY.getObject(new ResourceLocation(modid, enchName)));
-
-        if (bookStack.getItem() == Items.ENCHANTED_BOOK)
+        Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(modid, enchName));
+        if (enchantment == null)
         {
-            NBTTagCompound comp = bookStack.serializeNBT();
-            if (comp != null)
-            {
-                comp = comp.getCompoundTag("tag");
-                final NBTTagList list = comp.getTagList("StoredEnchantments", 10);
-                for (int i = 0; i < list.tagCount(); i++)
-                {
-                    comp = (NBTTagCompound) list.get(i);
-                    if (comp.getInteger("id") == id && comp.getInteger("lvl") > 0)
-                    {
-                        return true;
-                    }
-                }
-            }
+            return false;
         }
-        return false;
+        return bookHasEnchantment(bookStack, enchantment);
     }
 
     // An easier builder function for Item Entities
-    public static EntityItem createItemEntity(World world, BlockPos pos, ItemStack itemstack)
+    public static ItemEntity createItemEntity(World world, BlockPos pos, ItemStack itemstack)
     {
-        return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
+        return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
     }
 
     // An easier builder function for Item Entities
-    public static EntityItem createItemEntity(World world, BlockPos pos, Block block)
+    public static ItemEntity createItemEntity(World world, BlockPos pos, Block block)
     {
-        return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(block));
+        return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(block));
     }
 
     // An easier builder function for Item Entities
-    public static EntityItem createItemEntity(World world, BlockPos pos, Item item)
+    public static ItemEntity createItemEntity(World world, BlockPos pos, Item item)
     {
-        return new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item));
+        return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item));
     }
 
     // Finds an itemstack using modid and name
     public static ItemStack findItemStack(String modid, String name)
     {
         ResourceLocation resLoc = new ResourceLocation(modid, name);
-        if (Item.REGISTRY.containsKey(resLoc))
-            return new ItemStack(Item.REGISTRY.getObject(resLoc));
-        else if (Block.REGISTRY.containsKey(resLoc))
-            if (Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)) != null)
-                return new ItemStack(Item.getItemFromBlock(Block.REGISTRY.getObject(resLoc)), 1);
+
+        if (ForgeRegistries.ITEMS.containsKey(resLoc))
+        {
+            return new ItemStack(ForgeRegistries.ITEMS.getValue(resLoc));
+        }
 
         return ItemStack.EMPTY;
     }

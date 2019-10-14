@@ -1,29 +1,19 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
-import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
-import com.oitsjustjose.vtweaks.util.HelperFunctions;
-import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
-import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.functions.LootFunction;
-import net.minecraft.world.storage.loot.functions.SetCount;
-import net.minecraft.world.storage.loot.functions.SetNBT;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantmentImperishableHandler
 {
@@ -31,23 +21,27 @@ public class EnchantmentImperishableHandler
     @SubscribeEvent
     public void register(PlayerInteractEvent event)
     {
-        if (!ModConfig.enchantments.enableImperishable)
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
         {
             return;
         }
 
-        if (event.getItemStack().isEmpty() || event.getEntityPlayer() == null)
+        if (event.getItemStack().isEmpty() || event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity))
         {
             return;
         }
 
         ItemStack stack = event.getItemStack();
+        if (!(stack.getItem() instanceof ToolItem))
+        {
+            return;
+        }
+        ToolItem tool = (ToolItem) stack.getItem();
 
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
         {
-            if (stack.getItemDamage() >= stack.getMaxDamage())
+            if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
             {
-                // Assuming it's a bed item named "Sleeping Bag":
                 if (event.isCancelable())
                 {
                     event.setCanceled(true);
@@ -61,7 +55,7 @@ public class EnchantmentImperishableHandler
     @SubscribeEvent
     public void register(LivingHurtEvent event)
     {
-        if (!ModConfig.enchantments.enableImperishable)
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
         {
             return;
         }
@@ -71,19 +65,21 @@ public class EnchantmentImperishableHandler
             return;
         }
         // For the case where a player hurts an entity
-        if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof EntityPlayer)
+        if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity)
         {
-            EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
             ItemStack stack = player.getHeldItemMainhand();
 
-            if (stack.isEmpty())
+            if (stack.isEmpty() || !(stack.getItem() instanceof ToolItem))
             {
                 return;
             }
 
+            ToolItem tool = (ToolItem) stack.getItem();
+
             if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
             {
-                if (stack.getItemDamage() >= stack.getMaxDamage())
+                if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
                 {
                     stack.attemptDamageItem(-1, player.getRNG(), null);
 
@@ -97,33 +93,34 @@ public class EnchantmentImperishableHandler
             }
         }
         // For the case where an entity hurts a player
-        else if (event.getEntityLiving() instanceof EntityPlayer)
+        else if (event.getEntityLiving() instanceof PlayerEntity)
         {
-            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
             float validDefense = 0.0F;
             float validToughness = 0.0F;
+
             for (ItemStack stack : player.getEquipmentAndArmor())
             {
 
-                if (stack.isEmpty() || !(stack.getItem() instanceof ItemArmor))
+                if (stack.isEmpty() || !(stack.getItem() instanceof ArmorItem))
                 {
                     continue;
                 }
 
+                ArmorItem armor = (ArmorItem) stack.getItem();
                 // How much the player is ACTUALLY getting hurt
                 if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, stack) > 0)
                 {
-                    if (stack.getItemDamage() >= stack.getMaxDamage())
+                    if (armor.getDamage(stack) >= armor.getMaxDamage(stack))
                     {
                         stack.attemptDamageItem(-1, player.getRNG(), null);
                         continue;
                     }
                 }
 
-                ItemArmor armor = (ItemArmor) stack.getItem();
-                validDefense += armor.damageReduceAmount;
-                validToughness += armor.toughness;
+                validDefense += armor.getDamageReduceAmount();
+                validToughness += armor.getToughness();
             }
 
             float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
@@ -135,21 +132,22 @@ public class EnchantmentImperishableHandler
     @SubscribeEvent
     public void lootLoad(LootTableLoadEvent event)
     {
-        if (!ModConfig.enchantments.enableImperishable)
-        {
-            return;
-        }
+        // if (!ModConfig.enchantments.enableImperishable)
+        // {
+        // return;
+        // }
 
-        LootCondition[] none = new LootCondition[0];
-        LootPool pool = event.getTable().getPool("main");
+        // ILootCondition[] none = new ILootCondition[]
+        // {};
+        // LootPool pool = event.getTable().getPool("main");
 
-        if (LootTableList.CHESTS_NETHER_BRIDGE.equals(event.getName()))
-        {
-            LootFunction enchantment = new SetNBT(none,
-                    HelperFunctions.getEnchantedBookNBT(Enchantments.getInstance().imperishable, 1));
-            LootFunction quantity = new SetCount(none, new RandomValueRange(1));
-            pool.addEntry(new LootEntryItem(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]
-            { enchantment, quantity }, none, VTweaks.MODID + ":imperishable_book"));
-        }
+        // if (LootTables.CHESTS_NETHER_BRIDGE.toString().equals(event.getName().toString()))
+        // {
+        // LootFunction enchantment = new SetNBT(none,
+        // HelperFunctions.getEnchantedBookNBT(Enchantments.getInstance().imperishable, 1));
+        // LootFunction quantity = new SetCount(none, new RandomValueRange(1));
+        // pool.addEntry(new LootPool(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]
+        // { enchantment, quantity }, none, Constants.MODID + ":imperishable_book"));
+        // }
     }
 }

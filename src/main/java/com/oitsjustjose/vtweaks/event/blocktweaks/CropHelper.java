@@ -1,26 +1,26 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
-import java.util.Iterator;
+import java.util.List;
 
+import com.oitsjustjose.vtweaks.config.BlockTweakConfig;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
-import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CocoaBlock;
+import net.minecraft.block.CropsBlock;
+import net.minecraft.block.NetherWartBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class CropHelper
 {
@@ -28,89 +28,87 @@ public class CropHelper
     public void registerVanilla(RightClickBlock event)
     {
         // Checks if feature is enabled
-        if (!ModConfig.blockTweaks.cropTweak.enableCropTweak)
+        if (!BlockTweakConfig.ENABLE_CROP_TWEAK.get())
         {
             return;
         }
 
         event.getWorld().getBlockState(event.getPos());
-        if (event.getEntityPlayer() == null || event.getHand() != EnumHand.MAIN_HAND)
+        if (event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity)
+                || event.getHand() != Hand.MAIN_HAND)
         {
             return;
         }
 
-        IBlockState state = event.getWorld().getBlockState(event.getPos());
+        BlockState state = event.getWorld().getBlockState(event.getPos());
+        PlayerEntity player = (PlayerEntity) event.getEntity();
         Block harvestable = state.getBlock();
 
-        for (String blackList : ModConfig.blockTweaks.cropTweak.blacklist)
+        for (String blackList : BlockTweakConfig.CROP_TWEAK_BLACKLIST.get())
         {
-            if (harvestable.getClass().getName().toLowerCase().contains(blackList.toLowerCase()))
+            if (ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blackList)) == harvestable)
             {
                 return;
             }
         }
 
-        if (harvestable instanceof BlockCrops)
+        if (event.getWorld() instanceof ServerWorld)
         {
-            if (harvestGenericCrop(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
+            ServerWorld world = (ServerWorld) event.getWorld();
+
+            if (harvestable instanceof CropsBlock)
             {
-                event.setCanceled(true);
+                if (harvestGenericCrop(world, event.getPos(), state, player))
+                {
+                    event.setCanceled(true);
+                }
             }
-        }
-        else if (harvestable instanceof BlockNetherWart)
-        {
-            if (harvestNetherWart(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
+            else if (harvestable instanceof NetherWartBlock)
             {
-                event.setCanceled(true);
+                if (harvestNetherWart(world, event.getPos(), state, player))
+                {
+                    event.setCanceled(true);
+                }
             }
-        }
-        else if (harvestable instanceof BlockCocoa)
-        {
-            if (harvestCocoaPod(event.getWorld(), event.getPos(), state, event.getEntityPlayer()))
+            else if (harvestable instanceof CocoaBlock)
             {
-                event.setCanceled(true);
+                if (harvestCocoaPod(world, event.getPos(), state, player))
+                {
+                    event.setCanceled(true);
+                }
             }
         }
     }
 
-    public boolean harvestGenericCrop(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    public boolean harvestGenericCrop(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        BlockCrops crop = (BlockCrops) state.getBlock();
+        CropsBlock crop = (CropsBlock) state.getBlock();
         if (crop.isMaxAge(state))
         {
             if (!world.isRemote)
             {
-                final NonNullList<ItemStack> drops = NonNullList.create();
-                final Item mainDrop = crop.getItemDropped(state, world.rand, 0);
-                crop.getDrops(drops, world, pos, state, 0);
-                // An iterator to remove a seed or potato / carrot
-                Iterator<ItemStack> iter = drops.iterator();
-                while (iter.hasNext())
-                {
-                    final ItemStack next = iter.next();
-                    if (next.getItem() != mainDrop || next.getItem() == Items.POTATO || next.getItem() == Items.CARROT)
+                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
+
+                drops.forEach((stack) -> {
+                    if (stack.getCount() > 1)
                     {
-                        iter.remove();
-                        break;
+                        stack.shrink(1);
+                        dropItem(world, player.getPosition(), stack);
                     }
-                }
-                for (ItemStack i : drops)
-                {
-                    dropItem(world, player.getPosition(), i);
-                }
+                });
+
                 world.setBlockState(pos, crop.withAge(0));
             }
-            player.swingArm(EnumHand.MAIN_HAND);
+            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
     }
 
-    private boolean harvestNetherWart(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    private boolean harvestNetherWart(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        BlockNetherWart wart = (BlockNetherWart) state.getBlock();
-        final NonNullList<ItemStack> drops = NonNullList.create();
-        wart.getDrops(drops, world, pos, state, 0);
+        NetherWartBlock wart = (NetherWartBlock) state.getBlock();
+        List<ItemStack> drops = Block.getDrops(state, world, pos, null);
         // This is how I'm determining the crop is grown
         if (drops.size() > 1)
         {
@@ -123,17 +121,15 @@ public class CropHelper
                 }
                 world.setBlockState(pos, wart.getDefaultState());
             }
-            player.swingArm(EnumHand.MAIN_HAND);
+            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
     }
 
-    private boolean harvestCocoaPod(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    private boolean harvestCocoaPod(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        BlockCocoa cocoa = (BlockCocoa) state.getBlock();
-        final NonNullList<ItemStack> drops = NonNullList.create();
-        cocoa.getDrops(drops, world, pos, state, 0);
+        List<ItemStack> drops = Block.getDrops(state, world, pos, null);
         // This is how I'm determining the crop is grown
         if (drops.size() > 1)
         {
@@ -144,9 +140,9 @@ public class CropHelper
                 {
                     dropItem(world, player.getPosition(), i);
                 }
-                world.setBlockState(pos, state.withProperty(BlockCocoa.AGE, Integer.valueOf(0)));
+                world.setBlockState(pos, state.with(CocoaBlock.AGE, Integer.valueOf(0)));
             }
-            player.swingArm(EnumHand.MAIN_HAND);
+            player.swingArm(Hand.MAIN_HAND);
             return true;
         }
         return false;
@@ -154,6 +150,6 @@ public class CropHelper
 
     private void dropItem(World world, BlockPos pos, ItemStack itemstack)
     {
-        world.spawnEntity(HelperFunctions.createItemEntity(world, pos, itemstack));
+        world.addEntity(HelperFunctions.createItemEntity(world, pos, itemstack));
     }
 }

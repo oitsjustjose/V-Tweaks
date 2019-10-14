@@ -1,18 +1,18 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
+import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
-import com.oitsjustjose.vtweaks.util.ModConfig;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnchantmentLumberingHandler
 {
@@ -20,28 +20,28 @@ public class EnchantmentLumberingHandler
     public void register(BreakEvent event)
     {
         // Check if enchantment is disabled
-        if (!ModConfig.enchantments.enableLumbering)
+        if (!EnchantmentConfig.ENABLE_LUMBERING.get())
         {
             return;
         }
         // Check that state, world, player or player's held item all exist
         if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null
-                || event.getPlayer().getHeldItemMainhand().isEmpty() || event.getPlayer().capabilities.isCreativeMode)
+                || event.getPlayer().getHeldItemMainhand().isEmpty() || event.getPlayer().isCreative())
         {
             return;
         }
         // Local variables
-        World world = event.getWorld();
-        EntityPlayer player = event.getPlayer();
+        IWorld world = event.getWorld();
+        PlayerEntity player = event.getPlayer();
         // Checks if the axe has lumbering
         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
                 player.getHeldItemMainhand()) > 0)
         {
             if (player.isSneaking())
             {
-                if (event.getState().getBlock().isWood(world, event.getPos()))
+                if (BlockTags.LOGS.contains(event.getState().getBlock()))
                 {
-                    chopTree(world, player, event.getPos());
+                    chopTree(world.getWorld(), player, event.getPos());
                     world.playSound(
                             null, event.getPos(), event.getState().getBlock()
                                     .getSoundType(event.getState(), world, event.getPos(), player).getBreakSound(),
@@ -59,7 +59,7 @@ public class EnchantmentLumberingHandler
      * @param player
      * @param pos
      */
-    private void chopTree(World world, EntityPlayer player, BlockPos pos)
+    private void chopTree(World world, PlayerEntity player, BlockPos pos)
     {
         for (int mod_x = -1; mod_x <= 1; mod_x++)
         {
@@ -70,37 +70,24 @@ public class EnchantmentLumberingHandler
                     BlockPos iterPos = pos.add(mod_x, mod_y, mod_z);
                     if (iterPos != pos)
                     {
-                        if (world.getBlockState(iterPos).getBlock().isWood(world, iterPos))
+                        if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock()))
                         {
                             chopTree(world, player, iterPos);
                         }
-                        else if (ModConfig.enchantments.lumberingCutsLeaves)
+                        else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get())
                         {
-                            if (world.getBlockState(iterPos).getBlock().isLeaves(world.getBlockState(iterPos), world,
+                            if (world.getBlockState(iterPos).getBlock().isFoliage(world.getBlockState(iterPos), world,
                                     iterPos))
                             {
                                 chopTree(world, player, iterPos);
                             }
                         }
                     }
-                    breakBlock(world, player, pos);
+                    world.destroyBlock(pos, true);
+                    player.getHeldItemMainhand().attemptDamageItem(1, world.rand, null);
                 }
             }
         }
     }
 
-    // Simple function to break a block as if a player did it
-    private void breakBlock(World world, EntityPlayer player, BlockPos pos)
-    {
-        Block block = world.getBlockState(pos).getBlock();
-        IBlockState state = world.getBlockState(pos);
-
-        block.onBlockHarvested(world, pos, state, player);
-        if (block.removedByPlayer(state, world, pos, player, true))
-        {
-            block.onBlockDestroyedByPlayer(world, pos, state);
-            block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
-        }
-        world.setBlockToAir(pos);
-    }
 }

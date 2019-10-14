@@ -1,16 +1,16 @@
 package com.oitsjustjose.vtweaks.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.util.ModConfig;
+import com.oitsjustjose.vtweaks.config.MobTweakConfig;
 
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PetArmory
 {
@@ -18,7 +18,7 @@ public class PetArmory
     public void registerEvent(EntityInteract event)
     {
         // Checks that the feature is enabled
-        if (!ModConfig.mobTweaks.enablePetArmory)
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get())
         {
             return;
         }
@@ -28,39 +28,43 @@ public class PetArmory
             return;
         }
         // Conirms the target is tamable!
-        if (event.getTarget() instanceof EntityTameable)
+        if (event.getTarget() instanceof TameableEntity)
         {
-            EntityTameable pet = (EntityTameable) event.getTarget();
-            EntityPlayer player = event.getEntityPlayer();
+            TameableEntity pet = (TameableEntity) event.getTarget();
+            if (!(event.getEntityLiving() instanceof PlayerEntity))
+            {
+                return;
+            }
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
             if (!player.getHeldItemMainhand().isEmpty() && pet.isTamed() && pet.isOwner(player))
             {
                 if (player.getHeldItemMainhand().getItem() == Items.IRON_HORSE_ARMOR)
                 {
-                    pet.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+                    pet.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(Items.IRON_BOOTS));
+                    pet.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(Items.IRON_LEGGINGS));
+                    pet.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+                    pet.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(Items.IRON_HELMET));
 
                     player.getHeldItemMainhand().shrink(1);
                     player.playSound(new SoundEvent(new ResourceLocation("entity.horse.armor")), 1.0F, 0.85F);
                 }
                 else if (player.getHeldItemMainhand().getItem() == Items.GOLDEN_HORSE_ARMOR)
                 {
-                    pet.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.GOLDEN_BOOTS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.GOLDEN_LEGGINGS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.GOLDEN_CHESTPLATE));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET));
+                    pet.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(Items.GOLDEN_BOOTS));
+                    pet.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(Items.GOLDEN_LEGGINGS));
+                    pet.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(Items.GOLDEN_CHESTPLATE));
+                    pet.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(Items.GOLDEN_HELMET));
 
                     player.getHeldItemMainhand().shrink(1);
                     player.playSound(new SoundEvent(new ResourceLocation("entity.horse.armor")), 1.0F, 0.85F);
                 }
                 else if (player.getHeldItemMainhand().getItem() == Items.DIAMOND_HORSE_ARMOR)
                 {
-                    pet.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.DIAMOND_BOOTS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
-                    pet.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET));
+                    pet.setItemStackToSlot(EquipmentSlotType.FEET, new ItemStack(Items.DIAMOND_BOOTS));
+                    pet.setItemStackToSlot(EquipmentSlotType.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS));
+                    pet.setItemStackToSlot(EquipmentSlotType.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
+                    pet.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(Items.DIAMOND_HELMET));
 
                     player.getHeldItemMainhand().shrink(1);
                     player.playSound(new SoundEvent(new ResourceLocation("entity.horse.armor")), 1.0F, 0.85F);
