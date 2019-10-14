@@ -1,108 +1,43 @@
-// package com.oitsjustjose.vtweaks.util;
+package com.oitsjustjose.vtweaks.util;
 
-// import java.util.ArrayList;
-// import java.util.Objects;
+import java.util.ArrayList;
 
-// import com.google.common.collect.ImmutableList;
-// import com.oitsjustjose.vtweaks.enchantment.Enchantments;
+import com.google.common.collect.Lists;
+import com.oitsjustjose.vtweaks.VTweaks;
 
-// import mezz.jei.api.IJeiHelpers;
-// import mezz.jei.api.IJeiRuntime;
-// import mezz.jei.api.IModPlugin;
-// import mezz.jei.api.IModRegistry;
-// import mezz.jei.api.ISubtypeRegistry;
-// import mezz.jei.api.JEIPlugin;
-// import mezz.jei.api.ingredients.IModIngredientRegistration;
-// import mezz.jei.api.recipe.IVanillaRecipeFactory;
-// import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-// import net.minecraft.init.Items;
-// import net.minecraft.item.ItemStack;
-// import net.minecraft.nbt.NBTTagCompound;
-// import net.minecraft.util.ResourceLocation;
-// import net.minecraftforge.fml.common.Loader;
-// import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 
-// @JEIPlugin
-// public class JEICompat implements IModPlugin
-// {
-// @Override
-// public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry)
-// {
-// }
+@JeiPlugin
+public class JEICompat implements IModPlugin
+{
+    private static ResourceLocation ID = new ResourceLocation(Constants.MODID, "ench_books");
 
-// @Override
-// public void registerIngredients(IModIngredientRegistration registry)
-// {
-// }
+    @Override
+    public ResourceLocation getPluginUid()
+    {
+        return ID;
+    }
 
-// @Override
-// public void register(IModRegistry registry)
-// {
-// IJeiHelpers jeiHelpers = registry.getJeiHelpers();
-// IVanillaRecipeFactory factory = jeiHelpers.getVanillaRecipeFactory();
+    @Override
+    public void registerRecipes(IRecipeRegistration registration)
+    {
+        ArrayList<Object> recipes = Lists.newArrayList();
+        recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK),
+                Lists.newArrayList(new ItemStack(Items.GOLDEN_AXE)),
+                Lists.newArrayList(HelperFunctions.getEnchantedBook(VTweaks.lumbering))));
 
-// if (ModConfig.misc.enableHorseArmorRecipes)
-// {
-// addAnvilRecipe(factory, registry, new ItemStack(Items.IRON_LEGGINGS), new ItemStack(Items.IRON_LEGGINGS),
-// new ItemStack(Items.IRON_HORSE_ARMOR));
-// addAnvilRecipe(factory, registry, new ItemStack(Items.GOLDEN_LEGGINGS),
-// new ItemStack(Items.GOLDEN_LEGGINGS), new ItemStack(Items.GOLDEN_HORSE_ARMOR));
-// addAnvilRecipe(factory, registry, new ItemStack(Items.DIAMOND_LEGGINGS),
-// new ItemStack(Items.DIAMOND_LEGGINGS), new ItemStack(Items.DIAMOND_HORSE_ARMOR));
-// }
-// if (ModConfig.enchantments.enableLumbering)
-// {
-// ArrayList<ItemStack> axes = new ArrayList<>();
-// axes.add(new ItemStack(Items.GOLDEN_AXE));
+        recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(
+                HelperFunctions.getEnchantedBook(Enchantments.UNBREAKING, 3),
+                Lists.newArrayList(HelperFunctions.getEnchantedBook(Enchantments.UNBREAKING, 3)),
+                Lists.newArrayList(HelperFunctions.getEnchantedBook(VTweaks.imperishable))));
 
-// if (Loader.isModLoaded("toolbox"))
-// {
-// for (String s : new String[]
-// { "null", "diamond", "emerald", "quartz", "prismarine", "ender_pearl", "lapis", "biotite", "amethyst",
-// "ruby", "peridot", "topaz", "tanzanite", "malachite", "sapphire", "amber", "obsidian",
-// "aquamarine" })
-// {
-// NBTTagCompound comp = new NBTTagCompound();
-// comp.setString("ADORNMENT", s);
-// comp.setString("Haft", "wood");
-// comp.setString("Handle", "wood");
-// comp.setString("Head", "gold");
-// ItemStack toolboxAxe = new ItemStack(Objects
-// .requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation("toolbox", "axe"))));
-// toolboxAxe.setTagCompound(comp);
-// axes.add(toolboxAxe);
-// }
-// }
-// addAnvilRecipe(factory, registry, new ItemStack(Items.WRITABLE_BOOK), axes,
-// HelperFunctions.getEnchantedBook(VTweaks.lumbering));
-// }
-// }
-
-// @Override
-// public void onRuntimeAvailable(IJeiRuntime jeiRuntime)
-// {
-// }
-
-// private void addAnvilRecipe(IVanillaRecipeFactory factory, IModRegistry registry, ItemStack inputLeft,
-// ItemStack inputRight, ItemStack output)
-// {
-// ArrayList<ItemStack> rightTemp = new ArrayList<>();
-// ArrayList<ItemStack> outputTemp = new ArrayList<>();
-// rightTemp.add(inputRight);
-// outputTemp.add(output);
-// registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(inputLeft, rightTemp, outputTemp)),
-// VanillaRecipeCategoryUid.ANVIL);
-// }
-
-// private void addAnvilRecipe(IVanillaRecipeFactory factory, IModRegistry registry, ItemStack inputLeft,
-// ArrayList<ItemStack> inputRight, ItemStack output)
-// {
-// ArrayList<ItemStack> outputTemp = new ArrayList<>();
-// for (int i = 0; i < inputRight.size(); i++)
-// {
-// outputTemp.add(output);
-// }
-// registry.addRecipes(ImmutableList.of(factory.createAnvilRecipe(inputLeft, inputRight, outputTemp)),
-// VanillaRecipeCategoryUid.ANVIL);
-// }
-// }
+        registration.addRecipes(recipes, VanillaRecipeCategoryUid.ANVIL);
+    }
+}

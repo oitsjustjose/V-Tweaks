@@ -4,7 +4,6 @@ import com.oitsjustjose.vtweaks.config.CommonConfig;
 import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentImperishable;
 import com.oitsjustjose.vtweaks.enchantment.EnchantmentLumbering;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.enchantment.handler.EnchantmentLumberingHandler;
@@ -67,7 +66,6 @@ public class VTweaks
     public void setup(final FMLCommonSetupEvent event)
     {
         // Enchantments
-        MinecraftForge.EVENT_BUS.register(new Enchantments());
         MinecraftForge.EVENT_BUS.register(new Recipes());
 
         // Mob Tweaks

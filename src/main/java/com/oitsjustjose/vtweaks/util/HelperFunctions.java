@@ -26,6 +26,13 @@ public class HelperFunctions
         return retBook;
     }
 
+    public static ItemStack getEnchantedBook(Enchantment ench, int lvl)
+    {
+        ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantedBookItem.addEnchantment(retBook, new EnchantmentData(ench, lvl));
+        return retBook;
+    }
+
     /**
      * @param modid    The mod owning the enchantment
      * @param enchName The internalized name of the enchantment
