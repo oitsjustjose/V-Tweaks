@@ -37,7 +37,7 @@ public class MobTweakConfig
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
-                "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but creepers and those in the blacklist.")
+                "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but those in this blacklist.")
                 .define("challengerMobsEnabled", true);
         CHALLENGER_MOBS_LOOT = COMMON_BUILDER
                 .comment("A string list of form <modid:item> of possible loot items a Challenger Mob could drop")
@@ -50,14 +50,14 @@ public class MobTweakConfig
                             {
                                 String itemName = (String) itemRaw;
                                 String[] parts = itemName.split("[\\W]");
-                                
+
                                 if (parts.length != 2 && parts.length != 3)
                                 {
                                     return false;
                                 }
-                                
+
                                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts[0], parts[1]));
-                                
+
                                 if (item != null)
                                 {
                                     challengerMobDrops.add(

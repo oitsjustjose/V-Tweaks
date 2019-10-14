@@ -42,7 +42,7 @@ public class DropTweaks
         // Handles egg hatching; configurable chance.
         if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG)
         {
-            if (world.rand.nextInt(ItemTweakConfig.EGG_HATCING_CHANCE.get()) == 0)
+            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get())
             {
                 if (!world.isRemote)
                 {

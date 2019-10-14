@@ -19,14 +19,14 @@ public class ItemTweakConfig
         ENABLE_EGG_HATCHING = COMMON_BUILDER.comment("Allows egg items in the world to hatch instead of despawn")
                 .define("eggHatchingEnabled", true);
         EGG_HATCING_CHANCE = COMMON_BUILDER
-                .comment("The chance (1 in X, where X is described below) that the egg will turn into a chick"
+                .comment("The chance (out of 100 - higher means more frequent) that the egg will turn into a chick"
                         + "\nDO NOT SET THIS TOO HIGH OR ELSE CHICKENS MAY INFINITELY LAG YOUR WORLD")
                 .defineInRange("eggHatchingChance", 512, 1, Integer.MAX_VALUE);
         ENABLE_SAPLING_SELF_PLANTING = COMMON_BUILDER
                 .comment("Instead of de-spawning, saplings will attempt to plant themselves")
                 .define("enableSaplingPlanting", true);
-        DESPAWN_TIME_OVERRIDE = COMMON_BUILDER
-                .comment("Adjust Item Despawn Time (in ticks: 20 ticks in a second)\n-1 prevents items from despawning at all")
+        DESPAWN_TIME_OVERRIDE = COMMON_BUILDER.comment(
+                "Adjust Item Despawn Time (in ticks: 20 ticks in a second)\n-1 prevents items from despawning at all")
                 .defineInRange("despawnTimeAdjustments", -1, -1, Integer.MAX_VALUE);
         ENABLE_CONCRETE_TWEAKS = COMMON_BUILDER
                 .comment("Convert Concrete Powder to Concrete when the item is thrown into water")

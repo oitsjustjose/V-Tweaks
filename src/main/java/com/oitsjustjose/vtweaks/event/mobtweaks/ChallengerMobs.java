@@ -4,14 +4,15 @@ import com.oitsjustjose.vtweaks.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombiePigmanEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
@@ -37,18 +38,25 @@ public class ChallengerMobs
 
         if (!event.getWorld().isRemote())
         {
-            if (event.getWorld().getRandom().nextInt(MobTweakConfig.CHALLENGER_MOBS_RARITY.get()) == 0)
+            if (event.getWorld().getRandom().nextInt(100) <= MobTweakConfig.CHALLENGER_MOBS_RARITY.get()
+                    && !event.getEntity().getPersistentData().getBoolean("challenger_mob_checked"))
             {
                 final ChallengerMobType VARIANT = ChallengerMobType.values()[event.getWorld().getRandom().nextInt(8)];
 
-                if (event.getEntity() != null && event.getEntity() instanceof MobEntity)
+                if (event.getEntity() != null && event.getEntity() instanceof MonsterEntity)
                 {
                     if (event.getEntity() instanceof ZombiePigmanEntity || isBlackListed(event.getEntity()))
                     {
                         return;
                     }
 
-                    MobEntity monster = (MobEntity) event.getEntity();
+                    MonsterEntity monster = (MonsterEntity) event.getEntity();
+
+                    if (isChallengerMob(monster))
+                    {
+                        return;
+                    }
+
                     monster.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
                     monster.setItemStackToSlot(EquipmentSlotType.CHEST, ItemStack.EMPTY);
                     monster.setItemStackToSlot(EquipmentSlotType.LEGS, ItemStack.EMPTY);
@@ -56,8 +64,7 @@ public class ChallengerMobs
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
                     monster.setCustomName(mobClassName(VARIANT, monster));
-                    // Specifically keeps creepers from spawning with fire resistance to prevent
-                    // funny business
+                    // Specifically keeps creepers from spawning with fire resistance to prevent funny business
                     if (!(monster instanceof CreeperEntity))
                     {
                         monster.addPotionEffect(
@@ -79,7 +86,13 @@ public class ChallengerMobs
                         pants.addEnchantment(HelperFunctions.getEnchantment("minecraft", "blast_protection"), 5);
                         monster.setItemStackToSlot(EquipmentSlotType.LEGS, pants);
                     }
+
+                    setChallengerTag(monster, VARIANT);
                 }
+            }
+            else
+            {
+                event.getEntity().getPersistentData().putBoolean("challenger_mob_checked", true);
             }
         }
     }
@@ -92,13 +105,21 @@ public class ChallengerMobs
             return;
         }
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof MobEntity)
-                || !isChallengerMob((MobEntity) event.getEntity()))
+        if (event.getEntity() == null || !(event.getEntity() instanceof MonsterEntity)
+                || !isChallengerMob((MonsterEntity) event.getEntity()))
         {
             return;
         }
 
         event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
+    }
+
+    private void setChallengerTag(MonsterEntity entity, ChallengerMobType variant)
+    {
+        CompoundNBT comp = entity.getPersistentData();
+        CompoundNBT type = new CompoundNBT();
+        type.putString("variant", variant.getPrefix());
+        comp.put("challenger_mob_data", type);
     }
 
     private boolean isBlackListed(Entity entity)
@@ -113,7 +134,7 @@ public class ChallengerMobs
         return false;
     }
 
-    private ITextComponent mobClassName(ChallengerMobType type, MobEntity mob)
+    private ITextComponent mobClassName(ChallengerMobType type, MonsterEntity mob)
     {
         StringBuilder mobString = new StringBuilder(mob.toString().substring(0, mob.toString().indexOf("[")));
         String[] nameParts = mobString.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
@@ -141,19 +162,14 @@ public class ChallengerMobs
         return HelperFunctions.createItemEntity(world, pos, MobTweakConfig.challengerMobDrops.get(RNG));
     }
 
-    private boolean isChallengerMob(MobEntity entity)
+    private boolean isChallengerMob(MonsterEntity entity)
     {
+        CompoundNBT comp = entity.getPersistentData();
 
-        String n = entity.getCustomName().getFormattedText();
-
-        for (ChallengerMobType type : ChallengerMobType.values())
+        if (comp.contains("challenger_mob_data"))
         {
-            if (n.startsWith(type.getPrefix()))
-            {
-                return true;
-            }
+            return true;
         }
-
         return false;
     }
 }
