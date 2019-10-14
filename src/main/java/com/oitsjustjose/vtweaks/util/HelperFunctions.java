@@ -55,6 +55,27 @@ public class HelperFunctions
     }
 
     /**
+     * @param bookStack       ItemStack containing the enchantetd book
+     * @param enchantmentData The enchantmentdata being matched
+     * @return true if the book has said enchantment, false otherwise
+     */
+    public static boolean bookHasEnchantment(ItemStack bookStack, EnchantmentData enchantmentData)
+    {
+        Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
+        for (Enchantment ench : bookEnchs.keySet())
+        {
+            if (ench.getName().equalsIgnoreCase(enchantmentData.enchantment.getName()))
+            {
+                if (bookEnchs.get(ench) == enchantmentData.enchantmentLevel)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * @param bookStack   ItemStack containing the enchantetd book
      * @param enchantment The enchantment being matched
      * @return true if the book has said enchantment, false otherwise

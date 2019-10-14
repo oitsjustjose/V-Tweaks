@@ -21,7 +21,8 @@
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevclient",
         "MC_VERSION": "1.14.4"
-      }
+      },
+      "console": "internalConsole"
     },
     {
       "type": "java",
@@ -40,7 +41,8 @@
         "FORGE_GROUP": "net.minecraftforge",
         "target": "fmluserdevserver",
         "MC_VERSION": "1.14.4"
-      }
+      },
+      "console": "internalConsole"
     }
   ]
 }

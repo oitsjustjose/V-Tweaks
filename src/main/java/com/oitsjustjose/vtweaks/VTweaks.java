@@ -23,6 +23,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.util.Constants;
 import com.oitsjustjose.vtweaks.util.GuideNotifier;
+import com.oitsjustjose.vtweaks.util.Recipes;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,6 +68,7 @@ public class VTweaks
     {
         // Enchantments
         MinecraftForge.EVENT_BUS.register(new Enchantments());
+        MinecraftForge.EVENT_BUS.register(new Recipes());
 
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());

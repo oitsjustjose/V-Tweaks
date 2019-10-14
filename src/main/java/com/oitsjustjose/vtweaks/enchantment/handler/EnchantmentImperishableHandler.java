@@ -2,7 +2,6 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.config.EnchantmentConfig;
-import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +9,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -127,28 +125,5 @@ public class EnchantmentImperishableHandler
             float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
             event.setAmount(damage);
         }
-    }
-
-    // This event is for the generation of teh lewtz
-    @SubscribeEvent
-    public void lootLoad(LootTableLoadEvent event)
-    {
-        // if (!ModConfig.enchantments.enableImperishable)
-        // {
-        // return;
-        // }
-
-        // ILootCondition[] none = new ILootCondition[]
-        // {};
-        // LootPool pool = event.getTable().getPool("main");
-
-        // if (LootTables.CHESTS_NETHER_BRIDGE.toString().equals(event.getName().toString()))
-        // {
-        // LootFunction enchantment = new SetNBT(none,
-        // HelperFunctions.getEnchantedBookNBT(VTweaks.imperishable, 1));
-        // LootFunction quantity = new SetCount(none, new RandomValueRange(1));
-        // pool.addEntry(new LootPool(Items.ENCHANTED_BOOK, 20, 0, new LootFunction[]
-        // { enchantment, quantity }, none, Constants.MODID + ":imperishable_book"));
-        // }
     }
 }

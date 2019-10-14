@@ -25,9 +25,10 @@ public class GuideNotifier
             style.setBold(true);
             style.setUnderlined(true);
             style.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiURL));
-            style.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("vtweaks.intro.link")));
+            style.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("vtweaks.intro.link")));
 
-            player.sendMessage(new TranslationTextComponent( "vtweaks.intro.message"));
+            player.sendMessage(new TranslationTextComponent("vtweaks.intro.message"));
             player.sendMessage(new TranslationTextComponent("vtweaks.intro.link").setStyle(style));
             tag.putBoolean("vtweaks:shown_wiki", true);
         }

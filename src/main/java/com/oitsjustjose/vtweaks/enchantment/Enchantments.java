@@ -8,5 +8,4 @@ public class Enchantments
 {
     private static Enchantments instance;
 
-
 }
