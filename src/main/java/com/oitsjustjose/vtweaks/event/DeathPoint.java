@@ -4,8 +4,7 @@ import com.oitsjustjose.vtweaks.config.CommonConfig;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -30,10 +29,8 @@ public class DeathPoint
     }
 
     // Coincidentally compatible with Journeymap :D
-    private StringTextComponent getCoordMessage(BlockPos pos)
+    private TranslationTextComponent getCoordMessage(BlockPos pos)
     {
-        String message = "Your most recent death was at: " + TextFormatting.YELLOW + "[X: " + pos.getX() + ", Y: "
-                + pos.getY() + ", Z: " + pos.getZ() + "]";
-        return new StringTextComponent(message);
+        return new TranslationTextComponent("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
     }
 }

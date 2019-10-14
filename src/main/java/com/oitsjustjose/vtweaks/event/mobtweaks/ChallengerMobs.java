@@ -18,7 +18,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -82,7 +81,8 @@ public class ChallengerMobs
                     if (VARIANT == ChallengerMobType.ZESTONIAN)
                     {
                         ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
-                        pants.setDisplayName(new StringTextComponent(TextFormatting.DARK_PURPLE + "Man Pants"));
+                        pants.setDisplayName(
+                                new TranslationTextComponent(TextFormatting.DARK_PURPLE + "vtweaks.man.pants"));
                         pants.addEnchantment(HelperFunctions.getEnchantment("minecraft", "blast_protection"), 5);
                         monster.setItemStackToSlot(EquipmentSlotType.LEGS, pants);
                     }
@@ -136,24 +136,8 @@ public class ChallengerMobs
 
     private ITextComponent mobClassName(ChallengerMobType type, MonsterEntity mob)
     {
-        StringBuilder mobString = new StringBuilder(mob.toString().substring(0, mob.toString().indexOf("[")));
-        String[] nameParts = mobString.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-        mobString = new StringBuilder();
-        for (int i = 0; i < nameParts.length; i++)
-        {
-            if (!nameParts[i].toLowerCase().contains("entity"))
-            {
-                if (i != (nameParts.length - 1))
-                {
-                    mobString.append(nameParts[i]).append(" ");
-                }
-                else
-                {
-                    mobString.append(nameParts[i]);
-                }
-            }
-        }
-        return new StringTextComponent(type.getPrefix() + " " + mobString);
+        return new TranslationTextComponent("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob",
+                mob.getName());
     }
 
     private ItemEntity getItem(World world, BlockPos pos)

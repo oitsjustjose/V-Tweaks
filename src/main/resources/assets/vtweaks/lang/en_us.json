@@ -1,4 +1,16 @@
 {
     "vtweaks:lumbering": "Lumbering",
-    "vtweaks:imperishable": "Imperishable"
+    "vtweaks:imperishable": "Imperishable",
+    "vtweaks.death.message": "You died at §e[X:%s, Y:%s, Z:%s]§r",
+    "vtweaks.man.pants": "Man Pants",
+    "vtweaks.mighty.challenger.mob": "Mighty %s",
+    "vtweaks.hungry.challenger.mob": "Hungry %s",
+    "vtweaks.ranger.challenger.mob": "Ranger %s",
+    "vtweaks.arcane.challenger.mob": "Arcane %s",
+    "vtweaks.pyro.challenger.mob": "Pyro %s",
+    "vtweaks.zestonian.challenger.mob": "Zestonian %s",
+    "vtweaks.reinforced.challenger.mob": "Hardened %s",
+    "vtweaks.agile.challenger.mob": "Agile %s",
+    "vtweaks.intro.message": "Welcome! Seems like this is your first time running V-Tweaks in this world! Here's a link to an online wiki if you're interested, keep in mind some features may be disabled!",
+    "vtweaks.intro.link": "V-Tweaks Online Wiki"
 }
