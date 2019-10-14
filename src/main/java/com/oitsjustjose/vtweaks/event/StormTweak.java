@@ -11,16 +11,19 @@ public class StormTweak
     public void registerTweak(WorldEvent event)
     {
         // Check if feature is enabled
-        if (!CommonConfig.DISABLE_THUNDER_STORMS.get())
+        if (!CommonConfig.DISABLE_THUNDER_STORMS.get() || event.getWorld() == null)
         {
             return;
         }
         // Converts storms to regular rain
-        if (event.getWorld().getWorld().isRaining())
+        if (event.getWorld().getWorld() != null)
         {
-            if (event.getWorld().getWorldInfo().isThundering())
+            if (event.getWorld().getWorld().isRaining())
             {
-                event.getWorld().getWorldInfo().setThundering(false);
+                if (event.getWorld().getWorldInfo().isThundering())
+                {
+                    event.getWorld().getWorldInfo().setThundering(false);
+                }
             }
         }
     }
