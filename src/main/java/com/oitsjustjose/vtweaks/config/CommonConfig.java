@@ -19,8 +19,8 @@ public class CommonConfig
 
     public static ForgeConfigSpec.BooleanValue DISABLE_THUNDER_STORMS;
     public static ForgeConfigSpec.BooleanValue ENABLE_DEATH_MESSAGE;
-    public static ForgeConfigSpec.ConfigValue<FoodTooltips> FOOD_TOOLTIP;
-    public static ForgeConfigSpec.ConfigValue<DurabilityTooltips> DURABILITY_TOOLTIP;
+    public static ForgeConfigSpec.EnumValue<FoodTooltips> FOOD_TOOLTIP;
+    public static ForgeConfigSpec.EnumValue<DurabilityTooltips> DURABILITY_TOOLTIP;
     public static ForgeConfigSpec.BooleanValue ENABLE_WELCOME_MESSAGE;
 
     private static String CATEGORY_MISC = "miscellaneous";
@@ -53,9 +53,9 @@ public class CommonConfig
         ENABLE_DEATH_MESSAGE = COMMON_BUILDER.comment("Prints your death point in chat").define("enableDeathPoint",
                 true);
         FOOD_TOOLTIP = COMMON_BUILDER.comment("Show food hunger & saturation on item hover")
-                .define("foodTooltipSetting", FoodTooltips.WITH_SHIFT);
+                .defineEnum("foodTooltipSetting", FoodTooltips.WITH_SHIFT);
         DURABILITY_TOOLTIP = COMMON_BUILDER.comment("Show tool durability on item hover")
-                .define("durabilityTooltipSetting", DurabilityTooltips.WITH_SHIFT);
+                .defineEnum("durabilityTooltipSetting", DurabilityTooltips.WITH_SHIFT);
         ENABLE_WELCOME_MESSAGE = COMMON_BUILDER
                 .comment("Show a welcome message in chat when joining a world for the first time")
                 .define("enableGuideNotifier", true);
