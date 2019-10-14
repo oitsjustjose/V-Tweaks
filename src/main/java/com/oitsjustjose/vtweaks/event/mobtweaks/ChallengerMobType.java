@@ -28,8 +28,8 @@ public enum ChallengerMobType
     {
         ItemStack[] toolList = new ItemStack[]
         { new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.BOWL), new ItemStack(Items.BOW),
-                new ItemStack(Items.STICK), new ItemStack(Items.FIREWORK_ROCKET), new ItemStack(Items.OAK_SIGN), ItemStack.EMPTY,
-                ItemStack.EMPTY };
+                new ItemStack(Items.STICK), new ItemStack(Items.FIREWORK_ROCKET), new ItemStack(Items.OAK_SIGN),
+                ItemStack.EMPTY, ItemStack.EMPTY };
 
         toolList[0].setDamage(toolList[0].getMaxDamage() / 8);
         toolList[0].addEnchantment(HelperFunctions.getEnchantment("minecraft", "sharpness"), 3);
