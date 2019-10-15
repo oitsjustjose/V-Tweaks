@@ -7,45 +7,96 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 
 public class EnchantmentImperishableHandler
 {
     // This event is for tools
     @SubscribeEvent
-    public void register(PlayerInteractEvent event)
+    public void register(BreakSpeed event)
     {
         if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
         {
             return;
         }
 
-        if (event.getItemStack().isEmpty() || event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity))
+        if (event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity))
         {
             return;
         }
 
-        ItemStack stack = event.getItemStack();
-        if (!(stack.getItem() instanceof ToolItem))
+        PlayerEntity player = (PlayerEntity) event.getEntity();
+        ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+        if (stack.isEmpty())
         {
             return;
         }
-        ToolItem tool = (ToolItem) stack.getItem();
+        if (stack.getItem() instanceof ToolItem)
+        {
+            ToolItem tool = (ToolItem) stack.getItem();
+
+            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
+            {
+                if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
+                {
+                    event.setNewSpeed(0F);
+                }
+            }
+        }
+        else if (stack.getItem() instanceof SwordItem)
+        {
+            SwordItem sword = (SwordItem) stack.getItem();
+
+            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
+            {
+                if (sword.getDamage(stack) >= sword.getMaxDamage(stack))
+                {
+                    event.setNewSpeed(0F);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void register(AttackEntityEvent event)
+    {
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
+        {
+            return;
+        }
+        if (event.getPlayer() == null || event.getPlayer().isCreative())
+        {
+            return;
+        }
+
+        ItemStack stack = event.getPlayer().getHeldItemMainhand();
+
+        if (stack.isEmpty() || !(stack.getItem() instanceof SwordItem)
+                || EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) <= 0)
+        {
+            return;
+        }
+
+        SwordItem sword = (SwordItem) stack.getItem();
 
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
         {
-            if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
+            if (sword.getDamage(stack) >= sword.getMaxDamage(stack))
             {
                 if (event.isCancelable())
                 {
                     event.setCanceled(true);
                 }
-                event.setResult(Result.DENY);
             }
         }
     }
@@ -63,36 +114,9 @@ public class EnchantmentImperishableHandler
         {
             return;
         }
-        // For the case where a player hurts an entity
-        if (event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity)
-        {
-            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
-            ItemStack stack = player.getHeldItemMainhand();
 
-            if (stack.isEmpty() || !(stack.getItem() instanceof ToolItem))
-            {
-                return;
-            }
-
-            ToolItem tool = (ToolItem) stack.getItem();
-
-            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
-            {
-                if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
-                {
-                    stack.attemptDamageItem(-1, player.getRNG(), null);
-
-                    if (event.isCancelable())
-                    {
-                        event.setCanceled(true);
-                    }
-                    event.setResult(Result.DENY);
-                    event.setAmount(0.0F);
-                }
-            }
-        }
         // For the case where an entity hurts a player
-        else if (event.getEntityLiving() instanceof PlayerEntity)
+        if (event.getEntityLiving() instanceof PlayerEntity)
         {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
@@ -101,7 +125,6 @@ public class EnchantmentImperishableHandler
 
             for (ItemStack stack : player.getEquipmentAndArmor())
             {
-
                 if (stack.isEmpty() || !(stack.getItem() instanceof ArmorItem))
                 {
                     continue;
@@ -113,7 +136,7 @@ public class EnchantmentImperishableHandler
                 {
                     if (armor.getDamage(stack) >= armor.getMaxDamage(stack))
                     {
-                        stack.attemptDamageItem(-1, player.getRNG(), null);
+                        player.setItemStackToSlot(armor.getEquipmentSlot(), stack.copy());
                         continue;
                     }
                 }
@@ -123,7 +146,12 @@ public class EnchantmentImperishableHandler
             }
 
             float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
-            event.setAmount(damage);
+            if (event.isCancelable())
+            {
+                player.setHealth(player.getHealth() - damage);
+                player.performHurtAnimation();
+                event.setCanceled(true);
+            }
         }
     }
 }
