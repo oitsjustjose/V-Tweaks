@@ -68,6 +68,14 @@ public class DropTweaks
                         new BlockRayTraceResult(new Vec3d(0D, 0D, 0D), Direction.UP, saplingPos, false)));
             }
         }
+        // Handles items that are supposed to never despawn
+        else if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1)
+        {
+            if (event.isCancelable())
+            {
+                event.setCanceled(true);
+            }
+        }
     }
 
     @SubscribeEvent
@@ -75,7 +83,8 @@ public class DropTweaks
     {
         // Checks to see if the despawn time is -1. If it is, items won't despawn, so
         // nothing to do here.
-        if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1 || event.getEntityItem() == null)
+        if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1 || !ItemTweakConfig.ENABLE_DESPAWN_TIME_OVERRIDE.get()
+                || event.getEntityItem() == null)
         {
             return;
         }
