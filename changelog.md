@@ -1,6 +1,15 @@
+# 3.0.1
+
+## Fixed
+
+* Imperishable enchant causing weird visual glitch on tools
+* Imperishable enchant not working on sword attacks
+* Imperishable enchant not working on sword breaking blocks
+* Imperishable enchant not working on armor
+
 # 3.0.0
 
-## Initial Port
+#### Initial Port
 
 ## What won't be coming
 
