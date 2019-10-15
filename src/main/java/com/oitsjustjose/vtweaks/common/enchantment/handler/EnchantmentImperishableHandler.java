@@ -5,12 +5,15 @@ import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -44,8 +47,10 @@ public class EnchantmentImperishableHandler
 
             if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
             {
-                if (tool.getDamage(stack) >= tool.getMaxDamage(stack))
+                if (tool.getDamage(stack) >= (tool.getMaxDamage(stack) - 1))
                 {
+                    event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.25F,
+                            (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
                     event.setNewSpeed(0F);
                 }
             }
@@ -56,8 +61,10 @@ public class EnchantmentImperishableHandler
 
             if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
             {
-                if (sword.getDamage(stack) >= sword.getMaxDamage(stack))
+                if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1))
                 {
+                    event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.25F,
+                            (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
                     event.setNewSpeed(0F);
                 }
             }
@@ -88,10 +95,13 @@ public class EnchantmentImperishableHandler
 
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
         {
-            if (sword.getDamage(stack) >= sword.getMaxDamage(stack))
+            if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1))
             {
                 if (event.isCancelable())
                 {
+                    event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F,
+                            (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
+                    event.getPlayer().sendStatusMessage(new TranslationTextComponent("vtweaks.sword.damaged"), true);
                     event.setCanceled(true);
                 }
             }
@@ -131,10 +141,18 @@ public class EnchantmentImperishableHandler
                 // How much the player is ACTUALLY getting hurt
                 if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
                 {
-                    if (armor.getDamage(stack) >= armor.getMaxDamage(stack))
+                    if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1))
                     {
                         player.setItemStackToSlot(armor.getEquipmentSlot(), stack.copy());
-                        continue;
+                    }
+                    else
+                    {
+                        ServerPlayerEntity damager = null;
+                        if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
+                        {
+                            damager = (ServerPlayerEntity) event.getSource().getTrueSource();
+                        }
+                        stack.attemptDamageItem(1, player.getRNG(), damager);
                     }
                 }
 
