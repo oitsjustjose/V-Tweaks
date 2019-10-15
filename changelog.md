@@ -1,5 +1,19 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.2
+
+### Added
+
+* Config Option for disabling any modifications to despawn timers at all
+
+### Fixed
+
+* Items despawning if Item Despawn Timer set to -1
+
+### Changed
+
+* Config options for item despawning to be more descriptive
+
 ## 3.0.1
 
 ### Fixed
