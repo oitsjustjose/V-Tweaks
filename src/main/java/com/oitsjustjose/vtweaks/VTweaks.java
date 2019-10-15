@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
+import com.oitsjustjose.vtweaks.client.ClientProxy;
+import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentImperishable;
@@ -32,6 +34,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -43,6 +46,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class VTweaks
 {
     private static VTweaks instance;
+    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     public Logger LOGGER = LogManager.getLogger();
 
     public static Enchantment lumbering = new EnchantmentLumbering();
@@ -65,6 +69,9 @@ public class VTweaks
 
     public void setup(final FMLCommonSetupEvent event)
     {
+        // Proxy init - sets up networking too
+        proxy.init();
+
         // Enchantments
         MinecraftForge.EVENT_BUS.register(new Recipes());
 

@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
 import java.util.List;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
 
@@ -52,6 +53,8 @@ public class CropHelper
             }
         }
 
+        boolean didHarvest = false;
+
         if (event.getWorld() instanceof ServerWorld)
         {
             ServerWorld world = (ServerWorld) event.getWorld();
@@ -61,6 +64,7 @@ public class CropHelper
                 if (harvestGenericCrop(world, event.getPos(), state, player))
                 {
                     event.setCanceled(true);
+                    didHarvest = true;
                 }
             }
             else if (harvestable instanceof NetherWartBlock)
@@ -68,6 +72,7 @@ public class CropHelper
                 if (harvestNetherWart(world, event.getPos(), state, player))
                 {
                     event.setCanceled(true);
+                    didHarvest = true;
                 }
             }
             else if (harvestable instanceof CocoaBlock)
@@ -75,10 +80,12 @@ public class CropHelper
                 if (harvestCocoaPod(world, event.getPos(), state, player))
                 {
                     event.setCanceled(true);
+                    didHarvest = true;
                 }
             }
         }
 
+        VTweaks.proxy.swingArm(player, didHarvest);
     }
 
     public boolean harvestGenericCrop(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
