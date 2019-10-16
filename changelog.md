@@ -1,5 +1,16 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.4
+
+## Changed
+
+* Crop Helper logic - [#629afb4](https://github.com/oitsjustjose/V-Tweaks/pull/55)
+
+## Fixed
+
+* Delay in right-clicking a crop and the player's arm swinging - [#629afb4](https://github.com/oitsjustjose/V-Tweaks/pull/55)
+
+
 ## 3.0.3c
 
 It's one of those days 😐 I'm having issues with Client/Server relations a lot today.
