@@ -27,10 +27,14 @@ public class PeacefulSurface
                 return;
             }
         }
-        if (event.getEntity().getEntityWorld().getCurrentMoonPhaseFactor() != 0.0
-                && event.getEntity().getPosition().getY() >= MobTweakConfig.PEACEFUL_SURFACE_MIN_Y.get())
+        // Check for midnight
+        if (event.getWorld().getWorld().getDimension().getMoonPhase(event.getWorld().getWorld().getDayTime()) != 4)
         {
-            event.setResult(Event.Result.DENY);
+            // Check if position is high enough
+            if (event.getEntity().getPosition().getY() >= MobTweakConfig.PEACEFUL_SURFACE_MIN_Y.get())
+            {
+                event.setResult(Event.Result.DENY);
+            }
         }
     }
 }

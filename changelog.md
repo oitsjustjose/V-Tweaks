@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.3b 
+
+### Fixed
+
+* *Actually* fixed that Peaceful Surface server-side crash 🤔
+
 ## 3.0.3
 
 ### Added
@@ -9,7 +15,7 @@
 * Sound when using an imperishable tool with only 1 durability left
 * New sound when when striking with an imperishable foe with only 1 durability left
 * New text when you go to attack with a broken sword that is saved by imperishable
-    * As always this is localizable :smile:
+    * As always this is localizable 😄
 
 ### Fixed
 
