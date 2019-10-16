@@ -28,4 +28,11 @@ public class ClientProxy extends CommonProxy
             });
         }
     }
+
+    @Override
+    public void hurt(PlayerEntity player, int newHealth)
+    {
+        player.setHealth(newHealth);
+        player.performHurtAnimation();
+    }
 }

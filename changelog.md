@@ -1,5 +1,13 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.3c
+
+It's one of those days 😐 I'm having issues with Client/Server relations a lot today.
+
+### Fixed
+
+* Server-side crash with Imperishable (the hurt animation, specifically)
+
 ## 3.0.3b 
 
 ### Fixed

@@ -22,4 +22,9 @@ public class CommonProxy
         CropHelperPacket msg = new CropHelperPacket(shouldSwing);
         networkManager.networkWrapper.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), msg);
     }
+
+    public void hurt(PlayerEntity player, int newHealth)
+    {
+        player.setHealth(newHealth);
+    }
 }

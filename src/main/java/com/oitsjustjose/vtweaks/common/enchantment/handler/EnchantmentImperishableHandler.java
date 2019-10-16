@@ -163,8 +163,9 @@ public class EnchantmentImperishableHandler
             float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
             if (event.isCancelable())
             {
-                player.setHealth(player.getHealth() - damage);
-                player.performHurtAnimation();
+                VTweaks.proxy.hurt(player, player.getHealth() - damage);
+                // 
+                // player.performHurtAnimation();
                 event.setCanceled(true);
             }
         }
