@@ -1,5 +1,31 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.3
+
+### Added
+
+* Arm swing when using the Crop Tweak to harvest a crop (this was work, but I felt like it was worth it)
+* Crop re-plant sound when using the Crop Tweak to harvest a crop
+* Sound when using an imperishable tool with only 1 durability left
+* New sound when when striking with an imperishable foe with only 1 durability left
+* New text when you go to attack with a broken sword that is saved by imperishable
+    * As always this is localizable :smile:
+
+### Fixed
+
+* Crop tweak not working on Cocoa or Nether Wart
+* Imperishable armor with durability > 1 not taking damage ever
+* Imperishable sword being able to break
+* Tool efficiency allowing your tool to break a block with Imperishable and 1 durability left
+* Lumbering taking *insane* durability from your axe
+* Tool Durability tooltip being 1 higher than actual
+* Server crash with Peaceful Surface
+
+### Changed
+
+* Lumbering now only breaks what logs it can before the tool breaks. It will leave your tool with 1 durability and the tree entact.
+* Cutting leaves with lumbering doesn't take durability
+
 ## 3.0.2
 
 ### Added
