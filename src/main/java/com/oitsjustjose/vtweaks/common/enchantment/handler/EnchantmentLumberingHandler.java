@@ -76,7 +76,6 @@ public class EnchantmentLumberingHandler
 
                         if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock()))
                         {
-                            VTweaks.getInstance().LOGGER.info("Destroying {}", world.getBlockState(iterPos).getBlock());
                             world.destroyBlock(iterPos, true);
                             player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
                             if (!chopTree(world, player, iterPos))
@@ -116,20 +115,16 @@ public class EnchantmentLumberingHandler
     {
         if (player.getHeldItemMainhand().isEmpty())
         {
-            VTweaks.getInstance().LOGGER.info("Returning false because hand is empty");
             return false;
         }
         else if (player.getHeldItemMainhand().getDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2)
         {
-            VTweaks.getInstance().LOGGER.info("Returning false because item may break");
             return false;
         }
         else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) <= 0)
         {
-            VTweaks.getInstance().LOGGER.info("Returning false enchantment is gone");
             return false;
         }
-        VTweaks.getInstance().LOGGER.info("Returning true");
         return true;
     }
 
