@@ -1,3 +1,7 @@
+2.0.5:
+
+* FIXED: Lumbering (Backport from 1.14 version)
+
 2.0.4:
 
 * FIXED: Crash if ChallengerMobs Rarity less than or equal to 0
