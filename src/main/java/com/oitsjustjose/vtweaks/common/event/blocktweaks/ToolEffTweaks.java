@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 
 import net.minecraft.block.Block;
@@ -7,6 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
@@ -34,6 +36,14 @@ public class ToolEffTweaks
         Block block = event.getState().getBlock();
         ItemStack heldItem = event.getEntityLiving().getHeldItemMainhand();
 
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, heldItem) > 0)
+        {
+            if (heldItem.getDamage() >= heldItem.getMaxDamage() - 1)
+            {
+                return;
+            }
+        }
+
         // Checks that the held item is a tool
         if (heldItem.getItem() instanceof ToolItem)
         {
@@ -42,6 +52,7 @@ public class ToolEffTweaks
             // Checks for axe-ing capabilities
             if (tool.getToolTypes(heldItem).contains(ToolType.AXE))
             {
+
                 if (block.getDefaultState().getMaterial() == Material.LEAVES)
                 {
                     event.setNewSpeed(event.getOriginalSpeed() * 6);
