@@ -114,19 +114,21 @@ public class CropHelper
 
     private boolean harvestNetherWart(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        NetherWartBlock wart = (NetherWartBlock) state.getBlock();
-        List<ItemStack> drops = Block.getDrops(state, world, pos, null);
-        // This is how I'm determining the crop is grown
-        if (drops.size() > 1)
+        if (state.get(NetherWartBlock.AGE) >= 3)
         {
             if (!world.isRemote)
             {
-                drops.remove(0);
-                for (ItemStack i : drops)
-                {
-                    dropItem(world, player.getPosition(), i);
-                }
-                world.setBlockState(pos, wart.getDefaultState());
+                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
+
+                drops.forEach((stack) -> {
+                    if (stack.getCount() > 1)
+                    {
+                        stack.shrink(1);
+                    }
+                    dropItem(world, player.getPosition(), stack);
+                });
+
+                world.setBlockState(pos, state.with(NetherWartBlock.AGE, Integer.valueOf(0)));
             }
             return true;
         }
@@ -135,17 +137,20 @@ public class CropHelper
 
     private boolean harvestCocoaPod(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        List<ItemStack> drops = Block.getDrops(state, world, pos, null);
-        // This is how I'm determining the crop is grown
-        if (drops.size() > 1)
+        if (state.get(CocoaBlock.AGE) >= 2)
         {
             if (!world.isRemote)
             {
-                drops.remove(0);
-                for (ItemStack i : drops)
-                {
-                    dropItem(world, player.getPosition(), i);
-                }
+                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
+
+                drops.forEach((stack) -> {
+                    if (stack.getCount() > 1)
+                    {
+                        stack.shrink(1);
+                    }
+                    dropItem(world, player.getPosition(), stack);
+                });
+
                 world.setBlockState(pos, state.with(CocoaBlock.AGE, Integer.valueOf(0)));
             }
             return true;

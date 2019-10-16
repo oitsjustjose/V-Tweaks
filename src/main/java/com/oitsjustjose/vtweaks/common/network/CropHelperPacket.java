@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
@@ -49,6 +50,7 @@ public class CropHelperPacket
             {
                 context.get().enqueueWork(() -> {
                     Minecraft.getInstance().player.swingArm(Hand.MAIN_HAND);
+                    Minecraft.getInstance().player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0F, 1.0F);
                 });
             }
         }
