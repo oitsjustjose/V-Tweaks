@@ -1,7 +1,0 @@
-{
-    "code-runner.defaultLanguage": "java",
-    "code-runner.executorMap": {
-        "json": "cd $workspaceRoot && gradle runClient",
-        "java": "cd $workspaceRoot && gradle runClient",
-    }
-}
