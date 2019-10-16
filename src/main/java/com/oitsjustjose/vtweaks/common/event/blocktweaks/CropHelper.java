@@ -2,9 +2,7 @@ package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
 import java.util.List;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,7 +10,13 @@ import net.minecraft.block.CocoaBlock;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.NetherWartBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.DirectionalPlaceContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +25,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CropHelper
 {
@@ -34,132 +38,77 @@ public class CropHelper
             return;
         }
 
-        event.getWorld().getBlockState(event.getPos());
-        if (event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity)
-                || event.getHand() != Hand.MAIN_HAND)
+        if (event.getHand() != Hand.MAIN_HAND)
         {
             return;
         }
 
-        BlockState state = event.getWorld().getBlockState(event.getPos());
-        PlayerEntity player = (PlayerEntity) event.getEntity();
-        Block harvestable = state.getBlock();
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        BlockState state = world.getBlockState(pos);
+        PlayerEntity player = event.getPlayer();
+        ResourceLocation name = state.getBlock().getRegistryName();
 
         for (String blackList : BlockTweakConfig.CROP_TWEAK_BLACKLIST.get())
         {
-            if (ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blackList)) == harvestable)
+            if (new ResourceLocation(blackList).equals(name))
             {
                 return;
             }
         }
 
-        boolean didHarvest = false;
-
-        if (event.getWorld() instanceof ServerWorld)
+        if (canHarvest(state))
         {
-            ServerWorld world = (ServerWorld) event.getWorld();
-
-            if (harvestable instanceof CropsBlock)
+            if (world instanceof ServerWorld)
             {
-                if (harvestGenericCrop(world, event.getPos(), state, player))
-                {
-                    event.setCanceled(true);
-                    didHarvest = true;
-                }
+                harvest((ServerWorld) world, pos, state, player);
             }
-            else if (harvestable instanceof NetherWartBlock)
-            {
-                if (harvestNetherWart(world, event.getPos(), state, player))
-                {
-                    event.setCanceled(true);
-                    didHarvest = true;
-                }
-            }
-            else if (harvestable instanceof CocoaBlock)
-            {
-                if (harvestCocoaPod(world, event.getPos(), state, player))
-                {
-                    event.setCanceled(true);
-                    didHarvest = true;
-                }
-            }
+            player.swingArm(Hand.MAIN_HAND);
+            event.setCanceled(true);
         }
-
-        VTweaks.proxy.swingArm(player, didHarvest);
     }
 
-    public boolean harvestGenericCrop(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
+    private boolean canHarvest(BlockState state)
     {
-        CropsBlock crop = (CropsBlock) state.getBlock();
-        if (crop.isMaxAge(state))
+        Block block = state.getBlock();
+        if (block instanceof CropsBlock)
         {
-            if (!world.isRemote())
-            {
-                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
-
-                drops.forEach((stack) -> {
-                    if (stack.getCount() > 1)
-                    {
-                        stack.shrink(1);
-                    }
-                    dropItem(world, player.getPosition(), stack);
-                });
-
-                world.setBlockState(pos, crop.withAge(0));
-            }
-            return true;
+            return ((CropsBlock) block).isMaxAge(state);
+        }
+        else if (block instanceof NetherWartBlock)
+        {
+            return state.get(NetherWartBlock.AGE) >= 3;
+        }
+        else if (block instanceof CocoaBlock)
+        {
+            return state.get(CocoaBlock.AGE) >= 2;
         }
         return false;
     }
 
-    private boolean harvestNetherWart(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
+    private void harvest(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        if (state.get(NetherWartBlock.AGE) >= 3)
+        List<ItemStack> drops = Block.getDrops(state, world, pos, null);
+        world.destroyBlock(pos, false);
+        boolean needPlant = true;
+        for (ItemStack stack : drops)
         {
-            if (!world.isRemote)
+            if (needPlant && plant(world, pos, stack))
             {
-                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
-
-                drops.forEach((stack) -> {
-                    if (stack.getCount() > 1)
-                    {
-                        stack.shrink(1);
-                    }
-                    dropItem(world, player.getPosition(), stack);
-                });
-
-                world.setBlockState(pos, state.with(NetherWartBlock.AGE, Integer.valueOf(0)));
+                needPlant = false;
             }
-            return true;
+            ItemHandlerHelper.giveItemToPlayer(player, stack);
         }
-        return false;
     }
 
-    private boolean harvestCocoaPod(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player)
+    private boolean plant(World world, BlockPos pos, ItemStack stack)
     {
-        if (state.get(CocoaBlock.AGE) >= 2)
+        Item item = stack.getItem();
+        if (item instanceof BlockItem)
         {
-            if (!world.isRemote)
-            {
-                List<ItemStack> drops = Block.getDrops(state, world, pos, null);
-
-                drops.forEach((stack) -> {
-                    if (stack.getCount() > 1)
-                    {
-                        stack.shrink(1);
-                    }
-                    dropItem(world, player.getPosition(), stack);
-                });
-
-                world.setBlockState(pos, state.with(CocoaBlock.AGE, Integer.valueOf(0)));
-            }
-            return true;
+            BlockItemUseContext context = new DirectionalPlaceContext(world, pos, Direction.DOWN, stack, Direction.UP);
+            return ((BlockItem) item).tryPlace(context) == ActionResultType.SUCCESS;
         }
         return false;
-    }
-
-    private void dropItem(World world, BlockPos pos, ItemStack itemstack)
-    {
-        world.addEntity(HelperFunctions.createItemEntity(world, pos, itemstack));
     }
 }
