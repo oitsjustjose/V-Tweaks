@@ -3,8 +3,6 @@ package com.oitsjustjose.vtweaks.enchantment.handler;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
@@ -59,7 +57,7 @@ public class EnchantmentLumberingHandler
      * @param player
      * @param pos
      */
-    private void chopTree(World world, EntityPlayer player, BlockPos pos)
+    private boolean chopTree(World world, EntityPlayer player, BlockPos pos)
     {
         for (int mod_x = -1; mod_x <= 1; mod_x++)
         {
@@ -70,37 +68,61 @@ public class EnchantmentLumberingHandler
                     BlockPos iterPos = pos.add(mod_x, mod_y, mod_z);
                     if (iterPos != pos)
                     {
+                        if (!canStillChop(player))
+                        {
+                            return false;
+                        }
+
                         if (world.getBlockState(iterPos).getBlock().isWood(world, iterPos))
                         {
-                            chopTree(world, player, iterPos);
+                            world.destroyBlock(iterPos, true);
+                            player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
+                            if (!chopTree(world, player, iterPos))
+                            {
+                                return false;
+                            }
                         }
                         else if (ModConfig.enchantments.lumberingCutsLeaves)
                         {
                             if (world.getBlockState(iterPos).getBlock().isLeaves(world.getBlockState(iterPos), world,
                                     iterPos))
                             {
-                                chopTree(world, player, iterPos);
+                                world.destroyBlock(iterPos, true);
+                                if (!chopTree(world, player, iterPos))
+                                {
+                                    return false;
+                                }
                             }
                         }
+
                     }
-                    breakBlock(world, player, pos);
                 }
             }
         }
+        return true;
     }
 
-    // Simple function to break a block as if a player did it
-    private void breakBlock(World world, EntityPlayer player, BlockPos pos)
+    /**
+     * Determines if the player can continue to chop down the tree
+     * 
+     * @param player the player to check
+     * @return
+     */
+    private boolean canStillChop(EntityPlayer player)
     {
-        Block block = world.getBlockState(pos).getBlock();
-        IBlockState state = world.getBlockState(pos);
-
-        block.onBlockHarvested(world, pos, state, player);
-        if (block.removedByPlayer(state, world, pos, player, true))
+        if (player.getHeldItemMainhand().isEmpty())
         {
-            block.onBlockDestroyedByPlayer(world, pos, state);
-            block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
+            return false;
         }
-        world.setBlockToAir(pos);
+        else if (player.getHeldItemMainhand().getItemDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2)
+        {
+            return false;
+        }
+        else if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
+                player.getHeldItemMainhand()) <= 0)
+        {
+            return false;
+        }
+        return true;
     }
 }
