@@ -22,6 +22,7 @@ import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
+import com.oitsjustjose.vtweaks.common.event.playertweaks.ArmSwingParity;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
@@ -93,6 +94,9 @@ public class VTweaks
         ConcreteTweaks.powderBlocks.forEach((item) -> {
             DispenserBlock.registerDispenseBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
         });
+
+        // Player Tweaks
+        MinecraftForge.EVENT_BUS.register(new ArmSwingParity());
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());

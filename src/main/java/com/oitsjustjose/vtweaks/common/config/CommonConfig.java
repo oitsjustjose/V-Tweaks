@@ -32,6 +32,7 @@ public class CommonConfig
         MobTweakConfig.init(COMMON_BUILDER);
         BlockTweakConfig.init(COMMON_BUILDER);
         ItemTweakConfig.init(COMMON_BUILDER);
+        PlayerTweakConfig.init(COMMON_BUILDER);
         init();
         COMMON_CONFIG = COMMON_BUILDER.build();
     }
