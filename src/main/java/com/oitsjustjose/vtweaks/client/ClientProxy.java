@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.common.network.CropHelperPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 
 public class ClientProxy extends CommonProxy
 {
@@ -23,6 +24,7 @@ public class ClientProxy extends CommonProxy
         {
             Minecraft.getInstance().enqueue(() -> {
                 Minecraft.getInstance().player.swingArm(Hand.MAIN_HAND);
+                Minecraft.getInstance().player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0F, 1.0F);
             });
         }
     }
