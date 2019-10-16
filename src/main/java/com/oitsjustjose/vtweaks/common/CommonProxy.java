@@ -23,7 +23,7 @@ public class CommonProxy
         networkManager.networkWrapper.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), msg);
     }
 
-    public void hurt(PlayerEntity player, int newHealth)
+    public void hurt(PlayerEntity player, float newHealth)
     {
         player.setHealth(newHealth);
     }

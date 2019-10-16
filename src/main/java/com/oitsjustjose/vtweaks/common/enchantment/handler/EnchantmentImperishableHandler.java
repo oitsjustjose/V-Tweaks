@@ -164,8 +164,6 @@ public class EnchantmentImperishableHandler
             if (event.isCancelable())
             {
                 VTweaks.proxy.hurt(player, player.getHealth() - damage);
-                // 
-                // player.performHurtAnimation();
                 event.setCanceled(true);
             }
         }

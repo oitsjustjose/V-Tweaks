@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void hurt(PlayerEntity player, int newHealth)
+    public void hurt(PlayerEntity player, float newHealth)
     {
         player.setHealth(newHealth);
         player.performHurtAnimation();
