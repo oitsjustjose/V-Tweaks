@@ -2,11 +2,26 @@
 
 ## 3.0.4
 
-## Changed
+### Added
+
+* Arm Swing Parity!
+
+    A feature ported from the 1.15 snapshots (which was ported from Bedrock Edition)
+    
+    Forces the player's arm to swing when:
+
+    * Interacting with entities (e.g. milking, shearing, mounting)
+    * Placing boats
+    * Using buckets
+    * Catching fish in buckets
+
+    This has a config option to disable the entire thing, of course.
+
+### Improved
 
 * Crop Helper logic - [#629afb4](https://github.com/oitsjustjose/V-Tweaks/pull/55)
 
-## Fixed
+### Fixed
 
 * Delay in right-clicking a crop and the player's arm swinging - [#629afb4](https://github.com/oitsjustjose/V-Tweaks/pull/55)
 
