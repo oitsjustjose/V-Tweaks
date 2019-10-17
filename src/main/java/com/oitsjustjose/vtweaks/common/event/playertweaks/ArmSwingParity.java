@@ -14,10 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,8 +48,6 @@ public class ArmSwingParity
             if (!sheep.getSheared() && !sheep.isChild() && shearHoldingHand != null)
             {
                 event.getPlayer().swingArm(shearHoldingHand);
-                event.getWorld().playSound(null, event.getTarget().getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR,
-                        SoundCategory.PLAYERS, 1F, 1F);
                 return;
             }
         }
@@ -155,7 +150,6 @@ public class ArmSwingParity
             }
         }
     }
-
 
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickBlock event)
