@@ -122,6 +122,12 @@ public class EnchantmentImperishableHandler
             return;
         }
 
+        // Do nothing if the armor wouldn't be damaged in the first place
+        if (event.getSource().isUnblockable())
+        {
+            return;
+        }
+
         // For the case where an entity hurts a player
         if (event.getEntityLiving() instanceof PlayerEntity)
         {
