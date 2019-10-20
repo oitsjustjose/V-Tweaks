@@ -130,7 +130,8 @@ public class ModConfig
             public int chance = 100;
 
             @Config.Name("Loot Table")
-            @Config.Comment("Loot table. Formatted as <modid>:<item>:<metadata>*<quantity>, <modid>:<item>*quantity, or <modid>:<item>")
+            @Config.Comment("Loot table. Formatted as:\n" + "    <modid>:<item>,\n" + "    <modid>:<item>*<quantity>,\n"
+                    + "    <modid>:<item>:<meta>, or\n" + "    <modid>:<item>:<meta>*<quantity>")
             public String[] loot = new String[]
             { "minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond", "minecraft:emerald",
                     "minecraft:ghast_tear", "minecraft:ender_pearl", "minecraft:emerald",
