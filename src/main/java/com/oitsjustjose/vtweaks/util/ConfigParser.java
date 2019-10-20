@@ -22,8 +22,7 @@ public class ConfigParser
 
     /**
      * @param input       A string array gathered from a config file
-     * @param includesQty true if strings in the array include quantities of the
-     *                    itemstack
+     * @param includesQty true if strings in the array include quantities of the itemstack
      * @return an ArrayList containing parsed ItemStacks of these
      */
     private static ArrayList<ItemStack> parse(String[] input, boolean includesQty)
@@ -44,8 +43,19 @@ public class ConfigParser
                     }
                     else if (parts.length == 3)
                     {
-                        tempStack = new ItemStack(tempStack.getItem(), 1, Integer.parseInt(parts[2]));
-                        ret.add(tempStack.copy());
+                        // This lets users either use:
+                        // <modid>:<item>:<meta> OR
+                        // <modid>:<item>*<qty>
+                        if (toSplit.contains("*"))
+                        {
+                            tempStack = new ItemStack(tempStack.getItem(), Integer.parseInt(parts[2]));
+                            ret.add(tempStack.copy());
+                        }
+                        else
+                        {
+                            tempStack = new ItemStack(tempStack.getItem(), 1, Integer.parseInt(parts[2]));
+                            ret.add(tempStack.copy());
+                        }
                     }
                     else if (parts.length == 4 && includesQty)
                     {
