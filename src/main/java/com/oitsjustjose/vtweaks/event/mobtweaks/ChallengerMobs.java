@@ -7,6 +7,7 @@ import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -73,6 +74,7 @@ public class ChallengerMobs
                     monster.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(VARIANT.getSpeed());
                     monster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(VARIANT.getHealth());
                     monster.setHealth(VARIANT.getHealth());
+                    monster.getEntityData().setBoolean("vtweaks_is_challenger", true);
 
                     // Special Man Pants for Zestonian Mobs
                     if (VARIANT == ChallengerMobType.ZESTONIAN)
@@ -118,24 +120,16 @@ public class ChallengerMobs
 
     private String mobClassName(ChallengerMobType type, EntityMob mob)
     {
-        StringBuilder mobString = new StringBuilder(mob.toString().substring(0, mob.toString().indexOf("[")));
-        String[] nameParts = mobString.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-        mobString = new StringBuilder();
-        for (int i = 0; i < nameParts.length; i++)
+        String mobName = EntityList.getEntityString(mob);
+
+        if (mobName == null)
         {
-            if (!nameParts[i].toLowerCase().contains("entity"))
-            {
-                if (i != (nameParts.length - 1))
-                {
-                    mobString.append(nameParts[i]).append(" ");
-                }
-                else
-                {
-                    mobString.append(nameParts[i]);
-                }
-            }
+            mobName = "generic";
         }
-        return I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob.prefix") + " " + mobString;
+
+        mobName = I18n.format("entity." + mobName + ".name");
+
+        return I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob", mobName);
     }
 
     private EntityItem getItem(World world, BlockPos pos)
@@ -147,16 +141,6 @@ public class ChallengerMobs
 
     private boolean isChallengerMob(EntityMob entity)
     {
-
-        String n = entity.getCustomNameTag();
-
-        for (ChallengerMobType type : ChallengerMobType.values())
-        {
-            if (n.startsWith(I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob.prefix")))
-            {
-                return true;
-            }
-        }
-        return false;
+        return entity.getEntityData().getBoolean("vtweaks_is_challenger");
     }
 }

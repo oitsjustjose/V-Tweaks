@@ -6,14 +6,14 @@ enchantment.vtweaks:imperishable=Imperishable
 vtweaks.deathpoint.msg=Your most recent death was at [X: %s, Y: %s, Z: %s]
 
 # Challenger Mob Names
-vtweaks.mighty.challenger.mob.prefix=Mighty
-vtweaks.hungry.challenger.mob.prefix=Hungry
-vtweaks.ranger.challenger.mob.prefix=Ranger
-vtweaks.arcane.challenger.mob.prefix=Arcane
-vtweaks.pyro.challenger.mob.prefix=Pyro
-vtweaks.zestonian.challenger.mob.prefix=Zestonian
-vtweaks.reinforced.challenger.mob.prefix=Hardened
-vtweaks.agile.challenger.mob.prefix=Agile
+vtweaks.mighty.challenger.mob=Mighty %s
+vtweaks.hungry.challenger.mob=Hungry %s
+vtweaks.ranger.challenger.mob=Ranger %s
+vtweaks.arcane.challenger.mob=Arcane %s
+vtweaks.pyro.challenger.mob=Pyro %s
+vtweaks.zestonian.challenger.mob=Zestonian %s
+vtweaks.reinforced.challenger.mob=Hardened %s
+vtweaks.agile.challenger.mob=Agile %s
 
 # V-Tweaks intro link
 
