@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -38,12 +38,11 @@ public class GuideNotifier
                 style.setBold(true);
                 style.setUnderlined(true);
                 style.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiURL));
-                style.setHoverEvent(
-                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("V-Tweaks Wiki")));
+                style.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                        new TextComponentTranslation("vtweaks.intro.link")));
 
-                player.sendMessage(new TextComponentString(
-                        "Welcome! Seems like this is your first time running V-Tweaks in this world! Here's a link to an online wiki if you're interested, keep in mind some features may be disabled!"));
-                player.sendMessage(new TextComponentString("V-Tweaks Online Wiki").setStyle(style));
+                player.sendMessage(new TextComponentTranslation("vtweaks.intro.message", player.getDisplayNameString()));
+                player.sendMessage(new TextComponentTranslation("vtweaks.intro.link").setStyle(style));
 
                 persistTag.setBoolean(SHOWN_LINK, true);
             }
