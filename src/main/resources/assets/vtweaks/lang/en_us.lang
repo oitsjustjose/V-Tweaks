@@ -1,6 +1,20 @@
 # Enchantment Names
 enchantment.vtweaks:lumbering=Lumbering
 enchantment.vtweaks:imperishable=Imperishable
+
+# Death Point
+vtweaks.deathpoint.msg=Your most recent death was at [X: %s, Y: %s, Z: %s]
+
+# Challenger Mob Names
+vtweaks.mighty.challenger.mob.prefix=Mighty
+vtweaks.hungry.challenger.mob.prefix=Hungry
+vtweaks.ranger.challenger.mob.prefix=Ranger
+vtweaks.arcane.challenger.mob.prefix=Arcane
+vtweaks.pyro.challenger.mob.prefix=Pyro
+vtweaks.zestonian.challenger.mob.prefix=Zestonian
+vtweaks.reinforced.challenger.mob.prefix=Hardened
+vtweaks.agile.challenger.mob.prefix=Agile
+
 # Enchantment Descriptions Compatability
 enchantment.vtweaks.lumbering.desc=§3While Sneaking:§r Fells an entire tree when breaking any wood block of the tree. §4§lWorks on non-trees too§r
 enchantment.vtweaks.imperishable.desc=Saves your tool or armor piece from breaking, thus §ldisabling the item's functionality until repaired.§r

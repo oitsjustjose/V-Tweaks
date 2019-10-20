@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -134,7 +135,7 @@ public class ChallengerMobs
                 }
             }
         }
-        return type.getPrefix() + " " + mobString;
+        return I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob.prefix") + " " + mobString;
     }
 
     private EntityItem getItem(World world, BlockPos pos)
@@ -151,12 +152,11 @@ public class ChallengerMobs
 
         for (ChallengerMobType type : ChallengerMobType.values())
         {
-            if (n.startsWith(type.getPrefix()))
+            if (n.startsWith(I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob.prefix")))
             {
                 return true;
             }
         }
-
         return false;
     }
 }
