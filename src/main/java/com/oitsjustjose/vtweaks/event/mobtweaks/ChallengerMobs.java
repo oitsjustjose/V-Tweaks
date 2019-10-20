@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -21,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -127,9 +127,10 @@ public class ChallengerMobs
             mobName = "generic";
         }
 
-        mobName = I18n.format("entity." + mobName + ".name");
+        mobName = new TextComponentTranslation("entity." + mobName + ".name").getFormattedText();
 
-        return I18n.format("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob", mobName);
+        return new TextComponentTranslation("vtweaks." + type.getPrefix().toLowerCase() + ".challenger.mob", mobName)
+                .getFormattedText();
     }
 
     private EntityItem getItem(World world, BlockPos pos)
