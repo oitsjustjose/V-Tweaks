@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,7 +16,7 @@ public class PeacefulSurface
         {
             return;
         }
-        if (event.getEntity() == null || !(event.getEntity() instanceof MobEntity))
+        if (event.getEntity() == null || !(event.getEntity() instanceof MonsterEntity))
         {
             return;
         }
