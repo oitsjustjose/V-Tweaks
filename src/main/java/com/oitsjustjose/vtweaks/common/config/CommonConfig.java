@@ -1,13 +1,10 @@
 package com.oitsjustjose.vtweaks.common.config;
 
-
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.fml.common.Mod;
@@ -73,11 +70,5 @@ public class CommonConfig
     public enum DurabilityTooltips
     {
         NEVER, WITH_SHIFT, ALWAYS
-    }
-
-    public static void setChallengerLootTable(ArrayList<ItemStack> newList)
-    {
-        // MobTweaks.ChallengerMobs.challengerLootTable = new ArrayList<>();
-        // MobTweaks.ChallengerMobs.challengerLootTable.addAll(newList);
     }
 }

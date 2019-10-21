@@ -27,11 +27,10 @@ public class ItemTweakConfig
                 ENABLE_SAPLING_SELF_PLANTING = COMMON_BUILDER
                                 .comment("Instead of de-spawning, saplings will attempt to plant themselves")
                                 .define("enableSaplingPlanting", true);
-                ENABLE_DESPAWN_TIME_OVERRIDE = COMMON_BUILDER
-                                .comment("Allow for modifications to item despawn timers")
+                ENABLE_DESPAWN_TIME_OVERRIDE = COMMON_BUILDER.comment("Allow for modifications to item despawn timers")
                                 .define("enableDespawnTimeAdjustments", false);
-                DESPAWN_TIME_OVERRIDE = COMMON_BUILDER
-                                .comment("Adjust Item Despawn Time (in ticks: 20 ticks in a second - default despawn delay is 6000 ticks)\n"
+                DESPAWN_TIME_OVERRIDE = COMMON_BUILDER.comment(
+                                "Adjust Item Despawn Time (in ticks: 20 ticks in a second - default despawn delay is 6000 ticks)\n"
                                                 + "-1 prevents items from despawning at all.\n"
                                                 + "If other \"do x on despawn\" configs are enabled, then those items **will still despawn**")
                                 .defineInRange("despawnTimeAdjustments", 6000, -1, Integer.MAX_VALUE);

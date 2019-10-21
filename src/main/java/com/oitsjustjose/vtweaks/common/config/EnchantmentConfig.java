@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.common.config;
 
-
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class EnchantmentConfig
