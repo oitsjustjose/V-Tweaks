@@ -1,5 +1,16 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.5
+
+### Added
+
+* Enchantment Descriptions Compat
+
+### Fixed
+
+* Imperishable applying armor defense to damage that shouldn't be reduced by armor (e.g. fall damage being reduced by armor).
+
+
 ## 3.0.4
 
 ### Added
