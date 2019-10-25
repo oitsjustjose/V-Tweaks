@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.common.util;
 
+import com.oitsjustjose.vtweaks.common.config.CommonConfig;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.Style;
@@ -15,6 +17,10 @@ public class GuideNotifier
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event)
     {
+        if (!CommonConfig.ENABLE_WELCOME_MESSAGE.get())
+        {
+            return;
+        }
         PlayerEntity player = event.getPlayer();
         CompoundNBT tag = player.getPersistentData();
         if (!tag.contains("vtweaks:shown_wiki"))
