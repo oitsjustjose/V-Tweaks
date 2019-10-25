@@ -1,26 +1,20 @@
 package com.oitsjustjose.vtweaks.common.event.itemtweaks;
 
-import java.util.UUID;
-
-import com.mojang.authlib.GameProfile;
 import com.oitsjustjose.vtweaks.common.config.ItemTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.Constants;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.DirectionalPlaceContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -61,11 +55,12 @@ public class DropTweaks
             // Checks to see if where the sapling *will* be is air
             if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable())
             {
-                FakePlayer fake = new FakePlayer(world.getServer().getWorld(world.getDimension().getType()),
-                        new GameProfile(UUID.nameUUIDFromBytes(Constants.MODID.getBytes()), "VTweaksFake"));
-                fake.setHeldItem(Hand.MAIN_HAND, stack);
-                stack.onItemUse(new ItemUseContext(fake, Hand.MAIN_HAND,
-                        new BlockRayTraceResult(new Vec3d(0D, 0D, 0D), Direction.UP, saplingPos, false)));
+                Item item = stack.getItem();
+                if (item instanceof BlockItem)
+                {
+                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack, Direction.UP);
+                    ((BlockItem) item).tryPlace(context);
+                }
             }
         }
         // Handles items that are supposed to never despawn
