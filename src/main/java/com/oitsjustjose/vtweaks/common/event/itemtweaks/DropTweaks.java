@@ -13,6 +13,7 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -54,12 +55,11 @@ public class DropTweaks
             }
         }
         // Handles sapling replanting; 100% chance
-        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get()
-                && Block.getBlockFromItem(stack.getItem()).getClass().getName().contains("BlockSapling"))
+        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && ItemTags.SAPLINGS.contains(stack.getItem()))
         {
             BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
             // Checks to see if where the sapling *will* be is air
-            if (world.isAirBlock(saplingPos))
+            if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable())
             {
                 FakePlayer fake = new FakePlayer(world.getServer().getWorld(world.getDimension().getType()),
                         new GameProfile(UUID.nameUUIDFromBytes(Constants.MODID.getBytes()), "VTweaksFake"));
