@@ -4,20 +4,16 @@ import java.util.ArrayList;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.item.ItemStack;
 
 public class ConfigParser
 {
-    private static Logger LOGGER = LogManager.getLogger(VTweaks.MODID);
 
     public static void parseItems()
     {
-        LOGGER.info(">> Running Config Item Parser");
+        VTweaks.LOGGER.info(">> Running Config Item Parser");
         ModConfig.setChallengerLootTable(parse(ModConfig.mobTweaks.challengerMobs.loot, true));
-        LOGGER.info(">> Config Item Parsing complete!");
+        VTweaks.LOGGER.info(">> Config Item Parsing complete!");
     }
 
     /**

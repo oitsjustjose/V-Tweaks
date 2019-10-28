@@ -21,11 +21,13 @@ import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 import com.oitsjustjose.vtweaks.util.Recipes;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -36,6 +38,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = VTweaks.MODID, name = VTweaks.NAME, version = VTweaks.VERSION, updateJSON = VTweaks.UPDATER)
 public class VTweaks
 {
+    public static Logger LOGGER = LogManager.getLogger(VTweaks.MODID);
+
     public static final String MODID = "vtweaks";
     public static final String NAME = "V-Tweaks";
     public static final String VERSION = "@VERSION@";
