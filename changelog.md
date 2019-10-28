@@ -9,6 +9,7 @@
 ### Changed
 
 - Welcome message shown status is now stored as a `WorldCapability` instead of within the player, so updating will show players this message ✨one more time✨.
+- Imperishable now damages from the correct source, instead of from a generic source
 
 ## 3.0.6
 
