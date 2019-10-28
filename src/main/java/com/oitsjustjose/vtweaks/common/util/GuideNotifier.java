@@ -1,6 +1,8 @@
 package com.oitsjustjose.vtweaks.common.util;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
+import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,9 +23,17 @@ public class GuideNotifier
         {
             return;
         }
+
+        IVTweaksCapability capability = event.getPlayer().getEntityWorld().getCapability(VTweaks.VTWEAKS_CAPABILITY)
+                .orElse(null);
+
+        if (capability == null)
+        {
+            return;
+        }
+
         PlayerEntity player = event.getPlayer();
-        CompoundNBT tag = player.getPersistentData();
-        if (!tag.contains("vtweaks:shown_wiki"))
+        if (!capability.hasPlayerSeenWelcome(player.getUniqueID()))
         {
             Style style = new Style();
             String wikiURL = "http://oitsjustjose.com/Mods/V-Tweaks/";
@@ -36,7 +46,7 @@ public class GuideNotifier
 
             player.sendMessage(new TranslationTextComponent("vtweaks.intro.message"));
             player.sendMessage(new TranslationTextComponent("vtweaks.intro.link").setStyle(style));
-            tag.putBoolean("vtweaks:shown_wiki", true);
+            capability.setPlayerSeenWelcome(player.getUniqueID());
         }
     }
 }

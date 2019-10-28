@@ -25,14 +25,22 @@ import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.event.playertweaks.ArmSwingParity;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
+import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
+import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
+import com.oitsjustjose.vtweaks.common.world.capability.VTweaksCapabilityProvider;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -52,6 +60,9 @@ public class VTweaks
 
     public static Enchantment lumbering = new EnchantmentLumbering();
     public static Enchantment imperishable = new EnchantmentImperishable();
+
+    @CapabilityInject(IVTweaksCapability.class)
+    public static final Capability<IVTweaksCapability> VTWEAKS_CAPABILITY = null;
 
     public VTweaks()
     {
@@ -111,6 +122,14 @@ public class VTweaks
     {
         ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_CONFIG);
         CommonConfig.loadConfig(CommonConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-common.toml"));
+    }
+
+    @SubscribeEvent
+    public void attachCap(AttachCapabilitiesEvent<World> event)
+    {
+        event.addCapability(new ResourceLocation(Constants.MODID, "capabilities"), new VTweaksCapabilityProvider());
+        LOGGER.info("V-Tweaks capability attached for {}",
+                event.getObject().getDimension().getType().getRegistryName().toString());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
