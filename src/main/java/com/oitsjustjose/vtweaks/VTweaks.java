@@ -25,7 +25,6 @@ import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.event.playertweaks.ArmSwingParity;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
 import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 import com.oitsjustjose.vtweaks.common.world.capability.VTweaksCapabilityProvider;
