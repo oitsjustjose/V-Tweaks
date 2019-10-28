@@ -183,9 +183,9 @@ public class ModConfig
             public boolean enableCropTweak = true;
 
             @Config.Name("Blacklisted Crops")
-            @Config.Comment("Objects listed here will not be effected by the Easy Crop Harvesting tweak. These are class names, or parts of class names")
+            @Config.Comment("Objects listed here will not be effected by the Easy Crop Harvesting tweak. These are of form <modid:block>, and accepts block wildcards (e.g. <modid:*>)")
             public String[] blacklist = new String[]
-            { "harvestcraft", "tehnut.resourceful.crops", "actuallyadditions" };
+            { "harvestcraft:*", "resourcefulcrops:*", "actuallyadditions:*" };
         }
     }
 

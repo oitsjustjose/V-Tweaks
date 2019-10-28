@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.event.blocktweaks;
 
 import java.util.Iterator;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.util.HelperFunctions;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
@@ -16,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -42,12 +44,9 @@ public class CropHelper
         IBlockState state = event.getWorld().getBlockState(event.getPos());
         Block harvestable = state.getBlock();
 
-        for (String blackList : ModConfig.blockTweaks.cropTweak.blacklist)
+        if (isBlacklisted(harvestable))
         {
-            if (harvestable.getClass().getName().toLowerCase().contains(blackList.toLowerCase()))
-            {
-                return;
-            }
+            return;
         }
 
         if (harvestable instanceof BlockCrops)
@@ -155,5 +154,27 @@ public class CropHelper
     private void dropItem(World world, BlockPos pos, ItemStack itemstack)
     {
         world.spawnEntity(HelperFunctions.createItemEntity(world, pos, itemstack));
+    }
+
+    private boolean isBlacklisted(Block block)
+    {
+        for (String name : ModConfig.blockTweaks.cropTweak.blacklist)
+        {
+            String[] parts = name.split(":");
+            if (parts.length != 2)
+            {
+                VTweaks.LOGGER.info("{} is not a valid entry", name);
+            }
+
+            if (parts[1] == "*")
+            {
+                return block.getRegistryName().getResourceDomain() == parts[0];
+            }
+            else
+            {
+                return new ResourceLocation(parts[0], parts[1]) == block.getRegistryName();
+            }
+        }
+        return false;
     }
 }
