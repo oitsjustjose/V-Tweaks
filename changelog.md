@@ -1,5 +1,27 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.7
+
+### Fixed
+
+- Welcome message showing more than once
+
+### Changed
+
+- Welcome message shown status is now stored as a `WorldCapability` instead of within the player, so updating will show players this message ✨one more time✨.
+
+## 3.0.6
+
+### Fixed
+
+- Sapling Self-Planting not working
+- Welcome Notification not respecting its config option
+
+### Changed
+
+- Sapling self-planting no longer uses a fake player (I don't know why I did that in the first place?!?)
+- Sapling self-planting will plant if the block is normally replaceable on use.
+
 ## 3.0.5
 
 ### Added
