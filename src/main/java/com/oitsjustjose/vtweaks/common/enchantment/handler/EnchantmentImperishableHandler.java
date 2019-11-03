@@ -12,9 +12,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -170,8 +168,7 @@ public class EnchantmentImperishableHandler
                 {
                     // 3. If the item breaks, destroy it and play a sound
                     player.setItemStackToSlot(armor.getEquipmentSlot(), ItemStack.EMPTY);
-                    player.getEntityWorld().playSound(player, player.getPosition(), SoundEvents.ITEM_SHIELD_BREAK,
-                            SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    VTweaks.proxy.playSoundClient(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
                 }
                 else
                 {
