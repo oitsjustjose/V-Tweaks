@@ -12,7 +12,9 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -144,32 +146,46 @@ public class EnchantmentImperishableHandler
                 }
 
                 ArmorItem armor = (ArmorItem) stack.getItem();
-                // How much the player is ACTUALLY getting hurt
+
+                // If the player has imperishable armor with 1 damage left,
+                // salvage it and don't add it to defense and toughness
                 if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
                 {
                     if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1))
                     {
                         player.setItemStackToSlot(armor.getEquipmentSlot(), stack.copy());
-                    }
-                    else
-                    {
-                        ServerPlayerEntity damager = null;
-                        if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
-                        {
-                            damager = (ServerPlayerEntity) event.getSource().getTrueSource();
-                        }
-                        stack.attemptDamageItem(1, player.getRNG(), damager);
+                        continue;
                     }
                 }
 
-                validDefense += armor.getDamageReduceAmount();
-                validToughness += armor.getToughness();
+                // Otherwise, just do a normal-ish thing:
+                // 1. Figure out the damager:
+                ServerPlayerEntity damager = null;
+                if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
+                {
+                    damager = (ServerPlayerEntity) event.getSource().getTrueSource();
+                }
+                // 2. Try to damage the item
+                if (stack.attemptDamageItem(1, player.getRNG(), damager))
+                {
+                    // 3. If the item breaks, destroy it and play a sound
+                    player.setItemStackToSlot(armor.getEquipmentSlot(), ItemStack.EMPTY);
+                    player.getEntityWorld().playSound(player, player.getPosition(), SoundEvents.ITEM_SHIELD_BREAK,
+                            SoundCategory.PLAYERS, 1.0F, 1.0F);
+                }
+                else
+                {
+                    // 4. If it doesn't, apply normal defense and toughness for that piece
+                    validDefense += armor.getDamageReduceAmount();
+                    validToughness += armor.getToughness();
+                }
             }
 
             float damage = CombatRules.getDamageAfterAbsorb(event.getAmount(), validDefense, validToughness);
+
             if (event.isCancelable())
             {
-                player.attackEntityFrom(event.getSource(), damage);
+                VTweaks.proxy.hurt(player, player.getHealth() - damage);
                 event.setCanceled(true);
             }
         }
