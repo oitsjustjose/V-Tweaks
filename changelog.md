@@ -1,5 +1,15 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.0.8
+
+### Fixed
+
+- Imperishable
+    - Taking no damage / less damage from any source at all, with or without armor on and with or without imperishable
+    - Fix armor defense values including an imperishable armor piece that shouldn't be able to protect
+    - Fixed armors not taking any damage when hurting the player
+
+
 ## 3.0.7
 
 ### Fixed
