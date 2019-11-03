@@ -1,17 +1,22 @@
 package com.oitsjustjose.vtweaks.client;
 
 import com.oitsjustjose.vtweaks.common.CommonProxy;
+import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 
 public class ClientProxy extends CommonProxy
 {
     @Override
     public void init()
     {
+        CommonProxy.networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,
+                ArmorBreakPacket::decode, ArmorBreakPacket::handleClient);
     }
+
+
 
     @Override
     public void hurt(PlayerEntity player, float newHealth)
@@ -21,8 +26,8 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void playSoundClient(SoundEvent event, float volume, float pitch)
+    public void playSound(PlayerEntity player)
     {
-        Minecraft.getInstance().player.playSound(event, volume, pitch);
+        Minecraft.getInstance().player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
     }
 }

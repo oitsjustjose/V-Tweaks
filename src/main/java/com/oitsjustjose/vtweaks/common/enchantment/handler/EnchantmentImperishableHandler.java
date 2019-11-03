@@ -168,7 +168,7 @@ public class EnchantmentImperishableHandler
                 {
                     // 3. If the item breaks, destroy it and play a sound
                     player.setItemStackToSlot(armor.getEquipmentSlot(), ItemStack.EMPTY);
-                    VTweaks.proxy.playSoundClient(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
+                    VTweaks.proxy.playSound(player);
                 }
                 else
                 {
