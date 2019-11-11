@@ -65,6 +65,7 @@ public class ChallengerMobs
                     monster.setItemStackToSlot(EquipmentSlotType.CHEST, ItemStack.EMPTY);
                     monster.setItemStackToSlot(EquipmentSlotType.LEGS, ItemStack.EMPTY);
                     monster.setItemStackToSlot(EquipmentSlotType.FEET, ItemStack.EMPTY);
+                    monster.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
                     monster.setCustomName(mobClassName(VARIANT, monster));
