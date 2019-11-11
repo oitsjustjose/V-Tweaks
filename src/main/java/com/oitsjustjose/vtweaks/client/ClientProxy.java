@@ -41,12 +41,8 @@ public class ClientProxy extends CommonProxy
     {
         if (MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get())
         {
-            if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.ALL
-                    || Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL)
-            {
-                IParticleData redstoneParticle = new RedstoneParticleData(r, g, b, 1F);
-                Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, x, y, z, 0D, 0D, 0D);
-            }
+            IParticleData redstoneParticle = new RedstoneParticleData(r, g, b, 1F);
+            Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, x, y, z, 0D, 0D, 0D);
         }
     }
 }

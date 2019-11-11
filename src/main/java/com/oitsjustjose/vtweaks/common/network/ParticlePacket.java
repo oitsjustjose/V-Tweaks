@@ -75,13 +75,9 @@ public class ParticlePacket
             context.get().enqueueWork(() -> {
                 if (MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get())
                 {
-                    if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.ALL
-                            || Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL)
-                    {
-                        IParticleData redstoneParticle = new RedstoneParticleData(msg.r, msg.g, msg.b, 1F);
-                        Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, msg.x, msg.y, msg.z,
-                                0D, 0D, 0D);
-                    }
+                    IParticleData redstoneParticle = new RedstoneParticleData(msg.r, msg.g, msg.b, 1F);
+                    Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, msg.x, msg.y, msg.z, 0D,
+                            0D, 0D);
                 }
             });
         }
