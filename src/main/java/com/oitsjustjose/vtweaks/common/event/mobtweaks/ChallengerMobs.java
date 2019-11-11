@@ -23,6 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -92,7 +93,7 @@ public class ChallengerMobs
                     }
 
                     setChallengerTag(monster, VARIANT);
-                    VTweaks.getInstance().challengerMobs.put(monster, monster.getEntityId());
+                    VTweaks.proxy.challengerMobs.put(monster, VARIANT);
                 }
             }
             else
@@ -127,7 +128,7 @@ public class ChallengerMobs
                     .warn("Did not have an instance of the V-Tweaks Capability to remove the entity");
             return;
         }
-        VTweaks.getInstance().challengerMobs.remove((MonsterEntity) event.getEntity());
+        VTweaks.proxy.challengerMobs.remove((MonsterEntity) event.getEntity());
     }
 
     @SubscribeEvent
@@ -142,8 +143,16 @@ public class ChallengerMobs
 
         if (isChallengerMob(monster))
         {
-            VTweaks.getInstance().challengerMobs.put(monster, monster.getEntityId());
+            VTweaks.proxy.challengerMobs.put(monster, getChallengerMobType(monster));
         }
+    }
+
+    @SubscribeEvent
+    public void registerEvent(TickEvent.WorldTickEvent event)
+    {
+        VTweaks.proxy.challengerMobs.forEach((monster, variant) -> {
+            // event.world.addParticle(particleData, x, y, z, xSpeed, ySpeed, zSpeed);
+        });
     }
 
     private void setChallengerTag(MonsterEntity entity, ChallengerMobType variant)
@@ -187,5 +196,24 @@ public class ChallengerMobs
             return true;
         }
         return false;
+    }
+
+    private ChallengerMobType getChallengerMobType(MonsterEntity monster)
+    {
+        CompoundNBT comp = monster.getPersistentData();
+
+        if (comp.contains("challenger_mob_data"))
+        {
+            CompoundNBT cmd = comp.getCompound("challenger_mob_data");
+            String type = cmd.getString("variant");
+            for (ChallengerMobType t : ChallengerMobType.values())
+            {
+                if (t.getPrefix().equalsIgnoreCase(type))
+                {
+                    return t;
+                }
+            }
+        }
+        return null;
     }
 }
