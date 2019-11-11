@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy
 {
@@ -14,9 +15,9 @@ public class ClientProxy extends CommonProxy
     {
         CommonProxy.networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,
                 ArmorBreakPacket::decode, ArmorBreakPacket::handleClient);
+
+        MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
     }
-
-
 
     @Override
     public void hurt(PlayerEntity player, float newHealth)

@@ -1,7 +1,9 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
+import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -21,6 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -89,12 +92,14 @@ public class ChallengerMobs
                     }
 
                     setChallengerTag(monster, VARIANT);
+                    VTweaks.getInstance().challengerMobs.put(monster, monster.getEntityId());
                 }
             }
             else
             {
                 event.getEntity().getPersistentData().putBoolean("challenger_mob_checked", true);
             }
+
         }
     }
 
@@ -113,6 +118,32 @@ public class ChallengerMobs
         }
 
         event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
+
+        IVTweaksCapability capability = event.getEntity().world.getCapability(VTweaks.VTWEAKS_CAPABILITY).orElse(null);
+
+        if (capability == null)
+        {
+            VTweaks.getInstance().LOGGER
+                    .warn("Did not have an instance of the V-Tweaks Capability to remove the entity");
+            return;
+        }
+        VTweaks.getInstance().challengerMobs.remove((MonsterEntity) event.getEntity());
+    }
+
+    @SubscribeEvent
+    public void registerEvent(EntityJoinWorldEvent event)
+    {
+        if (event.getEntity() == null || !(event.getEntity() instanceof MonsterEntity))
+        {
+            return;
+        }
+
+        MonsterEntity monster = (MonsterEntity) event.getEntity();
+
+        if (isChallengerMob(monster))
+        {
+            VTweaks.getInstance().challengerMobs.put(monster, monster.getEntityId());
+        }
     }
 
     private void setChallengerTag(MonsterEntity entity, ChallengerMobType variant)

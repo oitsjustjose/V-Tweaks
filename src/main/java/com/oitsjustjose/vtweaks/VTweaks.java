@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
@@ -34,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,11 +57,13 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class VTweaks
 {
     private static VTweaks instance;
-    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     public Logger LOGGER = LogManager.getLogger();
+    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public static Enchantment lumbering = new EnchantmentLumbering();
     public static Enchantment imperishable = new EnchantmentImperishable();
+
+    public ConcurrentHashMap<MonsterEntity, Integer> challengerMobs = new ConcurrentHashMap<>();
 
     @CapabilityInject(IVTweaksCapability.class)
     public static final Capability<IVTweaksCapability> VTWEAKS_CAPABILITY = null;
