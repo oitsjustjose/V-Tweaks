@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
