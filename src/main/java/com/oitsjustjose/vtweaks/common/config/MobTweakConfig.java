@@ -19,6 +19,7 @@ public class MobTweakConfig
     private static String CATEGORY_MOB_TWEAKS = "mob tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
+    public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY_WEAPONS;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
@@ -35,6 +36,9 @@ public class MobTweakConfig
 
         ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to R-Click your tamed pets with horse armor")
                 .define("enablePetArmory", true);
+        ENABLE_PET_ARMORY_WEAPONS = COMMON_BUILDER
+                .comment("Enabling this allows tamed pets to pick up weapons (which do actually work but don't render)")
+                .define("enablePetWeaponry", true);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
