@@ -8,7 +8,6 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -87,11 +86,6 @@ public class ChallengerParticles
         });
 
         toRemove.forEach((monster) -> {
-            IWorld world = monster.getEntityWorld();
-            if (world instanceof ServerWorld)
-            {
-                ((ServerWorld) world).removeEntity(monster);
-            }
             VTweaks.proxy.challengerMobs.remove(monster);
         });
     }
