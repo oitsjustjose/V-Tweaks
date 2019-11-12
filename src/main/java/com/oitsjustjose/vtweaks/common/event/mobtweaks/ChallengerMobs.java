@@ -101,8 +101,7 @@ public class ChallengerMobs
                     if (VARIANT == ChallengerMobType.ZESTONIAN)
                     {
                         ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
-                        pants.setDisplayName(
-                                new TranslationTextComponent(TextFormatting.DARK_PURPLE + "vtweaks.man.pants"));
+                        pants.setDisplayName(new TranslationTextComponent("vtweaks.man.pants"));
                         pants.addEnchantment(Utils.getEnchantment("minecraft", "blast_protection"), 5);
                         monster.setItemStackToSlot(EquipmentSlotType.LEGS, pants);
                     }
