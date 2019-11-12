@@ -1,14 +1,36 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.0
+
+### Added
+
+- [Configurable] Colored particle effects for challenger mobs (see [#62](https://github.com/oitsjustjose/V-Tweaks/issues/62#issuecomment-552642949))
+
+### Fixed
+
+- Challenger Mob items not being reassigned correctly if the original mob held something (e.g. skeletons)
+- Broken death messages and damage source names
+
+### Changed
+
+- Pet Armory:
+  - You can now apply any armor to your pet! Just throw armor near it, and it will pick it up!
+  - You can also throw weapons at it (if the config is enabled - if it is not it'll throw the item back at you)
+  - You can upgrade its armor any time, and in doing so get the old armor back
+  - You can forcefully remove the old armor back by right clicking while sneaking on your pet
+- Imperishable Logic for Armor
+  - Salvaged armor is now moved to your inventory (or thrown at you in world)
+  - Salvaged armor cannot be equipped
+  - No more dumb stuff with how armor is calculated or what the damage source is
+
 ## 3.0.8
 
 ### Fixed
 
 - Imperishable
-    - Taking no damage / less damage from any source at all, with or without armor on and with or without imperishable
-    - Fix armor defense values including an imperishable armor piece that shouldn't be able to protect
-    - Fixed armors not taking any damage when hurting the player
-
+  - Taking no damage / less damage from any source at all, with or without armor on and with or without imperishable
+  - Fix armor defense values including an imperishable armor piece that shouldn't be able to protect
+  - Fixed armors not taking any damage when hurting the player
 
 ## 3.0.7
 
