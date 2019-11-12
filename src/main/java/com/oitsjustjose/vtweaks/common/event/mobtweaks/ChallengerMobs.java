@@ -3,7 +3,6 @@ package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
-import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,9 +22,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,6 +41,21 @@ public class ChallengerMobs
 
         if (!event.getWorld().isRemote())
         {
+            // Fix hand items being incorrect
+            if (event.getEntity() instanceof MonsterEntity)
+            {
+                MonsterEntity monster = (MonsterEntity) event.getEntity();
+
+                if (isChallengerMob(monster))
+                {
+                    ChallengerMobType type = getChallengerMobType(monster);
+                    if (monster.getHeldItemMainhand().getItem() != type.getEquipment().getItem())
+                    {
+                        monster.setHeldItem(Hand.MAIN_HAND, type.getEquipment());
+                    }
+                }
+            }
+
             if (event.getWorld().getRandom().nextInt(100) <= MobTweakConfig.CHALLENGER_MOBS_RARITY.get()
                     && !event.getEntity().getPersistentData().getBoolean("challenger_mob_checked"))
             {
@@ -120,16 +134,6 @@ public class ChallengerMobs
         }
 
         event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
-
-        IVTweaksCapability capability = event.getEntity().world.getCapability(VTweaks.VTWEAKS_CAPABILITY).orElse(null);
-
-        if (capability == null)
-        {
-            VTweaks.getInstance().LOGGER
-                    .warn("Did not have an instance of the V-Tweaks Capability to remove the entity");
-            return;
-        }
-        VTweaks.proxy.challengerMobs.remove((MonsterEntity) event.getEntity());
     }
 
     @SubscribeEvent
@@ -149,11 +153,35 @@ public class ChallengerMobs
     }
 
     @SubscribeEvent
-    public void registerEvent(TickEvent.WorldTickEvent event)
+    public void registerEvent(LivingHurtEvent event)
     {
-        VTweaks.proxy.challengerMobs.forEach((monster, variant) -> {
-            // event.world.addParticle(particleData, x, y, z, xSpeed, ySpeed, zSpeed);
-        });
+        if (event.getEntityLiving() == null || event.getSource() == null)
+        {
+            return;
+        }
+
+        if (!(event.getSource().getTrueSource() instanceof MonsterEntity))
+        {
+            return;
+        }
+
+        if (!isChallengerMob((MonsterEntity) event.getSource().getTrueSource()))
+        {
+            return;
+        }
+
+        MonsterEntity monster = (MonsterEntity) event.getSource().getTrueSource();
+
+        ChallengerMobType type = getChallengerMobType(monster);
+        StringBuilder sb = new StringBuilder();
+        if (type.getHitEffects() != null)
+        {
+            for (EffectInstance effect : type.getHitEffects())
+            {
+                event.getEntityLiving().addPotionEffect(effect);
+                sb.append(effect.getPotion().getDisplayName().getFormattedText()).append(", ");
+            }
+        }
     }
 
     private void setChallengerTag(MonsterEntity entity, ChallengerMobType variant)
