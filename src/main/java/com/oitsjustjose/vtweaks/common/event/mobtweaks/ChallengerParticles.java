@@ -8,17 +8,20 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChallengerParticles
 {
-    private long last = System.currentTimeMillis();
+    private long lastParticle = System.currentTimeMillis();
+    private long lastFlush = System.currentTimeMillis();
 
     @SubscribeEvent
     public void registerEvent(TickEvent.WorldTickEvent event)
     {
-        if (!(System.currentTimeMillis() - last >= 10L))
+        if (!(System.currentTimeMillis() - lastParticle >= 10L))
         {
             return;
         }
@@ -28,9 +31,30 @@ public class ChallengerParticles
             return;
         }
 
-        last = System.currentTimeMillis();
+        lastParticle = System.currentTimeMillis();
 
         ArrayList<MonsterEntity> toRemove = Lists.newArrayList();
+
+        if (System.currentTimeMillis() - lastFlush >= 1000L)
+        {
+            if (event.world instanceof ServerWorld)
+            {
+                VTweaks.proxy.challengerMobs.clear();
+                ServerWorld serverWorld = ((ServerWorld) event.world);
+                serverWorld.getEntities().forEach((entity) -> {
+                    if (entity instanceof MonsterEntity)
+                    {
+                        MonsterEntity monster = (MonsterEntity) entity;
+                        if (ChallengerMobs.isChallengerMob(monster))
+                        {
+                            ChallengerMobType type = ChallengerMobs.getChallengerMobType(monster);
+                            VTweaks.proxy.challengerMobs.put(monster, type);
+                        }
+                    }
+                });
+            }
+            lastFlush = System.currentTimeMillis();
+        }
 
         VTweaks.proxy.challengerMobs.forEach((monster, type) -> {
             if (!monster.isAlive())
@@ -39,6 +63,7 @@ public class ChallengerParticles
             }
             else
             {
+
                 Random rand = monster.getRNG();
 
                 float noiseX = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
@@ -61,9 +86,12 @@ public class ChallengerParticles
             }
         });
 
-        
         toRemove.forEach((monster) -> {
-            VTweaks.getInstance().LOGGER.info("Despawning entity " + monster.getDisplayName().getFormattedText());
+            IWorld world = monster.getEntityWorld();
+            if (world instanceof ServerWorld)
+            {
+                ((ServerWorld) world).removeEntity(monster);
+            }
             VTweaks.proxy.challengerMobs.remove(monster);
         });
     }
