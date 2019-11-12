@@ -77,7 +77,6 @@ public class PetArmory
         }
         catch (NullPointerException ex)
         {
-            ex.printStackTrace();
             return;
         }
     }
