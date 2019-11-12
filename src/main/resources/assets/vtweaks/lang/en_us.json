@@ -4,7 +4,7 @@
     "enchantment.vtweaks.lumbering.desc": "§3While Sneaking:§r\n    Fells an entire tree when breaking any wood block of the tree.\n    §4§lWorks on non-trees too§r",
     "enchantment.vtweaks.imperishable.desc": "Saves your tool or armor piece from breaking,\n    thus §ldisabling the item's functionality\n    until repaired.§r",
     "vtweaks.death.message": "You died at §e[X:%s, Y:%s, Z:%s]§r",
-    "vtweaks.man.pants": "Man Pants",
+    "vtweaks.man.pants": "§5Man Pants§r",
     "vtweaks.mighty.challenger.mob": "Mighty %s",
     "vtweaks.hungry.challenger.mob": "Hungry %s",
     "vtweaks.ranger.challenger.mob": "Ranger %s",

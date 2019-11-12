@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.2
+
+### Fixed
+
+- Broken localization on Man Pants
+- Mobs dying without death animation (immediately disappearing on death)
+
 ## 3.1.1
 
 ### Added
