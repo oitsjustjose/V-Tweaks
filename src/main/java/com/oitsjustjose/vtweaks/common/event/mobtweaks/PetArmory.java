@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
 
@@ -59,7 +58,6 @@ public class PetArmory
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
                     pet.getEntityWorld().addEntity(stackEntity);
                     pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
-                    VTweaks.getInstance().LOGGER.info("Should've set MAIN_HAND empty");
                 }
 
                 if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty())
@@ -69,7 +67,6 @@ public class PetArmory
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
                     pet.getEntityWorld().addEntity(stackEntity);
                     pet.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
-                    VTweaks.getInstance().LOGGER.info("Should've set OFF_HAND empty");
                 }
 
             }

@@ -6,7 +6,6 @@ import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.ParticlePacket;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.RedstoneParticleData;
