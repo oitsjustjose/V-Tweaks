@@ -216,7 +216,7 @@ public class ChallengerMobs
         return Utils.createItemEntity(world, pos, MobTweakConfig.challengerMobDrops.get(RNG));
     }
 
-    private boolean isChallengerMob(MonsterEntity entity)
+    public static boolean isChallengerMob(MonsterEntity entity)
     {
         CompoundNBT comp = entity.getPersistentData();
 
@@ -227,7 +227,7 @@ public class ChallengerMobs
         return false;
     }
 
-    private ChallengerMobType getChallengerMobType(MonsterEntity monster)
+    public static ChallengerMobType getChallengerMobType(MonsterEntity monster)
     {
         CompoundNBT comp = monster.getPersistentData();
 
