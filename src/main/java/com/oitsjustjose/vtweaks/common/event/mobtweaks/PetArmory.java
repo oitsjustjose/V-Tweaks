@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
+import com.oitsjustjose.vtweaks.common.util.Utils;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -54,7 +54,7 @@ public class PetArmory
                 if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty())
                 {
                     ItemStack heldStack = pet.getHeldItemMainhand().copy();
-                    ItemEntity stackEntity = HelperFunctions.createItemEntity(pet.getEntityWorld(), pet.getPosition()
+                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
                     pet.getEntityWorld().addEntity(stackEntity);
                     pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
@@ -63,7 +63,7 @@ public class PetArmory
                 if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty())
                 {
                     ItemStack heldStack = pet.getHeldItemOffhand().copy();
-                    ItemEntity stackEntity = HelperFunctions.createItemEntity(pet.getEntityWorld(), pet.getPosition()
+                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
                     pet.getEntityWorld().addEntity(stackEntity);
                     pet.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);

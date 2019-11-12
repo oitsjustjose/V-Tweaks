@@ -31,12 +31,12 @@ public class JEICompat implements IModPlugin
         ArrayList<Object> recipes = Lists.newArrayList();
         recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK),
                 Lists.newArrayList(new ItemStack(Items.GOLDEN_AXE)),
-                Lists.newArrayList(HelperFunctions.getEnchantedBook(VTweaks.lumbering))));
+                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.lumbering))));
 
         recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(
-                HelperFunctions.getEnchantedBook(Enchantments.UNBREAKING, 3),
-                Lists.newArrayList(HelperFunctions.getEnchantedBook(Enchantments.UNBREAKING, 3)),
-                Lists.newArrayList(HelperFunctions.getEnchantedBook(VTweaks.imperishable))));
+                Utils.getEnchantedBook(Enchantments.UNBREAKING, 3),
+                Lists.newArrayList(Utils.getEnchantedBook(Enchantments.UNBREAKING, 3)),
+                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.imperishable))));
 
         registration.addRecipes(recipes, VanillaRecipeCategoryUid.ANVIL);
     }

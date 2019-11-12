@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
+import com.oitsjustjose.vtweaks.common.util.Utils;
 
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,7 +44,7 @@ public class FeatherPlucker
             {
                 if (!player.world.isRemote && chicken.getGrowingAge() == 0)
                 {
-                    player.world.addEntity(HelperFunctions.createItemEntity(player.world,
+                    player.world.addEntity(Utils.createItemEntity(player.world,
                             event.getTarget().getPosition(), Items.FEATHER));
                     chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
                     chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially

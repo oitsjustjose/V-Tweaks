@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class HelperFunctions
+public class Utils
 {
     public static ItemStack getEnchantedBook(Enchantment ench)
     {

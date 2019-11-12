@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.enchantment;
 
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
+import com.oitsjustjose.vtweaks.common.util.Utils;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +36,7 @@ public class FeatherFallingTweak
 
         ItemStack boots = player.inventory.armorInventory.get(0);
         // Checks if FeatherFalling IV or higher is on the boots
-        if (EnchantmentHelper.getEnchantmentLevel(HelperFunctions.getEnchantment("minecraft", "feather_falling"),
+        if (EnchantmentHelper.getEnchantmentLevel(Utils.getEnchantment("minecraft", "feather_falling"),
                 boots) >= 4)
         {
             boots.damageItem((int) event.getAmount(), player, this::breakBoots);

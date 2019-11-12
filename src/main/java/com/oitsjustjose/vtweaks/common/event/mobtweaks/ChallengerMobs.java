@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.HelperFunctions;
+import com.oitsjustjose.vtweaks.common.util.Utils;
 import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 
 import net.minecraft.entity.Entity;
@@ -89,7 +89,7 @@ public class ChallengerMobs
                         ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
                         pants.setDisplayName(
                                 new TranslationTextComponent(TextFormatting.DARK_PURPLE + "vtweaks.man.pants"));
-                        pants.addEnchantment(HelperFunctions.getEnchantment("minecraft", "blast_protection"), 5);
+                        pants.addEnchantment(Utils.getEnchantment("minecraft", "blast_protection"), 5);
                         monster.setItemStackToSlot(EquipmentSlotType.LEGS, pants);
                     }
 
@@ -185,7 +185,7 @@ public class ChallengerMobs
     private ItemEntity getItem(World world, BlockPos pos)
     {
         int RNG = world.rand.nextInt(MobTweakConfig.challengerMobDrops.size());
-        return HelperFunctions.createItemEntity(world, pos, MobTweakConfig.challengerMobDrops.get(RNG));
+        return Utils.createItemEntity(world, pos, MobTweakConfig.challengerMobDrops.get(RNG));
     }
 
     private boolean isChallengerMob(MonsterEntity entity)

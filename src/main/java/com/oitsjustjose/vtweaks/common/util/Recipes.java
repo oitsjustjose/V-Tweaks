@@ -17,7 +17,7 @@ public class Recipes
     {
         if (EnchantmentConfig.ENABLE_LUMBERING.get())
         {
-            ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.lumbering);
+            ItemStack book = Utils.getEnchantedBook(VTweaks.lumbering);
 
             if (event.getLeft().isEmpty() || event.getRight().isEmpty())
                 return;
@@ -40,15 +40,15 @@ public class Recipes
 
         if (EnchantmentConfig.ENABLE_IMPERISHABLE.get())
         {
-            ItemStack book = HelperFunctions.getEnchantedBook(VTweaks.imperishable);
+            ItemStack book = Utils.getEnchantedBook(VTweaks.imperishable);
 
             if (event.getLeft().isEmpty() || event.getRight().isEmpty())
                 return;
 
             if (event.getLeft().getItem() == Items.ENCHANTED_BOOK && event.getRight().getItem() == Items.ENCHANTED_BOOK)
             {
-                if (HelperFunctions.bookHasEnchantment(event.getLeft(), new EnchantmentData(Enchantments.UNBREAKING, 3))
-                        && HelperFunctions.bookHasEnchantment(event.getRight(),
+                if (Utils.bookHasEnchantment(event.getLeft(), new EnchantmentData(Enchantments.UNBREAKING, 3))
+                        && Utils.bookHasEnchantment(event.getRight(),
                                 new EnchantmentData(Enchantments.UNBREAKING, 3)))
                 {
                     event.setCost(EnchantmentConfig.IMPERISHABLE_RECIPE_COST.get());
