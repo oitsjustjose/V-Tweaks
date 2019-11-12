@@ -1,5 +1,18 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.1
+
+### Added
+
+- New damage effects to some challenger mobs!
+  - Arcane Challengers inflict blindness, withering and levitation on hit
+  - Hungry Challengers inflict 30s of Hunger II
+
+### Fixed
+
+- Lingering Challenger Mob Particles
+- Debug statements spamming the game console
+
 ## 3.1.0
 
 ### Added
