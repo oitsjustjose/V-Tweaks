@@ -16,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -82,12 +83,7 @@ public class ChallengerMobs
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
                     monster.setCustomName(mobClassName(VARIANT, monster));
-                    // Specifically keeps creepers from spawning with fire resistance to prevent funny business
-                    if (!(monster instanceof CreeperEntity))
-                    {
-                        monster.addPotionEffect(
-                                new EffectInstance(Effects.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, true, true));
-                    }
+
                     // Every challenger mob will have a main hand item. Done before any checks.
                     monster.setHeldItem(Hand.MAIN_HAND, VARIANT.getEquipment());
                     monster.setDropChance(EquipmentSlotType.MAINHAND, Float.MIN_VALUE);
@@ -158,26 +154,37 @@ public class ChallengerMobs
             return;
         }
 
-        if (!(event.getSource().getTrueSource() instanceof MonsterEntity))
+        // Special attack features for challenger mobs
+        if (event.getSource().getTrueSource() instanceof MonsterEntity)
         {
-            return;
-        }
-
-        if (!isChallengerMob((MonsterEntity) event.getSource().getTrueSource()))
-        {
-            return;
-        }
-
-        MonsterEntity monster = (MonsterEntity) event.getSource().getTrueSource();
-
-        ChallengerMobType type = getChallengerMobType(monster);
-        StringBuilder sb = new StringBuilder();
-        if (type.getHitEffects() != null)
-        {
-            for (EffectInstance effect : type.getHitEffects())
+            if (isChallengerMob((MonsterEntity) event.getSource().getTrueSource()))
             {
-                event.getEntityLiving().addPotionEffect(effect);
-                sb.append(effect.getPotion().getDisplayName().getFormattedText()).append(", ");
+                MonsterEntity monster = (MonsterEntity) event.getSource().getTrueSource();
+
+                ChallengerMobType type = getChallengerMobType(monster);
+                StringBuilder sb = new StringBuilder();
+                if (type.getHitEffects() != null)
+                {
+                    for (EffectInstance effect : type.getHitEffects())
+                    {
+                        event.getEntityLiving().addPotionEffect(effect);
+                        sb.append(effect.getPotion().getDisplayName().getFormattedText()).append(", ");
+                    }
+                }
+            }
+        }
+        // Prevent challenger mobs from being killed by fire
+        else if (event.getEntity() instanceof MonsterEntity)
+        {
+            if (isChallengerMob((MonsterEntity) event.getEntity()))
+            {
+                if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.ON_FIRE
+                        || event.getSource() == DamageSource.LAVA)
+                {
+                    event.getEntity().extinguish();
+                    event.setAmount(0F);
+                    event.setCanceled(true);
+                }
             }
         }
     }
