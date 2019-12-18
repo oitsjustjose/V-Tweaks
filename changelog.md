@@ -1,5 +1,14 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.3
+
+### Changed
+
+- Challenger Mobs are now defended from fire damage without a fire resistance potion
+    - This prevents you from sapping the effect from the mob, if you have mods that add those enchantments
+    - This shows the hurt animation *once* every so-often, but rest assured no damage is being done
+    - This still fixes the concerns of spoofing them with lava or fire
+
 ## 3.1.2
 
 ### Fixed
