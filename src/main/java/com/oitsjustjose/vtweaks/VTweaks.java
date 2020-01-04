@@ -16,6 +16,7 @@ import com.oitsjustjose.vtweaks.event.mobtweaks.MobDropBuffs;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.event.mobtweaks.SheepDyeFix;
+import com.oitsjustjose.vtweaks.util.CakeRegistry;
 import com.oitsjustjose.vtweaks.util.ConfigParser;
 import com.oitsjustjose.vtweaks.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.util.ModConfig;
@@ -92,5 +93,6 @@ public class VTweaks
     {
         Blocks.COMMAND_BLOCK.setCreativeTab(CreativeTabs.REDSTONE);
         ConfigParser.parseItems();
+        CakeRegistry.init();
     }
 }
