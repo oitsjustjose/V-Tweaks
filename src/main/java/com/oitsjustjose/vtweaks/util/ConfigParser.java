@@ -61,12 +61,12 @@ public class ConfigParser
                     }
                     else
                     {
-                        LOGGER.info("Error parsing " + toSplit + ", please ensure proper formatting!");
+                        VTweaks.LOGGER.info("Error parsing " + toSplit + ", please ensure proper formatting!");
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    LOGGER.info("Error parsing " + toSplit + ", please ensure proper formatting!");
+                    VTweaks.LOGGER.info("Error parsing " + toSplit + ", please ensure proper formatting!");
                 }
             }
         }
