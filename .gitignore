@@ -22,4 +22,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 .classpath
 .project
-.settings/org.eclipse.buildship.core.prefs
+**/org.eclipse.*
+**/.vscode
