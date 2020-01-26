@@ -1,5 +1,11 @@
 # VTweaks Changelog
 
+## 2.0.6b
+
+### Fixed
+
+- **HOTFIX**: Remove debug console logs when lumbering
+
 ## 2.0.6
 
 ### Changed
@@ -12,26 +18,26 @@
 
 ## 2.0.5:
 
-### FIXED
+### Fixed
 
 - Lumbering (Backport from 1.14 version)
 
 ## 2.0.4:
 
-### FIXED
+### Fixed
 
 - Crash if ChallengerMobs Rarity less than or equal to 0
 - Debug output when throwing concrete powder with ConcreteTweaks enabled
 
 ## 2.0.3:
 
-### ADDED
+### Added
 
 - ConcreteTweaks: Throwing a concrete powder item from your inventory into water will turn it into a concrete block! This also works with dispensers.
 
 ## 2.0.2:
 
-### ADDED
+### Added
 
 - Config option for PeacefulSurface Y requirements
 - Config for whether or not lumbering chops down leaves with the tree
@@ -40,13 +46,13 @@
 
 - Lumbering wood-chopping algorithm: \* It now cuts down all of **_most_** trees! No more static pattern, now uses recursion to detect trees better
 
-### FIXED
+### Fixed
 
 - Updater URL (for the Mods GUI screen)
 
 ## 2.0.1:
 
-### ADDED
+### Added
 
 - Adventurer's Toolbox compat to Lumbering recipe
 
@@ -89,7 +95,7 @@
 
 ## 1.4.11.4:
 
-**The 1.10.x branch is now only under a "as-needed" updating basis; only widespread game-crashing bugs will be fixed**
+**The 1.10.x branch is now only under a "as-needed" updating basis; only widespread game-crashing bugs will be Fixed**
 
 ### Fixed
 

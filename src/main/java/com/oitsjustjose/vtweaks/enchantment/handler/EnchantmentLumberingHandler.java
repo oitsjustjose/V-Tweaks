@@ -149,7 +149,6 @@ public class EnchantmentLumberingHandler
         // Handle imperishable logic here
         else if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, axe) > 0)
         {
-            VTweaks.LOGGER.info(axe.getMaxDamage() - axe.getItemDamage());
             if ((axe.getMaxDamage() - axe.getItemDamage()) <= 1)
             {
                 return false;
