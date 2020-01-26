@@ -1,13 +1,17 @@
 package com.oitsjustjose.vtweaks.enchantment.handler;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.enchantment.Enchantments;
 import com.oitsjustjose.vtweaks.util.ModConfig;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -68,16 +72,17 @@ public class EnchantmentLumberingHandler
                     BlockPos iterPos = pos.add(mod_x, mod_y, mod_z);
                     if (iterPos != pos)
                     {
-                        if (!canStillChop(player))
-                        {
-                            return false;
-                        }
-
                         if (world.getBlockState(iterPos).getBlock().isWood(world, iterPos))
                         {
-                            world.destroyBlock(iterPos, true);
-                            player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
-                            if (!chopTree(world, player, iterPos))
+                            if (canStillChop(player))
+                            {
+                                world.destroyBlock(iterPos, true);
+                                if (!chopTree(world, player, iterPos))
+                                {
+                                    return false;
+                                }
+                            }
+                            else
                             {
                                 return false;
                             }
@@ -110,19 +115,47 @@ public class EnchantmentLumberingHandler
      */
     private boolean canStillChop(EntityPlayer player)
     {
-        if (player.getHeldItemMainhand().isEmpty())
+        ItemStack axe = player.getHeldItemMainhand();
+        // Check to make sure that the player is still holding the axe
+        if (axe.isEmpty())
         {
             return false;
         }
-        else if (player.getHeldItemMainhand().getItemDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2)
+        // Check to make sure that the player's held item still has lumbering
+        else if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering, axe) <= 0)
         {
             return false;
         }
-        else if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().lumbering,
-                player.getHeldItemMainhand()) <= 0)
+        // Try to handle energy devices
+        else if (axe.hasTagCompound())
         {
-            return false;
+            NBTTagCompound comp = axe.getTagCompound();
+            if (comp.hasKey("Energy"))
+            {
+                if (comp.getInteger("Energy") <= 0)
+                {
+                    return false;
+                }
+            }
         }
-        return true;
+        // Another attempt at detecting energy-tools
+        else if (axe.hasCapability(CapabilityEnergy.ENERGY, null))
+        {
+            if (axe.getCapability(CapabilityEnergy.ENERGY, null).getEnergyStored() <= 0)
+            {
+                return false;
+            }
+        }
+        // Handle imperishable logic here
+        else if (EnchantmentHelper.getEnchantmentLevel(Enchantments.getInstance().imperishable, axe) > 0)
+        {
+            VTweaks.LOGGER.info(axe.getMaxDamage() - axe.getItemDamage());
+            if ((axe.getMaxDamage() - axe.getItemDamage()) <= 1)
+            {
+                return false;
+            }
+        }
+
+        return !axe.attemptDamageItem(1, player.getRNG(), null);
     }
 }
