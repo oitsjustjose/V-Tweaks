@@ -1,5 +1,11 @@
 # VTweaks Changelog
 
+## 2.0.7
+
+### Fixed
+
+- Crash on right-click of block when the CropHelper blacklist config item is invalid
+
 ## 2.0.6b
 
 ### Fixed
