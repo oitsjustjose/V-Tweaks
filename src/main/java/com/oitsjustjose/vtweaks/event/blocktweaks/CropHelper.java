@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.event.blocktweaks;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.oitsjustjose.vtweaks.VTweaks;
@@ -26,6 +27,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CropHelper
 {
+    private static ArrayList<String> printed = new ArrayList<>();
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void registerVanilla(RightClickBlock event)
     {
@@ -160,19 +163,31 @@ public class CropHelper
     {
         for (String name : ModConfig.blockTweaks.cropTweak.blacklist)
         {
-            String[] parts = name.split(":");
-            if (parts.length != 2)
+            if (name.contains(":"))
             {
-                VTweaks.LOGGER.info("{} is not a valid entry", name);
-            }
+                String[] parts = name.split(":");
 
-            if (parts[1] == "*")
-            {
-                return block.getRegistryName().getResourceDomain() == parts[0];
+                if (parts.length != 2)
+                {
+                    VTweaks.LOGGER.info("{} is not a valid entry", name);
+                }
+
+                if (parts[1] == "*")
+                {
+                    return block.getRegistryName().getResourceDomain() == parts[0];
+                }
+                else
+                {
+                    return new ResourceLocation(parts[0], parts[1]) == block.getRegistryName();
+                }
             }
             else
             {
-                return new ResourceLocation(parts[0], parts[1]) == block.getRegistryName();
+                if (!printed.contains(name))
+                {
+                    VTweaks.LOGGER.info("Failed to parse Crop Helper blacklist entry {}", name);
+                    printed.add(name);
+                }
             }
         }
         return false;
