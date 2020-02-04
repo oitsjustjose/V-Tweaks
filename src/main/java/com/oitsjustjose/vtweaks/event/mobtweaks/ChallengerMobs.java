@@ -57,7 +57,10 @@ public class ChallengerMobs
                     monster.setItemStackToSlot(EntityEquipmentSlot.FEET, ItemStack.EMPTY);
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
-                    monster.setCustomNameTag(mobClassName(VARIANT, monster));
+                    if (ModConfig.mobTweaks.challengerMobs.customNames)
+                    {
+                        monster.setCustomNameTag(mobClassName(VARIANT, monster));
+                    }
                     // Specifically keeps creepers from spawning with fire resistance to prevent
                     // funny business
                     if (!(monster instanceof EntityCreeper))

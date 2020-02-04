@@ -1,5 +1,11 @@
 # VTweaks Changelog
 
+## 2.0.8
+
+### Added
+
+- Challenger Mobs config for disabling custom name tags
+
 ## 2.0.7
 
 ### Fixed

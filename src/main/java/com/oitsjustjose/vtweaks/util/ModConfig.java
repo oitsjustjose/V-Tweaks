@@ -129,6 +129,10 @@ public class ModConfig
             @Config.Name("Rarity")
             public int chance = 100;
 
+            @Config.Name("Custom Names")
+            @Config.Comment("Enabling this will add custom names (like name-tags) to challenger mobs")
+            public boolean customNames = true;
+
             @Config.Name("Loot Table")
             @Config.Comment("Loot table. Formatted as:\n" + "    <modid>:<item>,\n" + "    <modid>:<item>*<quantity>,\n"
                     + "    <modid>:<item>:<meta>, or\n" + "    <modid>:<item>:<meta>*<quantity>")
