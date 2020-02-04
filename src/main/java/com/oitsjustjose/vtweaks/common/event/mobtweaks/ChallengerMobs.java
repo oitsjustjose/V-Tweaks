@@ -80,7 +80,10 @@ public class ChallengerMobs
                     monster.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
 
                     // Custom Name Tags, and infinite fire resistance to prevent cheesy kills
-                    monster.setCustomName(mobClassName(VARIANT, monster));
+                    if (MobTweakConfig.ENABLE_CHALLENGER_MOBS_NAME.get())
+                    {
+                        monster.setCustomName(mobClassName(VARIANT, monster));
+                    }
 
                     // Every challenger mob will have a main hand item. Done before any checks.
                     monster.setHeldItem(Hand.MAIN_HAND, VARIANT.getEquipment());

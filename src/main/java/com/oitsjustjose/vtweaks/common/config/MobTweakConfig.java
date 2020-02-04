@@ -22,6 +22,7 @@ public class MobTweakConfig
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY_WEAPONS;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_BLACKLIST;
     public static ForgeConfigSpec.IntValue CHALLENGER_MOBS_RARITY;
@@ -44,6 +45,8 @@ public class MobTweakConfig
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
                 "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but those in this blacklist.")
                 .define("challengerMobsEnabled", true);
+        ENABLE_CHALLENGER_MOBS_NAME = COMMON_BUILDER.comment("Enable custom nametags on challenger mobs")
+                .define("challengerMobsNames", true);
         CHALLENGER_MOBS_LOOT = COMMON_BUILDER
                 .comment("A string list of form <modid:item> of possible loot items a Challenger Mob could drop")
                 .defineList("challengerMobsLoot",

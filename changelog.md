@@ -1,5 +1,15 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.4
+
+### Changed
+
+- Forge dependency to stable (28.2.0)
+
+### Added
+
+- Challenger Mob config for disabling their custom name tags
+
 ## 3.1.3
 
 ### Changed
