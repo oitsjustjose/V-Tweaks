@@ -37,7 +37,7 @@ public class NaturalBabies
 
             if (animal.getRNG().nextInt(100) <= MobTweakConfig.NATURAL_BABIES_CHANCE.get())
             {
-                animal.setGrowingAge(-1000);
+                animal.setGrowingAge(-24000);
             }
         }
     }
