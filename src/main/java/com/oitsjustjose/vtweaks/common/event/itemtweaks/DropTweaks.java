@@ -43,7 +43,8 @@ public class DropTweaks
                 {
                     ChickenEntity chick = new ChickenEntity(EntityType.CHICKEN, world);
                     chick.setGrowingAge(-24000);
-                    chick.setLocationAndAngles(entItem.posX, entItem.posY, entItem.posZ, entItem.rotationYaw, 0.0F);
+                    chick.setLocationAndAngles(entItem.getPosX(), entItem.getPosY(), entItem.getPosZ(),
+                            entItem.rotationYaw, 0.0F);
                     world.addEntity(chick);
                 }
             }
@@ -51,14 +52,15 @@ public class DropTweaks
         // Handles sapling replanting; 100% chance
         else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && ItemTags.SAPLINGS.contains(stack.getItem()))
         {
-            BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
+            BlockPos saplingPos = fromDouble(entItem.getPosX(), entItem.getPosY(), entItem.getPosZ());
             // Checks to see if where the sapling *will* be is air
             if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable())
             {
                 Item item = stack.getItem();
                 if (item instanceof BlockItem)
                 {
-                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack, Direction.UP);
+                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,
+                            Direction.UP);
                     ((BlockItem) item).tryPlace(context);
                 }
             }

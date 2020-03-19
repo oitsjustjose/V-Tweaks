@@ -81,7 +81,7 @@ public class ConcreteTweaks
 
         public ItemEntityConcrete(ItemEntity item)
         {
-            super(item.getEntityWorld(), item.posX, item.posY, item.posZ, item.getItem());
+            super(item.getEntityWorld(), item.getPosX(), item.getPosY(), item.getPosZ(), item.getItem());
             this.setMotion(item.getMotion());
             this.setPickupDelay(40);
         }

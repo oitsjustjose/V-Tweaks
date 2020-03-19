@@ -36,7 +36,7 @@ public class EnchantmentLumberingHandler
         // Checks if the axe has lumbering
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0)
         {
-            if (player.isSneaking())
+            if (player.isCrouching())
             {
                 if (BlockTags.LOGS.contains(event.getState().getBlock()))
                 {

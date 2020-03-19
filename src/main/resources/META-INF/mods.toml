@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (28 is current forge version)
+loaderVersion="[31,)" #mandatory (28 is current forge version)
 issueTrackerURL="http://github.com/oitsjustjose/v-tweaks/issues"
 [[mods]]
 modId="vtweaks"
@@ -14,13 +14,13 @@ A mod that tweaks the vanilla game without adding any new items
 [[dependencies.vtweaks]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[28,)" #mandatory
+    versionRange="[31,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.vtweaks]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"

@@ -68,9 +68,9 @@ public class ChallengerParticles
                 float noiseX = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
                 float noiseZ = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
 
-                double x = monster.posX + noiseX;
-                double y = rand.nextBoolean() ? monster.posY + (monster.getHeight() / 2) : monster.posY;
-                double z = monster.posZ + noiseZ;
+                double x = monster.getPosX() + noiseX;
+                double y = rand.nextBoolean() ? monster.getPosY() + (monster.getHeight() / 2) : monster.getPosY();
+                double z = monster.getPosZ() + noiseZ;
 
                 y += rand.nextFloat() + rand.nextInt(1);
 

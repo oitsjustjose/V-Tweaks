@@ -124,7 +124,7 @@ public class PetArmory
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             boolean strippedArmor = false;
 
-            if (player.getHeldItemMainhand().isEmpty() && player.isSneaking() && pet.isTamed() && pet.isOwner(player))
+            if (player.getHeldItemMainhand().isEmpty() && player.isCrouching() && pet.isTamed() && pet.isOwner(player))
             {
                 // Give the armor back
                 for (EquipmentSlotType slotType : EquipmentSlotType.values())
