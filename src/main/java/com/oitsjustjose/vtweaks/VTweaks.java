@@ -21,7 +21,6 @@ import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.NaturalBabies;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.event.playertweaks.ArmSwingParity;
@@ -94,7 +93,6 @@ public class VTweaks
         MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
-        MinecraftForge.EVENT_BUS.register(new NaturalBabies());
         
 
         // Block Tweaks
