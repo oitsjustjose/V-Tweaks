@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.5
+
+### Fixed
+
+- Cake Tweaks not working
+
 ## 3.1.4
 
 ### Changed
