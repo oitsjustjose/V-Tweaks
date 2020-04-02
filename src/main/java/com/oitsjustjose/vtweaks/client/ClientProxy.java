@@ -13,9 +13,12 @@ import net.minecraft.util.SoundEvents;
 
 public class ClientProxy extends CommonProxy
 {
+    Minecraft mc;
+    
     @Override
     public void init()
     {
+        mc = Minecraft.getInstance();
         CommonProxy.networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,
                 ArmorBreakPacket::decode, ArmorBreakPacket::handleClient);
         networkManager.networkWrapper.registerMessage(1, ParticlePacket.class, ParticlePacket::encode,
@@ -32,7 +35,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void playSound(PlayerEntity player)
     {
-        Minecraft.getInstance().player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
+        mc.player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class ClientProxy extends CommonProxy
         if (MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get())
         {
             IParticleData redstoneParticle = new RedstoneParticleData(r, g, b, 1F);
-            Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, x, y, z, 0D, 0D, 0D);
+            mc.worldRenderer.addParticle(redstoneParticle, false, x, y, z, 0D, 0D, 0D);
         }
     }
 }

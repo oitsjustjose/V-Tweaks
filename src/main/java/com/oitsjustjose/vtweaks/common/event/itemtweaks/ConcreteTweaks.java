@@ -56,7 +56,7 @@ public class ConcreteTweaks
             if (powderBlocks.contains(itemBlock))
             {
                 ItemEntityConcrete concrete = new ItemEntityConcrete(entItem);
-                if (!concrete.getEntityWorld().isRemote)
+                if (!concrete.world.isRemote)
                 {
                     concrete.getEntityWorld().addEntity(concrete);
                 }
