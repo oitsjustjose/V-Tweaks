@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.14.x
 
+## 3.1.6
+
+### Fixed
+
+- [Hopefully] fixed issues with ChallengerMob particles
+- Fixed Pillagers being able to become challengers, rendering them useless without their crossbow
+
 ## 3.1.5
 
 ### Fixed
