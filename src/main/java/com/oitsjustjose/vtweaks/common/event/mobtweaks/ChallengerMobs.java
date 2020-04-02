@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
 
@@ -8,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.PillagerEntity;
 import net.minecraft.entity.monster.ZombiePigmanEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -39,6 +38,10 @@ public class ChallengerMobs
 
         if (!event.getWorld().isRemote())
         {
+            if (event.getEntity() instanceof PillagerEntity)
+            {
+                return;
+            }
             // Fix hand items being incorrect
             if (event.getEntity() instanceof MonsterEntity)
             {
@@ -103,7 +106,6 @@ public class ChallengerMobs
                     }
 
                     setChallengerTag(monster, VARIANT);
-                    VTweaks.proxy.challengerMobs.put(monster, VARIANT);
                 }
             }
             else
@@ -129,22 +131,6 @@ public class ChallengerMobs
         }
 
         event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
-    }
-
-    @SubscribeEvent
-    public void registerEvent(EntityJoinWorldEvent event)
-    {
-        if (event.getEntity() == null || !(event.getEntity() instanceof MonsterEntity))
-        {
-            return;
-        }
-
-        MonsterEntity monster = (MonsterEntity) event.getEntity();
-
-        if (isChallengerMob(monster))
-        {
-            VTweaks.proxy.challengerMobs.put(monster, getChallengerMobType(monster));
-        }
     }
 
     @SubscribeEvent

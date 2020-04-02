@@ -1,13 +1,9 @@
 package com.oitsjustjose.vtweaks.common;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
 import com.oitsjustjose.vtweaks.common.network.ParticlePacket;
 
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -15,7 +11,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class CommonProxy
 {
     public static NetworkManager networkManager = new NetworkManager();
-    public ConcurrentHashMap<MonsterEntity, ChallengerMobType> challengerMobs = new ConcurrentHashMap<>();
 
     public void init()
     {
