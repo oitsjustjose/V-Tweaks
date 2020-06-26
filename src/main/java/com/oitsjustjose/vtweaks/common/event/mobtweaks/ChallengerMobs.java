@@ -92,8 +92,8 @@ public class ChallengerMobs
                     monster.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(VARIANT.getHealth());
                     monster.setHealth(VARIANT.getHealth());
 
-                    // Special Man Pants for Zestonian Mobs
-                    if (VARIANT == ChallengerMobType.ZESTONIAN)
+                    // Special Man Pants for Zistonian Mobs
+                    if (VARIANT == ChallengerMobType.ZISTONIAN)
                     {
                         ItemStack pants = new ItemStack(Items.GOLDEN_LEGGINGS);
                         pants.setDisplayName(new TranslationTextComponent("vtweaks.man.pants"));
