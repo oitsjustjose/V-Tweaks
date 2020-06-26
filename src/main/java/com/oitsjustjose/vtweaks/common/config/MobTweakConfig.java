@@ -81,7 +81,7 @@ public class MobTweakConfig
                         });
         CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
                 .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-                .defineList("challengerMobsBlacklist", Lists.newArrayList(), (itemRaw) -> {
+                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> {
                     if (itemRaw instanceof String)
                     {
                         return true;
