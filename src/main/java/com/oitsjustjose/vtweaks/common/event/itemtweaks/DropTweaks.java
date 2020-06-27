@@ -27,7 +27,7 @@ public class DropTweaks {
             return;
         }
 
-        if (event.getEntityItem().world.isRemote) {
+        if (!event.getEntityItem().world.isRemote) {
             return;
         }
 
