@@ -10,8 +10,7 @@ import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class CommonConfig
-{
+public class CommonConfig {
     public static final ForgeConfigSpec COMMON_CONFIG;
     private static final Builder COMMON_BUILDER = new Builder();
 
@@ -23,8 +22,7 @@ public class CommonConfig
 
     private static String CATEGORY_MISC = "miscellaneous";
 
-    static
-    {
+    static {
         EnchantmentConfig.init(COMMON_BUILDER);
         MobTweakConfig.init(COMMON_BUILDER);
         BlockTweakConfig.init(COMMON_BUILDER);
@@ -33,16 +31,14 @@ public class CommonConfig
         COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
-    public static void loadConfig(ForgeConfigSpec spec, Path path)
-    {
+    public static void loadConfig(ForgeConfigSpec spec, Path path) {
         final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave()
                 .writingMode(WritingMode.REPLACE).build();
         configData.load();
         spec.setConfig(configData);
     }
 
-    private static void init()
-    {
+    private static void init() {
         COMMON_BUILDER.comment("Miscellaneous").push(CATEGORY_MISC);
 
         DISABLE_THUNDER_STORMS = COMMON_BUILDER
@@ -61,13 +57,11 @@ public class CommonConfig
         COMMON_BUILDER.pop();
     }
 
-    public enum FoodTooltips
-    {
+    public enum FoodTooltips {
         NEVER, WITH_SHIFT, ALWAYS
     }
 
-    public enum DurabilityTooltips
-    {
+    public enum DurabilityTooltips {
         NEVER, WITH_SHIFT, ALWAYS
     }
 }

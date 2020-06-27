@@ -14,32 +14,25 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EnchantmentLumberingHandler
-{
+public class EnchantmentLumberingHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void register(BreakEvent event)
-    {
+    public void register(BreakEvent event) {
         // Check if enchantment is disabled
-        if (!EnchantmentConfig.ENABLE_LUMBERING.get())
-        {
+        if (!EnchantmentConfig.ENABLE_LUMBERING.get()) {
             return;
         }
         // Check that state, world, player or player's held item all exist
         if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null
-                || event.getPlayer().getHeldItemMainhand().isEmpty() || event.getPlayer().isCreative())
-        {
+                || event.getPlayer().getHeldItemMainhand().isEmpty() || event.getPlayer().isCreative()) {
             return;
         }
         // Local variables
         IWorld world = event.getWorld();
         PlayerEntity player = event.getPlayer();
         // Checks if the axe has lumbering
-        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0)
-        {
-            if (player.isCrouching())
-            {
-                if (BlockTags.LOGS.contains(event.getState().getBlock()))
-                {
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0) {
+            if (player.isCrouching()) {
+                if (BlockTags.LOGS.contains(event.getState().getBlock())) {
                     chopTree(world.getWorld(), player, event.getPos());
                     world.playSound(
                             null, event.getPos(), event.getState().getBlock()
@@ -58,40 +51,28 @@ public class EnchantmentLumberingHandler
      * @param player
      * @param pos
      */
-    private boolean chopTree(World world, PlayerEntity player, BlockPos pos)
-    {
-        for (int mod_x = -1; mod_x <= 1; mod_x++)
-        {
-            for (int mod_y = -1; mod_y <= 1; mod_y++)
-            {
-                for (int mod_z = -1; mod_z <= 1; mod_z++)
-                {
+    private boolean chopTree(World world, PlayerEntity player, BlockPos pos) {
+        for (int mod_x = -1; mod_x <= 1; mod_x++) {
+            for (int mod_y = -1; mod_y <= 1; mod_y++) {
+                for (int mod_z = -1; mod_z <= 1; mod_z++) {
                     BlockPos iterPos = pos.add(mod_x, mod_y, mod_z);
-                    if (iterPos != pos)
-                    {
-                        if (!canStillChop(player))
-                        {
+                    if (iterPos != pos) {
+                        if (!canStillChop(player)) {
                             return false;
                         }
 
-                        if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock()))
-                        {
+                        if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock())) {
                             world.destroyBlock(iterPos, true);
                             player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
-                            if (!chopTree(world, player, iterPos))
-                            {
+                            if (!chopTree(world, player, iterPos)) {
                                 return false;
                             }
 
-                        }
-                        else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get())
-                        {
-                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock()))
-                            {
+                        } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
+                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
                                 world.destroyBlock(iterPos, true);
 
-                                if (!chopTree(world, player, iterPos))
-                                {
+                                if (!chopTree(world, player, iterPos)) {
                                     return false;
                                 }
                             }
@@ -111,18 +92,12 @@ public class EnchantmentLumberingHandler
      * @param player the player to check
      * @return
      */
-    private boolean canStillChop(PlayerEntity player)
-    {
-        if (player.getHeldItemMainhand().isEmpty())
-        {
+    private boolean canStillChop(PlayerEntity player) {
+        if (player.getHeldItemMainhand().isEmpty()) {
             return false;
-        }
-        else if (player.getHeldItemMainhand().getDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2)
-        {
+        } else if (player.getHeldItemMainhand().getDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2) {
             return false;
-        }
-        else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) <= 0)
-        {
+        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) <= 0) {
             return false;
         }
         return true;

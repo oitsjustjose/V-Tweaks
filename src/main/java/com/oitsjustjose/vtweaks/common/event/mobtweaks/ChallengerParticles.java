@@ -10,33 +10,26 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ChallengerParticles
-{
+public class ChallengerParticles {
     private long lastParticle = System.currentTimeMillis();
 
     @SubscribeEvent
-    public void registerEvent(TickEvent.WorldTickEvent event)
-    {
-        if (!(System.currentTimeMillis() - lastParticle >= 10L))
-        {
+    public void registerEvent(TickEvent.WorldTickEvent event) {
+        if (!(System.currentTimeMillis() - lastParticle >= 10L)) {
             return;
         }
 
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || !MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get())
-        {
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || !MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get()) {
             return;
         }
 
         lastParticle = System.currentTimeMillis();
 
-        if (event.world instanceof ServerWorld)
-        {
+        if (event.world instanceof ServerWorld) {
             ServerWorld serverWorld = ((ServerWorld) event.world);
             serverWorld.getEntities().forEach((entity) -> {
-                if (entity instanceof MonsterEntity)
-                {
-                    if (ChallengerMobs.isChallengerMob((MonsterEntity) entity))
-                    {
+                if (entity instanceof MonsterEntity) {
+                    if (ChallengerMobs.isChallengerMob((MonsterEntity) entity)) {
                         MonsterEntity monster = (MonsterEntity) entity;
                         ChallengerMobType type = ChallengerMobs.getChallengerMobType(monster);
 
@@ -52,8 +45,7 @@ public class ChallengerParticles
 
                         y += rand.nextFloat() + rand.nextInt(1);
 
-                        if (type != null)
-                        {
+                        if (type != null) {
                             float r = type.getRed();
                             float g = type.getGreen();
                             float b = type.getBlue();

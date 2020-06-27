@@ -22,50 +22,38 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class EnchantmentImperishableHandler
-{
+public class EnchantmentImperishableHandler {
     // This event is for tools
     @SubscribeEvent
-    public void register(BreakSpeed event)
-    {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
-        {
+    public void register(BreakSpeed event) {
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity))
-        {
+        if (event.getEntity() == null || !(event.getEntity() instanceof PlayerEntity)) {
             return;
         }
 
         PlayerEntity player = (PlayerEntity) event.getEntity();
         ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
-        if (stack.isEmpty())
-        {
+        if (stack.isEmpty()) {
             return;
         }
-        if (stack.getItem() instanceof ToolItem)
-        {
+        if (stack.getItem() instanceof ToolItem) {
             ToolItem tool = (ToolItem) stack.getItem();
 
-            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
-            {
-                if (tool.getDamage(stack) >= (tool.getMaxDamage(stack) - 1))
-                {
+            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+                if (tool.getDamage(stack) >= (tool.getMaxDamage(stack) - 1)) {
                     event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.25F,
                             (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
                     event.setNewSpeed(0F);
                 }
             }
-        }
-        else if (stack.getItem() instanceof SwordItem)
-        {
+        } else if (stack.getItem() instanceof SwordItem) {
             SwordItem sword = (SwordItem) stack.getItem();
 
-            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
-            {
-                if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1))
-                {
+            if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+                if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1)) {
                     event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.25F,
                             (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
                     event.setNewSpeed(0F);
@@ -75,33 +63,26 @@ public class EnchantmentImperishableHandler
     }
 
     @SubscribeEvent
-    public void register(AttackEntityEvent event)
-    {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
-        {
+    public void register(AttackEntityEvent event) {
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
-        if (event.getPlayer() == null || event.getPlayer().isCreative())
-        {
+        if (event.getPlayer() == null || event.getPlayer().isCreative()) {
             return;
         }
 
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
 
         if (stack.isEmpty() || !(stack.getItem() instanceof SwordItem)
-                || EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) <= 0)
-        {
+                || EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) <= 0) {
             return;
         }
 
         SwordItem sword = (SwordItem) stack.getItem();
 
-        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
-        {
-            if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1))
-            {
-                if (event.isCancelable())
-                {
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+            if (sword.getDamage(stack) >= (sword.getMaxDamage(stack) - 1)) {
+                if (event.isCancelable()) {
                     event.getPlayer().playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F,
                             (float) Math.min(1.0F, 0.5F + event.getPlayer().getRNG().nextDouble()));
                     event.getPlayer().sendStatusMessage(new TranslationTextComponent("vtweaks.sword.damaged"), true);
@@ -113,25 +94,18 @@ public class EnchantmentImperishableHandler
 
     // This event is for attacking / damage
     @SubscribeEvent
-    public void register(PlayerEvent event)
-    {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get())
-        {
+    public void register(PlayerEvent event) {
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
 
-        try
-        {
+        try {
             ArrayList<ItemStack> salvaged = Lists.newArrayList();
-            for (ItemStack stack : event.getPlayer().getArmorInventoryList())
-            {
-                if (stack.getItem() instanceof ArmorItem)
-                {
+            for (ItemStack stack : event.getPlayer().getArmorInventoryList()) {
+                if (stack.getItem() instanceof ArmorItem) {
                     ArmorItem armor = (ArmorItem) stack.getItem();
-                    if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0)
-                    {
-                        if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1))
-                        {
+                    if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+                        if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1)) {
                             salvaged.add(stack);
                         }
                     }
@@ -144,9 +118,7 @@ public class EnchantmentImperishableHandler
                 event.getPlayer().inventory.markDirty();
                 VTweaks.proxy.playSound(event.getPlayer());
             });
-        }
-        catch (NullPointerException ignored)
-        {
+        } catch (NullPointerException ignored) {
             return;
         }
     }

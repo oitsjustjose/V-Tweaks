@@ -15,19 +15,16 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
-public class JEICompat implements IModPlugin
-{
+public class JEICompat implements IModPlugin {
     private static ResourceLocation ID = new ResourceLocation(Constants.MODID, "ench_books");
 
     @Override
-    public ResourceLocation getPluginUid()
-    {
+    public ResourceLocation getPluginUid() {
         return ID;
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration)
-    {
+    public void registerRecipes(IRecipeRegistration registration) {
         ArrayList<Object> recipes = Lists.newArrayList();
         recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK),
                 Lists.newArrayList(new ItemStack(Items.GOLDEN_AXE)),

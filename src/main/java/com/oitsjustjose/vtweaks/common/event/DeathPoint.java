@@ -8,19 +8,15 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class DeathPoint
-{
+public class DeathPoint {
     @SubscribeEvent
-    public void registerTweak(LivingDeathEvent event)
-    {
+    public void registerTweak(LivingDeathEvent event) {
         // Check if feature is enabled
-        if (!CommonConfig.ENABLE_DEATH_MESSAGE.get())
-        {
+        if (!CommonConfig.ENABLE_DEATH_MESSAGE.get()) {
             return;
         }
         // Are you human?
-        if (!(event.getEntity() instanceof PlayerEntity))
-        {
+        if (!(event.getEntity() instanceof PlayerEntity)) {
             return;
         }
 
@@ -29,8 +25,7 @@ public class DeathPoint
     }
 
     // Coincidentally compatible with Journeymap :D
-    private TranslationTextComponent getCoordMessage(BlockPos pos)
-    {
+    private TranslationTextComponent getCoordMessage(BlockPos pos) {
         return new TranslationTextComponent("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
     }
 }

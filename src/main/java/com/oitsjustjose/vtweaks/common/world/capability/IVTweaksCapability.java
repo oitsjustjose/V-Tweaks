@@ -6,8 +6,7 @@ import java.util.UUID;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public interface IVTweaksCapability extends INBTSerializable<CompoundNBT>
-{
+public interface IVTweaksCapability extends INBTSerializable<CompoundNBT> {
     boolean hasPlayerSeenWelcome(UUID uuid);
 
     void setPlayerSeenWelcome(UUID uuid);

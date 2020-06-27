@@ -51,8 +51,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod(Constants.MODID)
-public class VTweaks
-{
+public class VTweaks {
     private static VTweaks instance;
     public Logger LOGGER = LogManager.getLogger();
     public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
@@ -63,8 +62,7 @@ public class VTweaks
     @CapabilityInject(IVTweaksCapability.class)
     public static final Capability<IVTweaksCapability> VTWEAKS_CAPABILITY = null;
 
-    public VTweaks()
-    {
+    public VTweaks() {
         instance = this;
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -73,13 +71,11 @@ public class VTweaks
         this.configSetup();
     }
 
-    public static VTweaks getInstance()
-    {
+    public static VTweaks getInstance() {
         return instance;
     }
 
-    public void setup(final FMLCommonSetupEvent event)
-    {
+    public void setup(final FMLCommonSetupEvent event) {
         // Proxy init - sets up networking too
         proxy.init();
 
@@ -92,7 +88,6 @@ public class VTweaks
         MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
-        
 
         // Block Tweaks
         MinecraftForge.EVENT_BUS.register(new CropHelper());
@@ -116,41 +111,34 @@ public class VTweaks
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
     }
 
-    private void configSetup()
-    {
+    private void configSetup() {
         ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.COMMON_CONFIG);
         CommonConfig.loadConfig(CommonConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-common.toml"));
     }
 
     @SubscribeEvent
-    public void attachCap(AttachCapabilitiesEvent<World> event)
-    {
+    public void attachCap(AttachCapabilitiesEvent<World> event) {
         event.addCapability(new ResourceLocation(Constants.MODID, "capabilities"), new VTweaksCapabilityProvider());
         LOGGER.info("V-Tweaks capability attached for {}",
                 event.getObject().getDimension().getType().getRegistryName().toString());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents
-    {
+    public static class RegistryEvents {
         @SubscribeEvent
-        public static void registerEnchantments(final RegistryEvent.Register<Enchantment> enchantmentRegistryEvent)
-        {
+        public static void registerEnchantments(final RegistryEvent.Register<Enchantment> enchantmentRegistryEvent) {
 
-            if (EnchantmentConfig.ENABLE_LUMBERING.get())
-            {
+            if (EnchantmentConfig.ENABLE_LUMBERING.get()) {
                 enchantmentRegistryEvent.getRegistry().register(VTweaks.lumbering);
                 MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
             }
 
-            if (EnchantmentConfig.ENABLE_IMPERISHABLE.get())
-            {
+            if (EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
                 enchantmentRegistryEvent.getRegistry().register(VTweaks.imperishable);
                 MinecraftForge.EVENT_BUS.register(new EnchantmentImperishableHandler());
             }
 
-            if (EnchantmentConfig.ENABLE_FF_TWEAK.get())
-            {
+            if (EnchantmentConfig.ENABLE_FF_TWEAK.get()) {
                 MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
             }
         }
