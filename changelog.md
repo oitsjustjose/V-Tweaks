@@ -1,5 +1,19 @@
 # V-Tweaks Changelog MC 1.15.x
 
+## 3.1.7
+
+### Fixed
+
+- The `/give` command appearing to drop an extra item that didn't exist
+
+### Changed
+
+- Challenger Mobs' blacklist is now based on the name you use when you `/summon` them!! This makes it much easier to determine whether or not a mob is the *right* one, so I hope that helps 😄
+
+### Removed
+
+- Unused config for spawning baby animals. This was a 1.14 thing only and I don't even remember if I properly implemented it tbh.
+
 ## 3.1.6
 
 ### Fixed
