@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.PillagerEntity;
 import net.minecraft.entity.monster.ZombiePigmanEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -16,6 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -153,11 +153,16 @@ public class ChallengerMobs {
     }
 
     private boolean isBlackListed(Entity entity) {
-        for (String s : MobTweakConfig.CHALLENGER_MOBS_BLACKLIST.get()) {
-            if (entity.getClass().getName().toLowerCase().contains(s.toLowerCase())) {
+        if (entity == null) {
+            return true;
+        }
+
+        for (String str : MobTweakConfig.CHALLENGER_MOBS_BLACKLIST.get()) {
+            if (new ResourceLocation(str).equals(entity.getType().getRegistryName())) {
                 return true;
             }
         }
+
         return false;
     }
 
