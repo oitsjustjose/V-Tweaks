@@ -19,7 +19,7 @@ public enum ChallengerMobType {
                     new EffectInstance(Effects.WITHER, 100, 1, false, true),
                     new EffectInstance(Effects.LEVITATION, 100, 0, false, true) }),
     PYRO(0.25D, 40F, "Pyro", new int[] { 196, 41, 6 }, null),
-    ZESTONIAN(0.25D, 40F, "Zestonian", new int[] { 155, 6, 196 }, null),
+    ZISTONIAN(0.25D, 40F, "Zistonian", new int[] { 155, 6, 196 }, null),
     REINFORCED(0.25D, 160F, "Reinforced", new int[] { 64, 1, 7 }, null),
     AGILE(0.6D, 10F, "Agile", new int[] { 10, 209, 169 }, null);
 
