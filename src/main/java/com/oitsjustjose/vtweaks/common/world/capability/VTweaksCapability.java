@@ -6,36 +6,30 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.nbt.CompoundNBT;
 
-public class VTweaksCapability implements IVTweaksCapability
-{
+public class VTweaksCapability implements IVTweaksCapability {
     private Map<UUID, Boolean> msgMap;
 
-    public VTweaksCapability()
-    {
+    public VTweaksCapability() {
         this.msgMap = new ConcurrentHashMap<>();
     }
 
     @Override
-    public void setPlayerSeenWelcome(UUID uuid)
-    {
+    public void setPlayerSeenWelcome(UUID uuid) {
         this.msgMap.put(uuid, true);
     }
 
     @Override
-    public boolean hasPlayerSeenWelcome(UUID uuid)
-    {
+    public boolean hasPlayerSeenWelcome(UUID uuid) {
         return this.msgMap.containsKey(uuid);
     }
 
     @Override
-    public Map<UUID, Boolean> getPlayerSeenWelcome()
-    {
+    public Map<UUID, Boolean> getPlayerSeenWelcome() {
         return this.msgMap;
     }
 
     @Override
-    public CompoundNBT serializeNBT()
-    {
+    public CompoundNBT serializeNBT() {
         CompoundNBT compound = new CompoundNBT();
         compound.put("PlayersShownWelcome", new CompoundNBT());
 
@@ -47,8 +41,7 @@ public class VTweaksCapability implements IVTweaksCapability
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT compound)
-    {
+    public void deserializeNBT(CompoundNBT compound) {
         CompoundNBT playersShown = compound.getCompound("PlayersShownWelcome");
 
         playersShown.keySet().forEach(x -> this.setPlayerSeenWelcome(UUID.fromString(x)));

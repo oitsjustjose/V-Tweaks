@@ -18,16 +18,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class PetArmory
-{
+public class PetArmory {
     @SubscribeEvent
-    public void registerEvent(AnimalTameEvent event)
-    {
-        if (event.getAnimal() instanceof TameableEntity)
-        {
+    public void registerEvent(AnimalTameEvent event) {
+        if (event.getAnimal() instanceof TameableEntity) {
             TameableEntity pet = (TameableEntity) event.getAnimal();
-            for (EquipmentSlotType slotType : EquipmentSlotType.values())
-            {
+            for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
                 pet.setDropChance(slotType, 1F);
             }
             pet.setCanPickUpLoot(true);
@@ -35,24 +31,18 @@ public class PetArmory
     }
 
     @SubscribeEvent
-    public void registerEvent(EntityEvent event)
-    {
-        if (event.getEntity() == null)
-        {
+    public void registerEvent(EntityEvent event) {
+        if (event.getEntity() == null) {
             return;
         }
-        if (MobTweakConfig.ENABLE_PET_ARMORY_WEAPONS.get())
-        {
+        if (MobTweakConfig.ENABLE_PET_ARMORY_WEAPONS.get()) {
             return;
         }
-        try
-        {
-            if (event.getEntity() instanceof TameableEntity)
-            {
+        try {
+            if (event.getEntity() instanceof TameableEntity) {
                 TameableEntity pet = (TameableEntity) event.getEntity();
 
-                if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty())
-                {
+                if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty()) {
                     ItemStack heldStack = pet.getHeldItemMainhand().copy();
                     ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
@@ -60,8 +50,7 @@ public class PetArmory
                     pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
                 }
 
-                if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty())
-                {
+                if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty()) {
                     ItemStack heldStack = pet.getHeldItemOffhand().copy();
                     ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
                             .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
@@ -71,27 +60,20 @@ public class PetArmory
 
             }
 
-        }
-        catch (NullPointerException ex)
-        {
+        } catch (NullPointerException ex) {
             return;
         }
     }
 
     @SubscribeEvent
-    public void registerEvent(EntityJoinWorldEvent event)
-    {
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get())
-        {
+    public void registerEvent(EntityJoinWorldEvent event) {
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
             return;
         }
-        if (event.getEntity() instanceof TameableEntity)
-        {
+        if (event.getEntity() instanceof TameableEntity) {
             TameableEntity pet = (TameableEntity) event.getEntity();
-            if (pet.isTamed())
-            {
-                for (EquipmentSlotType slotType : EquipmentSlotType.values())
-                {
+            if (pet.isTamed()) {
+                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
                     pet.setDropChance(slotType, 1F);
                 }
                 pet.setCanPickUpLoot(true);
@@ -100,51 +82,41 @@ public class PetArmory
     }
 
     @SubscribeEvent
-    public void registerEvent(EntityInteract event)
-    {
+    public void registerEvent(EntityInteract event) {
         // Checks that the feature is enabled
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get())
-        {
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
             return;
         }
         // Confirms there's a target
-        if (event.getTarget() == null)
-        {
+        if (event.getTarget() == null) {
             return;
         }
         // Conirms the target is tamable!
-        if (event.getTarget() instanceof TameableEntity)
-        {
+        if (event.getTarget() instanceof TameableEntity) {
             TameableEntity pet = (TameableEntity) event.getTarget();
-            if (!(event.getEntityLiving() instanceof PlayerEntity))
-            {
+            if (!(event.getEntityLiving() instanceof PlayerEntity)) {
                 return;
             }
 
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             boolean strippedArmor = false;
 
-            if (player.getHeldItemMainhand().isEmpty() && player.isSneaking() && pet.isTamed() && pet.isOwner(player))
-            {
+            if (player.getHeldItemMainhand().isEmpty() && player.isSneaking() && pet.isTamed() && pet.isOwner(player)) {
                 // Give the armor back
-                for (EquipmentSlotType slotType : EquipmentSlotType.values())
-                {
-                    if (slotType.getSlotType() == Group.HAND)
-                    {
+                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+                    if (slotType.getSlotType() == Group.HAND) {
                         continue;
                     }
 
                     ItemStack itemInSlot = pet.getItemStackFromSlot(slotType);
 
-                    if (!itemInSlot.isEmpty())
-                    {
+                    if (!itemInSlot.isEmpty()) {
                         ItemHandlerHelper.giveItemToPlayer(player, itemInSlot.copy());
                         pet.setItemStackToSlot(slotType, ItemStack.EMPTY);
                         strippedArmor = true;
                     }
                 }
-                if (strippedArmor)
-                {
+                if (strippedArmor) {
                     player.playSound(SoundEvents.ENTITY_HORSE_ARMOR, .5F, 0.85F);
                 }
             }

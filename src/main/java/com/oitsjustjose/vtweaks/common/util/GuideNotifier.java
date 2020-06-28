@@ -13,27 +13,22 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class GuideNotifier
-{
+public class GuideNotifier {
     @SubscribeEvent
-    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event)
-    {
-        if (!CommonConfig.ENABLE_WELCOME_MESSAGE.get())
-        {
+    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!CommonConfig.ENABLE_WELCOME_MESSAGE.get()) {
             return;
         }
 
         IVTweaksCapability capability = event.getPlayer().getEntityWorld().getCapability(VTweaks.VTWEAKS_CAPABILITY)
                 .orElse(null);
 
-        if (capability == null)
-        {
+        if (capability == null) {
             return;
         }
 
         PlayerEntity player = event.getPlayer();
-        if (!capability.hasPlayerSeenWelcome(player.getUniqueID()))
-        {
+        if (!capability.hasPlayerSeenWelcome(player.getUniqueID())) {
             Style style = new Style();
             String wikiURL = "http://oitsjustjose.com/Mods/V-Tweaks/";
             style.setColor(TextFormatting.GREEN);

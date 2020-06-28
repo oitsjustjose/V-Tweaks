@@ -8,8 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class BlockTweakConfig
-{
+public class BlockTweakConfig {
     private static String CATEGORY_BLOCK_TWEAKS = "block tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_CROP_TWEAK;
@@ -18,19 +17,16 @@ public class BlockTweakConfig
     public static ForgeConfigSpec.BooleanValue ENABLE_CAKE_DROP;
     public static ForgeConfigSpec.BooleanValue ENABLE_TOOL_EFF_TWEAKS;
 
-    public static void init(ForgeConfigSpec.Builder COMMON_BUILDER)
-    {
+    public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Block Tweaks").push(CATEGORY_BLOCK_TWEAKS);
 
         ENABLE_CROP_TWEAK = COMMON_BUILDER.comment("Allows for r-clicking to harvest most any (including mod) crops")
                 .define("cropTweaksEnabled", true);
         CROP_TWEAK_BLACKLIST = COMMON_BUILDER.comment("A list of blocks to ignore, of form <modid:block>")
                 .defineList("cropTweaksBlacklist", Lists.newArrayList(), (itemRaw) -> {
-                    if (itemRaw instanceof String)
-                    {
+                    if (itemRaw instanceof String) {
                         String itemName = (String) itemRaw;
-                        if (ForgeRegistries.BLOCKS.getValue(new ResourceLocation(itemName)) != null)
-                        {
+                        if (ForgeRegistries.BLOCKS.getValue(new ResourceLocation(itemName)) != null) {
                             return true;
                         }
                     }

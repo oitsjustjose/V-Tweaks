@@ -12,14 +12,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ToolTips
-{
+public class ToolTips {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public void registerTweak(ItemTooltipEvent event)
-    {
-        if (event.getItemStack().isEmpty())
-        {
+    public void registerTweak(ItemTooltipEvent event) {
+        if (event.getItemStack().isEmpty()) {
             return;
         }
 
@@ -27,11 +24,9 @@ public class ToolTips
         boolean shift = Screen.hasShiftDown();
 
         // Food tooltip
-        if (stack.getItem().isFood())
-        {
+        if (stack.getItem().isFood()) {
             // Checks to see if feature is enabled
-            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.NEVER)
-            {
+            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.NEVER) {
                 return;
             }
 
@@ -39,114 +34,90 @@ public class ToolTips
             int hunger = food.getHealing();
             float saturation = food.getSaturation() * 10;
 
-            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.ALWAYS)
-            {
+            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.ALWAYS) {
                 event.getToolTip().add(getHungerString(hunger));
                 event.getToolTip().add(getSaturationString((int) saturation));
-            }
-            else if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.WITH_SHIFT && shift)
-            {
+            } else if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.WITH_SHIFT && shift) {
                 event.getToolTip().add(getHungerString(hunger));
                 event.getToolTip().add(getSaturationString((int) saturation));
             }
         }
 
-        if (stack.getItem().isDamageable())
-        {
+        if (stack.getItem().isDamageable()) {
             // Checks to see if feature is enabled
-            if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.NEVER)
-            {
+            if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.NEVER) {
                 return;
             }
 
-            if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.ALWAYS)
-            {
+            if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.ALWAYS) {
                 event.getToolTip().add(getDurabilityString(stack));
-            }
-            else if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.WITH_SHIFT && shift)
-            {
+            } else if (CommonConfig.DURABILITY_TOOLTIP.get() == CommonConfig.DurabilityTooltips.WITH_SHIFT && shift) {
                 event.getToolTip().add(getDurabilityString(stack));
             }
         }
     }
 
-    private StringTextComponent getHungerString(int hunger)
-    {
+    private StringTextComponent getHungerString(int hunger) {
         StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger:");
 
-        for (int i = 0; i < (hunger / 2); i++)
-        {
+        for (int i = 0; i < (hunger / 2); i++) {
             ret.append(TextFormatting.DARK_RED).append("\u2588");
         }
-        if (hunger % 2 != 0)
-        {
+        if (hunger % 2 != 0) {
             ret.append(TextFormatting.DARK_RED).append("\u258C");
         }
         return new StringTextComponent(ret.toString());
     }
 
-    private StringTextComponent getSaturationString(int saturation)
-    {
+    private StringTextComponent getSaturationString(int saturation) {
         StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Sat:");
-        for (int i = 0; i < saturation / 2; i++)
-        {
+        for (int i = 0; i < saturation / 2; i++) {
             ret.append(TextFormatting.RED).append("\u2588");
         }
-        if (saturation % 2 != 0)
-        {
+        if (saturation % 2 != 0) {
             ret.append(TextFormatting.RED).append("\u258C");
         }
         return new StringTextComponent(ret.toString());
     }
 
-    private StringTextComponent getDurabilityString(ItemStack itemstack)
-    {
+    private StringTextComponent getDurabilityString(ItemStack itemstack) {
         String ret = "Durability: ";
         int max = itemstack.getMaxDamage();
         int damage = itemstack.getDamage();
         float percentage = 1 - ((float) damage / (float) max);
-        if (percentage >= .9)
-        {
+        if (percentage >= .9) {
             return new StringTextComponent(
                     ret + TextFormatting.LIGHT_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .8)
-        {
+        if (percentage >= .8) {
             return new StringTextComponent(
                     ret + TextFormatting.DARK_PURPLE + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .7)
-        {
+        if (percentage >= .7) {
             return new StringTextComponent(
                     ret + TextFormatting.BLUE + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .6)
-        {
+        if (percentage >= .6) {
             return new StringTextComponent(
                     ret + TextFormatting.DARK_AQUA + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .5)
-        {
+        if (percentage >= .5) {
             return new StringTextComponent(
                     ret + TextFormatting.DARK_GREEN + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .4)
-        {
+        if (percentage >= .4) {
             return new StringTextComponent(
                     ret + TextFormatting.GREEN + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .3)
-        {
+        if (percentage >= .3) {
             return new StringTextComponent(
                     ret + TextFormatting.YELLOW + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .2)
-        {
+        if (percentage >= .2) {
             return new StringTextComponent(
                     ret + TextFormatting.GOLD + (max - damage) + " / " + max + TextFormatting.RESET);
         }
-        if (percentage >= .1)
-        {
+        if (percentage >= .1) {
             return new StringTextComponent(
                     ret + TextFormatting.RED + (max - damage) + " / " + max + TextFormatting.RESET);
         }

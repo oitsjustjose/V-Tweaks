@@ -19,14 +19,11 @@ import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class DropTweaks
-{
+public class DropTweaks {
 
     @SubscribeEvent
-    public void registerTweak(ItemExpireEvent event)
-    {
-        if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty())
-        {
+    public void registerTweak(ItemExpireEvent event) {
+        if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty()) {
             return;
         }
 
@@ -35,12 +32,9 @@ public class DropTweaks
         ItemStack stack = entItem.getItem();
 
         // Handles egg hatching; configurable chance.
-        if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG)
-        {
-            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get())
-            {
-                if (!world.isRemote)
-                {
+        if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG) {
+            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get()) {
+                if (!world.isRemote) {
                     ChickenEntity chick = new ChickenEntity(EntityType.CHICKEN, world);
                     chick.setGrowingAge(-24000);
                     chick.setLocationAndAngles(entItem.posX, entItem.posY, entItem.posZ, entItem.rotationYaw, 0.0F);
@@ -49,38 +43,32 @@ public class DropTweaks
             }
         }
         // Handles sapling replanting; 100% chance
-        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && ItemTags.SAPLINGS.contains(stack.getItem()))
-        {
+        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && ItemTags.SAPLINGS.contains(stack.getItem())) {
             BlockPos saplingPos = fromDouble(entItem.posX, entItem.posY, entItem.posZ);
             // Checks to see if where the sapling *will* be is air
-            if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable())
-            {
+            if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
                 Item item = stack.getItem();
-                if (item instanceof BlockItem)
-                {
-                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack, Direction.UP);
+                if (item instanceof BlockItem) {
+                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,
+                            Direction.UP);
                     ((BlockItem) item).tryPlace(context);
                 }
             }
         }
         // Handles items that are supposed to never despawn
-        else if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1)
-        {
-            if (event.isCancelable())
-            {
+        else if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1) {
+            if (event.isCancelable()) {
                 event.setCanceled(true);
             }
         }
     }
 
     @SubscribeEvent
-    public void registerTweak(ItemTossEvent event)
-    {
+    public void registerTweak(ItemTossEvent event) {
         // Checks to see if the despawn time is -1. If it is, items won't despawn, so
         // nothing to do here.
         if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1 || !ItemTweakConfig.ENABLE_DESPAWN_TIME_OVERRIDE.get()
-                || event.getEntityItem() == null)
-        {
+                || event.getEntityItem() == null) {
             return;
         }
 
@@ -88,8 +76,7 @@ public class DropTweaks
         entItem.lifespan = ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get();
     }
 
-    private BlockPos fromDouble(double xIn, double yIn, double zIn)
-    {
+    private BlockPos fromDouble(double xIn, double yIn, double zIn) {
         int x = (xIn % 1) >= .5 ? (int) Math.ceil(xIn) : (int) Math.floor(xIn);
         int y = (yIn % 1) >= .5 ? (int) Math.ceil(yIn) : (int) Math.floor(yIn);
         int z = (zIn % 1) >= .5 ? (int) Math.ceil(zIn) : (int) Math.floor(zIn);

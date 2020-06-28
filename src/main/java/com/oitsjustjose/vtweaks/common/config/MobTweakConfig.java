@@ -11,8 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class MobTweakConfig
-{
+public class MobTweakConfig {
 
     public static ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
 
@@ -32,8 +31,7 @@ public class MobTweakConfig
     public static ForgeConfigSpec.IntValue PEACEFUL_SURFACE_MIN_Y;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> PEACEFUL_SURFACE_BLACKLIST;
 
-    public static void init(ForgeConfigSpec.Builder COMMON_BUILDER)
-    {
+    public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
 
         ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to R-Click your tamed pets with horse armor")
@@ -58,20 +56,17 @@ public class MobTweakConfig
                                 "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl",
                                 "minecraft:emerald", "minecraft:experience_bottle"),
                         (itemRaw) -> {
-                            if (itemRaw instanceof String)
-                            {
+                            if (itemRaw instanceof String) {
                                 String itemName = (String) itemRaw;
                                 String[] parts = itemName.split("[\\W]");
 
-                                if (parts.length != 2 && parts.length != 3)
-                                {
+                                if (parts.length != 2 && parts.length != 3) {
                                     return false;
                                 }
 
                                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts[0], parts[1]));
 
-                                if (item != null)
-                                {
+                                if (item != null) {
                                     challengerMobDrops.add(
                                             new ItemStack(item, parts.length == 3 ? Integer.parseInt(parts[2]) : 1));
                                     return true;
@@ -81,9 +76,8 @@ public class MobTweakConfig
                         });
         CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
                 .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-                .defineList("challengerMobsBlacklist", Lists.newArrayList(), (itemRaw) -> {
-                    if (itemRaw instanceof String)
-                    {
+                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> {
+                    if (itemRaw instanceof String) {
                         return true;
                     }
                     return false;
@@ -103,8 +97,7 @@ public class MobTweakConfig
                 .comment("A list of dimensions (of form <modid:type>) to ignore when prevent surface mob spawns.")
                 .defineList("peacefulSurfaceDimBlacklist",
                         Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> {
-                            if (itemRaw instanceof String)
-                            {
+                            if (itemRaw instanceof String) {
                                 return true;
                             }
                             return false;

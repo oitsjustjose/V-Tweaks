@@ -23,8 +23,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ConcreteTweaks
-{
+public class ConcreteTweaks {
     public static ArrayList<Item> concreteBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE.asItem(),
             Blocks.LIGHT_GRAY_CONCRETE.asItem(), Blocks.GRAY_CONCRETE.asItem(), Blocks.BLACK_CONCRETE.asItem(),
             Blocks.RED_CONCRETE.asItem(), Blocks.ORANGE_CONCRETE.asItem(), Blocks.YELLOW_CONCRETE.asItem(),
@@ -43,21 +42,16 @@ public class ConcreteTweaks
             Blocks.BROWN_CONCRETE_POWDER.asItem());
 
     @SubscribeEvent
-    public void registerTweak(ItemTossEvent event)
-    {
-        if (!ItemTweakConfig.ENABLE_CONCRETE_TWEAKS.get())
-        {
+    public void registerTweak(ItemTossEvent event) {
+        if (!ItemTweakConfig.ENABLE_CONCRETE_TWEAKS.get()) {
             return;
         }
         ItemEntity entItem = event.getEntityItem();
-        if (entItem.getItem().getItem() instanceof BlockItem)
-        {
+        if (entItem.getItem().getItem() instanceof BlockItem) {
             BlockItem itemBlock = (BlockItem) entItem.getItem().getItem();
-            if (powderBlocks.contains(itemBlock))
-            {
+            if (powderBlocks.contains(itemBlock)) {
                 ItemEntityConcrete concrete = new ItemEntityConcrete(entItem);
-                if (!concrete.world.isRemote)
-                {
+                if (!concrete.world.isRemote) {
                     concrete.getEntityWorld().addEntity(concrete);
                 }
                 event.setResult(Event.Result.DENY);
@@ -70,31 +64,25 @@ public class ConcreteTweaks
     /**
      * A Custom EntityItem that replaces concrete powder with concrete when in water
      */
-    public static class ItemEntityConcrete extends ItemEntity
-    {
+    public static class ItemEntityConcrete extends ItemEntity {
 
-        public ItemEntityConcrete(World worldIn, double x, double y, double z, ItemStack stack)
-        {
+        public ItemEntityConcrete(World worldIn, double x, double y, double z, ItemStack stack) {
             super(worldIn, x, y, z, stack);
             this.setPickupDelay(40);
         }
 
-        public ItemEntityConcrete(ItemEntity item)
-        {
+        public ItemEntityConcrete(ItemEntity item) {
             super(item.getEntityWorld(), item.posX, item.posY, item.posZ, item.getItem());
             this.setMotion(item.getMotion());
             this.setPickupDelay(40);
         }
 
         @Override
-        public void tick()
-        {
-            if (this.inWater)
-            {
+        public void tick() {
+            if (this.inWater) {
                 String target = this.getItem().getItem().getRegistryName().toString().replace("_powder", "");
                 Item replacement = ForgeRegistries.ITEMS.getValue(new ResourceLocation(target));
-                if (replacement != null)
-                {
+                if (replacement != null) {
                     this.setItem(new ItemStack(replacement, this.getItem().getCount()));
                 }
             }
@@ -105,11 +93,9 @@ public class ConcreteTweaks
     /**
      * Describes custom Dispenser functionality for concrete powder blocks
      */
-    public static final IDispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior()
-    {
+    public static final IDispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
         @Override
-        protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
-        {
+        protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
             Direction facing = (Direction) source.getBlockState().get(DispenserBlock.FACING);
             IPosition pos = DispenserBlock.getDispensePosition(source);
             ItemStack itemstack = stack.split(1);
@@ -117,32 +103,24 @@ public class ConcreteTweaks
             return stack;
         }
 
-        public void dispense(World worldIn, ItemStack stack, int speed, Direction facing, IPosition position)
-        {
+        public void dispense(World worldIn, ItemStack stack, int speed, Direction facing, IPosition position) {
             double d0 = position.getX();
             double d1 = position.getY();
             double d2 = position.getZ();
 
-            if (facing.getAxis() == Direction.Axis.Y)
-            {
+            if (facing.getAxis() == Direction.Axis.Y) {
                 d1 = d1 - 0.125D;
-            }
-            else
-            {
+            } else {
                 d1 = d1 - 0.15625D;
             }
 
             ItemEntity entityitem = null;
-            if (stack.getItem() instanceof BlockItem)
-            {
+            if (stack.getItem() instanceof BlockItem) {
                 BlockItem itemBlock = (BlockItem) stack.getItem();
-                if (powderBlocks.contains(itemBlock))
-                {
+                if (powderBlocks.contains(itemBlock)) {
                     entityitem = new ItemEntityConcrete(worldIn, d0, d1, d2, stack);
                 }
-            }
-            else
-            {
+            } else {
                 entityitem = new ItemEntity(worldIn, d0, d1, d2, stack);
             }
             double d3 = worldIn.rand.nextDouble() * 0.1D + 0.2D;

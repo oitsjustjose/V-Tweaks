@@ -13,8 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class ParticlePacket
-{
+public class ParticlePacket {
     double x;
     double y;
     double z;
@@ -23,8 +22,7 @@ public class ParticlePacket
     float g;
     float b;
 
-    public ParticlePacket(PacketBuffer buf)
-    {
+    public ParticlePacket(PacketBuffer buf) {
         this.x = buf.readDouble();
         this.y = buf.readDouble();
         this.z = buf.readDouble();
@@ -34,8 +32,7 @@ public class ParticlePacket
         this.b = buf.readFloat();
     }
 
-    public ParticlePacket(double x, double y, double z, float r, float g, float b)
-    {
+    public ParticlePacket(double x, double y, double z, float r, float g, float b) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -45,13 +42,11 @@ public class ParticlePacket
         this.b = b;
     }
 
-    public static ParticlePacket decode(PacketBuffer buf)
-    {
+    public static ParticlePacket decode(PacketBuffer buf) {
         return new ParticlePacket(buf);
     }
 
-    public static void encode(ParticlePacket msg, PacketBuffer buf)
-    {
+    public static void encode(ParticlePacket msg, PacketBuffer buf) {
         buf.writeDouble(msg.x);
         buf.writeDouble(msg.y);
         buf.writeDouble(msg.z);
@@ -61,19 +56,15 @@ public class ParticlePacket
         buf.writeFloat(msg.b);
     }
 
-    public void handleServer(Supplier<NetworkEvent.Context> context)
-    {
+    public void handleServer(Supplier<NetworkEvent.Context> context) {
         context.get().setPacketHandled(true);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void handleClient(ParticlePacket msg, Supplier<NetworkEvent.Context> context)
-    {
-        if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT)
-        {
+    public static void handleClient(ParticlePacket msg, Supplier<NetworkEvent.Context> context) {
+        if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.get().enqueueWork(() -> {
-                if (MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get())
-                {
+                if (MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get()) {
                     IParticleData redstoneParticle = new RedstoneParticleData(msg.r, msg.g, msg.b, 1F);
                     Minecraft.getInstance().worldRenderer.addParticle(redstoneParticle, false, msg.x, msg.y, msg.z, 0D,
                             0D, 0D);

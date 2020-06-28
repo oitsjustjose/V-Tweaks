@@ -14,42 +14,34 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 //Idea stolen from copygirl's old tweaks mod. Code is all original, but I liked this
 
-public class FeatherPlucker
-{
+public class FeatherPlucker {
     @SubscribeEvent
-    public void registerEvent(EntityInteract event)
-    {
+    public void registerEvent(EntityInteract event) {
         // Checks if feature is enabled
-        if (!MobTweakConfig.ENABLE_FEATHER_PLUCKING.get())
-        {
+        if (!MobTweakConfig.ENABLE_FEATHER_PLUCKING.get()) {
             return;
         }
 
-        if (event.getTarget() == null || !(event.getTarget() instanceof ChickenEntity))
-        {
+        if (event.getTarget() == null || !(event.getTarget() instanceof ChickenEntity)) {
             return;
         }
 
         ChickenEntity chicken = (ChickenEntity) event.getTarget();
 
-        if (!(event.getEntityLiving() instanceof PlayerEntity))
-        {
+        if (!(event.getEntityLiving() instanceof PlayerEntity)) {
             return;
         }
 
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-        if (!chicken.isChild())
-        {
-            if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() instanceof ShearsItem)
-            {
-                if (!player.world.isRemote && chicken.getGrowingAge() == 0)
-                {
-                    player.world.addEntity(Utils.createItemEntity(player.world,
-                            event.getTarget().getPosition(), Items.FEATHER));
+        if (!chicken.isChild()) {
+            if (!player.getHeldItemMainhand().isEmpty()
+                    && player.getHeldItemMainhand().getItem() instanceof ShearsItem) {
+                if (!player.world.isRemote && chicken.getGrowingAge() == 0) {
+                    player.world.addEntity(
+                            Utils.createItemEntity(player.world, event.getTarget().getPosition(), Items.FEATHER));
                     chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
                     chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
-                    if (!player.isCreative())
-                    {
+                    if (!player.isCreative()) {
                         player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
                     }
                 }
