@@ -20,7 +20,6 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY_WEAPONS;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
-    public static ForgeConfigSpec.IntValue NATURAL_BABIES_CHANCE;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
@@ -41,9 +40,6 @@ public class MobTweakConfig {
                 .define("enablePetWeaponry", true);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
-        NATURAL_BABIES_CHANCE = COMMON_BUILDER
-                .comment("Chance (out of 100) that a passive mob can spawn as a baby." + "\n0 to disable feature.")
-                .defineInRange("naturalBabiesChance", 30, 0, 100);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
                 "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but those in this blacklist.")
                 .define("challengerMobsEnabled", true);
