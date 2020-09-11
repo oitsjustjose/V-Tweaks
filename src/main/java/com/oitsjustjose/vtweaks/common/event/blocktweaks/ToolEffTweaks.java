@@ -9,9 +9,10 @@ import net.minecraft.block.LeverBlock;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,18 +45,8 @@ public class ToolEffTweaks {
 
             // Checks for axe-ing capabilities
             if (tool.getToolTypes(heldItem).contains(ToolType.AXE)) {
-
-                if (block.getDefaultState().getMaterial() == Material.LEAVES) {
-                    event.setNewSpeed(event.getOriginalSpeed() * 6);
-                }
-                if (block == Blocks.HAY_BLOCK) {
-                    event.setNewSpeed(event.getOriginalSpeed() * 4);
-                }
                 if (block == Blocks.LADDER) {
                     event.setNewSpeed(event.getOriginalSpeed() * 5);
-                }
-                if (block == Blocks.CACTUS) {
-                    event.setNewSpeed(event.getOriginalSpeed() * 2);
                 }
             }
             // Checks for pickaxe-ing capabilities
@@ -76,9 +67,13 @@ public class ToolEffTweaks {
                     event.setNewSpeed(event.getOriginalSpeed() * 4);
                 }
             }
-        }
-
-        if (heldItem.getItem() instanceof ShearsItem) {
+        } else if (heldItem.getItem() instanceof HoeItem) {
+            if (block == Blocks.CACTUS) {
+                event.setNewSpeed(event.getOriginalSpeed() * 2);
+            }
+            if (block.getDefaultState().getMaterial() == Material.LEAVES) {
+                event.setNewSpeed(event.getOriginalSpeed() * 6);
+            }
             if (block == Blocks.HAY_BLOCK) {
                 event.setNewSpeed(event.getOriginalSpeed() * 4);
             }
