@@ -12,7 +12,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
