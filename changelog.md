@@ -1,6 +1,6 @@
 # V-Tweaks Changelog MC 1.15.x
 
-## 3.1.8
+## 3.1.9
 
 ### Changed
 
@@ -9,6 +9,14 @@
 ### Fixed
 
 - Pack version for the mod's resources
+
+## 3.1.8
+
+### Changed
+
+- Peaceful Surface now only affects natural spawns. Mob spawners above sea level will now work, as well as other non-natural spawns
+- The hoe is now used for tool efficiency tweaks to maintain parity with 1.16 -- hoes are now most effective against cacti, leaves and hay bales.
+
 
 ## 3.1.7
 
