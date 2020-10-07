@@ -48,7 +48,8 @@ public class DropTweaks {
             }
         }
         // Handles sapling replanting; 100% chance
-        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && ItemTags.SAPLINGS.contains(stack.getItem())) {
+        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get()
+                && ItemTags.SAPLINGS.func_230235_a_(stack.getItem())) {
             BlockPos saplingPos = fromDouble(entItem.getPosX(), entItem.getPosY(), entItem.getPosZ());
             // Checks to see if where the sapling *will* be is air
             if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {

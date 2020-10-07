@@ -32,8 +32,8 @@ public class EnchantmentLumberingHandler {
         // Checks if the axe has lumbering
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0) {
             if (player.isCrouching()) {
-                if (BlockTags.LOGS.contains(event.getState().getBlock())) {
-                    chopTree(world.getWorld(), player, event.getPos());
+                if (BlockTags.LOGS.func_230235_a_(event.getState().getBlock())) {
+                    chopTree(world, player, event.getPos());
                     world.playSound(
                             null, event.getPos(), event.getState().getBlock()
                                     .getSoundType(event.getState(), world, event.getPos(), player).getBreakSound(),
@@ -51,7 +51,7 @@ public class EnchantmentLumberingHandler {
      * @param player
      * @param pos
      */
-    private boolean chopTree(World world, PlayerEntity player, BlockPos pos) {
+    private boolean chopTree(IWorld world, PlayerEntity player, BlockPos pos) {
         for (int mod_x = -1; mod_x <= 1; mod_x++) {
             for (int mod_y = -1; mod_y <= 1; mod_y++) {
                 for (int mod_z = -1; mod_z <= 1; mod_z++) {
@@ -61,7 +61,7 @@ public class EnchantmentLumberingHandler {
                             return false;
                         }
 
-                        if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock())) {
+                        if (BlockTags.LOGS.func_230235_a_(world.getBlockState(iterPos).getBlock())) {
                             world.destroyBlock(iterPos, true);
                             player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
                             if (!chopTree(world, player, iterPos)) {
@@ -69,7 +69,7 @@ public class EnchantmentLumberingHandler {
                             }
 
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
-                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
+                            if (BlockTags.LEAVES.func_230235_a_(world.getBlockState(iterPos).getBlock())) {
                                 world.destroyBlock(iterPos, true);
 
                                 if (!chopTree(world, player, iterPos)) {

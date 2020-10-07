@@ -9,7 +9,6 @@ import net.minecraft.block.LeverBlock;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraftforge.common.ToolType;
@@ -65,16 +64,6 @@ public class ToolEffTweaks {
                 if (block.getDefaultState().getMaterial() == Material.PISTON) {
                     event.setNewSpeed(event.getOriginalSpeed() * 4);
                 }
-            }
-        } else if (heldItem.getItem() instanceof HoeItem) {
-            if (block == Blocks.CACTUS) {
-                event.setNewSpeed(event.getOriginalSpeed() * 2);
-            }
-            if (block.getDefaultState().getMaterial() == Material.LEAVES) {
-                event.setNewSpeed(event.getOriginalSpeed() * 6);
-            }
-            if (block == Blocks.HAY_BLOCK) {
-                event.setNewSpeed(event.getOriginalSpeed() * 4);
             }
         }
     }

@@ -120,7 +120,7 @@ public class VTweaks {
     public void attachCap(AttachCapabilitiesEvent<World> event) {
         event.addCapability(new ResourceLocation(Constants.MODID, "capabilities"), new VTweaksCapabilityProvider());
         LOGGER.info("V-Tweaks capability attached for {}",
-                event.getObject().getDimension().getType().getRegistryName().toString());
+                event.getObject().func_230315_m_().func_242725_p().toString());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

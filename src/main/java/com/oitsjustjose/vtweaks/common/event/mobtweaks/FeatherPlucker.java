@@ -38,7 +38,7 @@ public class FeatherPlucker {
                     && player.getHeldItemMainhand().getItem() instanceof ShearsItem) {
                 if (!player.world.isRemote && chicken.getGrowingAge() == 0) {
                     player.world.addEntity(
-                            Utils.createItemEntity(player.world, event.getTarget().getPosition(), Items.FEATHER));
+                            Utils.createItemEntity(player.world, event.getTarget().func_233580_cy_(), Items.FEATHER));
                     chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
                     chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
                     if (!player.isCreative()) {

@@ -8,6 +8,7 @@ import net.minecraft.block.CakeBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -21,11 +22,12 @@ public class CakeTweak {
 
         Block block = event.getState().getBlock();
         if (event.getPlayer() != null && block instanceof CakeBlock) {
-            if (event.getState().has(CakeBlock.BITES)) {
+            // if (event.getState().has(CakeBlock.BITES)) {
+            if (event.getState().func_235901_b_(CakeBlock.BITES)) {
                 int bites = event.getState().get(CakeBlock.BITES);
                 VTweaks.getInstance().LOGGER.info("Cake has " + bites + " bites");
                 if (bites == 0) {
-                    ItemEntity cakeItem = new ItemEntity(event.getWorld().getWorld(),
+                    ItemEntity cakeItem = new ItemEntity((World) event.getWorld(),
                             (double) event.getPos().getX() + 0.5D, (double) event.getPos().getY(),
                             (double) event.getPos().getZ() + 0.5D, new ItemStack(Items.CAKE));
                     cakeItem.setPickupDelay(10);

@@ -21,7 +21,7 @@ public class ToolTips {
         }
 
         ItemStack stack = event.getItemStack();
-        boolean shift = Screen.hasShiftDown();
+        boolean shift = Screen.func_231173_s_();
 
         // Food tooltip
         if (stack.getItem().isFood()) {

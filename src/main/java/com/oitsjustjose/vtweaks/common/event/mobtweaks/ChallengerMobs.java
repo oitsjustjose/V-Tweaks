@@ -4,10 +4,10 @@ import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombiePigmanEntity;
+import net.minecraft.entity.monster.ZombifiedPiglinEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -51,7 +51,7 @@ public class ChallengerMobs {
                 final ChallengerMobType VARIANT = ChallengerMobType.values()[event.getWorld().getRandom().nextInt(8)];
 
                 if (event.getEntity() != null && event.getEntity() instanceof MonsterEntity) {
-                    if (event.getEntity() instanceof ZombiePigmanEntity || isBlackListed(event.getEntity())) {
+                    if (event.getEntity() instanceof ZombifiedPiglinEntity || isBlackListed(event.getEntity())) {
                         return;
                     }
 
@@ -76,8 +76,8 @@ public class ChallengerMobs {
                     monster.setHeldItem(Hand.MAIN_HAND, VARIANT.getEquipment());
                     monster.setDropChance(EquipmentSlotType.MAINHAND, Float.MIN_VALUE);
 
-                    monster.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(VARIANT.getSpeed());
-                    monster.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(VARIANT.getHealth());
+                    monster.getAttribute(Attributes.field_233821_d_).setBaseValue(VARIANT.getSpeed());
+                    monster.getAttribute(Attributes.field_233818_a_).setBaseValue(VARIANT.getHealth());
                     monster.setHealth(VARIANT.getHealth());
 
                     // Special Man Pants for Zistonian Mobs
@@ -108,7 +108,7 @@ public class ChallengerMobs {
             return;
         }
 
-        event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
+        event.getDrops().add(getItem(event.getEntity().world, event.getEntity().func_233580_cy_()));
     }
 
     @SubscribeEvent
@@ -123,11 +123,9 @@ public class ChallengerMobs {
                 MonsterEntity monster = (MonsterEntity) event.getSource().getTrueSource();
 
                 ChallengerMobType type = getChallengerMobType(monster);
-                StringBuilder sb = new StringBuilder();
                 if (type.getHitEffects() != null) {
                     for (EffectInstance effect : type.getHitEffects()) {
                         event.getEntityLiving().addPotionEffect(effect);
-                        sb.append(effect.getPotion().getDisplayName().getFormattedText()).append(", ");
                     }
                 }
             }

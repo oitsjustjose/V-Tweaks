@@ -1,5 +1,7 @@
 package com.oitsjustjose.vtweaks.common.event;
 
+import java.util.UUID;
+
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +23,7 @@ public class DeathPoint {
         }
 
         PlayerEntity player = (PlayerEntity) event.getEntity();
-        player.sendMessage(getCoordMessage(event.getEntity().getPosition()));
+        player.sendMessage(getCoordMessage(event.getEntity().func_233580_cy_()), UUID.randomUUID());
     }
 
     // Coincidentally compatible with Journeymap :D
