@@ -1,5 +1,15 @@
 # V-Tweaks Changelog MC 1.15.x
 
+## 3.1.8
+
+### Changed
+
+- Bumped Forge and MCP mappings
+
+### Fixed
+
+- Pack version for the mod's resources
+
 ## 3.1.7
 
 ### Fixed
