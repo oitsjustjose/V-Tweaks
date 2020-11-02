@@ -34,7 +34,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,7 +54,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class VTweaks {
     private static VTweaks instance;
     public Logger LOGGER = LogManager.getLogger();
-    public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
     public static Enchantment lumbering = new EnchantmentLumbering();
     public static Enchantment imperishable = new EnchantmentImperishable();
