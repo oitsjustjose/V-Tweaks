@@ -23,7 +23,7 @@ public class DeathPoint {
         }
 
         PlayerEntity player = (PlayerEntity) event.getEntity();
-        player.sendMessage(getCoordMessage(event.getEntity().func_233580_cy_()), UUID.randomUUID());
+        player.sendMessage(getCoordMessage(event.getEntity().getPosition()), UUID.randomUUID());
     }
 
     // Coincidentally compatible with Journeymap :D

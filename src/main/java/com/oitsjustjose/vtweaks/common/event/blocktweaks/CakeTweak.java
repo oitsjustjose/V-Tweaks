@@ -22,8 +22,7 @@ public class CakeTweak {
 
         Block block = event.getState().getBlock();
         if (event.getPlayer() != null && block instanceof CakeBlock) {
-            // if (event.getState().has(CakeBlock.BITES)) {
-            if (event.getState().func_235901_b_(CakeBlock.BITES)) {
+            if (event.getState().hasProperty(CakeBlock.BITES)) {
                 int bites = event.getState().get(CakeBlock.BITES);
                 VTweaks.getInstance().LOGGER.info("Cake has " + bites + " bites");
                 if (bites == 0) {

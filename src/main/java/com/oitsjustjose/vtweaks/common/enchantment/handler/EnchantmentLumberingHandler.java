@@ -32,7 +32,7 @@ public class EnchantmentLumberingHandler {
         // Checks if the axe has lumbering
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0) {
             if (player.isCrouching()) {
-                if (BlockTags.LOGS.func_230235_a_(event.getState().getBlock())) {
+                if (BlockTags.LOGS.contains(event.getState().getBlock())) {
                     chopTree(world, player, event.getPos());
                     world.playSound(
                             null, event.getPos(), event.getState().getBlock()
@@ -61,7 +61,7 @@ public class EnchantmentLumberingHandler {
                             return false;
                         }
 
-                        if (BlockTags.LOGS.func_230235_a_(world.getBlockState(iterPos).getBlock())) {
+                        if (BlockTags.LOGS.contains(world.getBlockState(iterPos).getBlock())) {
                             world.destroyBlock(iterPos, true);
                             player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
                             if (!chopTree(world, player, iterPos)) {
@@ -69,7 +69,7 @@ public class EnchantmentLumberingHandler {
                             }
 
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
-                            if (BlockTags.LEAVES.func_230235_a_(world.getBlockState(iterPos).getBlock())) {
+                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
                                 world.destroyBlock(iterPos, true);
 
                                 if (!chopTree(world, player, iterPos)) {

@@ -33,17 +33,16 @@ public class GuideNotifier {
         PlayerEntity player = event.getPlayer();
         if (!capability.hasPlayerSeenWelcome(player.getUniqueID())) {
             String wikiURL = "http://oitsjustjose.com/Mods/V-Tweaks/";
-            Style style = Style.field_240709_b_;
-            style = style.func_240718_a_(Color.func_240744_a_(TextFormatting.GREEN));
-            style = style.func_240713_a_(true);
-            style = style.func_244282_c(true);
-            style = style.func_240715_a_(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiURL));
-            style = style.func_240716_a_(new HoverEvent(HoverEvent.Action.field_230550_a_,
-                    new TranslationTextComponent("vtweaks.intro.link")));
+            Style style = Style.EMPTY;
+            style = style.setColor(Color.fromTextFormatting(TextFormatting.GREEN));
+            style = style.setUnderlined(true);
+            style = style.setBold(true);
+            style = style.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, wikiURL));
+            style = style.setHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("vtweaks.intro.link")));
 
             player.sendMessage(new TranslationTextComponent("vtweaks.intro.message"), UUID.randomUUID());
-            player.sendMessage(new TranslationTextComponent("vtweaks.intro.link").func_230530_a_(style),
-                    UUID.randomUUID());
+            player.sendMessage(new TranslationTextComponent("vtweaks.intro.link").setStyle(style), UUID.randomUUID());
             capability.setPlayerSeenWelcome(player.getUniqueID());
         }
     }

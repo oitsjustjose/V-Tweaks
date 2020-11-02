@@ -34,6 +34,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -106,7 +107,6 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new ToolTips());
         MinecraftForge.EVENT_BUS.register(new StormTweak());
         MinecraftForge.EVENT_BUS.register(new DeathPoint());
-
         // Default Features
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
     }
@@ -119,8 +119,7 @@ public class VTweaks {
     @SubscribeEvent
     public void attachCap(AttachCapabilitiesEvent<World> event) {
         event.addCapability(new ResourceLocation(Constants.MODID, "capabilities"), new VTweaksCapabilityProvider());
-        LOGGER.info("V-Tweaks capability attached for {}",
-                event.getObject().func_230315_m_().func_242725_p().toString());
+        LOGGER.info("V-Tweaks capability attached for {}", event.getObject().getDimensionKey().getLocation());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

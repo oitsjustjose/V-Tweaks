@@ -76,8 +76,8 @@ public class ChallengerMobs {
                     monster.setHeldItem(Hand.MAIN_HAND, VARIANT.getEquipment());
                     monster.setDropChance(EquipmentSlotType.MAINHAND, Float.MIN_VALUE);
 
-                    monster.getAttribute(Attributes.field_233821_d_).setBaseValue(VARIANT.getSpeed());
-                    monster.getAttribute(Attributes.field_233818_a_).setBaseValue(VARIANT.getHealth());
+                    monster.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(VARIANT.getSpeed());
+                    monster.getAttribute(Attributes.MAX_HEALTH).setBaseValue(VARIANT.getHealth());
                     monster.setHealth(VARIANT.getHealth());
 
                     // Special Man Pants for Zistonian Mobs
@@ -108,7 +108,7 @@ public class ChallengerMobs {
             return;
         }
 
-        event.getDrops().add(getItem(event.getEntity().world, event.getEntity().func_233580_cy_()));
+        event.getDrops().add(getItem(event.getEntity().world, event.getEntity().getPosition()));
     }
 
     @SubscribeEvent
