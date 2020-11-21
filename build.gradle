@@ -120,10 +120,13 @@ curseforge {
     changelogType = 'markdown'
     changelog = file("./changelog.md")
     releaseType = 'release'
-    addGameVersion "${game_version}"
+    addGameVersion "1.16.1"
+    addGameVersion "1.16.2"
+    addGameVersion "1.16.3"
+    addGameVersion "1.16.4"
 
     mainArtifact(jar) {
-        displayName = "V-Tweaks ${game_version} ${mod_version}"
+        displayName = "V-Tweaks 1.16.x ${mod_version}"
     }
   }
 }
