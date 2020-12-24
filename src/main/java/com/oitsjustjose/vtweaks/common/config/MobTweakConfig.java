@@ -86,7 +86,7 @@ public class MobTweakConfig {
                 .define("enableChallengerMobParticles", true);
         ENABLE_PEACEFUL_SURFACE = COMMON_BUILDER
                 .comment("Prevents mobs from spawning above sea level unless it's a new moon")
-                .define("peacefulSurfaceEnabled", true);
+                .define("peacefulSurfaceEnabled", false);
         PEACEFUL_SURFACE_MIN_Y = COMMON_BUILDER.comment("The lowest Y-level which mobs will be prevented from spawning")
                 .defineInRange("peacefulSurfaceMinY", 60, 1, 255);
         PEACEFUL_SURFACE_BLACKLIST = COMMON_BUILDER
