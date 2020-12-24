@@ -5,10 +5,14 @@ import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -92,14 +96,32 @@ public class EnchantmentLumberingHandler {
      * @return
      */
     private boolean canStillChop(PlayerEntity player) {
-        if (player.getHeldItemMainhand().isEmpty()) {
-            return false;
-        } else if (player.getHeldItemMainhand().getDamage() >= player.getHeldItemMainhand().getMaxDamage() - 2) {
-            return false;
-        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) <= 0) {
-            return false;
-        }
-        return true;
-    }
+        ItemStack axe = player.getHeldItemMainhand();
+        IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
+        if (axe.isEmpty()) {
+            return false;
+        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, axe) <= 0) {
+            return false;
+        } else if (axe.hasTag()) {
+            CompoundNBT comp = axe.getTag();
+            if (comp.contains("Energy")) {
+                if (comp.getInt("Energy") <= 0) {
+                    return false;
+                }
+            }
+        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, axe) > 0) {
+            if ((axe.getMaxDamage() - axe.getDamage()) <= 1) {
+                return false;
+            }
+        }
+        if (cap != null) {
+            if (cap.getEnergyStored() <= 0) {
+                return false;
+            }
+        }
+        // Handle imperishable logic here
+
+        return !axe.attemptDamageItem(1, player.getRNG(), null);
+    }
 }
