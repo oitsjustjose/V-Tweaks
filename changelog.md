@@ -1,5 +1,16 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.3.0
+
+### Fixed
+
+- Lumbering not working on electrical tools (for the most part)
+- Particles from Challenger Mobs lingering after the mob has died/despawned
+
+### Changed
+
+- `enablePeacefulSurface` now defaults to `false`
+
 ## 3.2.0
 
 Change compiler options to support 1.16.3 and 1.16.4 (and hopefully .1 and .2 too?)
