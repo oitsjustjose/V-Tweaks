@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.3.1
+
+### Fixed
+
+- Challenger mobs still lingering after the mob has died/despawned (I HOPE)
+- Challenger mob particles not rendering on servers, at all
+
 ## 3.3.0
 
 ### Fixed
