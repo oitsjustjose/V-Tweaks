@@ -1,9 +1,11 @@
 package com.oitsjustjose.vtweaks.common;
 
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
+import com.oitsjustjose.vtweaks.common.network.ChallengerMobPacket;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
-import com.oitsjustjose.vtweaks.common.network.ParticlePacket;
 
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -14,8 +16,8 @@ public class CommonProxy {
     public void init() {
         networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,
                 ArmorBreakPacket::decode, ArmorBreakPacket::handleServer);
-        networkManager.networkWrapper.registerMessage(1, ParticlePacket.class, ParticlePacket::encode,
-                ParticlePacket::decode, ParticlePacket::handleServer);
+        networkManager.networkWrapper.registerMessage(1, ChallengerMobPacket.class, ChallengerMobPacket::encode,
+                ChallengerMobPacket::decode, ChallengerMobPacket::handleServer);
     }
 
     public void playSound(PlayerEntity player) {
@@ -27,8 +29,8 @@ public class CommonProxy {
         player.setHealth(newHealth);
     }
 
-    public void showParticle(double x, double y, double z, float r, float g, float b) {
-        ParticlePacket msg = new ParticlePacket(x, y, z, r, g, b);
+    public void addChallengerMob(MonsterEntity entity, ChallengerMobType type) {
+        ChallengerMobPacket msg = new ChallengerMobPacket(entity.getEntityId(), type);
         networkManager.networkWrapper.send(PacketDistributor.ALL.noArg(), msg);
     }
 }
