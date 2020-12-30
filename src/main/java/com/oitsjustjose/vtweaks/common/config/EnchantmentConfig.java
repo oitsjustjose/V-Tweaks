@@ -12,6 +12,7 @@ public class EnchantmentConfig {
     public static ForgeConfigSpec.IntValue IMPERISHABLE_RECIPE_COST;
     public static ForgeConfigSpec.IntValue LUMBERING_RECIPE_COST;
     public static ForgeConfigSpec.BooleanValue LUMBERING_CUTS_LEAVES;
+    public static ForgeConfigSpec.BooleanValue LUMBERING_WOOD_STRICT;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Enchantments").push(CATEGORY_ENCHANTMENTS);
@@ -27,8 +28,11 @@ public class EnchantmentConfig {
         LUMBERING_RECIPE_COST = COMMON_BUILDER.comment("Number of levels Lumbering costs to create in an anvil")
                 .defineInRange("lumberingCost", 16, 1, 40);
         LUMBERING_CUTS_LEAVES = COMMON_BUILDER
-                .comment("Should the lumbering enchantments also prune the leaves of a tree?")
+                .comment("Should the lumbering enchantment also prune the leaves of a tree?")
                 .define("lumberingCutsLeaves", true);
+        LUMBERING_WOOD_STRICT = COMMON_BUILDER.comment(
+                "Should the lumbering enchantment be strict about wood types?\ne.g. if you're in a forest with mixed woods touching, should lumbering only break the same type of wood that was initially broken?")
+                .define("lumberingIsStrictAboutWood", true);
 
         COMMON_BUILDER.pop();
     }
