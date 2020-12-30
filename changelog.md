@@ -1,5 +1,14 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.3.2
+
+### Added
+
+- New config option for limiting lumbering to the initial wood type you broke
+    
+    See [this tweet](https://twitter.com/oitsjustjose/status/1344366952509284353): the first 3 lumbers are with `lumberingIsStrictAboutWood=true`, the last is with `lumberingIsStrictAboutWood=false`
+    
+
 ## 3.3.1
 
 ### Fixed
