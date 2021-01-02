@@ -99,25 +99,19 @@ public class EnchantmentLumberingHandler {
         ItemStack axe = player.getHeldItemMainhand().copy();
         IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
+        // Energy Handling
         if (axe.hasTag()) {
             CompoundNBT comp = axe.getTag();
             if (comp.contains("Energy")) {
-                if (comp.getInt("Energy") <= 0) {
-                    return false;
-                }
+                return comp.getInt("Energy") > 0;
             }
         }
 
-        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, axe) != 0) {
-            if ((axe.getMaxDamage() - axe.getDamage()) <= 2) {
-                return false;
-            }
+        if (cap != null) {
+            return cap.getEnergyStored() > 0;
         }
 
-        if (cap != null && cap.getEnergyStored() <= 0) {
-            return false;
-        }
-
+        // This will both save the tool, and save it for Imperishing
         return (axe.getMaxDamage() - axe.getDamage()) > 2;
     }
 

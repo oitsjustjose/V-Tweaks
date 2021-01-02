@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.3.3b
+
+### Fixed
+
+(LOGICAL ERROR): Lumbering not working with electrical tools and possibly others
+
 ## 3.3.3
 
 ### Fixed
