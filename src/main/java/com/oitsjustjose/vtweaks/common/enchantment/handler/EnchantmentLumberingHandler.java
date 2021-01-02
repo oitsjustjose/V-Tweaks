@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
@@ -64,14 +65,13 @@ public class EnchantmentLumberingHandler {
                         if (!canStillChop(player)) {
                             return false;
                         }
-
                         if (woodMatchFilter(original, world.getBlockState(iterPos))) {
                             world.destroyBlock(iterPos, true);
                             player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
+
                             if (!chopTree(world, player, iterPos, original)) {
                                 return false;
                             }
-
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
                             if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
                                 world.destroyBlock(iterPos, true);
@@ -97,33 +97,29 @@ public class EnchantmentLumberingHandler {
      * @return
      */
     private boolean canStillChop(PlayerEntity player) {
-        ItemStack axe = player.getHeldItemMainhand();
+        ItemStack axe = player.getHeldItemMainhand().copy();
         IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
-        if (axe.isEmpty()) {
-            return false;
-        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, axe) <= 0) {
-            return false;
-        } else if (axe.hasTag()) {
+        if (axe.hasTag()) {
             CompoundNBT comp = axe.getTag();
             if (comp.contains("Energy")) {
                 if (comp.getInt("Energy") <= 0) {
                     return false;
                 }
             }
-        } else if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, axe) > 0) {
-            if ((axe.getMaxDamage() - axe.getDamage()) <= 1) {
-                return false;
-            }
         }
-        if (cap != null) {
-            if (cap.getEnergyStored() <= 0) {
-                return false;
-            }
-        }
-        // Handle imperishable logic here
 
-        return !axe.attemptDamageItem(1, player.getRNG(), null);
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.imperishable, axe) != 0) {
+            if ((axe.getMaxDamage() - axe.getDamage()) <= 2) {
+                return false;
+            }
+        }
+
+        if (cap != null && cap.getEnergyStored() <= 0) {
+            return false;
+        }
+
+        return (axe.getMaxDamage() - axe.getDamage()) > 2;
     }
 
     private boolean woodMatchFilter(BlockState original, BlockState current) {
