@@ -1,5 +1,14 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.3.3
+
+### Fixed
+
+Lumbering:
+- Tool damage from lumbering will now make sense again
+- Imperishable will always save a tool while lumbering again
+- Non-imperishable tools will reserve 1 durability on your tool so it doesn't get destroyed via lumbering and you can repair it
+
 ## 3.3.2
 
 ### Added
