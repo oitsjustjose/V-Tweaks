@@ -25,6 +25,7 @@ public class ClientProxy extends CommonProxy {
         networkManager.networkWrapper.registerMessage(1, ChallengerMobPacket.class, ChallengerMobPacket::encode,
                 ChallengerMobPacket::decode, ChallengerMobPacket::handleClient);
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
+        MinecraftForge.EVENT_BUS.register(new LowHealthSound());
     }
 
     @Override
