@@ -25,7 +25,6 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_BLACKLIST;
     public static ForgeConfigSpec.IntValue CHALLENGER_MOBS_RARITY;
-    public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_PARTICLES;
     public static ForgeConfigSpec.BooleanValue ENABLE_PEACEFUL_SURFACE;
     public static ForgeConfigSpec.IntValue PEACEFUL_SURFACE_MIN_Y;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> PEACEFUL_SURFACE_BLACKLIST;
@@ -81,9 +80,6 @@ public class MobTweakConfig {
         CHALLENGER_MOBS_RARITY = COMMON_BUILDER.comment(
                 "The frequency (out of 100 - higher means more frequent) of a mob being turned into a Challenger")
                 .defineInRange("challengerMobsFrequency", 15, 1, 100);
-        ENABLE_CHALLENGER_PARTICLES = COMMON_BUILDER
-                .comment("Enable colored particles for challenger mobs (dependent on particle setting as well)")
-                .define("enableChallengerMobParticles", true);
         ENABLE_PEACEFUL_SURFACE = COMMON_BUILDER
                 .comment("Prevents mobs from spawning above sea level unless it's a new moon")
                 .define("peacefulSurfaceEnabled", false);

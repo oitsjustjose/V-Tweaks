@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 
 import net.minecraft.entity.monster.MonsterEntity;
@@ -12,7 +13,7 @@ public class ChallengerParticles {
 
     @SubscribeEvent
     public void registerEvent(EntityEvent evt) {
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || !MobTweakConfig.ENABLE_CHALLENGER_PARTICLES.get()) {
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || !ClientConfig.ENABLE_CHALLENGER_PARTICLES.get()) {
             return;
         }
 

@@ -1,10 +1,6 @@
 package com.oitsjustjose.vtweaks.client;
 
-import java.util.Map.Entry;
 import java.util.Random;
-
-import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
