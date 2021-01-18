@@ -2,7 +2,6 @@ package com.oitsjustjose.vtweaks.common.network;
 
 import java.util.function.Supplier;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 

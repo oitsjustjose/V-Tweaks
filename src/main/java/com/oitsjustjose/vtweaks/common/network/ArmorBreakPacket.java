@@ -32,7 +32,8 @@ public class ArmorBreakPacket {
     public static void handleClient(ArmorBreakPacket msg, Supplier<NetworkEvent.Context> context) {
         if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.get().enqueueWork(() -> {
-                Minecraft.getInstance().player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F, 1.0F);
+                Minecraft mc = Minecraft.getInstance();
+                mc.player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F, 1.0F);
             });
         }
         context.get().setPacketHandled(true);

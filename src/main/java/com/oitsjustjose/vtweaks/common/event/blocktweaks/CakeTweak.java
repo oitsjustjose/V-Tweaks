@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 
 import net.minecraft.block.Block;
