@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.ToolEffTweaks;
+import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
@@ -107,6 +108,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new ToolTips());
         MinecraftForge.EVENT_BUS.register(new StormTweak());
         MinecraftForge.EVENT_BUS.register(new DeathPoint());
+        MinecraftForge.EVENT_BUS.register(new AnvilRepairTweaks());
         // Default Features
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
     }

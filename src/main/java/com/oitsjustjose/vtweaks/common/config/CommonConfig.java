@@ -16,6 +16,8 @@ public class CommonConfig {
 
     public static ForgeConfigSpec.BooleanValue DISABLE_THUNDER_STORMS;
     public static ForgeConfigSpec.BooleanValue ENABLE_DEATH_MESSAGE;
+    public static ForgeConfigSpec.BooleanValue ENABLE_CHEAP_ANVIL_REPAIR;
+
     public static ForgeConfigSpec.EnumValue<FoodTooltips> FOOD_TOOLTIP;
     public static ForgeConfigSpec.EnumValue<DurabilityTooltips> DURABILITY_TOOLTIP;
     public static ForgeConfigSpec.BooleanValue ENABLE_WELCOME_MESSAGE;
@@ -53,6 +55,8 @@ public class CommonConfig {
         ENABLE_WELCOME_MESSAGE = COMMON_BUILDER
                 .comment("Show a welcome message in chat when joining a world for the first time")
                 .define("enableGuideNotifier", true);
+        ENABLE_CHEAP_ANVIL_REPAIR = COMMON_BUILDER.comment("Makes all anvil tool repairs always cost 1 level of XP")
+                .define("enableCheapAnvilRepair", true);
 
         COMMON_BUILDER.pop();
     }
