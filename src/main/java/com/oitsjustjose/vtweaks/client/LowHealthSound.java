@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
