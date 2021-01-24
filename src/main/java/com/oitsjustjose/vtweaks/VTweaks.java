@@ -23,6 +23,7 @@ import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.NoPetFriendlyFire;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.util.Constants;
@@ -86,6 +87,7 @@ public class VTweaks {
 
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
+        MinecraftForge.EVENT_BUS.register(new NoPetFriendlyFire());
         MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
         MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
