@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.4.1
+
+### Added
+
+- New Feature: No Pet Friendly Fire!
+    - This feature prevents either (configurable) the owner of a pet, or all players, from attacking tamed pets!
+
 ## 3.4.0.1
 
 ### Fixed
