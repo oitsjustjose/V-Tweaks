@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.4.0.1
+
+### Fixed
+
+- Strict lumbering being _too_ strict with BlockStates
+- Extra break sound being played when lumbering
+
 ## 3.4.0
 
 ### Added
