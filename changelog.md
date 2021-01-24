@@ -1,5 +1,16 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.4.0
+
+### Added
+
+- Low-health heartbeat noise - fully configurable, fully client-side
+- Anvil tweak that prevents your tools from increasing in XP cost to repair!
+
+### Changed
+
+- Lumbering now is more FPS friendly by reducing particles and sounds
+
 ## 3.3.3b
 
 ### Fixed

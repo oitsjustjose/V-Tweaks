@@ -124,6 +124,7 @@ curseforge {
     addGameVersion "1.16.2"
     addGameVersion "1.16.3"
     addGameVersion "1.16.4"
+    addGameVersion "1.16.5"
 
     mainArtifact(jar) {
         displayName = "V-Tweaks 1.16.x ${mod_version}"
