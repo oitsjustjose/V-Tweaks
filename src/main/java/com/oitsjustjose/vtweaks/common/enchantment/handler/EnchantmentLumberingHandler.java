@@ -41,10 +41,6 @@ public class EnchantmentLumberingHandler {
             if (player.isCrouching()) {
                 if (BlockTags.LOGS.contains(event.getState().getBlock())) {
                     chopTree(world, player, event.getPos(), event.getState());
-                    world.playSound(
-                            null, event.getPos(), event.getState().getBlock()
-                                    .getSoundType(event.getState(), world, event.getPos(), player).getBreakSound(),
-                            SoundCategory.BLOCKS, 1F, 0.8F);
                 }
             }
         }
