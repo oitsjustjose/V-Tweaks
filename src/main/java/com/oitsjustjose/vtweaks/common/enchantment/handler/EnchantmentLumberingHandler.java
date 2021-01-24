@@ -121,7 +121,7 @@ public class EnchantmentLumberingHandler {
 
     private boolean woodMatchFilter(BlockState original, BlockState current) {
         if (EnchantmentConfig.LUMBERING_WOOD_STRICT.get()) {
-            return original.equals(current);
+            return original.getBlock().getRegistryName().equals(current.getBlock().getRegistryName());
         }
         return BlockTags.LOGS.contains(current.getBlock());
     }
