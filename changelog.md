@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.4.1.1
+
+### Fixed
+
+- Low health sound playing for every player, not just the associated player.
+
 ## 3.4.1
 
 ### Added

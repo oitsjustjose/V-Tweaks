@@ -27,6 +27,10 @@ public class LowHealthSound {
             return;
         }
 
+        if (evt.getPlayer().getUniqueID() != mc.player.getUniqueID()) {
+            return;
+        }
+
         ex.execute(() -> {
             try {
                 if (!mc.isGamePaused()) {
