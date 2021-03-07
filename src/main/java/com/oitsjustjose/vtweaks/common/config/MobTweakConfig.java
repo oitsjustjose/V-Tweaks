@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,13 +13,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class MobTweakConfig {
-
-    public static ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
-
     private static String CATEGORY_MOB_TWEAKS = "mob tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
-    public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY_WEAPONS;
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
     public static ForgeConfigSpec.BooleanValue ENABLE_SMALL_BEES;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
@@ -34,11 +31,8 @@ public class MobTweakConfig {
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
 
-        ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to R-Click your tamed pets with horse armor")
+        ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
                 .define("enablePetArmory", true);
-        ENABLE_PET_ARMORY_WEAPONS = COMMON_BUILDER
-                .comment("Enabling this allows tamed pets to pick up weapons (which do actually work but don't render)")
-                .define("enablePetWeaponry", true);
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
                 "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
                 .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
@@ -58,25 +52,7 @@ public class MobTweakConfig {
                         Lists.newArrayList("minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond",
                                 "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl",
                                 "minecraft:emerald", "minecraft:experience_bottle"),
-                        (itemRaw) -> {
-                            if (itemRaw instanceof String) {
-                                String itemName = (String) itemRaw;
-                                String[] parts = itemName.split("[\\W]");
-
-                                if (parts.length != 2 && parts.length != 3) {
-                                    return false;
-                                }
-
-                                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts[0], parts[1]));
-
-                                if (item != null) {
-                                    challengerMobDrops.add(
-                                            new ItemStack(item, parts.length == 3 ? Integer.parseInt(parts[2]) : 1));
-                                    return true;
-                                }
-                            }
-                            return false;
-                        });
+                        (itemRaw) -> itemRaw instanceof String);
         CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
                 .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
                 .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> {

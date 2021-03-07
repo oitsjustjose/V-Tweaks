@@ -1,18 +1,22 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
-
+import net.minecraft.client.resources.ReloadListener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombifiedPiglinEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -20,13 +24,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+
 
 public class ChallengerMobs {
+    private ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent event) {
         if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || MobTweakConfig.CHALLENGER_MOBS_RARITY.get() <= 0) {
@@ -99,7 +111,7 @@ public class ChallengerMobs {
 
     @SubscribeEvent
     public void registerEvent(LivingDropsEvent event) {
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || MobTweakConfig.challengerMobDrops.size() <= 0) {
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || challengerMobDrops.size() <= 0) {
             return;
         }
 
@@ -143,6 +155,48 @@ public class ChallengerMobs {
         }
     }
 
+    private void process() {
+        challengerMobDrops.clear();
+
+        MobTweakConfig.CHALLENGER_MOBS_LOOT.get().forEach((itemName) -> {
+            String[] parts = itemName.split("[\\W]");
+
+            if (parts.length != 2 && parts.length != 3) {
+                VTweaks.getInstance().LOGGER.error("{} does not conform to <modid:item> or <modid:item*quantity>. Skipping...", itemName);
+            }
+
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts[0], parts[1]));
+
+            if (item != null) {
+                ItemStack i = new ItemStack(item, parts.length == 3 ? Integer.parseInt(parts[2]) : 1);
+                VTweaks.getInstance().LOGGER.info("Added {} {} to Challenger Mobs Loot", i.getCount(), i.getItem());
+                challengerMobDrops.add(i);
+            } else {
+                VTweaks.getInstance().LOGGER.error("{} has no syntax issues but could not be resolved to an item in-game. Skipping...", itemName);
+            }
+        });
+    }
+
+    @SubscribeEvent
+    public void onServerStart(final FMLServerStartedEvent evt) {
+        process();
+    }
+
+    @SubscribeEvent
+    public void onSlashReload(AddReloadListenerEvent evt) {
+        evt.addListener(new ReloadListener<Void>() {
+            @Override
+            protected void apply(Void objectIn, IResourceManager resourceMgr, IProfiler profilerIn) {
+                process();
+            }
+
+            @Override
+            protected Void prepare(IResourceManager resourceMgr, IProfiler profilerIn) {
+                return null;
+            }
+        });
+    }
+
     private void setChallengerTag(MonsterEntity entity, ChallengerMobType variant) {
         CompoundNBT comp = entity.getPersistentData();
         CompoundNBT type = new CompoundNBT();
@@ -170,17 +224,13 @@ public class ChallengerMobs {
     }
 
     private ItemEntity getItem(World world, BlockPos pos) {
-        int RNG = world.rand.nextInt(MobTweakConfig.challengerMobDrops.size());
-        return Utils.createItemEntity(world, pos, MobTweakConfig.challengerMobDrops.get(RNG));
+        int RNG = world.rand.nextInt(challengerMobDrops.size());
+        return Utils.createItemEntity(world, pos, challengerMobDrops.get(RNG));
     }
 
     public static boolean isChallengerMob(MonsterEntity entity) {
         CompoundNBT comp = entity.getPersistentData();
-
-        if (comp.contains("challenger_mob_data")) {
-            return true;
-        }
-        return false;
+        return comp.contains("challenger_mob_data");
     }
 
     public static ChallengerMobType getChallengerMobType(MonsterEntity monster) {

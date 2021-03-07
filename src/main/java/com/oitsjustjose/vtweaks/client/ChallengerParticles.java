@@ -20,6 +20,10 @@ public class ChallengerParticles {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void registerEvent(RenderWorldLastEvent evt) {
+        if (mc.world == null) {
+            return;
+        }
+
         if (System.currentTimeMillis() - lastParticle < 10L) {
             return;
         }

@@ -11,12 +11,16 @@ public class SmallBees {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void registerEvent(RenderLivingEvent.Pre<BeeEntity, BeeModel<BeeEntity>> evt) {
-        evt.getMatrixStack().scale(.5F, .5F, .5F);
+        if (evt.getEntity() instanceof BeeEntity) {
+            evt.getMatrixStack().scale(.5F, .5F, .5F);
+        }
     }
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void registerEvent(RenderLivingEvent.Post<BeeEntity, BeeModel<BeeEntity>> evt) {
-        evt.getMatrixStack().scale(1F, 1F, 1F);
+//        if (evt.getEntity() instanceof BeeEntity) {
+//            evt.getMatrixStack().scale(1F, 1F, 1F);
+//        }
     }
 }

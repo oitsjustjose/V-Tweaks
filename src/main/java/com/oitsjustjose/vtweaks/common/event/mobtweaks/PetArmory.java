@@ -19,8 +19,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class PetArmory {
+
+    /**
+     * Allows newly tamed pets to pick up loot and drop it should they *gasp* die.
+     */
     @SubscribeEvent
     public void registerEvent(AnimalTameEvent event) {
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
+            return;
+        }
         if (event.getAnimal() instanceof TameableEntity) {
             TameableEntity pet = (TameableEntity) event.getAnimal();
             for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
@@ -30,41 +37,46 @@ public class PetArmory {
         }
     }
 
-    @SubscribeEvent
-    public void registerEvent(EntityEvent event) {
-        if (event.getEntity() == null) {
-            return;
-        }
-        if (MobTweakConfig.ENABLE_PET_ARMORY_WEAPONS.get()) {
-            return;
-        }
-        try {
-            if (event.getEntity() instanceof TameableEntity) {
-                TameableEntity pet = (TameableEntity) event.getEntity();
+//    @SubscribeEvent
+//    public void registerEvent(EntityEvent event) {
+//        if (event.getEntity() == null) {
+//            return;
+//        }
+//        if (MobTweakConfig.ENABLE_PET_ARMORY_WEAPONS.get()) {
+//            return;
+//        }
+//        try {
+//            if (event.getEntity() instanceof TameableEntity) {
+//                TameableEntity pet = (TameableEntity) event.getEntity();
+//
+//                // Check that there's an item in the mainhand
+//                if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty()) {
+//                    // If there is, clone the stack and ...... drop it??
+//                    ItemStack heldStack = pet.getHeldItemMainhand().copy();
+//                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
+//                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
+//                    pet.getEntityWorld().addEntity(stackEntity);
+//                    pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
+//                }
+//
+//                if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty()) {
+//                    ItemStack heldStack = pet.getHeldItemOffhand().copy();
+//                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
+//                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
+//                    pet.getEntityWorld().addEntity(stackEntity);
+//                    pet.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
+//                }
+//
+//            }
+//        } catch (NullPointerException ex) {
+//            return;
+//        }
+//    }
 
-                if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty()) {
-                    ItemStack heldStack = pet.getHeldItemMainhand().copy();
-                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
-                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
-                    pet.getEntityWorld().addEntity(stackEntity);
-                    pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
-                }
-
-                if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty()) {
-                    ItemStack heldStack = pet.getHeldItemOffhand().copy();
-                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
-                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
-                    pet.getEntityWorld().addEntity(stackEntity);
-                    pet.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
-                }
-
-            }
-
-        } catch (NullPointerException ex) {
-            return;
-        }
-    }
-
+    /**
+     * Makes sure that existing pets are allowed to pick up things
+     * if they weren't already
+     */
     @SubscribeEvent
     public void registerEvent(EntityJoinWorldEvent event) {
         if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {

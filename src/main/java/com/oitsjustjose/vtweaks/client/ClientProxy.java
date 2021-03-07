@@ -36,7 +36,9 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void playSound(PlayerEntity player) {
-        mc.player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
+        if (mc.player != null) {
+            mc.player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
+        }
     }
 
     @Override
