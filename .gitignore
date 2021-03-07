@@ -10,6 +10,8 @@
 /bin/
 .vscode/
 logs
+.idea/
+.idea/*
 
 # Ignore Gradle GUI config
 gradle-app.setting
