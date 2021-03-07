@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.client.ClientProxy;
+import com.oitsjustjose.vtweaks.client.SmallBees;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
@@ -20,21 +21,12 @@ import com.oitsjustjose.vtweaks.common.event.blocktweaks.ToolEffTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.NoPetFriendlyFire;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
 import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 import com.oitsjustjose.vtweaks.common.world.capability.VTweaksCapabilityProvider;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
@@ -52,6 +44,8 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -88,6 +82,7 @@ public class VTweaks {
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
         MinecraftForge.EVENT_BUS.register(new NoPetFriendlyFire());
+        MinecraftForge.EVENT_BUS.register(new SmallBees());
         MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
         MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());

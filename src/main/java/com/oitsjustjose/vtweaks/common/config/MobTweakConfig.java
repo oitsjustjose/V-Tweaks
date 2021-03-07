@@ -20,6 +20,7 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY_WEAPONS;
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
+    public static ForgeConfigSpec.BooleanValue ENABLE_SMALL_BEES;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
@@ -41,6 +42,9 @@ public class MobTweakConfig {
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
                 "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
                 .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
+        ENABLE_SMALL_BEES = COMMON_BUILDER
+                .comment("If enabled, all bees will always be half the size they are in Vanilla. Does not affect breeding or hitboxes")
+                .define("enableSmallBees", true);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
