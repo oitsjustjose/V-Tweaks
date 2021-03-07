@@ -33,11 +33,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 
 public class ChallengerMobs {
-    private ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
+    private final ArrayList<ItemStack> challengerMobDrops = new ArrayList<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent event) {
@@ -186,12 +187,13 @@ public class ChallengerMobs {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ReloadListener<Void>() {
             @Override
-            protected void apply(Void objectIn, IResourceManager resourceMgr, IProfiler profilerIn) {
+            protected void apply(@Nonnull Void objectIn, @Nonnull IResourceManager resourceMgr, @Nonnull IProfiler profilerIn) {
                 process();
             }
 
             @Override
-            protected Void prepare(IResourceManager resourceMgr, IProfiler profilerIn) {
+            @Nonnull // Ironic considering I'm returning null anyways.. ok tho
+            protected Void prepare(@Nonnull IResourceManager resourceMgr, @Nonnull IProfiler profilerIn) {
                 return null;
             }
         });

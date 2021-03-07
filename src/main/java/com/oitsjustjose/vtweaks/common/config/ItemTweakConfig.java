@@ -3,7 +3,7 @@ package com.oitsjustjose.vtweaks.common.config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ItemTweakConfig {
-    private static String CATEGORY_ITEM_TWEAKS = "item tweaks";
+    private static final String CATEGORY_ITEM_TWEAKS = "item tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_EGG_HATCHING;
     public static ForgeConfigSpec.IntValue EGG_HATCING_CHANCE;

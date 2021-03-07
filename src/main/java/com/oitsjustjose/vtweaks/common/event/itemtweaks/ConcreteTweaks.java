@@ -96,7 +96,7 @@ public class ConcreteTweaks {
     public static final IDispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
         @Override
         protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-            Direction facing = (Direction) source.getBlockState().get(DispenserBlock.FACING);
+            Direction facing = source.getBlockState().get(DispenserBlock.FACING);
             IPosition pos = DispenserBlock.getDispensePosition(source);
             ItemStack itemstack = stack.split(1);
             this.dispense(source.getWorld(), itemstack, 6, facing, pos);

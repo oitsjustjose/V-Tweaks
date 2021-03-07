@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
 public class JEICompat implements IModPlugin {
-    private static ResourceLocation ID = new ResourceLocation(Constants.MODID, "ench_books");
+    private static final ResourceLocation ID = new ResourceLocation(Constants.MODID, "ench_books");
 
     @Override
     public ResourceLocation getPluginUid() {

@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.nbt.CompoundNBT;
 
 public class VTweaksCapability implements IVTweaksCapability {
-    private Map<UUID, Boolean> msgMap;
+    private final Map<UUID, Boolean> msgMap;
 
     public VTweaksCapability() {
         this.msgMap = new ConcurrentHashMap<>();

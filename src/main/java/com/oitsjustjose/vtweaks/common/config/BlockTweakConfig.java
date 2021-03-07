@@ -9,7 +9,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockTweakConfig {
-    private static String CATEGORY_BLOCK_TWEAKS = "block tweaks";
+    private static final String CATEGORY_BLOCK_TWEAKS = "block tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_CROP_TWEAK;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CROP_TWEAK_BLACKLIST;
@@ -26,9 +26,7 @@ public class BlockTweakConfig {
                 .defineList("cropTweaksBlacklist", Lists.newArrayList(), (itemRaw) -> {
                     if (itemRaw instanceof String) {
                         String itemName = (String) itemRaw;
-                        if (ForgeRegistries.BLOCKS.getValue(new ResourceLocation(itemName)) != null) {
-                            return true;
-                        }
+                        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(itemName)) != null;
                     }
                     return false;
                 });

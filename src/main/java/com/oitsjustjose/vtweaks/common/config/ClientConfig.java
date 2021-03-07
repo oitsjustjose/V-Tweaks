@@ -21,7 +21,7 @@ public class ClientConfig {
 
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_PARTICLES;
 
-    private static String CATEGORY_CLIENT = "client_configs";
+    private static final String CATEGORY_CLIENT = "client_configs";
 
     static {
         init();

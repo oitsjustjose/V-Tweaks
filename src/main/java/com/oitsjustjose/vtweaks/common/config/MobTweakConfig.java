@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class MobTweakConfig {
-    private static String CATEGORY_MOB_TWEAKS = "mob tweaks";
+    private static final String CATEGORY_MOB_TWEAKS = "mob tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
@@ -55,12 +55,7 @@ public class MobTweakConfig {
                         (itemRaw) -> itemRaw instanceof String);
         CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
                 .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> {
-                    if (itemRaw instanceof String) {
-                        return true;
-                    }
-                    return false;
-                });
+                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> itemRaw instanceof String);
         CHALLENGER_MOBS_RARITY = COMMON_BUILDER.comment(
                 "The frequency (out of 100 - higher means more frequent) of a mob being turned into a Challenger")
                 .defineInRange("challengerMobsFrequency", 15, 1, 100);
@@ -72,12 +67,7 @@ public class MobTweakConfig {
         PEACEFUL_SURFACE_BLACKLIST = COMMON_BUILDER
                 .comment("A list of dimensions (of form <modid:type>) to ignore when prevent surface mob spawns.")
                 .defineList("peacefulSurfaceDimBlacklist",
-                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> {
-                            if (itemRaw instanceof String) {
-                                return true;
-                            }
-                            return false;
-                        });
+                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> itemRaw instanceof String);
 
         COMMON_BUILDER.pop();
     }

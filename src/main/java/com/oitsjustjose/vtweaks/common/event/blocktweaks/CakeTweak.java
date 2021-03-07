@@ -25,7 +25,7 @@ public class CakeTweak {
                 int bites = event.getState().get(CakeBlock.BITES);
                 if (bites == 0) {
                     ItemEntity cakeItem = new ItemEntity((World) event.getWorld(),
-                            (double) event.getPos().getX() + 0.5D, (double) event.getPos().getY(),
+                            (double) event.getPos().getX() + 0.5D, event.getPos().getY(),
                             (double) event.getPos().getZ() + 0.5D, new ItemStack(Items.CAKE));
                     cakeItem.setPickupDelay(10);
                     event.getWorld().addEntity(cakeItem);

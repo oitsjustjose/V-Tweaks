@@ -58,8 +58,8 @@ public class BonemealTweaks {
         double d0 = rand.nextGaussian() * 0.02D;
         double d1 = rand.nextGaussian() * 0.02D;
         double d2 = rand.nextGaussian() * 0.02D;
-        world.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) ((float) pos.getX() + rand.nextFloat()),
+        world.addParticle(ParticleTypes.HAPPY_VILLAGER, (float) pos.getX() + rand.nextFloat(),
                 (double) pos.getY() + (double) rand.nextFloat() * state.getShape(world, pos).getEnd(Axis.Y),
-                (double) ((float) pos.getZ() + rand.nextFloat()), d0, d1, d2);
+                (float) pos.getZ() + rand.nextFloat(), d0, d1, d2);
     }
 }

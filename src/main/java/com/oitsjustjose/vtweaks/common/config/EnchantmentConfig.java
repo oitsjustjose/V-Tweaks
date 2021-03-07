@@ -4,7 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class EnchantmentConfig {
 
-    private static String CATEGORY_ENCHANTMENTS = "enchantments";
+    private static final String CATEGORY_ENCHANTMENTS = "enchantments";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_LUMBERING;
     public static ForgeConfigSpec.BooleanValue ENABLE_IMPERISHABLE;

@@ -14,8 +14,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChallengerParticles {
-    private long lastParticle = 0L;
-    private Minecraft mc = Minecraft.getInstance();
+    private final long lastParticle = 0L;
+    private final Minecraft mc = Minecraft.getInstance();
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)

@@ -22,7 +22,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.EnumValue<DurabilityTooltips> DURABILITY_TOOLTIP;
     public static ForgeConfigSpec.BooleanValue ENABLE_WELCOME_MESSAGE;
 
-    private static String CATEGORY_MISC = "miscellaneous";
+    private static final String CATEGORY_MISC = "miscellaneous";
 
     static {
         EnchantmentConfig.init(COMMON_BUILDER);
