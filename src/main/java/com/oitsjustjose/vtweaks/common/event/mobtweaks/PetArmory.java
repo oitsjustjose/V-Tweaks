@@ -1,17 +1,15 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.Utils;
-
-import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.EquipmentSlotType.Group;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -19,59 +17,40 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class PetArmory {
+    private static final String TAG = "vtweaks:lootPickupBackup";
+
+    private void backupPriorSettings(TameableEntity ent) {
+        CompoundNBT comp = ent.getPersistentData();
+        if (!comp.contains(TAG)) {
+            comp.putBoolean(TAG, ent.canPickUpLoot());
+        }
+    }
+
+    private void restorePriorSettings(TameableEntity ent) {
+        CompoundNBT comp = ent.getPersistentData();
+        if (comp.contains(TAG)) {
+            ent.setCanPickUpLoot(comp.getBoolean(TAG));
+            comp.remove(TAG);
+        }
+    }
+
 
     /**
      * Allows newly tamed pets to pick up loot and drop it should they *gasp* die.
      */
     @SubscribeEvent
     public void registerEvent(AnimalTameEvent event) {
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
-            return;
-        }
-        if (event.getAnimal() instanceof TameableEntity) {
-            TameableEntity pet = (TameableEntity) event.getAnimal();
-            for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
-                pet.setDropChance(slotType, 1F);
+        if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
+            if (event.getAnimal() instanceof TameableEntity) {
+                TameableEntity pet = (TameableEntity) event.getAnimal();
+                backupPriorSettings(pet);
+                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+                    pet.setDropChance(slotType, 1F);
+                }
+                pet.setCanPickUpLoot(true);
             }
-            pet.setCanPickUpLoot(true);
         }
     }
-
-//    @SubscribeEvent
-//    public void registerEvent(EntityEvent event) {
-//        if (event.getEntity() == null) {
-//            return;
-//        }
-//        if (MobTweakConfig.ENABLE_PET_ARMORY_WEAPONS.get()) {
-//            return;
-//        }
-//        try {
-//            if (event.getEntity() instanceof TameableEntity) {
-//                TameableEntity pet = (TameableEntity) event.getEntity();
-//
-//                // Check that there's an item in the mainhand
-//                if (pet.getHeldItemMainhand() != null && !pet.getHeldItemMainhand().isEmpty()) {
-//                    // If there is, clone the stack and ...... drop it??
-//                    ItemStack heldStack = pet.getHeldItemMainhand().copy();
-//                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
-//                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
-//                    pet.getEntityWorld().addEntity(stackEntity);
-//                    pet.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
-//                }
-//
-//                if (pet.getHeldItemOffhand() != null && !pet.getHeldItemOffhand().isEmpty()) {
-//                    ItemStack heldStack = pet.getHeldItemOffhand().copy();
-//                    ItemEntity stackEntity = Utils.createItemEntity(pet.getEntityWorld(), pet.getPosition()
-//                            .add(pet.getLookVec().x * 2, pet.getLookVec().y * 2, pet.getLookVec().z * 2), heldStack);
-//                    pet.getEntityWorld().addEntity(stackEntity);
-//                    pet.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
-//                }
-//
-//            }
-//        } catch (NullPointerException ex) {
-//            return;
-//        }
-//    }
 
     /**
      * Makes sure that existing pets are allowed to pick up things
@@ -79,17 +58,22 @@ public class PetArmory {
      */
     @SubscribeEvent
     public void registerEvent(EntityJoinWorldEvent event) {
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
+        if (!(event.getEntity() instanceof TameableEntity)) {
             return;
         }
-        if (event.getEntity() instanceof TameableEntity) {
-            TameableEntity pet = (TameableEntity) event.getEntity();
+
+        TameableEntity pet = (TameableEntity) event.getEntity();
+
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
             if (pet.isTamed()) {
+                backupPriorSettings(pet);
                 for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
                     pet.setDropChance(slotType, 1F);
                 }
                 pet.setCanPickUpLoot(true);
             }
+        } else {
+            restorePriorSettings(pet);
         }
     }
 
