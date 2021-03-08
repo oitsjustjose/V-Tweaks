@@ -64,10 +64,9 @@ public class PetArmory {
 
         TameableEntity pet = (TameableEntity) event.getEntity();
 
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
+        if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
             if (pet.isTamed()) {
-                backupPriorSettings(pet);
-                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+                 for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
                     pet.setDropChance(slotType, 1F);
                 }
                 pet.setCanPickUpLoot(true);
@@ -101,10 +100,6 @@ public class PetArmory {
                     && pet.isOwner(player)) {
                 // Give the armor back
                 for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
-                    if (slotType.getSlotType() == Group.HAND) {
-                        continue;
-                    }
-
                     ItemStack itemInSlot = pet.getItemStackFromSlot(slotType);
 
                     if (!itemInSlot.isEmpty()) {
