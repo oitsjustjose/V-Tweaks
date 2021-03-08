@@ -1,5 +1,21 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.4.2
+
+### Added
+
+- SMOL BEES
+    - They're smol. What else do you want!
+    - Oh yeah, they're bounding box is the same so it's easy to interact with them still
+
+### Fixed
+
+- Challenger Mob Loot not working
+    - If you change your challenger mob drops, you'll need to run the `/refresh` command to reload them as a side-effect of this fix
+- PetArmory configs being completely useless
+- NoPetFriendlyFire now prevents other damage forms such as Sweeping Edge, splash potions and more
+    - A hurt animation/sound will still inevitably be played, but rest assured 0 damage is done.
+
 ## 3.4.1.1
 
 ### Fixed
