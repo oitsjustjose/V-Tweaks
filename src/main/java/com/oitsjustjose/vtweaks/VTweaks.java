@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.client.ClientProxy;
+import com.oitsjustjose.vtweaks.client.LowHealthSound;
 import com.oitsjustjose.vtweaks.client.SmallBees;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
@@ -106,6 +107,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new StormTweak());
         MinecraftForge.EVENT_BUS.register(new DeathPoint());
         MinecraftForge.EVENT_BUS.register(new AnvilRepairTweaks());
+        MinecraftForge.EVENT_BUS.register(new LowHealthSound());
         // Default Features
         MinecraftForge.EVENT_BUS.register(new GuideNotifier());
     }
