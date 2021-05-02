@@ -6,6 +6,7 @@ import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,7 @@ public class EnchantmentLumberingHandler {
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player.getHeldItemMainhand()) > 0) {
             if (player.isCrouching()) {
                 if (BlockTags.LOGS.contains(event.getState().getBlock())) {
-                    chopTree(world, player, event.getPos(), event.getState());
+                    chopTree(world, player, event.getPos(), event.getState(), 0);
                 }
             }
         }
@@ -53,7 +54,14 @@ public class EnchantmentLumberingHandler {
      * @param player
      * @param pos
      */
-    private boolean chopTree(ServerWorld world, PlayerEntity player, BlockPos pos, BlockState original) {
+    private boolean chopTree(ServerWorld world, PlayerEntity player, BlockPos pos, BlockState original, int curr) {
+        if (curr >= EnchantmentConfig.LUMBERING_MAX_INT.get()) {
+            if (curr > EnchantmentConfig.LUMBERING_MAX_INT.get()) {
+                VTweaks.getInstance().LOGGER.info("Somehow exceeded max lumbering count with value {} (max is {})",
+                        curr, EnchantmentConfig.LUMBERING_MAX_INT.get());
+            }
+            return false;
+        }
         for (int mod_x = -1; mod_x <= 1; mod_x++) {
             for (int mod_y = -1; mod_y <= 1; mod_y++) {
                 for (int mod_z = -1; mod_z <= 1; mod_z++) {
@@ -64,13 +72,13 @@ public class EnchantmentLumberingHandler {
                         }
                         if (woodMatchFilter(original, world.getBlockState(iterPos))) {
                             emulateBreak(world, iterPos, player, true);
-                            if (!chopTree(world, player, iterPos, original)) {
+                            if (!chopTree(world, player, iterPos, original, curr + 1)) {
                                 return false;
                             }
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
                             if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
                                 emulateBreak(world, iterPos, player, false);
-                                if (!chopTree(world, player, iterPos, original)) {
+                                if (!chopTree(world, player, iterPos, original, curr + 1)) {
                                     return false;
                                 }
                             }

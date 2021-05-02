@@ -7,6 +7,7 @@ public class EnchantmentConfig {
     private static final String CATEGORY_ENCHANTMENTS = "enchantments";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_LUMBERING;
+    public static ForgeConfigSpec.IntValue LUMBERING_MAX_INT;
     public static ForgeConfigSpec.BooleanValue ENABLE_IMPERISHABLE;
     public static ForgeConfigSpec.BooleanValue ENABLE_FF_TWEAK;
     public static ForgeConfigSpec.IntValue IMPERISHABLE_RECIPE_COST;
@@ -19,6 +20,8 @@ public class EnchantmentConfig {
 
         ENABLE_LUMBERING = COMMON_BUILDER.comment("Enable the Lumbering enchantment for Axes").define("enableLumbering",
                 true);
+        LUMBERING_MAX_INT = COMMON_BUILDER.comment("The maximum amount of logs lumbering can destroy")
+                .defineInRange("maxLumberCount", 1024, 1, Integer.MAX_VALUE);
         ENABLE_IMPERISHABLE = COMMON_BUILDER.comment("Enable the Imperishable enchantment for any breakable item")
                 .define("enableImperishable", true);
         ENABLE_FF_TWEAK = COMMON_BUILDER.comment("Feather Falling IV or above directs 100% of fall damage to boots")
