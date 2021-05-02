@@ -20,7 +20,7 @@ public class EnchantmentLumbering extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return true;
+        return this != enchantment;
     }
 
     @Override
