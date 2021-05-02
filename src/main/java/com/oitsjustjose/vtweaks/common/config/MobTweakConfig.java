@@ -1,23 +1,16 @@
 package com.oitsjustjose.vtweaks.common.config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import com.oitsjustjose.vtweaks.VTweaks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class MobTweakConfig {
     private static final String CATEGORY_MOB_TWEAKS = "mob tweaks";
 
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
-    public static ForgeConfigSpec.BooleanValue ENABLE_SMALL_BEES;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
@@ -36,9 +29,6 @@ public class MobTweakConfig {
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
                 "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
                 .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
-        ENABLE_SMALL_BEES = COMMON_BUILDER
-                .comment("If enabled, all bees will always be half the size they are in Vanilla. Does not affect breeding or hitboxes")
-                .define("enableSmallBees", true);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(

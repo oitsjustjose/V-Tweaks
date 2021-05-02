@@ -19,6 +19,8 @@ public class ClientConfig {
     public static ForgeConfigSpec.DoubleValue LOW_HEALTH_THRESHOLD;
     public static ForgeConfigSpec.LongValue LOW_HEALTH_FREQ;
 
+    public static ForgeConfigSpec.BooleanValue ENABLE_SMALL_BEES;
+
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_PARTICLES;
 
     private static final String CATEGORY_CLIENT = "client_configs";
@@ -50,13 +52,13 @@ public class ClientConfig {
                 .comment("The frequency with which the low health sound will play (in milliseconds)")
                 .defineInRange("lowHealthSoundFrequency", 2000, 0, Long.MAX_VALUE);
 
+        ENABLE_SMALL_BEES = CLIENT_BUILDER
+                .comment("If enabled, all bees will always be half-sized. Does not affect breeding or hitboxes")
+                .define("enableSmallBees", true);
+
         ENABLE_CHALLENGER_PARTICLES = CLIENT_BUILDER
                 .comment("Enable colored particles for challenger mobs (dependent on particle setting as well)")
                 .define("enableChallengerMobParticles", true);
-        // ENABLE_WELCOME_MESSAGE = COMMON_BUILDER
-        // .comment("Show a welcome message in chat when joining a world for the first
-        // time")
-        // .define("enableGuideNotifier", true);
 
         CLIENT_BUILDER.pop();
     }
