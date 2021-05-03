@@ -1,20 +1,35 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.5.0
+
+### Added
+
+- ChopDown: A new feature where trees straight up fall down (**DISABLED BY DEFAULT**)
+  - Trees don't just disappear into items, but they fall instead! [Credit to Tersnip's original implementation](oitsjustjo.se/u/5cCfruy1x)
+  - Acknowledges lumbering, has smarter tree detection than the original as well as some other small optimizations overall
+  - Configurable tree detection (checks for at least 1 leaf and x many logs above the original, where x is a config option)
+
+### Fixed
+
+- Smol Bees config not working -- this config option is now in the Client Config as well
+- Enchantments being able to be applied on top of each other
+- New Lumbering config option to set max log limit fixes StackOverflow in dense forests with unbreakable/electric tools
+
 ## 3.4.2
 
 ### Added
 
 - SMOL BEES
-    - They're smol. What else do you want!
-    - Oh yeah, they're bounding box is the same so it's easy to interact with them still
+  - They're smol. What else do you want!
+  - Oh yeah, they're bounding box is the same so it's easy to interact with them still
 
 ### Fixed
 
 - Challenger Mob Loot not working
-    - If you change your challenger mob drops, you'll need to run the `/refresh` command to reload them as a side-effect of this fix
+  - If you change your challenger mob drops, you'll need to run the `/refresh` command to reload them as a side-effect of this fix
 - PetArmory configs being completely useless
 - NoPetFriendlyFire now prevents other damage forms such as Sweeping Edge, splash potions and more
-    - A hurt animation/sound will still inevitably be played, but rest assured 0 damage is done.
+  - A hurt animation/sound will still inevitably be played, but rest assured 0 damage is done.
 
 ## 3.4.1.1
 
@@ -27,7 +42,7 @@
 ### Added
 
 - New Feature: No Pet Friendly Fire!
-    - This feature prevents either (configurable) the owner of a pet, or all players, from attacking tamed pets!
+  - This feature prevents either (configurable) the owner of a pet, or all players, from attacking tamed pets!
 
 ## 3.4.0.1
 
@@ -58,6 +73,7 @@
 ### Fixed
 
 Lumbering:
+
 - Tool damage from lumbering will now make sense again
 - Imperishable will always save a tool while lumbering again
 - Non-imperishable tools will reserve 1 durability on your tool so it doesn't get destroyed via lumbering and you can repair it
@@ -67,9 +83,7 @@ Lumbering:
 ### Added
 
 - New config option for limiting lumbering to the initial wood type you broke
-    
-    See [this tweet](https://twitter.com/oitsjustjose/status/1344366952509284353): the first 3 lumbers are with `lumberingIsStrictAboutWood=true`, the last is with `lumberingIsStrictAboutWood=false`
-    
+  See [this tweet](https://twitter.com/oitsjustjose/status/1344366952509284353): the first 3 lumbers are with `lumberingIsStrictAboutWood=true`, the last is with `lumberingIsStrictAboutWood=false`
 
 ## 3.3.1
 
