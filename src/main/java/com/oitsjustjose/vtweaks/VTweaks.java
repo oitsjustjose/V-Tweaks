@@ -19,15 +19,25 @@ import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.ToolEffTweaks;
+import com.oitsjustjose.vtweaks.common.event.blocktweaks.ChopDown;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.NoPetFriendlyFire;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
 import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 import com.oitsjustjose.vtweaks.common.world.capability.VTweaksCapabilityProvider;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
@@ -45,8 +55,6 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -94,6 +102,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
         MinecraftForge.EVENT_BUS.register(new CakeTweak());
         MinecraftForge.EVENT_BUS.register(new ToolEffTweaks());
+        MinecraftForge.EVENT_BUS.register(new ChopDown());
 
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
