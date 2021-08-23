@@ -3,6 +3,8 @@
     "vtweaks:imperishable": "不灭",
     "enchantment.vtweaks.lumbering.desc": "§3潜行状态下：§r\n    破坏组成树的任意木方块可令整颗树倒下。\n    §4§l非树木亦有效果§r",
     "enchantment.vtweaks.imperishable.desc": "保护工具或护甲，令其免遭破坏，\n    即§l在物品得到修理之前\n    禁用其功能。§r",
+    "vtweaks:lumbering.desc": "潜行破坏树干方块可砍倒整颗树。非树木亦有效果",
+    "vtweaks:imperishable.desc": "令工具或护甲免遭破坏，在修理前禁用其功能",
     "vtweaks.death.message": "你死在了§e[X:%s, Y:%s, Z:%s]§r",
     "vtweaks.man.pants": "§5半身裤§r",
     "vtweaks.mighty.challenger.mob": "强大之%s",
