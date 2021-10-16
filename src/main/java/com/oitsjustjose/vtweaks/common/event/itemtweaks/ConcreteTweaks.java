@@ -1,27 +1,26 @@
 package com.oitsjustjose.vtweaks.common.event.itemtweaks;
 
-import java.util.ArrayList;
-
 import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.common.config.ItemTweakConfig;
-
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
 
 public class ConcreteTweaks {
     public static ArrayList<Item> concreteBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE.asItem(),
@@ -51,12 +50,12 @@ public class ConcreteTweaks {
             BlockItem itemBlock = (BlockItem) entItem.getItem().getItem();
             if (powderBlocks.contains(itemBlock)) {
                 ItemEntityConcrete concrete = new ItemEntityConcrete(entItem);
-                if (!concrete.world.isRemote) {
-                    concrete.getEntityWorld().addEntity(concrete);
+                if (!concrete.level.isClientSide()) {
+                    concrete.level.addFreshEntity(concrete);
                 }
                 event.setResult(Event.Result.DENY);
                 event.setCanceled(true);
-                entItem.remove();
+                entItem.discard();
             }
         }
     }
@@ -66,20 +65,20 @@ public class ConcreteTweaks {
      */
     public static class ItemEntityConcrete extends ItemEntity {
 
-        public ItemEntityConcrete(World worldIn, double x, double y, double z, ItemStack stack) {
+        public ItemEntityConcrete(Level worldIn, double x, double y, double z, ItemStack stack) {
             super(worldIn, x, y, z, stack);
-            this.setPickupDelay(40);
+            this.setPickUpDelay(40);
         }
 
         public ItemEntityConcrete(ItemEntity item) {
-            super(item.getEntityWorld(), item.getPosX(), item.getPosY(), item.getPosZ(), item.getItem());
-            this.setMotion(item.getMotion());
-            this.setPickupDelay(40);
+            super(item.level, item.getX(), item.getY(), item.getZ(), item.getItem());
+            this.setDeltaMovement(item.getDeltaMovement());
+            this.setPickUpDelay(40);
         }
 
         @Override
         public void tick() {
-            if (this.inWater) {
+            if (this.isInWater()) {
                 String target = this.getItem().getItem().getRegistryName().toString().replace("_powder", "");
                 Item replacement = ForgeRegistries.ITEMS.getValue(new ResourceLocation(target));
                 if (replacement != null) {
@@ -93,20 +92,20 @@ public class ConcreteTweaks {
     /**
      * Describes custom Dispenser functionality for concrete powder blocks
      */
-    public static final IDispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
+    public static final DispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
         @Override
-        protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-            Direction facing = source.getBlockState().get(DispenserBlock.FACING);
-            IPosition pos = DispenserBlock.getDispensePosition(source);
+        public ItemStack execute(BlockSource source, ItemStack stack) {
+            Direction facing = source.getBlockState().getValue(DispenserBlock.FACING);
+            Position pos = DispenserBlock.getDispensePosition(source);
             ItemStack itemstack = stack.split(1);
-            this.dispense(source.getWorld(), itemstack, 6, facing, pos);
+            this.dispense(source.getLevel(), itemstack, 6, facing, pos);
             return stack;
         }
 
-        public void dispense(World worldIn, ItemStack stack, int speed, Direction facing, IPosition position) {
-            double d0 = position.getX();
-            double d1 = position.getY();
-            double d2 = position.getZ();
+        public void dispense(Level worldIn, ItemStack stack, int speed, Direction facing, Position position) {
+            double d0 = position.x();
+            double d1 = position.y();
+            double d2 = position.z();
 
             if (facing.getAxis() == Direction.Axis.Y) {
                 d1 = d1 - 0.125D;
@@ -123,18 +122,18 @@ public class ConcreteTweaks {
             } else {
                 entityitem = new ItemEntity(worldIn, d0, d1, d2, stack);
             }
-            double d3 = worldIn.rand.nextDouble() * 0.1D + 0.2D;
-            double motX = (double) facing.getXOffset() * d3;
+            double d3 = worldIn.getRandom().nextDouble() * 0.1D + 0.2D;
+            double motX = (double) facing.getStepX() * d3;
             double motY = 0.20000000298023224D;
-            double motZ = (double) facing.getZOffset() * d3;
-            motX += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
-            motY += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
-            motZ += worldIn.rand.nextGaussian() * 0.007499999832361937D * (double) speed;
-            entityitem.setMotion(motX, motY, motZ);
+            double motZ = (double) facing.getStepZ() * d3;
+            motX += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
+            motY += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
+            motZ += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
+            entityitem.setDeltaMovement(motX, motY, motZ);
 
             // Dispensed items have no pickup delay so.....
-            entityitem.setNoPickupDelay();
-            worldIn.addEntity(entityitem);
+            entityitem.setNoPickUpDelay();
+            worldIn.addFreshEntity(entityitem);
         }
     };
 }

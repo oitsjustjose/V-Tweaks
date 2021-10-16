@@ -1,17 +1,16 @@
 package com.oitsjustjose.vtweaks.client;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.ChallengerMobPacket;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientProxy extends CommonProxy {
     Minecraft mc;
@@ -28,20 +27,20 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void hurt(PlayerEntity player, float newHealth) {
+    public void hurt(Player player, float newHealth) {
         player.setHealth(newHealth);
-        player.performHurtAnimation();
+        player.animateHurt();
     }
 
     @Override
-    public void playSound(PlayerEntity player) {
+    public void playSound(Player player) {
         if (mc.player != null) {
-            mc.player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1F, 1F);
+            mc.player.playSound(SoundEvents.SHIELD_BREAK, 1F, 1F);
         }
     }
 
     @Override
-    public void addChallengerMob(MonsterEntity entity, ChallengerMobType type) {
-        challengerMobs.put(entity.getEntityId(), type);
+    public void addChallengerMob(Monster entity, ChallengerMobType type) {
+        challengerMobs.put(entity.getId(), type);
     }
 }

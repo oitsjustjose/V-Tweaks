@@ -1,14 +1,13 @@
 package com.oitsjustjose.vtweaks.common.event;
 
-import java.util.UUID;
-
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
-
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.UUID;
 
 public class DeathPoint {
     @SubscribeEvent
@@ -18,16 +17,16 @@ public class DeathPoint {
             return;
         }
         // Are you human?
-        if (!(event.getEntity() instanceof PlayerEntity)) {
+        if (!(event.getEntity() instanceof Player)) {
             return;
         }
 
-        PlayerEntity player = (PlayerEntity) event.getEntity();
-        player.sendMessage(getCoordMessage(event.getEntity().getPosition()), UUID.randomUUID());
+        Player player = (Player) event.getEntity();
+        player.sendMessage(getCoordMessage(player.getOnPos()), UUID.randomUUID());
     }
 
     // Coincidentally compatible with Journeymap :D
-    private TranslationTextComponent getCoordMessage(BlockPos pos) {
-        return new TranslationTextComponent("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
+    private TranslatableComponent getCoordMessage(BlockPos pos) {
+        return new TranslatableComponent("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
     }
 }

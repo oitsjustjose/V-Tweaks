@@ -1,23 +1,23 @@
 package com.oitsjustjose.vtweaks.common.network;
 
-import java.util.function.Supplier;
-
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
-
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
+import java.util.function.Supplier;
+
 
 public class ChallengerMobPacket {
     int entityId;
     ChallengerMobType type;
 
-    public ChallengerMobPacket(PacketBuffer buf) {
+    public ChallengerMobPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
-        this.type = ChallengerMobType.valueOf(buf.readString());
+        this.type = ChallengerMobType.valueOf(buf.readUtf());
     }
 
     public ChallengerMobPacket(int entityId, ChallengerMobType type) {
@@ -25,13 +25,13 @@ public class ChallengerMobPacket {
         this.type = type;
     }
 
-    public static ChallengerMobPacket decode(PacketBuffer buf) {
+    public static ChallengerMobPacket decode(FriendlyByteBuf buf) {
         return new ChallengerMobPacket(buf);
     }
 
-    public static void encode(ChallengerMobPacket msg, PacketBuffer buf) {
+    public static void encode(ChallengerMobPacket msg, FriendlyByteBuf buf) {
         buf.writeInt(msg.entityId);
-        buf.writeString(msg.type.toString());
+        buf.writeUtf(msg.type.toString());
     }
 
     public void handleServer(Supplier<NetworkEvent.Context> context) {

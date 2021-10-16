@@ -2,8 +2,7 @@ package com.oitsjustjose.vtweaks.common.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
-
-import net.minecraft.item.ToolItem;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -18,9 +17,9 @@ public class AnvilRepairTweaks {
             return;
         }
 
-        if (evt.getLeft().getItem() instanceof ToolItem) {
-            ToolItem tool = (ToolItem) evt.getLeft().getItem();
-            if (tool.getTier().getRepairMaterial().test(evt.getRight())) {
+        if (evt.getLeft().getItem() instanceof DiggerItem) {
+            DiggerItem tool = (DiggerItem) evt.getLeft().getItem();
+            if (tool.getTier().getRepairIngredient().test(evt.getRight())) {
                 evt.getLeft().setRepairCost(0);
                 evt.setCost(0);
             }

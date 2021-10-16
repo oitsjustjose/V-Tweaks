@@ -1,41 +1,38 @@
 package com.oitsjustjose.vtweaks.common.enchantment;
 
-import java.util.Set;
-
 import com.oitsjustjose.vtweaks.common.util.Constants;
-
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 public class EnchantmentLumbering extends Enchantment {
     public EnchantmentLumbering() {
-        super(Rarity.VERY_RARE, EnchantmentType.DIGGER, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
+        super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.setRegistryName(new ResourceLocation(Constants.MODID, "lumbering"));
-        this.name = this.getRegistryName().toString();
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return this != enchantment;
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        Set<ToolType> classes = stack.getItem().getToolTypes(stack);
-        return classes.contains(ToolType.AXE);
+    public boolean canEnchant(ItemStack stack) {
+        return stack.canPerformAction(ToolActions.AXE_DIG);
     }
 
     @Override
-    public int getMinEnchantability(int par1) {
+    public int getMinCost(int par1) {
         return 0;
     }
 
     @Override
-    public int getMaxEnchantability(int par1) {
+    public int getMaxCost(int par1) {
         return 0;
     }
 }

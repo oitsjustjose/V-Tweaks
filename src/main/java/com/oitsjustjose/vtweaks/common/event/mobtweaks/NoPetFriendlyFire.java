@@ -1,10 +1,8 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -21,16 +19,14 @@ public class NoPetFriendlyFire {
             return;
         }
 
-        if (!(evt.getTarget() instanceof TameableEntity)) {
+        if (!(evt.getTarget() instanceof TamableAnimal)) {
             return;
         }
 
-        TameableEntity pet = (TameableEntity) evt.getTarget();
-        if (!pet.isTamed()) {
+        TamableAnimal pet = (TamableAnimal) evt.getTarget();
+        if (!pet.isTame()) {
             return;
         }
-
-        VTweaks.getInstance().LOGGER.info("Pet is tamed to {}", pet.getOwner());
 
         boolean applyToAny = MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.ALL;
         if (applyToAny || pet.getOwner() == evt.getPlayer()) {
@@ -40,7 +36,9 @@ public class NoPetFriendlyFire {
         }
     }
 
-    /** Prevents Auxilliary Damage to Pets */
+    /**
+     * Prevents Auxilliary Damage to Pets
+     */
     @SubscribeEvent
     public void registerEvent(LivingHurtEvent evt) {
         if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) {
@@ -52,21 +50,21 @@ public class NoPetFriendlyFire {
         }
 
         // Check that the main target of pain is a pet
-        if (!(evt.getEntity() instanceof TameableEntity)) {
+        if (!(evt.getEntity() instanceof TamableAnimal)) {
             return;
         }
 
         // Check if the main source of pain is a player
-        if (!(evt.getSource().getTrueSource() instanceof PlayerEntity)) {
+        if (!(evt.getSource().getDirectEntity() instanceof Player)) {
             return;
         }
 
-        TameableEntity pet = (TameableEntity) evt.getEntity();
-        PlayerEntity player = (PlayerEntity) evt.getSource().getTrueSource();
+        TamableAnimal pet = (TamableAnimal) evt.getEntity();
+        Player player = (Player) evt.getSource().getDirectEntity();
 
         boolean applyToAny = MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.ALL;
 
-        if (applyToAny || pet.isOwner(player)) {
+        if (applyToAny || pet.isOwnedBy(player)) {
             evt.setAmount(0);
             evt.setResult(Event.Result.DENY);
             if (evt.isCancelable()) {

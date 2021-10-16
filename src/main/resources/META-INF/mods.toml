@@ -1,29 +1,26 @@
-modLoader="javafml" #mandatory
-loaderVersion="[32,)" #mandatory (28 is current forge version)
-issueTrackerURL="http://github.com/oitsjustjose/v-tweaks/issues"
+modLoader="javafml"
+loaderVersion="[37,)"
 license="GNU GPLv3"
 
 [[mods]]
 modId="vtweaks"
-version="${version}"
+version="${file.jarVersion}"
 displayName="V-Tweaks"
 displayURL="http://github.com/oitsjustjose/v-tweaks"
 credits=""
 authors="oitsjustjose"
-description='''
-A mod that tweaks the vanilla game without adding any new items
-'''
+description='''A mod that tweaks the vanilla game without adding any new items'''
 
-[[dependencies.vtweaks]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[32,)" #mandatory
+[[dependencies.vtweaks]]
+    modId="forge"
+    mandatory=true
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.vtweaks]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)" # Honestly this should work on most versions /shrug
+    versionRange="[1.17.1,1.18)"
     ordering="NONE"
     side="BOTH"

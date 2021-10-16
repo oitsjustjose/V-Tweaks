@@ -1,18 +1,17 @@
 package com.oitsjustjose.vtweaks.common.util;
 
-import java.util.ArrayList;
-
 import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.VTweaks;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+
+import java.util.ArrayList;
 
 @JeiPlugin
 public class JEICompat implements IModPlugin {

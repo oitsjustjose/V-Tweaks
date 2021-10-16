@@ -1,3 +1,4 @@
+// TODO: Re-enable CurseGradle when it supports new ForgeGradle
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
@@ -6,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
     dependencies {
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
@@ -19,13 +20,14 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.matthewprenger.cursegradle'
 
 
+version = '1.0'
 group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "VTweaks-${game_version}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: "snapshot", version: "${mappings_version}"
+    mappings channel: 'official', version: '1.17.1'
     runs {
         client {
             workingDirectory project.file('run')
@@ -58,7 +60,7 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.85'
     compileOnly fg.deobf("mezz.jei:jei-${game_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${game_version}:${jei_version}")
 }
@@ -77,6 +79,7 @@ jar {
         ])
     }
 }
+
 
 // Example configuration to allow publishing using the maven-publish task
 // we define a custom artifact that is sourced from the reobfJar output task
@@ -98,39 +101,24 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-processResources {
-    version = "${mod_version}"
-    from(sourceSets.main.resources) {
-        include '**/mods.toml'
-        expand 'version': version
-    }
-}
-
-build.dependsOn processResources
-
 artifacts {
     archives deobfJar
     archives sourcesJar
 }
 
-curseforge {
-  apiKey = project.hasProperty("CURSEFORGE_API_KEY") ? project.CURSEFORGE_API_KEY : ""
-  project {
-    id = '238048'
-    changelogType = 'markdown'
-    changelog = file("./changelog.md")
-    releaseType = 'release'
-    addGameVersion "1.16.1"
-    addGameVersion "1.16.2"
-    addGameVersion "1.16.3"
-    addGameVersion "1.16.4"
-    addGameVersion "1.16.5"
-
-    mainArtifact(jar) {
-        displayName = "V-Tweaks 1.16.x ${mod_version}"
-    }
-  }
-}
+ curseforge {
+   apiKey = project.hasProperty("CURSEFORGE_API_KEY") ? project.CURSEFORGE_API_KEY : ""
+   project {
+     id = '238048'
+     changelogType = 'markdown'
+     changelog = file("./changelog.md")
+     releaseType = 'beta'
+     addGameVersion "1.17.1"
+     mainArtifact(jar) {
+         displayName = "V-Tweaks 1.17.1 ${mod_version}"
+     }
+   }
+ }
 
 publishing {
     publications {

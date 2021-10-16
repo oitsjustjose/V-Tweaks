@@ -1,32 +1,32 @@
 package com.oitsjustjose.vtweaks.common.util;
 
-import java.util.Map;
-
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Map;
 
 public class Utils {
     public static ItemStack getEnchantedBook(Enchantment ench) {
         ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(retBook, new EnchantmentData(ench, 1));
+        EnchantedBookItem.addEnchantment(retBook, new EnchantmentInstance(ench, 1));
         return retBook;
     }
 
     public static ItemStack getEnchantedBook(Enchantment ench, int lvl) {
         ItemStack retBook = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(retBook, new EnchantmentData(ench, lvl));
+        EnchantedBookItem.addEnchantment(retBook, new EnchantmentInstance(ench, lvl));
         return retBook;
     }
 
@@ -40,14 +40,14 @@ public class Utils {
     }
 
     /**
-     * @param bookStack   ItemStack containing the enchantetd book
+     * @param bookStack   ItemStack containing the enchanted book
      * @param enchantment The enchantment being matched
      * @return true if the book has said enchantment, false otherwise
      */
     public static boolean bookHasEnchantment(ItemStack bookStack, Enchantment enchantment) {
         Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
         for (Enchantment ench : bookEnchs.keySet()) {
-            if (ench.getName().equalsIgnoreCase(enchantment.getName())) {
+            if (ench.getRegistryName().equals(enchantment.getRegistryName())) {
                 return true;
             }
         }
@@ -55,15 +55,15 @@ public class Utils {
     }
 
     /**
-     * @param bookStack       ItemStack containing the enchantetd book
-     * @param enchantmentData The enchantmentdata being matched
+     * @param bookStack           ItemStack containing the enchanted book
+     * @param EnchantmentInstance The EnchantmentInstance being matched
      * @return true if the book has said enchantment, false otherwise
      */
-    public static boolean bookHasEnchantment(ItemStack bookStack, EnchantmentData enchantmentData) {
+    public static boolean bookHasEnchantment(ItemStack bookStack, EnchantmentInstance EnchantmentInstance) {
         Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
         for (Enchantment ench : bookEnchs.keySet()) {
-            if (ench.getName().equalsIgnoreCase(enchantmentData.enchantment.getName())) {
-                if (bookEnchs.get(ench) == enchantmentData.enchantmentLevel) {
+            if (ench.getRegistryName().equals(EnchantmentInstance.enchantment.getRegistryName())) {
+                if (bookEnchs.get(ench) == EnchantmentInstance.level) {
                     return true;
                 }
             }
@@ -72,12 +72,11 @@ public class Utils {
     }
 
     /**
-     * @param bookStack   ItemStack containing the enchantetd book
      * @param enchantment The enchantment being matched
      * @return true if the book has said enchantment, false otherwise
      */
-    public static CompoundNBT getEnchantedBookNBT(Enchantment enchantment, int level) {
-        return EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchantment, level)).getTag();
+    public static CompoundTag getEnchantedBookNBT(Enchantment enchantment, int level) {
+        return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level)).getTag();
     }
 
     /**
@@ -95,17 +94,17 @@ public class Utils {
     }
 
     // An easier builder function for Item Entities
-    public static ItemEntity createItemEntity(World world, BlockPos pos, ItemStack itemstack) {
+    public static ItemEntity createItemEntity(Level world, BlockPos pos, ItemStack itemstack) {
         return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), itemstack.copy());
     }
 
     // An easier builder function for Item Entities
-    public static ItemEntity createItemEntity(World world, BlockPos pos, Block block) {
+    public static ItemEntity createItemEntity(Level world, BlockPos pos, Block block) {
         return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(block));
     }
 
     // An easier builder function for Item Entities
-    public static ItemEntity createItemEntity(World world, BlockPos pos, Item item) {
+    public static ItemEntity createItemEntity(Level world, BlockPos pos, Item item) {
         return new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item));
     }
 

@@ -20,7 +20,6 @@ public class CommonConfig {
 
     public static ForgeConfigSpec.EnumValue<FoodTooltips> FOOD_TOOLTIP;
     public static ForgeConfigSpec.EnumValue<DurabilityTooltips> DURABILITY_TOOLTIP;
-    public static ForgeConfigSpec.BooleanValue ENABLE_WELCOME_MESSAGE;
 
     private static final String CATEGORY_MISC = "miscellaneous";
 
@@ -52,9 +51,6 @@ public class CommonConfig {
                 .defineEnum("foodTooltipSetting", FoodTooltips.WITH_SHIFT);
         DURABILITY_TOOLTIP = COMMON_BUILDER.comment("Show tool durability on item hover")
                 .defineEnum("durabilityTooltipSetting", DurabilityTooltips.WITH_SHIFT);
-        ENABLE_WELCOME_MESSAGE = COMMON_BUILDER
-                .comment("Show a welcome message in chat when joining a world for the first time")
-                .define("enableGuideNotifier", true);
         ENABLE_CHEAP_ANVIL_REPAIR = COMMON_BUILDER.comment("Makes all anvil tool repairs always cost 1 level of XP")
                 .define("enableCheapAnvilRepair", true);
 

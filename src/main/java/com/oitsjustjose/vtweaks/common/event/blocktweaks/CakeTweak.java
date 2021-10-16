@@ -1,13 +1,12 @@
 package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.CakeBlock;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CakeBlock;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -22,13 +21,13 @@ public class CakeTweak {
         Block block = event.getState().getBlock();
         if (event.getPlayer() != null && block instanceof CakeBlock) {
             if (event.getState().hasProperty(CakeBlock.BITES)) {
-                int bites = event.getState().get(CakeBlock.BITES);
+                int bites = event.getState().getValue(CakeBlock.BITES);
                 if (bites == 0) {
-                    ItemEntity cakeItem = new ItemEntity((World) event.getWorld(),
+                    ItemEntity cakeItem = new ItemEntity((Level) event.getWorld(),
                             (double) event.getPos().getX() + 0.5D, event.getPos().getY(),
                             (double) event.getPos().getZ() + 0.5D, new ItemStack(Items.CAKE));
-                    cakeItem.setPickupDelay(10);
-                    event.getWorld().addEntity(cakeItem);
+                    cakeItem.setPickUpDelay(10);
+                    event.getWorld().addFreshEntity(cakeItem);
                 }
             }
         }

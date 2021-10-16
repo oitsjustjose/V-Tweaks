@@ -2,13 +2,12 @@ package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
-
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -22,30 +21,30 @@ public class FeatherPlucker {
             return;
         }
 
-        if (event.getTarget() == null || !(event.getTarget() instanceof ChickenEntity)) {
+        if (event.getTarget() == null || !(event.getTarget() instanceof Chicken)) {
             return;
         }
 
-        ChickenEntity chicken = (ChickenEntity) event.getTarget();
+        Chicken chicken = (Chicken) event.getTarget();
 
-        if (!(event.getEntityLiving() instanceof PlayerEntity)) {
+        if (!(event.getEntityLiving() instanceof Player)) {
             return;
         }
 
-        PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-        if (!chicken.isChild()) {
-            if (!player.getHeldItemMainhand().isEmpty()
-                    && player.getHeldItemMainhand().getItem() instanceof ShearsItem) {
-                if (!player.world.isRemote && chicken.getGrowingAge() == 0) {
-                    player.world.addEntity(
-                            Utils.createItemEntity(player.world, event.getTarget().getPosition(), Items.FEATHER));
-                    chicken.attackEntityFrom(DamageSource.GENERIC, 0.0F);
-                    chicken.setGrowingAge(10000); // Used for a cooldown timer, essentially
+        Player player = (Player) event.getEntityLiving();
+        if (!chicken.isBaby()) {
+            if (!player.getMainHandItem().isEmpty()
+                    && player.getMainHandItem().getItem() instanceof ShearsItem) {
+                if (!player.level.isClientSide() && chicken.getAge() == 0) {
+                    player.level.addFreshEntity(
+                            Utils.createItemEntity(player.level, event.getTarget().getOnPos(), Items.FEATHER));
+                    chicken.hurt(DamageSource.GENERIC, 0.0F);
+                    chicken.setAge(10000); // Used for a cooldown timer, essentially
                     if (!player.isCreative()) {
-                        player.getHeldItemMainhand().attemptDamageItem(1, player.getRNG(), null);
+                        player.getMainHandItem().hurt(1, player.getRandom(), null);
                     }
                 }
-                player.swingArm(Hand.MAIN_HAND);
+                player.swing(InteractionHand.MAIN_HAND);
             }
         }
     }

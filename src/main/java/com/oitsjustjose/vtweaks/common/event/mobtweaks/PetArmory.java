@@ -1,15 +1,12 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.EquipmentSlotType.Group;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -19,15 +16,15 @@ import net.minecraftforge.items.ItemHandlerHelper;
 public class PetArmory {
     private static final String TAG = "vtweaks:lootPickupBackup";
 
-    private void backupPriorSettings(TameableEntity ent) {
-        CompoundNBT comp = ent.getPersistentData();
+    private void backupPriorSettings(TamableAnimal ent) {
+        CompoundTag comp = ent.getPersistentData();
         if (!comp.contains(TAG)) {
             comp.putBoolean(TAG, ent.canPickUpLoot());
         }
     }
 
-    private void restorePriorSettings(TameableEntity ent) {
-        CompoundNBT comp = ent.getPersistentData();
+    private void restorePriorSettings(TamableAnimal ent) {
+        CompoundTag comp = ent.getPersistentData();
         if (comp.contains(TAG)) {
             ent.setCanPickUpLoot(comp.getBoolean(TAG));
             comp.remove(TAG);
@@ -41,10 +38,10 @@ public class PetArmory {
     @SubscribeEvent
     public void registerEvent(AnimalTameEvent event) {
         if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
-            if (event.getAnimal() instanceof TameableEntity) {
-                TameableEntity pet = (TameableEntity) event.getAnimal();
+            if (event.getAnimal() instanceof TamableAnimal) {
+                TamableAnimal pet = (TamableAnimal) event.getAnimal();
                 backupPriorSettings(pet);
-                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+                for (EquipmentSlot slotType : EquipmentSlot.values()) {
                     pet.setDropChance(slotType, 1F);
                 }
                 pet.setCanPickUpLoot(true);
@@ -58,15 +55,15 @@ public class PetArmory {
      */
     @SubscribeEvent
     public void registerEvent(EntityJoinWorldEvent event) {
-        if (!(event.getEntity() instanceof TameableEntity)) {
+        if (!(event.getEntity() instanceof TamableAnimal)) {
             return;
         }
 
-        TameableEntity pet = (TameableEntity) event.getEntity();
+        TamableAnimal pet = (TamableAnimal) event.getEntity();
 
         if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
-            if (pet.isTamed()) {
-                 for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
+            if (pet.isTame()) {
+                for (EquipmentSlot slotType : EquipmentSlot.values()) {
                     pet.setDropChance(slotType, 1F);
                 }
                 pet.setCanPickUpLoot(true);
@@ -87,29 +84,29 @@ public class PetArmory {
             return;
         }
         // Conirms the target is tamable!
-        if (event.getTarget() instanceof TameableEntity) {
-            TameableEntity pet = (TameableEntity) event.getTarget();
-            if (!(event.getEntityLiving() instanceof PlayerEntity)) {
+        if (event.getTarget() instanceof TamableAnimal) {
+            TamableAnimal pet = (TamableAnimal) event.getTarget();
+            if (!(event.getEntityLiving() instanceof Player)) {
                 return;
             }
 
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+            Player player = (Player) event.getEntityLiving();
             boolean strippedArmor = false;
 
-            if (player.getHeldItemMainhand().isEmpty() && player.isCrouching() && pet.isTamed()
-                    && pet.isOwner(player)) {
+            if (player.getMainHandItem().isEmpty() && player.isCrouching() && pet.isTame()
+                    && pet.isOwnedBy(player)) {
                 // Give the armor back
-                for (EquipmentSlotType slotType : EquipmentSlotType.values()) {
-                    ItemStack itemInSlot = pet.getItemStackFromSlot(slotType);
+                for (EquipmentSlot slotType : EquipmentSlot.values()) {
+                    ItemStack itemInSlot = pet.getItemBySlot(slotType);
 
                     if (!itemInSlot.isEmpty()) {
                         ItemHandlerHelper.giveItemToPlayer(player, itemInSlot.copy());
-                        pet.setItemStackToSlot(slotType, ItemStack.EMPTY);
+                        pet.setItemSlot(slotType, ItemStack.EMPTY);
                         strippedArmor = true;
                     }
                 }
                 if (strippedArmor) {
-                    player.playSound(SoundEvents.ENTITY_HORSE_ARMOR, .5F, 0.85F);
+                    player.playSound(SoundEvents.HORSE_ARMOR, .5F, 0.85F);
                 }
             }
         }

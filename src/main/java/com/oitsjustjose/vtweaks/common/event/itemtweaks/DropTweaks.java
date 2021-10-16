@@ -1,20 +1,19 @@
 package com.oitsjustjose.vtweaks.common.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.ItemTweakConfig;
-
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.DirectionalPlaceContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,37 +26,37 @@ public class DropTweaks {
             return;
         }
 
-        if (!event.getEntityItem().world.isRemote) {
+        if (!event.getEntityItem().level.isClientSide) {
             return;
         }
 
         ItemEntity entItem = event.getEntityItem();
-        World world = entItem.getEntityWorld();
+        Level world = entItem.level;
         ItemStack stack = entItem.getItem();
 
         // Handles egg hatching; configurable chance.
         if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG) {
             if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get()) {
-                if (!world.isRemote) {
-                    ChickenEntity chick = new ChickenEntity(EntityType.CHICKEN, world);
-                    chick.setGrowingAge(-24000);
-                    chick.setLocationAndAngles(entItem.getPosX(), entItem.getPosY(), entItem.getPosZ(),
-                            entItem.rotationYaw, 0.0F);
-                    world.addEntity(chick);
+                if (!world.isClientSide()) {
+                    Chicken chick = new Chicken(EntityType.CHICKEN, world);
+                    chick.setAge(-24000);
+                    chick.setPos(entItem.getX(), entItem.getY(), entItem.getZ());
+                    chick.lerpHeadTo(entItem.getYRot(), 0);
+                    world.addFreshEntity(chick);
                 }
             }
         }
         // Handles sapling replanting; 100% chance
         else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get()
                 && ItemTags.SAPLINGS.contains(stack.getItem())) {
-            BlockPos saplingPos = fromDouble(entItem.getPosX(), entItem.getPosY(), entItem.getPosZ());
+            BlockPos saplingPos = fromDouble(entItem.getX(), entItem.getY(), entItem.getZ());
             // Checks to see if where the sapling *will* be is air
-            if (world.isAirBlock(saplingPos) || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
+            if (world.getBlockState(saplingPos).isAir() || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
                 Item item = stack.getItem();
                 if (item instanceof BlockItem) {
-                    BlockItemUseContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,
+                    BlockPlaceContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,
                             Direction.UP);
-                    ((BlockItem) item).tryPlace(context);
+                    ((BlockItem) item).place(context);
                 }
             }
         }

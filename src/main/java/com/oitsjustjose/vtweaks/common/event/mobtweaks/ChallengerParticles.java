@@ -3,8 +3,7 @@ package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -21,9 +20,9 @@ public class ChallengerParticles {
             return;
         }
 
-        if (evt.getEntity() instanceof MonsterEntity) {
-            if (ChallengerMobs.isChallengerMob((MonsterEntity) evt.getEntity())) {
-                MonsterEntity monster = (MonsterEntity) evt.getEntity();
+        if (evt.getEntity() instanceof Monster) {
+            if (ChallengerMobs.isChallengerMob((Monster) evt.getEntity())) {
+                Monster monster = (Monster) evt.getEntity();
                 ChallengerMobType type = ChallengerMobs.getChallengerMobType(monster);
                 VTweaks.proxy.addChallengerMob(monster, type);
             }

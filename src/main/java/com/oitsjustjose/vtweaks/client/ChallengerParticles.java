@@ -2,12 +2,17 @@ package com.oitsjustjose.vtweaks.client;
 
 import java.util.Random;
 
+import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.particle.DustParticle;
+import net.minecraft.client.particle.DustParticleBase;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.DustParticleOptionsBase;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -20,7 +25,7 @@ public class ChallengerParticles {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void registerEvent(RenderWorldLastEvent evt) {
-        if (mc.world == null) {
+        if (mc.level == null) {
             return;
         }
 
@@ -28,25 +33,24 @@ public class ChallengerParticles {
             return;
         }
 
-        Entity view = mc.getRenderViewEntity();
+        Entity view = mc.getCameraEntity();
         if (view == null) {
             return;
         }
-        Vector3d position = view.getPositionVec();
+        Vec3 position = view.getForward();
 
         ClientProxy.challengerMobs.forEach((id, type) -> {
-            Entity tmp = mc.world.getEntityByID(id);
-            if (tmp instanceof MonsterEntity) {
-                MonsterEntity monster = (MonsterEntity) tmp;
-                if (monster.isInRangeToRenderDist(position.squareDistanceTo(monster.getPositionVec()))
-                        && monster.isAlive()) {
-                    Random rand = monster.getRNG();
+            Entity tmp = mc.level.getEntity(id);
+            if (tmp instanceof Monster) {
+                Monster monster = (Monster) tmp;
+                if (monster.shouldRenderAtSqrDistance(position.distanceTo(monster.getForward())) && monster.isAlive()) {
+                    Random rand = monster.getRandom();
                     float noiseX = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
                     float noiseZ = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
 
-                    double x = monster.getPosX() + noiseX;
-                    double y = rand.nextBoolean() ? monster.getPosY() + (monster.getHeight() / 2) : monster.getPosY();
-                    double z = monster.getPosZ() + noiseZ;
+                    double x = monster.getX() + noiseX;
+                    double y = rand.nextBoolean() ? monster.getY() + (monster.getBbHeight() / 2) : monster.getY();
+                    double z = monster.getZ() + noiseZ;
 
                     y += rand.nextFloat() + rand.nextInt(1);
 
@@ -54,8 +58,8 @@ public class ChallengerParticles {
                         float r = type.getRed();
                         float g = type.getGreen();
                         float b = type.getBlue();
-                        IParticleData particle = new RedstoneParticleData(r, g, b, 1F);
-                        mc.worldRenderer.addParticle(particle, false, x, y, z, 0D, 0D, 0D);
+                        ParticleOptions particle = new DustParticleOptions(new Vector3f(r, g, b), 1F);
+                        mc.levelRenderer.addParticle(particle, false, x, y, z, 0D, 0D, 0D);
                     }
                 }
             }
