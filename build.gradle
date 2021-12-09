@@ -1,4 +1,3 @@
-// TODO: Re-enable CurseGradle when it supports new ForgeGradle
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
@@ -24,10 +23,10 @@ version = '1.0'
 group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "VTweaks-${game_version}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: "${game_version}"
     runs {
         client {
             workingDirectory project.file('run')
@@ -60,7 +59,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.85'
+    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
     compileOnly fg.deobf("mezz.jei:jei-${game_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${game_version}:${jei_version}")
 }
@@ -113,9 +112,9 @@ artifacts {
      changelogType = 'markdown'
      changelog = file("./changelog.md")
      releaseType = 'release'
-     addGameVersion "1.17.1"
+     addGameVersion "1.18"
      mainArtifact(jar) {
-         displayName = "V-Tweaks 1.17.1 ${mod_version}"
+         displayName = "V-Tweaks 1.18 ${mod_version}"
      }
    }
  }

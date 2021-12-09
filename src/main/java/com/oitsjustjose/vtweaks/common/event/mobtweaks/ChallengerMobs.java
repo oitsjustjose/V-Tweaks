@@ -29,7 +29,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fmlserverevents.FMLServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -181,7 +181,7 @@ public class ChallengerMobs {
     }
 
     @SubscribeEvent
-    public void onServerStart(final FMLServerStartedEvent evt) {
+    public void onServerStart(final ServerStartedEvent evt) {
         process();
     }
 
@@ -189,7 +189,9 @@ public class ChallengerMobs {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new PreparableReloadListener() {
             @Override
-            public CompletableFuture<Void> reload(PreparableReloadListener.PreparationBarrier p_10638_, ResourceManager p_10639_, ProfilerFiller p_10640_, ProfilerFiller p_10641_, Executor p_10642_, Executor p_10643_) {
+            public CompletableFuture<Void> reload(PreparableReloadListener.PreparationBarrier p_10638_,
+                    ResourceManager p_10639_, ProfilerFiller p_10640_, ProfilerFiller p_10641_, Executor p_10642_,
+                    Executor p_10643_) {
                 return CompletableFuture.runAsync(() -> {
                     process();
                 }, p_10642_).thenCompose(p_10638_::wait);

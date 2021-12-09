@@ -5,17 +5,14 @@ import java.util.Random;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.DustParticle;
-import net.minecraft.client.particle.DustParticleBase;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.DustParticleOptionsBase;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChallengerParticles {
@@ -24,7 +21,7 @@ public class ChallengerParticles {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public void registerEvent(RenderWorldLastEvent evt) {
+    public void registerEvent(RenderLevelLastEvent evt) {
         if (mc.level == null) {
             return;
         }

@@ -4,10 +4,11 @@ import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.ChallengerMobPacket;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public class CommonProxy {
     public static NetworkManager networkManager = new NetworkManager();

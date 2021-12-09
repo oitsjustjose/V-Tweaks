@@ -1,15 +1,15 @@
 package com.oitsjustjose.vtweaks.common.network;
 
+import java.util.function.Supplier;
+
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
-import java.util.function.Supplier;
-
+import net.minecraftforge.network.NetworkEvent;
 
 public class ChallengerMobPacket {
     int entityId;

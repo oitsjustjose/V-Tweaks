@@ -13,7 +13,7 @@ public class SmallBees {
     @OnlyIn(Dist.CLIENT)
     public void registerEvent(RenderLivingEvent.Pre<Bee, BeeModel<Bee>> evt) {
         if (ClientConfig.ENABLE_SMALL_BEES.get() && evt.getEntity() instanceof Bee) {
-            evt.getMatrixStack().scale(.5F, .5F, .5F);
+            evt.getPoseStack().scale(.5F, .5F, .5F);
         }
     }
 }
