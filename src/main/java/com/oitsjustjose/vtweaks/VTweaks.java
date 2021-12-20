@@ -17,13 +17,23 @@ import com.oitsjustjose.vtweaks.common.event.StormTweak;
 import com.oitsjustjose.vtweaks.common.event.ToolTips;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
+import com.oitsjustjose.vtweaks.common.event.blocktweaks.ChopDown;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.NoPetFriendlyFire;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,8 +46,6 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -47,7 +55,6 @@ public class VTweaks {
 
     public static Enchantment lumbering = new EnchantmentLumbering();
     public static Enchantment imperishable = new EnchantmentImperishable();
-
 
     public VTweaks() {
         instance = this;
@@ -82,6 +89,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new CropHelper());
         MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
         MinecraftForge.EVENT_BUS.register(new CakeTweak());
+        MinecraftForge.EVENT_BUS.register(new ChopDown());
 
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
