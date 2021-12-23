@@ -12,6 +12,7 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_PET_ARMORY;
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
+    public static ForgeConfigSpec.LongValue FEATHER_PLUCKING_COOLDOWN;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
@@ -24,13 +25,17 @@ public class MobTweakConfig {
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
 
-        ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
+        ENABLE_PET_ARMORY = COMMON_BUILDER
+                .comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
                 .define("enablePetArmory", true);
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
                 "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
                 .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
+        FEATHER_PLUCKING_COOLDOWN = COMMON_BUILDER
+                .comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.")
+                .defineInRange("featurePluckingCooldown", 600000, 1, Long.MAX_VALUE);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
                 "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but those in this blacklist.")
                 .define("challengerMobsEnabled", true);
@@ -45,7 +50,8 @@ public class MobTweakConfig {
                         (itemRaw) -> itemRaw instanceof String);
         CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
                 .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> itemRaw instanceof String);
+                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"),
+                        (itemRaw) -> itemRaw instanceof String);
         CHALLENGER_MOBS_RARITY = COMMON_BUILDER.comment(
                 "The frequency (out of 100 - higher means more frequent) of a mob being turned into a Challenger")
                 .defineInRange("challengerMobsFrequency", 15, 1, 100);
@@ -57,7 +63,8 @@ public class MobTweakConfig {
         PEACEFUL_SURFACE_BLACKLIST = COMMON_BUILDER
                 .comment("A list of dimensions (of form <modid:type>) to ignore when prevent surface mob spawns.")
                 .defineList("peacefulSurfaceDimBlacklist",
-                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> itemRaw instanceof String);
+                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"),
+                        (itemRaw) -> itemRaw instanceof String);
 
         COMMON_BUILDER.pop();
     }

@@ -1,7 +1,11 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
+import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
+import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.Utils;
+
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Chicken;
@@ -14,6 +18,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 //Idea stolen from copygirl's old tweaks mod. Code is all original, but I liked this
 
 public class FeatherPlucker {
+    private static final String PLUCK_COOLDOWN_KEY = Constants.MODID + ":pluck_cooldown";
+
     @SubscribeEvent
     public void registerEvent(EntityInteract event) {
         // Checks if feature is enabled
@@ -21,31 +27,44 @@ public class FeatherPlucker {
             return;
         }
 
-        if (event.getTarget() == null || !(event.getTarget() instanceof Chicken)) {
+        if (event.getTarget() == null
+                || !(event.getTarget() instanceof Chicken)
+                || !(event.getEntityLiving() instanceof Player)) {
             return;
         }
 
         Chicken chicken = (Chicken) event.getTarget();
-
-        if (!(event.getEntityLiving() instanceof Player)) {
-            return;
-        }
-
         Player player = (Player) event.getEntityLiving();
-        if (!chicken.isBaby()) {
-            if (!player.getMainHandItem().isEmpty()
-                    && player.getMainHandItem().getItem() instanceof ShearsItem) {
-                if (!player.level.isClientSide() && chicken.getAge() == 0) {
-                    player.level.addFreshEntity(
-                            Utils.createItemEntity(player.level, event.getTarget().getOnPos(), Items.FEATHER));
-                    chicken.hurt(DamageSource.GENERIC, 0.0F);
-                    chicken.setAge(10000); // Used for a cooldown timer, essentially
-                    if (!player.isCreative()) {
-                        player.getMainHandItem().hurt(1, player.getRandom(), null);
-                    }
+
+        if (!player.getMainHandItem().isEmpty()
+                && player.getMainHandItem().getItem() instanceof ShearsItem) {
+            if (!player.level.isClientSide() && canPluck(chicken)) {
+                player.level.addFreshEntity(
+                        Utils.createItemEntity(player.level, event.getTarget().getOnPos(),
+                                Items.FEATHER));
+                chicken.hurt(DamageSource.GENERIC, 0.0F);
+                setCooldown(chicken);
+                if (!player.isCreative()) {
+                    player.getMainHandItem().hurt(1, player.getRandom(), null);
                 }
-                player.swing(InteractionHand.MAIN_HAND);
             }
+            player.swing(InteractionHand.MAIN_HAND);
         }
+    }
+
+    private boolean canPluck(Chicken chicken) {
+        CompoundTag tag = chicken.getPersistentData();
+        if (!tag.contains(PLUCK_COOLDOWN_KEY)) {
+            // No pluck cooldown key, means never plucked..
+            return true;
+        }
+
+        long lastTime = tag.getLong(PLUCK_COOLDOWN_KEY);
+        return System.currentTimeMillis() - lastTime >= MobTweakConfig.FEATHER_PLUCKING_COOLDOWN.get();
+    }
+
+    private void setCooldown(Chicken chicken) {
+        CompoundTag tag = chicken.getPersistentData();
+        tag.putLong(PLUCK_COOLDOWN_KEY, System.currentTimeMillis());
     }
 }
