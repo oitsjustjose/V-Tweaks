@@ -17,6 +17,7 @@ import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -63,6 +64,7 @@ public class ChopDown {
         int rad = 32;
         int leaf = 5;
         Direction dir = getDirection(player.blockPosition(), initialPos);
+        player.sendMessage(new TextComponent(dir.toString()), player.getUUID());
 
         // Let's not chop down everything if it's basically not a tree
         boolean leavesFound = false;
@@ -135,13 +137,13 @@ public class ChopDown {
         int transformedY = pos.getY() - initialBreakPos.getY();
         switch (facing) {
             case SOUTH:
-                return pos.offset(1, 0, transformedY);
+                return pos.offset(1, 0, 1 + transformedY);
             case NORTH:
-                return pos.offset(1, 0, -transformedY);
+                return pos.offset(1, 0, -transformedY + 1);
             case EAST:
-                return pos.offset(1 + transformedY, 0, 0);
+                return pos.offset(1 + transformedY, 0, 1);
             case WEST:
-                return pos.offset(1 - transformedY, 0, 0);
+                return pos.offset(-transformedY + 1, 0, 1);
             default: // Up and Down won't be involved.
                 return pos;
         }
