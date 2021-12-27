@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.18.x
 
+## 3.5.4
+
+### Fixed
+
+- Chat spam with ChopDown Enabled
+
 ## 3.5.3
 
 ### Changed

@@ -64,7 +64,6 @@ public class ChopDown {
         int rad = 32;
         int leaf = 5;
         Direction dir = getDirection(player.blockPosition(), initialPos);
-        player.sendMessage(new TextComponent(dir.toString()), player.getUUID());
 
         // Let's not chop down everything if it's basically not a tree
         boolean leavesFound = false;
