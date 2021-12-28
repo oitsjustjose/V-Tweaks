@@ -35,4 +35,4 @@ jobs:
       - name: Upload Release Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "${{ github.ref }}"
+        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "${{ github.event.release.tag_name }}"
