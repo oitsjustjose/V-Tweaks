@@ -8,13 +8,27 @@
   },
   "unlocalizedName": "agile",
   "healthMultiplier": 0.25,
-  "speedMultiplier": 2.0,
+  "speedMultiplier": 1.5,
   "effectsOnAttack": [],
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:zombie"]
+  },
   "loot": [
     {
-      "item": "minecraft:stick",
-      "count": 1,
-      "nbt": { "Enchantments": [{ "id": "binding_curse", "lvl": 1 }] }
+      "weight": 1,
+      "item": {
+        "item": "minecraft:stick",
+        "count": 1,
+        "nbt": { "Enchantments": [{ "id": "binding_curse", "lvl": 1 }] }
+      }
+    },
+    {
+      "weight": 10,
+      "item": {
+        "item": "minecraft:golden_apple",
+        "count": 44
+      }
     }
   ]
 }

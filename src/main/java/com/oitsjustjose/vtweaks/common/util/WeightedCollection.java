@@ -1,14 +1,18 @@
 package com.oitsjustjose.vtweaks.common.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import com.oitsjustjose.vtweaks.VTweaks;
 
-public class WeightedArrayList<T, Integer> {
-    private HashMap<T, Integer> items;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+public class WeightedCollection<T> {
+    private final HashMap<T, Integer> items;
     Random random;
 
-    public WeightedArrayList() {
+    public WeightedCollection() {
         this.items = new HashMap<>();
         this.random = new Random();
     }
@@ -17,21 +21,35 @@ public class WeightedArrayList<T, Integer> {
         this.items.clear();
     }
 
-//    public ArrayList<T> getArrayList() {
-//        return (ArrayList<T>) this.items.clone();
-//    }
-//
-
     public void add(T item, Integer chance) {
         this.items.put(item, chance);
     }
 
+    public Set<T> getCollection() {
+        return this.items.keySet();
+    }
+
+    @Nullable
     public T pick() {
         int total = 0;
         for (Integer x : items.values()) {
-            total += (int) x;
+            total += x;
         }
 
-        int rng =
+        if (total <= 0) {
+            return null;
+        }
+
+        int rng = this.random.nextInt(total);
+        for (Map.Entry<T, Integer> entry : this.items.entrySet()) {
+            int wt = entry.getValue();
+            if (rng < wt) {
+                return entry.getKey();
+            }
+            rng -= wt;
+        }
+
+        VTweaks.getInstance().LOGGER.error("Could not reach decision on WeightedCollection#pick");
+        return null;
     }
 }

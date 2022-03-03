@@ -1,0 +1,39 @@
+{
+  "weight": 10,
+  "gear": {},
+  "color": {
+    "red": 63,
+    "green": 10,
+    "blue": 92
+  },
+  "unlocalizedName": "arcane",
+  "healthMultiplier": 2.0,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:zombie"]
+  },
+  "effectsOnAttack": [
+    {
+      "name": "minecraft:blindness",
+      "duration": 300,
+      "amplifier": 0
+    },
+    {
+      "name": "minecraft:wither",
+      "duration": 100,
+      "amplifier": 1
+    },
+    {
+      "name": "minecraft:levitation",
+      "duration": 100,
+      "amplifier": 0
+    }
+  ],
+  "loot": [
+    {
+      "weight": 1,
+      "item": { "item": "minecraft:golden_apple" }
+    }
+  ]
+}

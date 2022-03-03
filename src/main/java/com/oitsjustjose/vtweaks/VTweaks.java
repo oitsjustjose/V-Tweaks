@@ -7,37 +7,27 @@ import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
+import com.oitsjustjose.vtweaks.common.data.ChallengerMobDataLoader;
 import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentImperishable;
 import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentLumbering;
 import com.oitsjustjose.vtweaks.common.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentLumberingHandler;
+import com.oitsjustjose.vtweaks.common.entity.ChallengerMobHandler;
+import com.oitsjustjose.vtweaks.common.entity.ChallengerParticles;
 import com.oitsjustjose.vtweaks.common.event.DeathPoint;
 import com.oitsjustjose.vtweaks.common.event.StormTweak;
 import com.oitsjustjose.vtweaks.common.event.ToolTips;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.ToolEffTweaks;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.ChopDown;
+import com.oitsjustjose.vtweaks.common.event.blocktweaks.*;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobs;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerParticles;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.FeatherPlucker;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.NoPetFriendlyFire;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.PeacefulSurface;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.PetArmory;
+import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.GuideNotifier;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
 import com.oitsjustjose.vtweaks.common.world.capability.IVTweaksCapability;
 import com.oitsjustjose.vtweaks.common.world.capability.VTweaksCapabilityProvider;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
@@ -45,6 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -55,6 +46,8 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -93,7 +86,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new NoPetFriendlyFire());
         MinecraftForge.EVENT_BUS.register(new SmallBees());
         MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
-        MinecraftForge.EVENT_BUS.register(new ChallengerMobs());
+        MinecraftForge.EVENT_BUS.register(new ChallengerMobHandler());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
 
@@ -132,6 +125,11 @@ public class VTweaks {
     public void attachCap(AttachCapabilitiesEvent<World> event) {
         event.addCapability(new ResourceLocation(Constants.MODID, "capabilities"), new VTweaksCapabilityProvider());
         LOGGER.info("V-Tweaks capability attached for {}", event.getObject().getDimensionKey().getLocation());
+    }
+
+    @SubscribeEvent
+    public void onSlashReload(AddReloadListenerEvent evt) {
+        evt.addListener(new ChallengerMobDataLoader());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

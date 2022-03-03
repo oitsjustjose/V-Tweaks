@@ -1,21 +1,20 @@
 package com.oitsjustjose.vtweaks.client;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.oitsjustjose.vtweaks.common.CommonProxy;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
+import com.oitsjustjose.vtweaks.common.entity.ChallengerMob;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.ChallengerMobPacket;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ClientProxy extends CommonProxy {
     Minecraft mc;
-    public static ConcurrentHashMap<Integer, ChallengerMobType> challengerMobs = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Integer, ChallengerMob> challengerMobs = new ConcurrentHashMap<>();
 
     @Override
     public void init() {
@@ -41,7 +40,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void addChallengerMob(MonsterEntity entity, ChallengerMobType type) {
+    public void addChallengerMob(MonsterEntity entity, ChallengerMob type) {
         challengerMobs.put(entity.getEntityId(), type);
     }
 }

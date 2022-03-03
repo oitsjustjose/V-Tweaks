@@ -51,11 +51,7 @@ public class ChallengerParticles {
                     y += rand.nextFloat() + rand.nextInt(1);
 
                     if (type != null) {
-                        float r = type.getRed();
-                        float g = type.getGreen();
-                        float b = type.getBlue();
-                        IParticleData particle = new RedstoneParticleData(r, g, b, 1F);
-                        mc.worldRenderer.addParticle(particle, false, x, y, z, 0D, 0D, 0D);
+                        mc.worldRenderer.addParticle(type.getParticle(), false, x, y, z, 0D, 0D, 0D);
                     }
                 }
             }

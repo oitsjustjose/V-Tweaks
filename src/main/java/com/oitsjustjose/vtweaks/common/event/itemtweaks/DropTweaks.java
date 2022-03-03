@@ -37,7 +37,7 @@ public class DropTweaks {
 
         // Handles egg hatching; configurable chance.
         if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG) {
-            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get()) {
+            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCHING_CHANCE.get()) {
                 if (!world.isRemote) {
                     ChickenEntity chick = new ChickenEntity(EntityType.CHICKEN, world);
                     chick.setGrowingAge(-24000);
