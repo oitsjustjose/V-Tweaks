@@ -1,6 +1,11 @@
 {
   "weight": 10,
-  "gear": {},
+  "gear": {
+    "mainHand": {
+      "item": "minecraft:stick",
+      "nbt": { "Enchantments": [{ "id": "binding_curse", "lvl": 1 }] }
+    }
+  },
   "color": {
     "red": 63,
     "green": 10,
@@ -11,7 +16,7 @@
   "speedMultiplier": 1.0,
   "entityFilter": {
     "isBlacklist": false,
-    "entities": ["minecraft:zombie"]
+    "entities": ["minecraft:zombie", "minecraft:husk"]
   },
   "effectsOnAttack": [
     {

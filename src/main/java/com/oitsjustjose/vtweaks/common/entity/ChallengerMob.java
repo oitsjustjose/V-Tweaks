@@ -30,8 +30,8 @@ public class ChallengerMob {
     private final double healthMultiplier;
     private final double speedMultiplier;
 
-    private final ItemStack heldItemMainHand;
-    private final ItemStack heldItemOffHand;
+    private final ItemStack mainHand;
+    private final ItemStack offHand;
     private final ItemStack helmet;
     private final ItemStack chestplate;
     private final ItemStack leggings;
@@ -62,8 +62,8 @@ public class ChallengerMob {
         this.speedMultiplier = json.get("speedMultiplier").getAsDouble();
 
         JsonObject gear = json.get("gear").getAsJsonObject();
-        this.heldItemMainHand = ChallengerMobSer.deserializeItemStack(gear, "heldItemMainHand");
-        this.heldItemOffHand = ChallengerMobSer.deserializeItemStack(gear, "heldItemOffHand");
+        this.mainHand = ChallengerMobSer.deserializeItemStack(gear, "mainHand");
+        this.offHand = ChallengerMobSer.deserializeItemStack(gear, "off Hand");
         this.helmet = ChallengerMobSer.deserializeItemStack(gear, "helmet");
         this.chestplate = ChallengerMobSer.deserializeItemStack(gear, "chestplate");
         this.leggings = ChallengerMobSer.deserializeItemStack(gear, "leggings");
@@ -80,7 +80,6 @@ public class ChallengerMob {
         }
     }
 
-
     public void apply(MonsterEntity monster) {
         for (EquipmentSlotType e : EquipmentSlotType.values()) {
             monster.setItemStackToSlot(e, ItemStack.EMPTY);
@@ -91,8 +90,8 @@ public class ChallengerMob {
         monster.setItemStackToSlot(EquipmentSlotType.CHEST, this.chestplate);
         monster.setItemStackToSlot(EquipmentSlotType.LEGS, this.leggings);
         monster.setItemStackToSlot(EquipmentSlotType.FEET, this.boots);
-        monster.setHeldItem(Hand.MAIN_HAND, this.heldItemMainHand);
-        monster.setHeldItem(Hand.OFF_HAND, this.heldItemOffHand);
+        monster.setHeldItem(Hand.MAIN_HAND, this.mainHand);
+        monster.setHeldItem(Hand.OFF_HAND, this.offHand);
 
         double speed = monster.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
         double health = monster.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
@@ -109,7 +108,7 @@ public class ChallengerMob {
         comp.put("challenger_mob_data", type);
 
         // Infinite Fire Resistance
-        monster.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, Integer.MAX_VALUE));
+        monster.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
     }
 
     private ITextComponent mobClassName(MonsterEntity mob) {
@@ -136,5 +135,13 @@ public class ChallengerMob {
 
     public List<EffectInstance> getAttackEffects() {
         return this.effectsOnAttack;
+    }
+
+    public List<ResourceLocation> getEntityFilter() {
+        return this.entityFilter;
+    }
+
+    public boolean isEntityFilterIsBlacklist() {
+        return this.entityFilterIsBlacklist;
     }
 }

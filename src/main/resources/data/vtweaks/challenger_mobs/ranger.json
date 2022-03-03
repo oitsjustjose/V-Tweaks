@@ -1,0 +1,37 @@
+{
+  "weight": 10,
+  "gear": {
+    "helmet": {
+      "item": "minecraft:leather_helmet",
+      "nbt": { "display": { "color": 5350221 } }
+    },
+    "mainHand": {
+      "item": "minecraft:bow",
+      "nbt": {
+        "Enchantments": [
+          { "id": "minecraft:punch", "lvl": 2 },
+          { "id": "minecraft:power", "lvl": 3 }
+        ]
+      }
+    }
+  },
+  "color": {
+    "red": 81,
+    "green": 163,
+    "blue": 77
+  },
+  "unlocalizedName": "ranger",
+  "healthMultiplier": 1.25,
+  "speedMultiplier": 1.125,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:wither_skeleton", "minecraft:skeleton"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 1,
+      "item": { "item": "minecraft:golden_apple" }
+    }
+  ]
+}

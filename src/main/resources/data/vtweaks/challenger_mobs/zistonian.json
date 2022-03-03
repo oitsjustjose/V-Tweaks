@@ -1,0 +1,45 @@
+{
+  "weight": 10,
+  "gear": {
+    "mainHand": {
+      "item": "minecraft:oak_sign",
+      "nbt": {
+        "display": {
+          "Name": "[{\"text\":\"Zistonian Battle Sign\",\"italic\":false,\"color\":\"yellow\"}]"
+        },
+        "Enchantments": [{ "id": "knockback", "lvl": 10 }]
+      }
+    },
+    "leggings": {
+      "item": "minecraft:golden_leggings",
+      "nbt": {
+        "display": {
+          "Name": "[{\"text\":\"Man Pants\",\"italic\":false,\"color\":\"yellow\"}]",
+          "Lore": [
+            "[{\"text\":\"Some tell tales of an ancient MindCrack player who once wore these.\",\"italic\":false}]"
+          ]
+        },
+        "Enchantments": [{ "id": "blast_protection", "lvl": 6 }]
+      }
+    }
+  },
+  "color": {
+    "red": 155,
+    "green": 6,
+    "blue": 106
+  },
+  "unlocalizedName": "zistonian",
+  "healthMultiplier": 1.125,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:zombie", "minecraft:husk"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 1,
+      "item": { "item": "minecraft:golden_apple" }
+    }
+  ]
+}

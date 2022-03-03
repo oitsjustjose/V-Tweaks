@@ -13,10 +13,7 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.EnumValue<NoPetFriendlyFire> NO_PET_FRIENDLY_FIRE;
     public static ForgeConfigSpec.BooleanValue ENABLE_FEATHER_PLUCKING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS;
-    public static ForgeConfigSpec.BooleanValue ENABLE_CHALLENGER_MOBS_NAME;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_LOOT;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> CHALLENGER_MOBS_BLACKLIST;
-    public static ForgeConfigSpec.IntValue CHALLENGER_MOBS_RARITY;
+    public static ForgeConfigSpec.DoubleValue GLOBAL_CHALLENGER_MOB_CHANCE;
     public static ForgeConfigSpec.BooleanValue ENABLE_PEACEFUL_SURFACE;
     public static ForgeConfigSpec.IntValue PEACEFUL_SURFACE_MIN_Y;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> PEACEFUL_SURFACE_BLACKLIST;
@@ -27,28 +24,16 @@ public class MobTweakConfig {
         ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
                 .define("enablePetArmory", true);
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
-                "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
+                        "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
                 .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
-                "Randomly spawns more difficult (but more lootworthy) enemies.\nApplies to ALL enemies but those in this blacklist.")
+                        "A data-driven way to make some special mobs with abilities, effects, specialized loot and more!")
                 .define("challengerMobsEnabled", true);
-        ENABLE_CHALLENGER_MOBS_NAME = COMMON_BUILDER.comment("Enable custom nametags on challenger mobs")
-                .define("challengerMobsNames", true);
-        CHALLENGER_MOBS_LOOT = COMMON_BUILDER
-                .comment("A string list of form <modid:item> of possible loot items a Challenger Mob could drop")
-                .defineList("challengerMobsLoot",
-                        Lists.newArrayList("minecraft:gold_ingot", "minecraft:gold_nugget*15", "minecraft:diamond",
-                                "minecraft:emerald", "minecraft:ghast_tear", "minecraft:ender_pearl",
-                                "minecraft:emerald", "minecraft:experience_bottle"),
-                        (itemRaw) -> itemRaw instanceof String);
-        CHALLENGER_MOBS_BLACKLIST = COMMON_BUILDER
-                .comment("The class name (or part of it) of any entities that should not be turned to challenger mobs")
-                .defineList("challengerMobsBlacklist", Lists.newArrayList("minecraft:pillager"), (itemRaw) -> itemRaw instanceof String);
-        CHALLENGER_MOBS_RARITY = COMMON_BUILDER.comment(
-                "The frequency (out of 100 - higher means more frequent) of a mob being turned into a Challenger")
-                .defineInRange("challengerMobsFrequency", 15, 1, 100);
+        GLOBAL_CHALLENGER_MOB_CHANCE = COMMON_BUILDER
+                .comment("This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.")
+                .defineInRange("challengerMobGlobalChance", 0.25D, 0.0D, 1.0D);
         ENABLE_PEACEFUL_SURFACE = COMMON_BUILDER
                 .comment("Prevents mobs from spawning above sea level unless it's a new moon")
                 .define("peacefulSurfaceEnabled", false);

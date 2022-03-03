@@ -1,0 +1,31 @@
+{
+  "weight": 10,
+  "gear": {
+    "mainHand": {
+      "item": "firework_rocket",
+      "nbt": { "Enchantments": [{ "id": "fire_aspect", "lvl": 3 }] }
+    }
+  },
+  "color": {
+    "red": 196,
+    "green": 41,
+    "blue": 6
+  },
+  "unlocalizedName": "pyro",
+  "healthMultiplier": 1.0,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:spider", "minecraft:zombie"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 10,
+      "item": {
+        "item": "minecraft:golden_apple",
+        "count": 44
+      }
+    }
+  ]
+}

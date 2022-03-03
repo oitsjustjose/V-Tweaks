@@ -43,8 +43,8 @@ public class ChallengerMobSer {
     public static EffectInstance deserializeEffectInstance(JsonObject json) {
         try {
             String name = json.get("name").getAsString();
-            int amplifier = JSONUtils.hasField(json, "amplifier") ? json.get("amplifier").getAsInt() : 1;
-            int duration = JSONUtils.hasField(json, "duration") ? json.get("duration").getAsInt() : 30;
+            int amplifier = JSONUtils.hasField(json, "amplifier") ? json.get("amplifier").getAsInt() : 0;
+            int duration = JSONUtils.hasField(json, "duration") ? json.get("duration").getAsInt() : 100;
 
             Effect eff = ForgeRegistries.POTIONS.getValue(new ResourceLocation(name));
             if (eff == null) {

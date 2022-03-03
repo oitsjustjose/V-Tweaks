@@ -1,0 +1,43 @@
+{
+  "weight": 10,
+  "gear": {},
+  "color": {
+    "red": 5,
+    "green": 173,
+    "blue": 154
+  },
+  "unlocalizedName": "eldritch",
+  "healthMultiplier": 1.0,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:enderman"]
+  },
+  "effectsOnAttack": [
+    {
+      "name": "minecraft:slowness",
+      "duration": 600
+    },
+    {
+      "name": "minecraft:mining_fatigue",
+      "duration": 600
+    },
+    {
+      "name": "minecraft:unluck",
+      "duration": 2400
+    },
+    {
+      "name": "minecraft:bad_omen",
+      "duration": 4000
+    }
+  ],
+  "loot": [
+    {
+      "weight": 10,
+      "item": {
+        "item": "minecraft:golden_apple",
+        "count": 44
+      }
+    }
+  ]
+}

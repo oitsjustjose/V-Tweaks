@@ -29,6 +29,11 @@ public class WeightedCollection<T> {
         return this.items.keySet();
     }
 
+    @SuppressWarnings("unchecked")
+    public HashMap<T, Integer> getWeightMap() {
+        return (HashMap<T, Integer>) this.items.clone();
+    }
+
     @Nullable
     public T pick() {
         int total = 0;
