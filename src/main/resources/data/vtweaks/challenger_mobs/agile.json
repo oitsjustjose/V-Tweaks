@@ -1,0 +1,20 @@
+{
+  "weight": 10,
+  "gear": {},
+  "color": {
+    "red": 10,
+    "green": 209,
+    "blue": 169
+  },
+  "unlocalizedName": "agile",
+  "healthMultiplier": 0.25,
+  "speedMultiplier": 2.0,
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "item": "minecraft:stick",
+      "count": 1,
+      "nbt": { "Enchantments": [{ "id": "binding_curse", "lvl": 1 }] }
+    }
+  ]
+}
