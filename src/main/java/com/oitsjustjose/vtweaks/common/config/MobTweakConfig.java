@@ -17,6 +17,7 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_PEACEFUL_SURFACE;
     public static ForgeConfigSpec.IntValue PEACEFUL_SURFACE_MIN_Y;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> PEACEFUL_SURFACE_BLACKLIST;
+    public static ForgeConfigSpec.BooleanValue DISABLE_BABY_ZOMBIES;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
@@ -43,6 +44,7 @@ public class MobTweakConfig {
                 .comment("A list of dimensions (of form <modid:type>) to ignore when prevent surface mob spawns.")
                 .defineList("peacefulSurfaceDimBlacklist",
                         Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> itemRaw instanceof String);
+        DISABLE_BABY_ZOMBIES = COMMON_BUILDER.comment("Any time a Baby Zombie (or Zombie Piglin) spawns, it will be replaced with an adult").define("disableBabyZombies", true);
 
         COMMON_BUILDER.pop();
     }

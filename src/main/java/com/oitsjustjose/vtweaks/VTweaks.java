@@ -89,6 +89,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new ChallengerMobHandler());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
+        MinecraftForge.EVENT_BUS.register(new BabyZombies());
 
         // Block Tweaks
         MinecraftForge.EVENT_BUS.register(new CropHelper());
