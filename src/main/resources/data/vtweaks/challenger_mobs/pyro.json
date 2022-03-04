@@ -1,0 +1,56 @@
+{
+  "weight": 10,
+  "gear": {
+    "mainHand": {
+      "item": "minecraft:firework_rocket",
+      "nbt": { "Enchantments": [{ "id": "fire_aspect", "lvl": 3 }] }
+    }
+  },
+  "color": {
+    "red": 196,
+    "green": 41,
+    "blue": 6
+  },
+  "unlocalizedName": "pyro",
+  "healthMultiplier": 1.0,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:spider", "minecraft:zombie"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ghast_tear" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    },
+    {
+      "weight": 5,
+      "item": {
+        "item": "minecraft:firework_rocket",
+        "count": 5,
+        "nbt": { "Fireworks": { "Flight": 3 } }
+      }
+    },
+    {
+      "weight": 5,
+      "item": {
+        "item": "minecraft:firework_rocket",
+        "count": 3,
+        "nbt": { "Fireworks": { "Flight": 3 } }
+      }
+    },
+    {
+      "weight": 5,
+      "item": {
+        "item": "minecraft:firework_rocket",
+        "count": 2,
+        "nbt": { "Fireworks": { "Flight": 3 } }
+      }
+    }
+  ]
+}

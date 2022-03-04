@@ -1,10 +1,9 @@
 package com.oitsjustjose.vtweaks.common;
 
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
+import com.oitsjustjose.vtweaks.common.entity.ChallengerMob;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.ChallengerMobPacket;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +28,7 @@ public class CommonProxy {
         player.setHealth(newHealth);
     }
 
-    public void addChallengerMob(Monster entity, ChallengerMobType type) {
+    public void addChallengerMob(Monster entity, ChallengerMob type) {
         ChallengerMobPacket msg = new ChallengerMobPacket(entity.getId(), type);
         networkManager.networkWrapper.send(PacketDistributor.ALL.noArg(), msg);
     }

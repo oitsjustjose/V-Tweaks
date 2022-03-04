@@ -52,11 +52,7 @@ public class ChallengerParticles {
                     y += rand.nextFloat() + rand.nextInt(1);
 
                     if (type != null) {
-                        float r = type.getRed();
-                        float g = type.getGreen();
-                        float b = type.getBlue();
-                        ParticleOptions particle = new DustParticleOptions(new Vector3f(r, g, b), 1F);
-                        mc.levelRenderer.addParticle(particle, false, x, y, z, 0D, 0D, 0D);
+                        mc.levelRenderer.addParticle(type.getParticle(), false, x, y, z, 0D, 0D, 0D);
                     }
                 }
             }

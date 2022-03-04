@@ -1,28 +1,28 @@
 package com.oitsjustjose.vtweaks.common.network;
 
-import java.util.function.Supplier;
-
 import com.oitsjustjose.vtweaks.client.ClientProxy;
-import com.oitsjustjose.vtweaks.common.event.mobtweaks.ChallengerMobType;
-
+import com.oitsjustjose.vtweaks.common.entity.ChallengerMob;
+import com.oitsjustjose.vtweaks.common.entity.ChallengerMobHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class ChallengerMobPacket {
     int entityId;
-    ChallengerMobType type;
+    ChallengerMob challengerMob;
 
     public ChallengerMobPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
-        this.type = ChallengerMobType.valueOf(buf.readUtf());
+        this.challengerMob = ChallengerMobHandler.getChallengerMobByName(buf.readUtf());
     }
 
-    public ChallengerMobPacket(int entityId, ChallengerMobType type) {
+    public ChallengerMobPacket(int entityId, ChallengerMob challengerMob) {
         this.entityId = entityId;
-        this.type = type;
+        this.challengerMob = challengerMob;
     }
 
     public static ChallengerMobPacket decode(FriendlyByteBuf buf) {
@@ -31,7 +31,7 @@ public class ChallengerMobPacket {
 
     public static void encode(ChallengerMobPacket msg, FriendlyByteBuf buf) {
         buf.writeInt(msg.entityId);
-        buf.writeUtf(msg.type.toString());
+        buf.writeUtf(msg.challengerMob.toString());
     }
 
     public void handleServer(Supplier<NetworkEvent.Context> context) {
@@ -42,7 +42,7 @@ public class ChallengerMobPacket {
     public static void handleClient(ChallengerMobPacket msg, Supplier<NetworkEvent.Context> context) {
         if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.get().enqueueWork(() -> {
-                ClientProxy.challengerMobs.put(msg.entityId, msg.type);
+                ClientProxy.challengerMobs.put(msg.entityId, msg.challengerMob);
             });
         }
         context.get().setPacketHandled(true);

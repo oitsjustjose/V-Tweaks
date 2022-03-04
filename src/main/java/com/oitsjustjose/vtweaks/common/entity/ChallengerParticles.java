@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.event.mobtweaks;
+package com.oitsjustjose.vtweaks.common.entity;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
@@ -21,10 +21,12 @@ public class ChallengerParticles {
         }
 
         if (evt.getEntity() instanceof Monster) {
-            if (ChallengerMobs.isChallengerMob((Monster) evt.getEntity())) {
+            if (ChallengerMobHandler.isChallengerMob((Monster) evt.getEntity())) {
                 Monster monster = (Monster) evt.getEntity();
-                ChallengerMobType type = ChallengerMobs.getChallengerMobType(monster);
-                VTweaks.proxy.addChallengerMob(monster, type);
+                ChallengerMob challenger = ChallengerMobHandler.getChallengerMob(monster);
+                if(challenger != null) {
+                    VTweaks.proxy.addChallengerMob(monster, challenger);
+                }
             }
         }
     }

@@ -1,0 +1,61 @@
+{
+  "weight": 10,
+  "gear": {
+    "helmet": {
+      "item": "minecraft:leather_helmet",
+      "nbt": { "display": { "color": 5350221 } }
+    },
+    "mainHand": {
+      "item": "minecraft:bow",
+      "nbt": {
+        "Enchantments": [
+          { "id": "minecraft:punch", "lvl": 2 },
+          { "id": "minecraft:power", "lvl": 3 }
+        ]
+      }
+    }
+  },
+  "color": {
+    "red": 81,
+    "green": 163,
+    "blue": 77
+  },
+  "unlocalizedName": "ranger",
+  "healthMultiplier": 1.25,
+  "speedMultiplier": 1.125,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:wither_skeleton", "minecraft:skeleton"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 10,
+      "item": { "item": "minecraft:gold_ingot" }
+    },
+    {
+      "weight": 12,
+      "item": { "item": "minecraft:gold_nugget", "count": 15 }
+    },
+    {
+      "weight": 4,
+      "item": { "item": "minecraft:diamond" }
+    },
+    {
+      "weight": 7,
+      "item": { "item": "minecraft:string" }
+    },
+    {
+      "weight": 4,
+      "item": { "item": "minecraft:string", "count": 2 }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ghast_tear" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "weight": 10,
+  "gear": {
+    "mainHand": {
+      "item": "minecraft:oak_sign",
+      "nbt": {
+        "display": {
+          "Name": "[{\"text\":\"Zistonian Battle Sign\",\"italic\":false,\"color\":\"yellow\"}]"
+        },
+        "Enchantments": [{ "id": "knockback", "lvl": 10 }]
+      }
+    },
+    "leggings": {
+      "item": "minecraft:golden_leggings",
+      "nbt": {
+        "display": {
+          "Name": "[{\"text\":\"Man Pants\",\"italic\":false,\"color\":\"yellow\"}]",
+          "Lore": [
+            "[{\"text\":\"Some tell tales of an ancient MindCrack player who once wore these.\",\"italic\":false}]"
+          ]
+        },
+        "Enchantments": [{ "id": "blast_protection", "lvl": 6 }]
+      }
+    }
+  },
+  "color": {
+    "red": 155,
+    "green": 6,
+    "blue": 106
+  },
+  "unlocalizedName": "zistonian",
+  "healthMultiplier": 1.125,
+  "speedMultiplier": 1.0,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:zombie", "minecraft:husk"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 10,
+      "item": { "item": "minecraft:gold_ingot" }
+    },
+    {
+      "weight": 12,
+      "item": { "item": "minecraft:gold_nugget", "count": 15 }
+    },
+    {
+      "weight": 4,
+      "item": { "item": "minecraft:diamond" }
+    },
+    {
+      "weight": 7,
+      "item": { "item": "minecraft:emerald" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "weight": 10,
+  "gear": {},
+  "color": {
+    "red": 10,
+    "green": 209,
+    "blue": 169
+  },
+  "unlocalizedName": "agile",
+  "healthMultiplier": 0.25,
+  "speedMultiplier": 1.5,
+  "entityFilter": {
+    "isBlacklist": false,
+    "entities": ["minecraft:zombie", "minecraft:creeper", "minecraft:husk"]
+  },
+  "effectsOnAttack": [],
+  "loot": [
+    {
+      "weight": 4,
+      "item": { "item": "minecraft:redstone" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ghast_tear" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    },
+    {
+      "weight": 7,
+      "item": {
+        "item": "minecraft:potion",
+        "nbt": {
+          "CustomPotionColor": 3259330,
+          "CustomPotionEffects": [{ "Id": 1, "Duration": 3600, "Amplifier": 2 }]
+        }
+      }
+    }
+  ]
+}
