@@ -1,16 +1,21 @@
 package com.oitsjustjose.vtweaks.common.event;
 
+import com.mojang.datafixers.util.Pair;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.Food;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.List;
 
 public class ToolTips {
     @SubscribeEvent
@@ -31,14 +36,13 @@ public class ToolTips {
             }
 
             Food food = stack.getItem().getFood();
-            int hunger = food.getHealing();
             float saturation = food.getSaturation() * 10;
 
             if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.ALWAYS) {
-                event.getToolTip().add(getHungerString(hunger));
+                event.getToolTip().add(getHungerString(food));
                 event.getToolTip().add(getSaturationString((int) saturation));
             } else if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.WITH_SHIFT && shift) {
-                event.getToolTip().add(getHungerString(hunger));
+                event.getToolTip().add(getHungerString(food));
                 event.getToolTip().add(getSaturationString((int) saturation));
             }
         }
@@ -57,27 +61,43 @@ public class ToolTips {
         }
     }
 
-    private StringTextComponent getHungerString(int hunger) {
-        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Hunger:");
-
-        for (int i = 0; i < (hunger / 2); i++) {
-            ret.append(TextFormatting.DARK_RED).append("\u2588");
-        }
-        if (hunger % 2 != 0) {
-            ret.append(TextFormatting.DARK_RED).append("\u258C");
-        }
-        return new StringTextComponent(ret.toString());
+    private boolean hasBadEffect(List<Pair<EffectInstance, Float>> e) {
+        return e.stream().anyMatch(x -> !x.getFirst().getPotion().isBeneficial());
     }
 
-    private StringTextComponent getSaturationString(int saturation) {
-        StringBuilder ret = new StringBuilder(TextFormatting.GRAY + "Sat:");
+    private boolean hasGoodEffect(List<Pair<EffectInstance, Float>> e) {
+        return e.stream().anyMatch(x -> x.getFirst().getPotion().isBeneficial());
+    }
+
+    private TranslationTextComponent getHungerString(Food food) {
+        StringBuilder ret = new StringBuilder();
+
+        int hunger = food.getHealing();
+
+        boolean b = hasBadEffect(food.getEffects());
+        boolean g = hasGoodEffect(food.getEffects());
+
+        TextFormatting color = b ? TextFormatting.DARK_RED : g ? TextFormatting.DARK_PURPLE : TextFormatting.DARK_GREEN;
+
+        for (int i = 0; i < (hunger / 2); i++) {
+            ret.append(color).append("\u2588");
+        }
+        if (hunger % 2 != 0) {
+            ret.append(color).append("\u258C");
+        }
+
+        return new TranslationTextComponent("vtweaks.hunger.tooltip.text", ret.toString());
+    }
+
+    private TranslationTextComponent getSaturationString(int saturation) {
+        StringBuilder ret = new StringBuilder();
         for (int i = 0; i < saturation / 2; i++) {
-            ret.append(TextFormatting.RED).append("\u2588");
+            ret.append(TextFormatting.GREEN).append("\u2588");
         }
         if (saturation % 2 != 0) {
-            ret.append(TextFormatting.RED).append("\u258C");
+            ret.append(TextFormatting.GREEN).append("\u258C");
         }
-        return new StringTextComponent(ret.toString());
+        return new TranslationTextComponent("vtweaks.saturation.tooltip.text", ret.toString());
     }
 
     private StringTextComponent getDurabilityString(ItemStack itemstack) {
