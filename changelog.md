@@ -1,13 +1,114 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.6.0
+
+### Challenger Mobs Rewrite
+
+- The Challenger Mobs feature has been completely rewritten from the ground-up to be completely data-driven. This means
+  that you can add your own, modify existing or remove existing Challenger Mobs all via Datapack! To add your own class,
+  you'll need to add a translation yourself via Resource Pack. For example, if you add a new variant named `nitro`, you
+  would need to create / modify `assets/vtweaks/lang/en_us.json` (and one for every language you wish to support) and
+  add the following:
+
+    ```json
+    {
+      "vtweaks.nitro.challenger.mob": "Nitro %s"
+    }
+    ```
+
+  This is case sensitive; using `"name": "Nitro"` means that you would need to name it `vtweaks.Nitro.challenger.mob`,
+  rather than with a lower-case `n`.
+
+  A Challenger mob has the following properties:
+
+  ```json5
+  {
+    "weight": integer // The chance for this variant to be chosen for the allowed entities
+    "gear": { // nothing in here is required, if you want no gear you can leave this as {}
+      "mainHand": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      },
+      "offHand": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      },
+      "helmet": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      },
+      "chestplate": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      },
+      "leggings": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      },
+      "boots": { // optional
+        "item": string,
+        "count": integer // optional
+        "nbt": NBT Object // optional 
+      } 
+    },
+    "unlocalizedName": string, // used for localization, internal referencing
+    "healthMultiplier": float,
+    "speedMultiplier": float,
+    "entityFilter": {
+      "isBlacklist": boolean,
+      "entities": [
+        string where string is any entity's resource location (the one used in /summon command)
+      ]
+    },
+    "effectsOnAttack": [ // effects inflicted to player when attacked by this entity
+      {
+        "name": string, (same resource location used in /effect command)
+        "duration": integer //optional, in terms of ticks (remember 20 ticks in a second)
+        "amplifier": integer //optional, 0-indexed (amp == 0 means Level 1 potion eff)
+      }
+    ],
+    "loot": [
+      {
+        "weight": integer, // chance of this loot being dropped
+        "item": {
+          "item": string,
+          "count": integer // optional
+          "nbt": NBT Object // optional 
+        }
+      }
+    }
+  }
+- ```
+
+### Added
+
+- No feature `disableBabyZombies` which disables baby zombies and zombified piglins, replacing them with adult variants.
+
+### Changed
+
+- Food Tooltips now use colors differently:
+    - Green means normal food
+    - Magenta means food with beneficial effects
+    - Red means food with negative effects
+    - If a food has both negative and beneficial effects, the negative effects will take take priority.
+- Food tooltips' prefixes can now be localized to your language
+
 ## 3.5.0
 
 ### Added
 
 - ChopDown: A new feature where trees straight up fall down (**DISABLED BY DEFAULT**)
-  - Trees don't just disappear into items, but they fall instead! [Credit to Tersnip's original implementation](oitsjustjo.se/u/5cCfruy1x)
-  - Acknowledges lumbering, has smarter tree detection than the original as well as some other small optimizations overall
-  - Configurable tree detection (checks for at least 1 leaf and x many logs above the original, where x is a config option)
+    - Trees don't just disappear into items, but they fall
+      instead! [Credit to Tersnip's original implementation](oitsjustjo.se/u/5cCfruy1x)
+    - Acknowledges lumbering, has smarter tree detection than the original as well as some other small optimizations
+      overall
+    - Configurable tree detection (checks for at least 1 leaf and x many logs above the original, where x is a config
+      option)
 
 ### Fixed
 
@@ -20,16 +121,17 @@
 ### Added
 
 - SMOL BEES
-  - They're smol. What else do you want!
-  - Oh yeah, they're bounding box is the same so it's easy to interact with them still
+    - They're smol. What else do you want!
+    - Oh yeah, they're bounding box is the same so it's easy to interact with them still
 
 ### Fixed
 
 - Challenger Mob Loot not working
-  - If you change your challenger mob drops, you'll need to run the `/refresh` command to reload them as a side-effect of this fix
+    - If you change your challenger mob drops, you'll need to run the `/refresh` command to reload them as a side-effect
+      of this fix
 - PetArmory configs being completely useless
 - NoPetFriendlyFire now prevents other damage forms such as Sweeping Edge, splash potions and more
-  - A hurt animation/sound will still inevitably be played, but rest assured 0 damage is done.
+    - A hurt animation/sound will still inevitably be played, but rest assured 0 damage is done.
 
 ## 3.4.1.1
 
@@ -42,7 +144,7 @@
 ### Added
 
 - New Feature: No Pet Friendly Fire!
-  - This feature prevents either (configurable) the owner of a pet, or all players, from attacking tamed pets!
+    - This feature prevents either (configurable) the owner of a pet, or all players, from attacking tamed pets!
 
 ## 3.4.0.1
 
@@ -76,14 +178,16 @@ Lumbering:
 
 - Tool damage from lumbering will now make sense again
 - Imperishable will always save a tool while lumbering again
-- Non-imperishable tools will reserve 1 durability on your tool so it doesn't get destroyed via lumbering and you can repair it
+- Non-imperishable tools will reserve 1 durability on your tool so it doesn't get destroyed via lumbering and you can
+  repair it
 
 ## 3.3.2
 
 ### Added
 
 - New config option for limiting lumbering to the initial wood type you broke
-  See [this tweet](https://twitter.com/oitsjustjose/status/1344366952509284353): the first 3 lumbers are with `lumberingIsStrictAboutWood=true`, the last is with `lumberingIsStrictAboutWood=false`
+  See [this tweet](https://twitter.com/oitsjustjose/status/1344366952509284353): the first 3 lumbers are
+  with `lumberingIsStrictAboutWood=true`, the last is with `lumberingIsStrictAboutWood=false`
 
 ## 3.3.1
 

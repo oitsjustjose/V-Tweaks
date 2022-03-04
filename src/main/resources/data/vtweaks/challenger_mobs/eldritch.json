@@ -33,11 +33,16 @@
   ],
   "loot": [
     {
-      "weight": 10,
-      "item": {
-        "item": "minecraft:golden_apple",
-        "count": 44
-      }
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ender_eye" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ender_pearl" }
     }
   ]
 }

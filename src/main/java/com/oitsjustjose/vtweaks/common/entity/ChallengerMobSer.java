@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.common.entity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.item.ItemStack;
@@ -21,8 +22,14 @@ import java.util.List;
 public class ChallengerMobSer {
     @Nonnull
     public static ItemStack deserializeItemStack(JsonObject parent, String key) {
-        if(JSONUtils.hasField(parent, key)) {
-            return ShapedRecipe.deserializeItem(parent.getAsJsonObject(key));
+        if (JSONUtils.hasField(parent, key)) {
+            try {
+                return ShapedRecipe.deserializeItem(parent.getAsJsonObject(key));
+            } catch (JsonSyntaxException ex) {
+                VTweaks.getInstance().LOGGER.error("Item {} does not exist", parent.get(key).toString());
+                ex.printStackTrace();
+                return ItemStack.EMPTY;
+            }
         }
         return ItemStack.EMPTY;
     }
@@ -72,7 +79,6 @@ public class ChallengerMobSer {
 
         return effs;
     }
-
 
 
 }

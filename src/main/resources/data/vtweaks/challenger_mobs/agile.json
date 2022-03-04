@@ -16,10 +16,25 @@
   "effectsOnAttack": [],
   "loot": [
     {
-      "weight": 10,
+      "weight": 4,
+      "item": { "item": "minecraft:redstone" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:ghast_tear" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    },
+    {
+      "weight": 7,
       "item": {
-        "item": "minecraft:golden_apple",
-        "count": 44
+        "item": "minecraft:potion",
+        "nbt": {
+          "CustomPotionColor": 3259330,
+          "CustomPotionEffects": [{ "Id": 1, "Duration": 3600, "Amplifier": 2 }]
+        }
       }
     }
   ]

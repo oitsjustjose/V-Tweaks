@@ -2,7 +2,7 @@
   "weight": 10,
   "gear": {
     "mainHand": {
-      "item": "firework_rocket",
+      "item": "minecraft:firework_rocket",
       "nbt": { "Enchantments": [{ "id": "fire_aspect", "lvl": 3 }] }
     }
   },
@@ -21,10 +21,35 @@
   "effectsOnAttack": [],
   "loot": [
     {
-      "weight": 10,
+      "weight": 3,
+      "item": { "item": "minecraft:ghast_tear" }
+    },
+    {
+      "weight": 3,
+      "item": { "item": "minecraft:experience_bottle" }
+    },
+    {
+      "weight": 5,
       "item": {
-        "item": "minecraft:golden_apple",
-        "count": 44
+        "item": "minecraft:firework_rocket",
+        "count": 5,
+        "nbt": { "Fireworks": { "Flight": 3 } }
+      }
+    },
+    {
+      "weight": 5,
+      "item": {
+        "item": "minecraft:firework_rocket",
+        "count": 3,
+        "nbt": { "Fireworks": { "Flight": 3 } }
+      }
+    },
+    {
+      "weight": 5,
+      "item": {
+        "item": "minecraft:firework_rocket",
+        "count": 2,
+        "nbt": { "Fireworks": { "Flight": 3 } }
       }
     }
   ]
