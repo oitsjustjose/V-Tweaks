@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -37,7 +38,7 @@ public class EnchantmentLumberingHandler {
         // Checks if the axe has lumbering
         if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player) > 0) {
             if (player.isCrouching()) {
-                if (BlockTags.LOGS.contains(event.getState().getBlock())) {
+                if (event.getState().is(BlockTags.LOGS)) {
                     chopTree(world, player, event.getPos(), event.getState(), 0);
                 }
             }
@@ -66,7 +67,7 @@ public class EnchantmentLumberingHandler {
                                 return false;
                             }
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
-                            if (BlockTags.LEAVES.contains(world.getBlockState(iterPos).getBlock())) {
+                            if(world.getBlockState(iterPos).is(BlockTags.LEAVES)) {
                                 emulateBreak(world, iterPos, player, false);
                                 if (!chopTree(world, player, iterPos, original, curr + 1)) {
                                     return false;
@@ -119,7 +120,7 @@ public class EnchantmentLumberingHandler {
         if (EnchantmentConfig.LUMBERING_WOOD_STRICT.get()) {
             return original.getBlock().getRegistryName().equals(current.getBlock().getRegistryName());
         }
-        return BlockTags.LOGS.contains(current.getBlock());
+        return current.is(BlockTags.LOGS);
     }
 
     private void emulateBreak(ServerLevel world, BlockPos pos, Player player, boolean damageTool) {
