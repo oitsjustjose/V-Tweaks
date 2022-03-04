@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.6.1
+
+### Fixed
+
+- Client crash
+
 ## 3.6.0
 
 ### Challenger Mobs Rewrite
