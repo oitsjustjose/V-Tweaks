@@ -27,7 +27,9 @@ public class ChallengerParticles {
             if (ChallengerMobHandler.isChallengerMob((MonsterEntity) evt.getEntity())) {
                 MonsterEntity monster = (MonsterEntity) evt.getEntity();
                 ChallengerMob challenger = ChallengerMobHandler.getChallengerMob(monster);
-                VTweaks.proxy.addChallengerMob(monster, challenger);
+                if(challenger != null) {
+                    VTweaks.proxy.addChallengerMob(monster, challenger);
+                }
             }
         }
     }
