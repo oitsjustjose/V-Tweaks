@@ -35,9 +35,13 @@ public class ChallengerMobDataLoader extends JsonReloadListener {
             try {
                 JsonObject obj = json.getAsJsonObject();
 
-                ChallengerMob mob = new ChallengerMob(obj);
-                ChallengerMobHandler.challengerMobVariants.add(mob, mob.getWeight());
-                VTweaks.getInstance().LOGGER.info("Successfully added new Challenger Mob {} from {}", mob.getUnlocalizedName(), rl);
+                if (obj.entrySet().isEmpty()) {
+                    VTweaks.getInstance().LOGGER.info("Challenger mob {} has been disabled", rl);
+                } else {
+                    ChallengerMob mob = new ChallengerMob(obj);
+                    ChallengerMobHandler.challengerMobVariants.add(mob, mob.getWeight());
+                    VTweaks.getInstance().LOGGER.info("Successfully added new Challenger Mob {} ({})", mob.getUnlocalizedName(), rl);
+                }
             } catch (NullPointerException ex) {
                 VTweaks.getInstance().LOGGER.error("Skipping registration of Challenger Mob {} due to errors", rl);
                 ex.printStackTrace();
