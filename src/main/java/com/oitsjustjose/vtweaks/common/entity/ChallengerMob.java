@@ -4,8 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +21,7 @@ import java.util.List;
 
 public class ChallengerMob {
 
-    ParticleOptions particle;
+    Vector3f particleColor;
     private final int weight;
     private final String unlocalizedName;
 
@@ -54,7 +52,7 @@ public class ChallengerMob {
         float r = ((float) color.get("red").getAsInt()) / 255F;
         float g = ((float) color.get("green").getAsInt()) / 255F;
         float b = ((float) color.get("blue").getAsInt()) / 255F;
-        this.particle = new DustParticleOptions(new Vector3f(r, g, b), 1F);
+        this.particleColor = new Vector3f(r, g, b);
 
         this.unlocalizedName = json.get("unlocalizedName").getAsString();
 
@@ -125,8 +123,8 @@ public class ChallengerMob {
         return this.unlocalizedName;
     }
 
-    public ParticleOptions getParticle() {
-        return this.particle;
+    public Vector3f getParticleColor() {
+        return this.particleColor;
     }
 
     public int getWeight() {
