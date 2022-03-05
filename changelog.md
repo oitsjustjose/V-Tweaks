@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.16.x
 
+## 3.6.2
+
+### Fixed
+
+- Client crashes on servers, and any other particle-related issues.
+
 ## 3.6.1
 
 ### Fixed

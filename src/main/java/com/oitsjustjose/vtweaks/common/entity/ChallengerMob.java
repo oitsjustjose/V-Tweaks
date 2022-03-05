@@ -14,6 +14,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -23,7 +25,8 @@ import java.util.List;
 
 public class ChallengerMob {
 
-    IParticleData particle;
+    Vector3f particleColor;
+
     private final int weight;
     private final String unlocalizedName;
 
@@ -54,7 +57,7 @@ public class ChallengerMob {
         float r = ((float) color.get("red").getAsInt()) / 255F;
         float g = ((float) color.get("green").getAsInt()) / 255F;
         float b = ((float) color.get("blue").getAsInt()) / 255F;
-        this.particle = new RedstoneParticleData(r, g, b, 1F);
+        this.particleColor = new Vector3f(r, g, b);
 
         this.unlocalizedName = json.get("unlocalizedName").getAsString();
 
@@ -125,8 +128,8 @@ public class ChallengerMob {
         return this.unlocalizedName;
     }
 
-    public IParticleData getParticle() {
-        return this.particle;
+    public Vector3f getParticleColor() {
+        return this.particleColor;
     }
 
     public int getWeight() {
