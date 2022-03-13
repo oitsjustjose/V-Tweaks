@@ -2,6 +2,4 @@
 
 ## 3.6.2
 
-### Fixed
-
-- Challenger Particles causing issues on Client/server
+### Ported changes from 1.18.2 branch

@@ -1,6 +1,6 @@
 /**
  * Ported from https://github.com/ternsip/ChopDown/
- * <p>
+ * 
  * Lots of code here is from there but in my own interpreted way
  */
 
@@ -19,7 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +30,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
 
 public class ChopDown {
     @SubscribeEvent
@@ -59,8 +56,7 @@ public class ChopDown {
         Player player = evt.getPlayer();
 
         for (int dy = 0; dy < BlockTweakConfig.TREE_CHOP_DOWN_LOG_COUNT.get(); dy++) {
-
-            if (!level.getBlockState(initialPos.offset(0, dy, 0)).is(BlockTags.LOGS)) {
+            if (!BlockTags.LOGS.contains(level.getBlockState(initialPos.offset(0, dy, 0)).getBlock())) {
                 return;
             }
         }
@@ -91,8 +87,8 @@ public class ChopDown {
                         }
 
                         BlockState bs = level.getBlockState(tmpPos);
-                        boolean isLog = bs.is(BlockTags.LOGS);
-                        boolean isLeaf = bs.is(BlockTags.LEAVES);
+                        boolean isLog = BlockTags.LOGS.contains(bs.getBlock());
+                        boolean isLeaf = BlockTags.LEAVES.contains(bs.getBlock());
 
                         if (isLeaf && !leavesFound) {
                             leavesFound = true;
@@ -154,19 +150,44 @@ public class ChopDown {
 
     private boolean canBeMoved(Level level, BlockPos pos) {
         BlockState bs = level.getBlockState(pos);
-        return !bs.hasBlockEntity() && (bs.is(BlockTags.LOGS) || bs.is(BlockTags.LEAVES)
-                || bs.is(BlockTags.BEEHIVES) || bs.isAir());
+        Block b = bs.getBlock();
+
+        return !bs.hasBlockEntity() && (BlockTags.LOGS.contains(b) || BlockTags.LEAVES.contains(b)
+                || BlockTags.BEEHIVES.contains(b) || bs.isAir());
     }
 
     private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos) {
         BlockState bs = level.getBlockState(pos);
         // destroy some leaves
-        if (bs.is(BlockTags.LEAVES) && level.getRandom().nextBoolean()) {
+        if (BlockTags.LEAVES.contains(bs.getBlock()) && level.getRandom().nextBoolean()) {
             Block.dropResources(bs, level, newPos, null);
         } else {
-            FallingBlockEntity e = FallingBlockEntity.fall(level, newPos, bs);
+            CustomFallingBlockEntity e = new CustomFallingBlockEntity(level, newPos, bs);
             level.addFreshEntity(e);
         }
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+    }
+
+    class CustomFallingBlockEntity extends FallingBlockEntity {
+        public CustomFallingBlockEntity(Level level, BlockPos pos, BlockState s) {
+            // Adjust by 0.5 to snap to block axis
+            super(level, pos.getX() + (pos.getX() < 0 ? 0.5 : -0.5), pos.getY(),
+                    pos.getZ() + (pos.getZ() < 0 ? 0.5 : -0.5), s);
+            this.setBoundingBox(new AABB(pos.offset(0, 0, 0), pos.offset(1, 1, 1)));
+            this.time = 1;
+        }
+
+        @Nullable
+        @Override
+        public ItemEntity spawnAtLocation(ItemStack stack, float offsetY) {
+            BlockState state = this.getBlockState();
+
+            if (state != null && state.getBlock() instanceof LeavesBlock) {
+                Block.dropResources(state, this.level, this.getOnPos(), null);
+                return null;
+            }
+
+            return super.spawnAtLocation(stack, offsetY);
+        }
     }
 }

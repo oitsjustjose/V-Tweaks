@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.common.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -67,7 +67,7 @@ public class EnchantmentLumberingHandler {
                                 return false;
                             }
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
-                            if(world.getBlockState(iterPos).is(BlockTags.LEAVES)) {
+                            if (world.getBlockState(iterPos).is(BlockTags.LEAVES)) {
                                 emulateBreak(world, iterPos, player, false);
                                 if (!chopTree(world, player, iterPos, original, curr + 1)) {
                                     return false;
@@ -93,9 +93,6 @@ public class EnchantmentLumberingHandler {
         if (!player.getMainHandItem().canPerformAction(ToolActions.AXE_DIG)) {
             return false;
         }
-//        if (!player.getMainHandItem().getToolTypes().contains(ToolType.AXE)) {
-//            return false;
-//        }
 
         ItemStack axe = player.getMainHandItem().copy();
         IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);

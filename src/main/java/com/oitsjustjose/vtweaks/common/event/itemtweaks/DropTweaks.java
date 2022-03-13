@@ -50,7 +50,8 @@ public class DropTweaks {
         else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && stack.is(ItemTags.SAPLINGS)) {
             BlockPos saplingPos = fromDouble(entItem.getX(), entItem.getY(), entItem.getZ());
             // Checks to see if where the sapling *will* be is air
-            if (world.getBlockState(saplingPos).isAir() || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
+            if (world.getBlockState(saplingPos).isAir()
+                    || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
                 Item item = stack.getItem();
                 if (item instanceof BlockItem) {
                     BlockPlaceContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,
