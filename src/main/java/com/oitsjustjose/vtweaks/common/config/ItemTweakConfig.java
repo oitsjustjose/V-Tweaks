@@ -5,8 +5,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ItemTweakConfig {
     private static final String CATEGORY_ITEM_TWEAKS = "item tweaks";
 
-    public static ForgeConfigSpec.BooleanValue ENABLE_EGG_HATCHING;
-    public static ForgeConfigSpec.IntValue EGG_HATCING_CHANCE;
     public static ForgeConfigSpec.BooleanValue ENABLE_SAPLING_SELF_PLANTING;
     public static ForgeConfigSpec.BooleanValue ENABLE_DESPAWN_TIME_OVERRIDE;
     public static ForgeConfigSpec.IntValue DESPAWN_TIME_OVERRIDE;
@@ -15,12 +13,6 @@ public class ItemTweakConfig {
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Item Tweaks").push(CATEGORY_ITEM_TWEAKS);
 
-        ENABLE_EGG_HATCHING = COMMON_BUILDER.comment("Allows egg items in the world to hatch instead of despawn")
-                .define("eggHatchingEnabled", true);
-        EGG_HATCING_CHANCE = COMMON_BUILDER
-                .comment("The chance (out of 100 - higher means more frequent) that the egg will turn into a chick\n"
-                        + "**DO NOT SET THIS TOO HIGH OR ELSE CHICKENS MAY INFINITELY LAG YOUR WORLD**")
-                .defineInRange("eggHatchingChance", 1, 1, 100);
         ENABLE_SAPLING_SELF_PLANTING = COMMON_BUILDER
                 .comment("Instead of de-spawning, saplings will attempt to plant themselves")
                 .define("enableSaplingPlanting", true);

@@ -1,16 +1,14 @@
 package com.oitsjustjose.vtweaks.common.event.itemtweaks;
 
 import com.oitsjustjose.vtweaks.common.config.ItemTweakConfig;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.Level;
@@ -34,23 +32,12 @@ public class DropTweaks {
         Level world = entItem.level;
         ItemStack stack = entItem.getItem();
 
-        // Handles egg hatching; configurable chance.
-        if (ItemTweakConfig.ENABLE_EGG_HATCHING.get() && stack.getItem() == Items.EGG) {
-            if (world.getRandom().nextInt(100) <= ItemTweakConfig.EGG_HATCING_CHANCE.get()) {
-                if (!world.isClientSide()) {
-                    Chicken chick = new Chicken(EntityType.CHICKEN, world);
-                    chick.setAge(-24000);
-                    chick.setPos(entItem.getX(), entItem.getY(), entItem.getZ());
-                    chick.lerpHeadTo(entItem.getYRot(), 0);
-                    world.addFreshEntity(chick);
-                }
-            }
-        }
         // Handles sapling replanting; 100% chance
-        else if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && stack.is(ItemTags.SAPLINGS)) {
+        if (ItemTweakConfig.ENABLE_SAPLING_SELF_PLANTING.get() && stack.is(ItemTags.SAPLINGS)) {
             BlockPos saplingPos = fromDouble(entItem.getX(), entItem.getY(), entItem.getZ());
             // Checks to see if where the sapling *will* be is air
-            if (world.getBlockState(saplingPos).isAir() || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
+            if (world.getBlockState(saplingPos).isAir()
+                    || world.getBlockState(saplingPos).getMaterial().isReplaceable()) {
                 Item item = stack.getItem();
                 if (item instanceof BlockItem) {
                     BlockPlaceContext context = new DirectionalPlaceContext(world, saplingPos, Direction.DOWN, stack,

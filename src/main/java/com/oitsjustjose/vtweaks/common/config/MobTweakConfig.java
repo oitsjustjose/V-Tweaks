@@ -23,32 +23,37 @@ public class MobTweakConfig {
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
 
-        ENABLE_PET_ARMORY = COMMON_BUILDER.comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
+        ENABLE_PET_ARMORY = COMMON_BUILDER
+                .comment("Allows you to gear up tamed pets any armor and/or weapon. Doesn't render, but DOES work!")
                 .define("enablePetArmory", true);
         NO_PET_FRIENDLY_FIRE = COMMON_BUILDER.comment(
-                        "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
-                .defineEnum("disablePetFriendlyFire", NoPetFriendlyFire.OWNER);
+                "If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet")
+                .defineEnum("enablePetFriendlyFireTweak", NoPetFriendlyFire.OWNER);
         ENABLE_FEATHER_PLUCKING = COMMON_BUILDER.comment("Allows chicken feathers to be plucked w/ shears")
                 .define("enableFeatherPlucking", true);
         FEATHER_PLUCKING_COOLDOWN = COMMON_BUILDER
                 .comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.")
                 .defineInRange("featurePluckingCooldown", 600000, 1, Long.MAX_VALUE);
         ENABLE_CHALLENGER_MOBS = COMMON_BUILDER.comment(
-                        "A data-driven way to make some special mobs with abilities, effects, specialized loot and more!")
-                .define("challengerMobsEnabled", true);
+                "A data-driven way to make some special mobs with abilities, effects, specialized loot and more!")
+                .define("enableChallengerMobs", true);
         GLOBAL_CHALLENGER_MOB_CHANCE = COMMON_BUILDER
-                .comment("This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.")
+                .comment(
+                        "This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.")
                 .defineInRange("challengerMobGlobalChance", 0.25D, 0.0D, 1.0D);
         ENABLE_PEACEFUL_SURFACE = COMMON_BUILDER
                 .comment("Prevents mobs from spawning above sea level unless it's a new moon")
-                .define("peacefulSurfaceEnabled", false);
+                .define("enablePeacefulSurface", false);
         PEACEFUL_SURFACE_MIN_Y = COMMON_BUILDER.comment("The lowest Y-level which mobs will be prevented from spawning")
-                .defineInRange("peacefulSurfaceMinY", 60, 1, 255);
+                .defineInRange("peacefulSurfaceMinY", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
         PEACEFUL_SURFACE_BLACKLIST = COMMON_BUILDER
                 .comment("A list of dimensions (of form <modid:type>) to ignore when prevent surface mob spawns.")
                 .defineList("peacefulSurfaceDimBlacklist",
-                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"), (itemRaw) -> itemRaw instanceof String);
-        DISABLE_BABY_ZOMBIES = COMMON_BUILDER.comment("Any time a Baby Zombie (or Zombie Piglin) spawns, it will be replaced with an adult").define("disableBabyZombies", true);
+                        Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"),
+                        (itemRaw) -> itemRaw instanceof String);
+        DISABLE_BABY_ZOMBIES = COMMON_BUILDER
+                .comment("Any time a Baby Zombie (or Zombie Piglin) spawns, it will be replaced with an adult")
+                .define("enableBabyZombieTweak", true);
 
         COMMON_BUILDER.pop();
     }

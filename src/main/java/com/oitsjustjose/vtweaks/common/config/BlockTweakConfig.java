@@ -23,7 +23,7 @@ public class BlockTweakConfig {
         COMMON_BUILDER.comment("Block Tweaks").push(CATEGORY_BLOCK_TWEAKS);
 
         ENABLE_CROP_TWEAK = COMMON_BUILDER.comment("Allows for r-clicking to harvest most any (including mod) crops")
-                .define("cropTweaksEnabled", true);
+                .define("enableCropTweaks", true);
         CROP_TWEAK_BLACKLIST = COMMON_BUILDER.comment("A list of blocks to ignore, of form <modid:block>")
                 .defineList("cropTweaksBlacklist", Lists.newArrayList(), (itemRaw) -> {
                     if (itemRaw instanceof String) {
@@ -38,7 +38,7 @@ public class BlockTweakConfig {
                 true);
         ENABLE_TORCH_LIGHT_TWEAKS = COMMON_BUILDER.comment(
                 "Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`")
-                .define("enableTorchLightingTweaks", true);
+                .define("enableTorchLighting", true);
 
         ENABLE_TREE_CHOP_DOWN = COMMON_BUILDER.comment(
                 "Trees fall down (like, actually not just like lumbering). Credit to Tersnip's impl (oitsjustjo.se/u/5cCfruy1x)")
