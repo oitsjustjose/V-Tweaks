@@ -15,6 +15,7 @@ public class BlockTweakConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CROP_TWEAK_BLACKLIST;
     public static ForgeConfigSpec.BooleanValue ENABLE_BONEMEAL_TWEAK;
     public static ForgeConfigSpec.BooleanValue ENABLE_CAKE_DROP;
+    public static ForgeConfigSpec.BooleanValue ENABLE_TORCH_LIGHT_TWEAKS;
     public static ForgeConfigSpec.BooleanValue ENABLE_TREE_CHOP_DOWN;
     public static ForgeConfigSpec.IntValue TREE_CHOP_DOWN_LOG_COUNT;
 
@@ -35,6 +36,9 @@ public class BlockTweakConfig {
                 .define("enableBonemealTweak", true);
         ENABLE_CAKE_DROP = COMMON_BUILDER.comment("Allows for uneaten cake to drop on break").define("enableCakeDrop",
                 true);
+        ENABLE_TORCH_LIGHT_TWEAKS = COMMON_BUILDER.comment(
+                "Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`")
+                .define("enableTorchLightingTweaks", true);
 
         ENABLE_TREE_CHOP_DOWN = COMMON_BUILDER.comment(
                 "Trees fall down (like, actually not just like lumbering). Credit to Tersnip's impl (oitsjustjo.se/u/5cCfruy1x)")

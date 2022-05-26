@@ -21,6 +21,7 @@ import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.ChopDown;
 import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
+import com.oitsjustjose.vtweaks.common.event.blocktweaks.TorchLighting;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
@@ -90,6 +91,7 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new BonemealTweaks());
         MinecraftForge.EVENT_BUS.register(new CakeTweak());
         MinecraftForge.EVENT_BUS.register(new ChopDown());
+        MinecraftForge.EVENT_BUS.register(new TorchLighting());
 
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
