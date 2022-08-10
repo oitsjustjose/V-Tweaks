@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.entity;
+package com.oitsjustjose.vtweaks.common.entity.challenger;
 
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.VTweaks;

@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.entity;
+package com.oitsjustjose.vtweaks.common.entity.challenger;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;

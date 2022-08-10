@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.client;
 
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
-import com.oitsjustjose.vtweaks.common.entity.ChallengerMob;
+import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerMob;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.DustParticlePacket;
 import net.minecraft.client.Minecraft;
@@ -10,7 +10,6 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 

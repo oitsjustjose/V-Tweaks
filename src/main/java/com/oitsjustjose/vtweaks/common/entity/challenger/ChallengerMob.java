@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.entity;
+package com.oitsjustjose.vtweaks.common.entity.challenger;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
