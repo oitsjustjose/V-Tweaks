@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.common.entity.culling;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -11,10 +12,16 @@ public class EntityCullingHandler {
     public static ArrayList<EntityCullingRule> rules = new ArrayList<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void registerEvent(LivingSpawnEvent evt) {
+    public void registerEvent(LivingSpawnEvent.CheckSpawn evt) {
         if (evt.getWorld().isClientSide() || !(evt.getWorld() instanceof ServerLevel)) {
             return;
         }
-        rules.forEach(x -> x.apply(evt));
+
+        if (rules.stream().anyMatch(x -> x.apply(evt))) {
+            evt.setResult(Event.Result.DENY);
+            if (evt.isCancelable()) {
+                evt.setCanceled(true);
+            }
+        }
     }
 }

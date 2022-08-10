@@ -34,8 +34,8 @@ public class EntityCullDataLoader extends SimpleJsonResourceReloadListener {
                 JsonObject obj = json.getAsJsonObject();
 
                 ArrayList<String> eRaw = new ArrayList<>();
-                ArrayList<String> bRaw = new ArrayList<>(); // Left null for initializer
-                ArrayList<String> dRaw = new ArrayList<>(); // Left null for initializer
+                ArrayList<String> bRaw = new ArrayList<>();
+                ArrayList<String> dRaw = new ArrayList<>();
 
                 obj.get("entities").getAsJsonArray().forEach(x -> eRaw.add(x.getAsString()));
                 if (obj.has("dimensions")) {
@@ -47,6 +47,7 @@ public class EntityCullDataLoader extends SimpleJsonResourceReloadListener {
 
                 EntityCullingRule rule = new EntityCullingRule(bRaw, dRaw, eRaw);
                 EntityCullingHandler.rules.add(rule);
+                VTweaks.getInstance().LOGGER.info("Loaded {} into {}", rl, rule);
             } catch (NullPointerException ex) {
                 VTweaks.getInstance().LOGGER.error("Skipping registration of Entity Culling Rule {} due to errors", rl);
                 ex.printStackTrace();

@@ -2,8 +2,6 @@ package com.oitsjustjose.vtweaks.common.entity.culling;
 
 import com.mojang.datafixers.util.Either;
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.entity.culling.capability.INBTCapability;
-import com.oitsjustjose.vtweaks.common.entity.culling.capability.NBTCapability;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -79,25 +77,12 @@ public class EntityCullingRule {
         });
     }
 
-    public void apply(LivingSpawnEvent evt) {
-        // Filter on "Has already been checked?"
-        INBTCapability cap;
-        try {
-            cap = evt.getEntity().getCapability(NBTCapability.CAP).orElseThrow(NullPointerException::new);
-            if (cap.getFlag("cull_checked")) {
-                return;
-            } else {
-                cap.putFlag("cull_checked");
-            }
-        } catch (Exception ex) {
-            VTweaks.getInstance().LOGGER.warn("Capability for entity {} is NULL", evt.getEntity().getUUID().toString());
-            return;
-        }
+    public boolean apply(LivingSpawnEvent evt) {
         // filter by entity
         boolean hasMatchedOnEntity = this.entityTypes.contains(evt.getEntity().getType().getRegistryName());
         boolean hasMatchedOnEntityType = this.entityTypeTags.stream().anyMatch(typeTag -> evt.getEntity().getType().is(typeTag));
         if (!hasMatchedOnEntity && !hasMatchedOnEntityType) {
-            return;
+            return false;
         }
 
         ServerLevel lvl = (ServerLevel) evt.getWorld();
@@ -123,8 +108,21 @@ public class EntityCullingRule {
             return false;
         });
 
-        if (hasMatchedOnDim && (hasMatchedOnBiome || hasMatchedOnBiomeTag)) {
-            evt.getEntity().discard();
-        }
+        return (hasMatchedOnDim && (hasMatchedOnBiome || hasMatchedOnBiomeTag));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("EntityCullingRule for Entities");
+        builder.append(this.entityTypes.toString());
+        builder.append(" + ");
+        builder.append(this.entityTypeTags.toString());
+        builder.append(" in Biomes ");
+        builder.append(this.biomes.toString());
+        builder.append(" + ");
+        builder.append(this.biomeTags.toString());
+        builder.append(" In ");
+        builder.append(this.dimensions);
+        return builder.toString();
     }
 }
