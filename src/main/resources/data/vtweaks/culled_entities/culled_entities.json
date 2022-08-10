@@ -1,5 +1,6 @@
 {
+  "_comment": "This is a test file. Most things here are valid, but the dimension is faked so that there is no effect.",
+  "dimensions": ["vtweaks:made_up_for_this_test_file"],
   "entities": [ "minecraft:creeper" ],
-  "dimensions": ["minecraft:overworld"],
   "biomes": ["#minecraft:is_beach", "minecraft:desert"]
 }

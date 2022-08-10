@@ -52,7 +52,7 @@ public class MobTweakConfig {
                         Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"),
                         (itemRaw) -> itemRaw instanceof String);
         UNGRIEFED_CREEPERS = COMMON_BUILDER
-                .comment("When any Creeper (or entity with EntityType tag #forge:creeper) explodes, all blocks destroyed will plop back into place after a few seconds!")
+                .comment("When any Creeper (or entity with EntityType tag #forge:creepers) explodes, all blocks destroyed will plop back into place after a few seconds!")
                 .define("ungriefCreepers", true);
 
         COMMON_BUILDER.pop();
