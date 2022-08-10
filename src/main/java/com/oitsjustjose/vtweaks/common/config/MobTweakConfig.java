@@ -18,7 +18,7 @@ public class MobTweakConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_PEACEFUL_SURFACE;
     public static ForgeConfigSpec.IntValue PEACEFUL_SURFACE_MIN_Y;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> PEACEFUL_SURFACE_BLACKLIST;
-    public static ForgeConfigSpec.BooleanValue DISABLE_BABY_ZOMBIES;
+    public static ForgeConfigSpec.BooleanValue UNGRIEFED_CREEPERS;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Mob Tweaks").push(CATEGORY_MOB_TWEAKS);
@@ -51,9 +51,9 @@ public class MobTweakConfig {
                 .defineList("peacefulSurfaceDimBlacklist",
                         Lists.newArrayList("minecraft:the_nether", "minecraft:the_end"),
                         (itemRaw) -> itemRaw instanceof String);
-        DISABLE_BABY_ZOMBIES = COMMON_BUILDER
-                .comment("Any time a Baby Zombie (or Zombie Piglin) spawns, it will be replaced with an adult")
-                .define("enableBabyZombieTweak", true);
+        UNGRIEFED_CREEPERS = COMMON_BUILDER
+                .comment("When any Creeper (or entity with EntityType tag #forge:creeper) explodes, all blocks destroyed will plop back into place after a few seconds!")
+                .define("ungriefCreepers", true);
 
         COMMON_BUILDER.pop();
     }

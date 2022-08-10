@@ -1,0 +1,5 @@
+{
+  "entities": [ "minecraft:creeper" ],
+  "dimensions": ["minecraft:overworld"],
+  "biomes": ["#minecraft:is_beach", "minecraft:desert"]
+}

@@ -8,35 +8,39 @@ import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.common.data.ChallengerMobDataLoader;
+import com.oitsjustjose.vtweaks.common.data.EntityCullDataLoader;
 import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentImperishable;
 import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentLumbering;
 import com.oitsjustjose.vtweaks.common.enchantment.FeatherFallingTweak;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentImperishableHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentLumberingHandler;
-import com.oitsjustjose.vtweaks.common.entity.ChallengerMobHandler;
+import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerMobHandler;
+import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerParticles;
+import com.oitsjustjose.vtweaks.common.entity.culling.EntityCullingHandler;
+import com.oitsjustjose.vtweaks.common.entity.culling.capability.INBTCapability;
+import com.oitsjustjose.vtweaks.common.entity.culling.capability.NBTCapability;
 import com.oitsjustjose.vtweaks.common.event.DeathPoint;
 import com.oitsjustjose.vtweaks.common.event.StormTweak;
 import com.oitsjustjose.vtweaks.common.event.ToolTips;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.BonemealTweaks;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.CakeTweak;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.ChopDown;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.CropHelper;
-import com.oitsjustjose.vtweaks.common.event.blocktweaks.TorchLighting;
+import com.oitsjustjose.vtweaks.common.event.blocktweaks.*;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
-import com.oitsjustjose.vtweaks.common.entity.ChallengerParticles;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import com.oitsjustjose.vtweaks.common.util.Recipes;
-
-import net.minecraftforge.event.AddReloadListenerEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -46,6 +50,10 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -83,8 +91,9 @@ public class VTweaks {
         MinecraftForge.EVENT_BUS.register(new FeatherPlucker());
         MinecraftForge.EVENT_BUS.register(new ChallengerMobHandler());
         MinecraftForge.EVENT_BUS.register(new ChallengerParticles());
+        MinecraftForge.EVENT_BUS.register(new EntityCullingHandler());
         MinecraftForge.EVENT_BUS.register(new PeacefulSurface());
-        MinecraftForge.EVENT_BUS.register(new NoBabyZombies());
+        MinecraftForge.EVENT_BUS.register(new UngriefedCreepers());
 
         // Block Tweaks
         MinecraftForge.EVENT_BUS.register(new CropHelper());
@@ -118,6 +127,47 @@ public class VTweaks {
     @SubscribeEvent
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerMobDataLoader());
+        evt.addListener(new EntityCullDataLoader());
+    }
+
+    @SubscribeEvent
+    public void registerCaps(RegisterCapabilitiesEvent evt) {
+        evt.register(NBTCapability.class);
+    }
+
+    @SubscribeEvent
+    public void attachCaps(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject().getLevel().isClientSide()) {
+            return;
+        }
+
+        try {
+            final LazyOptional<INBTCapability> instance = LazyOptional.of(NBTCapability::new);
+            final ICapabilitySerializable<CompoundTag> provider = new ICapabilitySerializable<CompoundTag>() {
+                @Override
+                public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+                    return NBTCapability.CAP.orEmpty(cap, instance);
+                }
+
+                @Override
+                public CompoundTag serializeNBT() {
+                    INBTCapability cap = this.getCapability(NBTCapability.CAP).orElseThrow(RuntimeException::new);
+                    return cap.serialize();
+                }
+
+                @Override
+                public void deserializeNBT(CompoundTag nbt) {
+                    INBTCapability cap = this.getCapability(NBTCapability.CAP).orElseThrow(RuntimeException::new);
+                    cap.deserialize(nbt);
+                }
+            };
+
+            event.addCapability(Constants.ENTITY_CAP, provider);
+            event.addListener(instance::invalidate);
+        } catch (Exception e) {
+            LOGGER.error("VTweaks has faced a fatal error while attaching Entity Capabilities.");
+            throw new RuntimeException(e);
+        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
