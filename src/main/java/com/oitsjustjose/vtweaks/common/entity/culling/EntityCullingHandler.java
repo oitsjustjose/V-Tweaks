@@ -13,9 +13,8 @@ public class EntityCullingHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent.CheckSpawn evt) {
-        if (evt.getWorld().isClientSide() || !(evt.getWorld() instanceof ServerLevel)) {
-            return;
-        }
+        if (evt.getLevel().isClientSide()) return;
+        if (!(evt.getLevel() instanceof ServerLevel)) return;
 
         if (rules.stream().anyMatch(x -> x.apply(evt))) {
             evt.setResult(Event.Result.DENY);

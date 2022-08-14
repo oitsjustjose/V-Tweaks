@@ -11,25 +11,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class NoPetFriendlyFire {
     @SubscribeEvent
     public void registerEvent(AttackEntityEvent evt) {
-        if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) {
-            return;
-        }
-
-        if (evt.getPlayer() == null || evt.getTarget() == null) {
-            return;
-        }
-
-        if (!(evt.getTarget() instanceof TamableAnimal)) {
-            return;
-        }
-
-        TamableAnimal pet = (TamableAnimal) evt.getTarget();
-        if (!pet.isTame()) {
-            return;
-        }
+        if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) return;
+        if (evt.getTarget() == null) return;
+        if (evt.getEntity() == null) return;
+        if (!(evt.getTarget() instanceof TamableAnimal pet)) return;
+        if (!pet.isTame()) return;
 
         boolean applyToAny = MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.ALL;
-        if (applyToAny || pet.getOwner() == evt.getPlayer()) {
+        if (applyToAny || pet.getOwner() == evt.getEntity()) {
             if (evt.isCancelable()) {
                 evt.setCanceled(true);
             }
@@ -41,26 +30,11 @@ public class NoPetFriendlyFire {
      */
     @SubscribeEvent
     public void registerEvent(LivingHurtEvent evt) {
-        if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) {
-            return;
-        }
-
-        if (evt.getSource() == null || evt.getEntity() == null) {
-            return;
-        }
-
-        // Check that the main target of pain is a pet
-        if (!(evt.getEntity() instanceof TamableAnimal)) {
-            return;
-        }
-
-        // Check if the main source of pain is a player
-        if (!(evt.getSource().getDirectEntity() instanceof Player)) {
-            return;
-        }
-
-        TamableAnimal pet = (TamableAnimal) evt.getEntity();
-        Player player = (Player) evt.getSource().getDirectEntity();
+        if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) return;
+        if (evt.getSource() == null) return;
+        if (evt.getEntity() == null) return;
+        if (!(evt.getEntity() instanceof TamableAnimal pet)) return;
+        if (!(evt.getSource().getDirectEntity() instanceof Player player)) return;
 
         boolean applyToAny = MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.ALL;
 

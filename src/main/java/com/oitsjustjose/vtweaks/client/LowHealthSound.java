@@ -17,22 +17,22 @@ public class LowHealthSound {
             return;
         }
 
-        if (evt.getPlayer() == null || !evt.getPlayer().isAlive()) {
+        if (evt.getEntity() == null || !evt.getEntity().isAlive()) {
             return;
         }
 
         float vol = ClientConfig.LOW_HEALTH_VOLUME.get().floatValue();
         long now = System.currentTimeMillis();
 
-        if (evt.getPlayer().getHealth() / evt.getPlayer().getMaxHealth() < ClientConfig.LOW_HEALTH_THRESHOLD.get()) {
-            if (now >= getNextPlayTime(evt.getPlayer())) {
-                BEATS type = getNextPlayType(evt.getPlayer());
+        if (evt.getEntity().getHealth() / evt.getEntity().getMaxHealth() < ClientConfig.LOW_HEALTH_THRESHOLD.get()) {
+            if (now >= getNextPlayTime(evt.getEntity())) {
+                BEATS type = getNextPlayType(evt.getEntity());
                 float pitch = type == BEATS.first ? 1F : .5F;
                 long nextDelay = type == BEATS.first ? 200L : ClientConfig.LOW_HEALTH_FREQ.get();
 
 
-                evt.getPlayer().playSound(SoundEvents.NOTE_BLOCK_BASEDRUM, vol, pitch);
-                setNext(evt.getPlayer(), type == BEATS.first ? BEATS.second : BEATS.first, now + nextDelay);
+                evt.getEntity().playSound(SoundEvents.NOTE_BLOCK_BASEDRUM, vol, pitch);
+                setNext(evt.getEntity(), type == BEATS.first ? BEATS.second : BEATS.first, now + nextDelay);
             }
         }
     }

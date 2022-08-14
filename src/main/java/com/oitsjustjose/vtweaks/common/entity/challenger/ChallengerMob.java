@@ -2,10 +2,13 @@ package com.oitsjustjose.vtweaks.common.entity.challenger;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ChallengerMob {
 
@@ -91,11 +95,11 @@ public class ChallengerMob {
         monster.setItemInHand(InteractionHand.MAIN_HAND, this.mainHand);
         monster.setItemInHand(InteractionHand.OFF_HAND, this.offHand);
 
-        double speed = monster.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
-        double health = monster.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
+        double speed = Objects.requireNonNull(monster.getAttribute(Attributes.MOVEMENT_SPEED)).getBaseValue();
+        double health = Objects.requireNonNull(monster.getAttribute(Attributes.MAX_HEALTH)).getBaseValue();
 
-        monster.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed * this.speedMultiplier);
-        monster.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health * this.healthMultiplier);
+        Objects.requireNonNull(monster.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(speed * this.speedMultiplier);
+        Objects.requireNonNull(monster.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(health * this.healthMultiplier);
         monster.setHealth((float) (health * this.healthMultiplier));
 
         monster.setCustomName(mobClassName(monster));
@@ -109,9 +113,14 @@ public class ChallengerMob {
         monster.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
     }
 
-    private TranslatableComponent mobClassName(Monster mob) {
-        return new TranslatableComponent("vtweaks." + this.unlocalizedName + ".challenger.mob",
-                mob.getName());
+    private MutableComponent mobClassName(Monster mob) {
+        TranslatableContents c = new TranslatableContents("vtweaks." + this.unlocalizedName + ".challenger.mob", mob.getName());
+        try {
+            return c.resolve(null, mob, 0);
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+            return Component.empty().append(e.getMessage());
+        }
     }
 
     @Nullable

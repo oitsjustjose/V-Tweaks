@@ -4,11 +4,10 @@ import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Random;
 
 public class ChallengerParticles {
     @SubscribeEvent
@@ -26,7 +25,7 @@ public class ChallengerParticles {
                 Monster monster = (Monster) evt.getEntity();
                 ChallengerMob type = ChallengerMobHandler.getChallengerMob(monster);
                 if (monster.isAlive() && type != null) {
-                    Random rand = monster.getRandom();
+                    RandomSource rand = monster.getRandom();
                     float noiseX = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
                     float noiseZ = ((rand.nextBoolean() ? 1 : -1) * rand.nextFloat()) / 2;
 

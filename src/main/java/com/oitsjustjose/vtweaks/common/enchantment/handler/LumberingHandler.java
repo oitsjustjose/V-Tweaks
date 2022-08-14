@@ -8,35 +8,34 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EnchantmentLumberingHandler {
+public class LumberingHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void register(BreakEvent event) {
+    public void register(BlockEvent.BreakEvent event) {
         // Check if enchantment is disabled
         if (!EnchantmentConfig.ENABLE_LUMBERING.get()) {
             return;
         }
         // Check that state, world, player or player's held item all exist
-        if (event.getState() == null || event.getWorld() == null || event.getPlayer() == null
+        if (event.getState() == null || event.getLevel() == null || event.getPlayer() == null
                 || event.getPlayer().getMainHandItem().isEmpty() || event.getPlayer().isCreative()
-                || !(event.getWorld() instanceof ServerLevel)) {
+                || !(event.getLevel() instanceof ServerLevel)) {
             return;
         }
-        ServerLevel world = (ServerLevel) event.getWorld();
+        ServerLevel world = (ServerLevel) event.getLevel();
         Player player = event.getPlayer();
+        ItemStack stack = player.getMainHandItem();
         // Checks if the axe has lumbering
-        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player) > 0) {
+        if (stack.getEnchantmentLevel(VTweaks.Enchantments.lumbering) > 0) {
             if (player.isCrouching()) {
                 if (event.getState().is(BlockTags.LOGS)) {
                     chopTree(world, player, event.getPos(), event.getState(), 0);
@@ -67,7 +66,7 @@ public class EnchantmentLumberingHandler {
                                 return false;
                             }
                         } else if (EnchantmentConfig.LUMBERING_CUTS_LEAVES.get()) {
-                            if(world.getBlockState(iterPos).is(BlockTags.LEAVES)) {
+                            if (world.getBlockState(iterPos).is(BlockTags.LEAVES)) {
                                 emulateBreak(world, iterPos, player, false);
                                 if (!chopTree(world, player, iterPos, original, curr + 1)) {
                                     return false;
@@ -83,42 +82,31 @@ public class EnchantmentLumberingHandler {
         return true;
     }
 
-    /**
-     * Determines if the player can continue to chop down the tree
-     *
-     * @param player the player to check
-     * @return
-     */
     private boolean canStillChop(Player player) {
         if (!player.getMainHandItem().canPerformAction(ToolActions.AXE_DIG)) {
             return false;
         }
-//        if (!player.getMainHandItem().getToolTypes().contains(ToolType.AXE)) {
-//            return false;
-//        }
 
         ItemStack axe = player.getMainHandItem().copy();
-        IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-
-        // Energy Handling
         if (axe.hasTag()) {
             CompoundTag comp = axe.getTag();
+            assert comp != null;
             if (comp.contains("Energy")) {
                 return comp.getInt("Energy") > 0;
             }
         }
 
+        IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
         if (cap != null) {
             return cap.getEnergyStored() > 0;
         }
 
-        // This will both save the tool, and save it for Imperishing
         return (axe.getMaxDamage() - axe.getDamageValue()) > 2;
     }
 
     private boolean woodMatchFilter(BlockState original, BlockState current) {
         if (EnchantmentConfig.LUMBERING_WOOD_STRICT.get()) {
-            return original.getBlock().getRegistryName().equals(current.getBlock().getRegistryName());
+            return original.getBlock().getDescriptionId().equals(current.getBlock().getDescriptionId());
         }
         return current.is(BlockTags.LOGS);
     }

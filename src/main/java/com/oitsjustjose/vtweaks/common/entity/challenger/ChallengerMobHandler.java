@@ -14,6 +14,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -25,25 +26,18 @@ public class ChallengerMobHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent event) {
-        if (event.getWorld().isClientSide()) {
-            return;
-        }
+        if (event.getLevel().isClientSide()) return;
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
+        if (MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get() <= 0.0D) return;
+        // TODO: This needs to be changed to use the smarter logic discovered in entity culling. I'm using events all wrong..
+        if (event.getEntity().getPersistentData().getBoolean("challenger_mob_checked")) return;
 
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get() <= 0.0D) {
-            return;
-        }
-
-        if (event.getEntity().getPersistentData().getBoolean("challenger_mob_checked")) {
-            return;
-        }
 
         event.getEntity().getPersistentData().putBoolean("challenger_mob_checked", true);
-        if (event.getWorld().getRandom().nextDouble() > MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get()) {
-            return;
-        }
+        if (event.getLevel().getRandom().nextDouble() > MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get()) return;
 
-        if (event.getEntity() != null && event.getEntity() instanceof Monster) {
-            Monster monster = (Monster) event.getEntity();
+
+        if (event.getEntity() != null && event.getEntity() instanceof Monster monster) {
             if (isChallengerMob(monster)) return;
 
             ChallengerMob variant = filterForEntity(monster).pick();
@@ -51,50 +45,41 @@ public class ChallengerMobHandler {
                 variant.apply(monster);
             }
         }
+
     }
 
     @SubscribeEvent
     public void registerEvent(LivingDropsEvent event) {
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) {
-            return;
-        }
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof Monster)) {
-            return;
-        }
+        if (event.getEntity() == null) return;
+        if (!(event.getEntity() instanceof Monster monster)) return;
 
-        Monster m = (Monster) event.getEntity();
-        ChallengerMob chal = getChallengerMob(m);
+        ChallengerMob challenger = getChallengerMob(monster);
+        if (challenger == null) return;
 
-        if (chal == null) {
-            return;
-        }
-
-        ItemStack loot = chal.pickLoot();
+        ItemStack loot = challenger.pickLoot();
         if (loot != null) {
-            ItemEntity drop = Utils.createItemEntity(m.getLevel(), m.getOnPos(), loot);
+            ItemEntity drop = Utils.createItemEntity(monster.getLevel(), monster.getOnPos(), loot);
             event.getDrops().add(drop);
         }
+
     }
 
     @SubscribeEvent
     public void registerEvent(LivingHurtEvent event) {
-        if (event.getEntityLiving() == null || event.getSource() == null) {
-            return;
-        }
+        if (event.getEntity() == null) return;
+        if (event.getSource() == null) return;
 
         // Special attack features for challenger mobs
-        if (event.getSource().getDirectEntity() instanceof Monster) {
-            if (isChallengerMob((Monster) event.getSource().getDirectEntity())) {
-                Monster monster = (Monster) event.getSource().getDirectEntity();
-                ChallengerMob chal = getChallengerMob(monster);
-                if (chal == null) {
-                    return;
-                }
+        if (event.getSource().getDirectEntity() instanceof Monster monster) {
+            if (isChallengerMob(monster)) {
+                ChallengerMob challenger = getChallengerMob(monster);
+                if (challenger == null) return;
 
-                List<MobEffectInstance> eff = chal.getAttackEffects();
+                List<MobEffectInstance> eff = challenger.getAttackEffects();
                 if (!eff.isEmpty()) {
-                    eff.forEach(x -> event.getEntityLiving().addEffect(x));
+                    eff.forEach(x -> event.getEntity().addEffect(x));
                 }
             }
         }
@@ -112,7 +97,7 @@ public class ChallengerMobHandler {
     }
 
     private boolean canBeChallenger(ChallengerMob mob, Monster entity) {
-        ResourceLocation type = entity.getType().getRegistryName();
+        ResourceLocation type = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
         boolean isBl = mob.isEntityFilterIsBlacklist();
         List<ResourceLocation> types = mob.getEntityFilter();
         return (types.contains(type) && !isBl) || (!types.contains(type) && isBl);

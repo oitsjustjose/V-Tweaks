@@ -1,9 +1,12 @@
 package com.oitsjustjose.vtweaks.common.enchantment.handler;
 
 import com.google.common.collect.Lists;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -20,28 +23,27 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 
-public class EnchantmentImperishableHandler {
-    // Breaking a block with any tool
+public class ImperishableHandler {
+    private TranslatableContents notification = new TranslatableContents("vtweaks.tool.damaged");
+
     @SubscribeEvent
     public void register(BreakSpeed event) {
         if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer)) {
+        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
 
-        ServerPlayer player = (ServerPlayer) event.getEntity();
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
         if (stack.isEmpty()) {
             return;
         }
 
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
-                event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 0.25F,
-                        (float) Math.min(1.0F, 0.5F + event.getPlayer().getRandom().nextDouble()));
+                player.playSound(SoundEvents.SHIELD_BREAK, 0.25F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
                 event.setNewSpeed(0F);
             }
         }
@@ -53,17 +55,24 @@ public class EnchantmentImperishableHandler {
         if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
-        if (event.getPlayer() == null || event.getPlayer().isCreative()) {
+
+        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
 
-        ItemStack stack = event.getPlayer().getMainHandItem();
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
                 if (event.isCancelable()) {
-                    event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 1.0F,
-                            (float) Math.min(1.0F, 0.5F + event.getPlayer().getRandom().nextDouble()));
-                    event.getPlayer().displayClientMessage(new TranslatableComponent("vtweaks.tool.damaged"), true);
+                    player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
+                    MutableComponent component;
+                    try {
+                        component = notification.resolve(null, player, 0);
+                    } catch (CommandSyntaxException e) {
+                        component = Component.empty().append(e.getMessage());
+                        e.printStackTrace();
+                    }
+                    player.displayClientMessage(component, true);
                     event.setCanceled(true);
                 }
             }
@@ -76,17 +85,23 @@ public class EnchantmentImperishableHandler {
         if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
             return;
         }
-        if (event.getPlayer() == null || event.getPlayer().isCreative()) {
+        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
 
-        ItemStack stack = event.getPlayer().getMainHandItem();
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
                 if (event.isCancelable()) {
-                    event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 1.0F,
-                            (float) Math.min(1.0F, 0.5F + event.getPlayer().getRandom().nextDouble()));
-                    event.getPlayer().displayClientMessage(new TranslatableComponent("vtweaks.tool.damaged"), true);
+                    player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
+                    MutableComponent component;
+                    try {
+                        component = notification.resolve(null, player, 0);
+                    } catch (CommandSyntaxException e) {
+                        component = Component.empty().append(e.getMessage());
+                        e.printStackTrace();
+                    }
+                    player.displayClientMessage(component, true);
                     event.setCanceled(true);
                 }
             }
@@ -100,12 +115,15 @@ public class EnchantmentImperishableHandler {
             return;
         }
 
+        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
         try {
             ArrayList<ItemStack> salvaged = Lists.newArrayList();
-            for (ItemStack stack : event.getPlayer().getArmorSlots()) {
-                if (stack.getItem() instanceof ArmorItem) {
-                    ArmorItem armor = (ArmorItem) stack.getItem();
-                    if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+            for (ItemStack stack : player.getArmorSlots()) {
+                if (stack.getItem() instanceof ArmorItem armor) {
+                    if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
                         if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1)) {
                             salvaged.add(stack);
                         }
@@ -114,10 +132,10 @@ public class EnchantmentImperishableHandler {
             }
 
             salvaged.forEach((stack) -> {
-                ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), stack.copy());
-                event.getPlayer().setItemSlot(LivingEntity.getEquipmentSlotForItem(stack), ItemStack.EMPTY);
-                event.getPlayer().getInventory().setChanged();
-                VTweaks.proxy.playSound(event.getPlayer());
+                ItemHandlerHelper.giveItemToPlayer(player, stack.copy());
+                player.setItemSlot(LivingEntity.getEquipmentSlotForItem(stack), ItemStack.EMPTY);
+                player.getInventory().setChanged();
+                VTweaks.proxy.playSound(event.getEntity());
             });
         } catch (NullPointerException ignored) {
             return;

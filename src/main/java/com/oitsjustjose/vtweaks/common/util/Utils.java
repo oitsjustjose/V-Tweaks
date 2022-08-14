@@ -40,16 +40,17 @@ public class Utils {
     }
 
     /**
-     * @param bookStack   ItemStack containing the enchanted book
-     * @param enchantment The enchantment being matched
+     * @param bookStack ItemStack containing the enchanted book
+     * @param target    The enchantment being matched
      * @return true if the book has said enchantment, false otherwise
      */
-    public static boolean bookHasEnchantment(ItemStack bookStack, Enchantment enchantment) {
-        Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
-        for (Enchantment ench : bookEnchs.keySet()) {
-            if (ench.getRegistryName().equals(enchantment.getRegistryName())) {
-                return true;
-            }
+    public static boolean bookHasEnchantment(ItemStack bookStack, Enchantment target) {
+        Map<Enchantment, Integer> enchantmentsOnBook = EnchantmentHelper.getEnchantments(bookStack);
+        for (Enchantment enchantment : enchantmentsOnBook.keySet()) {
+            ResourceLocation rl1 = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+            ResourceLocation rl2 = ForgeRegistries.ENCHANTMENTS.getKey(target);
+            assert rl1 != null && rl2 != null;
+            if (rl1.equals(rl2)) return true;
         }
         return false;
     }
@@ -59,13 +60,14 @@ public class Utils {
      * @param EnchantmentInstance The EnchantmentInstance being matched
      * @return true if the book has said enchantment, false otherwise
      */
-    public static boolean bookHasEnchantment(ItemStack bookStack, EnchantmentInstance EnchantmentInstance) {
-        Map<Enchantment, Integer> bookEnchs = EnchantmentHelper.getEnchantments(bookStack);
-        for (Enchantment ench : bookEnchs.keySet()) {
-            if (ench.getRegistryName().equals(EnchantmentInstance.enchantment.getRegistryName())) {
-                if (bookEnchs.get(ench) == EnchantmentInstance.level) {
-                    return true;
-                }
+    public static boolean bookHasEnchantment(ItemStack bookStack, EnchantmentInstance target) {
+        Map<Enchantment, Integer> enchantmentsOnBook = EnchantmentHelper.getEnchantments(bookStack);
+        for (Enchantment enchantment : enchantmentsOnBook.keySet()) {
+            ResourceLocation rl1 = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+            ResourceLocation rl2 = ForgeRegistries.ENCHANTMENTS.getKey(target.enchantment);
+            assert rl1 != null && rl2 != null;
+            if (rl1.equals(rl2)) {
+                if (enchantmentsOnBook.get(enchantment) == target.level) return true;
             }
         }
         return false;

@@ -13,7 +13,7 @@ public class Recipes {
     @SubscribeEvent
     public void registerBookRecipes(AnvilUpdateEvent event) {
         if (EnchantmentConfig.ENABLE_LUMBERING.get()) {
-            ItemStack book = Utils.getEnchantedBook(VTweaks.lumbering);
+            ItemStack book = Utils.getEnchantedBook(VTweaks.Enchantments.lumbering);
 
             if (event.getLeft().isEmpty() || event.getRight().isEmpty())
                 return;
@@ -31,7 +31,7 @@ public class Recipes {
         }
 
         if (EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-            ItemStack book = Utils.getEnchantedBook(VTweaks.imperishable);
+            ItemStack book = Utils.getEnchantedBook(VTweaks.Enchantments.imperishable);
 
             if (event.getLeft().isEmpty() || event.getRight().isEmpty())
                 return;

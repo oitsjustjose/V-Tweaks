@@ -20,15 +20,12 @@ public class DropTweaks {
 
     @SubscribeEvent
     public void registerTweak(ItemExpireEvent event) {
-        if (event.getEntityItem() == null || event.getEntityItem().getItem().isEmpty()) {
-            return;
-        }
+        if (event.getEntity() == null) return;
+        if (event.getEntity().getItem().isEmpty()) return;
+        if (!event.getEntity().level.isClientSide) return;
 
-        if (!event.getEntityItem().level.isClientSide) {
-            return;
-        }
 
-        ItemEntity entItem = event.getEntityItem();
+        ItemEntity entItem = event.getEntity();
         Level world = entItem.level;
         ItemStack stack = entItem.getItem();
 
@@ -56,14 +53,11 @@ public class DropTweaks {
 
     @SubscribeEvent
     public void registerTweak(ItemTossEvent event) {
-        // Checks to see if the despawn time is -1. If it is, items won't despawn, so
-        // nothing to do here.
-        if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1 || !ItemTweakConfig.ENABLE_DESPAWN_TIME_OVERRIDE.get()
-                || event.getEntityItem() == null) {
-            return;
-        }
+        if (ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get() == -1) return;
+        if (!ItemTweakConfig.ENABLE_DESPAWN_TIME_OVERRIDE.get()) return;
+        if (event.getEntity() == null) return;
 
-        ItemEntity entItem = event.getEntityItem();
+        ItemEntity entItem = event.getEntity();
         entItem.lifespan = ItemTweakConfig.DESPAWN_TIME_OVERRIDE.get();
     }
 

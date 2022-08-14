@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.VTweaks;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -24,16 +25,16 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        ArrayList<Object> recipes = Lists.newArrayList();
+        ArrayList<IJeiAnvilRecipe> recipes = Lists.newArrayList();
         recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(new ItemStack(Items.WRITABLE_BOOK),
                 Lists.newArrayList(new ItemStack(Items.GOLDEN_AXE)),
-                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.lumbering))));
+                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.Enchantments.lumbering))));
 
         recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(
                 Utils.getEnchantedBook(Enchantments.UNBREAKING, 3),
                 Lists.newArrayList(Utils.getEnchantedBook(Enchantments.UNBREAKING, 3)),
-                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.imperishable))));
+                Lists.newArrayList(Utils.getEnchantedBook(VTweaks.Enchantments.imperishable))));
 
-        registration.addRecipes(recipes, VanillaRecipeCategoryUid.ANVIL);
+        registration.addRecipes(RecipeTypes.ANVIL, recipes);
     }
 }

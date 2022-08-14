@@ -6,63 +6,40 @@
 
 package com.oitsjustjose.vtweaks.common.event.blocktweaks;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map.Entry;
-
-import javax.annotation.Nullable;
-
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 
 public class ChopDown {
     @SubscribeEvent
     public void registerEvent(BlockEvent.BreakEvent evt) {
-        if (!BlockTweakConfig.ENABLE_TREE_CHOP_DOWN.get()) {
-            return;
-        }
+        if (!BlockTweakConfig.ENABLE_TREE_CHOP_DOWN.get()) return;
 
-        int lumberLvl = EnchantmentHelper.getItemEnchantmentLevel(VTweaks.lumbering, evt.getPlayer().getMainHandItem());
+        int lumberLvl = evt.getPlayer().getMainHandItem().getEnchantmentLevel(VTweaks.Enchantments.lumbering);
 
-        // Drop early if lumbering..
-        if (evt.getPlayer().isCrouching() && lumberLvl > 0) {
-            return;
-        }
-
-        if (!(evt.getWorld() instanceof Level)) {
-            return;
-        }
+        if (evt.getPlayer().isCrouching() && lumberLvl > 0) return;
+        if (!(evt.getLevel() instanceof Level level)) return;
 
         BlockPos initialPos = evt.getPos();
-        Level level = (Level) evt.getWorld();
         Player player = evt.getPlayer();
 
         for (int dy = 0; dy < BlockTweakConfig.TREE_CHOP_DOWN_LOG_COUNT.get(); dy++) {
-
-            if (!level.getBlockState(initialPos.offset(0, dy, 0)).is(BlockTags.LOGS)) {
-                return;
-            }
+            if (!level.getBlockState(initialPos.offset(0, dy, 0)).is(BlockTags.LOGS)) return;
         }
 
         int rad = 32;
@@ -138,18 +115,14 @@ public class ChopDown {
     private BlockPos getNewPosition(BlockPos initialBreakPos, BlockPos pos, Direction facing) {
         // Transforms height of tree into length of throw
         int transformedY = pos.getY() - initialBreakPos.getY();
-        switch (facing) {
-            case SOUTH:
-                return pos.offset(1, 0, 1 + transformedY);
-            case NORTH:
-                return pos.offset(1, 0, -transformedY + 1);
-            case EAST:
-                return pos.offset(1 + transformedY, 0, 1);
-            case WEST:
-                return pos.offset(-transformedY + 1, 0, 1);
-            default: // Up and Down won't be involved.
-                return pos;
-        }
+        return switch (facing) {
+            case SOUTH -> pos.offset(1, 0, 1 + transformedY);
+            case NORTH -> pos.offset(1, 0, -transformedY + 1);
+            case EAST -> pos.offset(1 + transformedY, 0, 1);
+            case WEST -> pos.offset(-transformedY + 1, 0, 1);
+            default -> // Up and Down won't be involved.
+                    pos;
+        };
     }
 
     private boolean canBeMoved(Level level, BlockPos pos) {

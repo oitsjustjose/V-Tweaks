@@ -1,32 +1,32 @@
 package com.oitsjustjose.vtweaks.common.event;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.UUID;
-
 public class DeathPoint {
     @SubscribeEvent
     public void registerTweak(LivingDeathEvent event) {
-        // Check if feature is enabled
-        if (!CommonConfig.ENABLE_DEATH_MESSAGE.get()) {
-            return;
-        }
-        // Are you human?
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) event.getEntity();
-        player.sendMessage(getCoordMessage(player.getOnPos()), UUID.randomUUID());
+        if (!CommonConfig.ENABLE_DEATH_MESSAGE.get()) return;
+        if (!(event.getEntity() instanceof Player player)) return;
+        player.sendSystemMessage(getCoordMessage(player));
     }
 
     // Coincidentally compatible with Journeymap :D
-    private TranslatableComponent getCoordMessage(BlockPos pos) {
-        return new TranslatableComponent("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
+    private MutableComponent getCoordMessage(Player player) {
+        BlockPos pos = player.getOnPos();
+        try {
+            TranslatableContents contents = new TranslatableContents("vtweaks.death.message", pos.getX(), pos.getY(), pos.getZ());
+            return contents.resolve(null, null, 0);
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+            return Component.empty().append(e.getMessage());
+        }
     }
 }

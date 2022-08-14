@@ -7,7 +7,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,12 +54,8 @@ public class PetArmory {
      * if they weren't already
      */
     @SubscribeEvent
-    public void registerEvent(EntityJoinWorldEvent event) {
-        if (!(event.getEntity() instanceof TamableAnimal)) {
-            return;
-        }
-
-        TamableAnimal pet = (TamableAnimal) event.getEntity();
+    public void registerEvent(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof TamableAnimal pet)) return;
 
         if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
             if (pet.isTame()) {
@@ -75,22 +71,12 @@ public class PetArmory {
 
     @SubscribeEvent
     public void registerEvent(EntityInteract event) {
-        // Checks that the feature is enabled
-        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) {
-            return;
-        }
-        // Confirms there's a target
-        if (event.getTarget() == null) {
-            return;
-        }
-        // Conirms the target is tamable!
-        if (event.getTarget() instanceof TamableAnimal) {
-            TamableAnimal pet = (TamableAnimal) event.getTarget();
-            if (!(event.getEntityLiving() instanceof Player)) {
-                return;
-            }
+        if (!MobTweakConfig.ENABLE_PET_ARMORY.get()) return;
+        if (event.getTarget() == null) return;
 
-            Player player = (Player) event.getEntityLiving();
+        // Conirms the target is tamable!
+        if (event.getTarget() instanceof TamableAnimal pet) {
+            Player player = event.getEntity();
             boolean strippedArmor = false;
 
             if (player.getMainHandItem().isEmpty() && player.isCrouching() && pet.isTame()

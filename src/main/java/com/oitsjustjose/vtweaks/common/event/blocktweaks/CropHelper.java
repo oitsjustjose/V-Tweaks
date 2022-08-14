@@ -23,6 +23,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -30,19 +31,14 @@ public class CropHelper {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void registerVanilla(RightClickBlock event) {
         // Checks if feature is enabled
-        if (!BlockTweakConfig.ENABLE_CROP_TWEAK.get()) {
-            return;
-        }
+        if (!BlockTweakConfig.ENABLE_CROP_TWEAK.get()) return;
+        if (event.getHand() != InteractionHand.MAIN_HAND) return;
 
-        if (event.getHand() != InteractionHand.MAIN_HAND) {
-            return;
-        }
-
-        Level world = event.getWorld();
+        Level world = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState state = world.getBlockState(pos);
-        Player player = event.getPlayer();
-        ResourceLocation name = state.getBlock().getRegistryName();
+        Player player = event.getEntity();
+        ResourceLocation name = ForgeRegistries.BLOCKS.getKey(state.getBlock());
 
         for (String blackList : BlockTweakConfig.CROP_TWEAK_BLACKLIST.get()) {
             if (new ResourceLocation(blackList).equals(name)) {
@@ -86,7 +82,7 @@ public class CropHelper {
     private boolean plant(ServerLevel world, BlockPos pos, ItemStack stack) {
         Item item = stack.getItem();
         if (item instanceof BlockItem) {
-            BlockPlaceContext  context = new DirectionalPlaceContext(world, pos, Direction.DOWN, stack, Direction.UP);
+            BlockPlaceContext context = new DirectionalPlaceContext(world, pos, Direction.DOWN, stack, Direction.UP);
             return ((BlockItem) item).place(context) == InteractionResult.SUCCESS;
         }
         return false;

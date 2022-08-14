@@ -23,18 +23,13 @@ public class FeatherPlucker {
     @SubscribeEvent
     public void registerEvent(EntityInteract event) {
         // Checks if feature is enabled
-        if (!MobTweakConfig.ENABLE_FEATHER_PLUCKING.get()) {
-            return;
-        }
+        if (!MobTweakConfig.ENABLE_FEATHER_PLUCKING.get()) return;
 
-        if (event.getTarget() == null
-                || !(event.getTarget() instanceof Chicken)
-                || !(event.getEntityLiving() instanceof Player)) {
-            return;
-        }
+        if (event.getTarget() == null) return;
+        if (!(event.getTarget() instanceof Chicken chicken)) return;
+        if (event.getEntity() == null) return;
 
-        Chicken chicken = (Chicken) event.getTarget();
-        Player player = (Player) event.getEntityLiving();
+        Player player = (Player) event.getEntity();
 
         if (!player.getMainHandItem().isEmpty()
                 && player.getMainHandItem().getItem() instanceof ShearsItem) {
@@ -54,11 +49,8 @@ public class FeatherPlucker {
 
     private boolean canPluck(Chicken chicken) {
         CompoundTag tag = chicken.getPersistentData();
-        if (!tag.contains(PLUCK_COOLDOWN_KEY)) {
-            // No pluck cooldown key, means never plucked..
-            return true;
-        }
-
+        // No pluck cooldown key, means never plucked..
+        if (!tag.contains(PLUCK_COOLDOWN_KEY)) return true;
         long lastTime = tag.getLong(PLUCK_COOLDOWN_KEY);
         return System.currentTimeMillis() - lastTime >= MobTweakConfig.FEATHER_PLUCKING_COOLDOWN.get();
     }

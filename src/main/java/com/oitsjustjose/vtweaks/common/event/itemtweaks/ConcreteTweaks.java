@@ -19,8 +19,10 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ConcreteTweaks {
     public static ArrayList<Item> concreteBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE.asItem(),
@@ -45,9 +47,8 @@ public class ConcreteTweaks {
         if (!ItemTweakConfig.ENABLE_CONCRETE_TWEAKS.get()) {
             return;
         }
-        ItemEntity entItem = event.getEntityItem();
-        if (entItem.getItem().getItem() instanceof BlockItem) {
-            BlockItem itemBlock = (BlockItem) entItem.getItem().getItem();
+        ItemEntity entItem = event.getEntity();
+        if (entItem.getItem().getItem() instanceof BlockItem itemBlock) {
             if (powderBlocks.contains(itemBlock)) {
                 ItemEntityConcrete concrete = new ItemEntityConcrete(entItem);
                 if (!concrete.level.isClientSide()) {
@@ -79,7 +80,7 @@ public class ConcreteTweaks {
         @Override
         public void tick() {
             if (this.isInWater()) {
-                String target = this.getItem().getItem().getRegistryName().toString().replace("_powder", "");
+                String target = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(this.getItem().getItem())).toString().replace("_powder", "");
                 Item replacement = ForgeRegistries.ITEMS.getValue(new ResourceLocation(target));
                 if (replacement != null) {
                     this.setItem(new ItemStack(replacement, this.getItem().getCount()));
@@ -94,7 +95,7 @@ public class ConcreteTweaks {
      */
     public static final DispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
         @Override
-        public ItemStack execute(BlockSource source, ItemStack stack) {
+        public @NotNull ItemStack execute(BlockSource source, ItemStack stack) {
             Direction facing = source.getBlockState().getValue(DispenserBlock.FACING);
             Position pos = DispenserBlock.getDispensePosition(source);
             ItemStack itemstack = stack.split(1);
@@ -114,8 +115,7 @@ public class ConcreteTweaks {
             }
 
             ItemEntity entityitem = null;
-            if (stack.getItem() instanceof BlockItem) {
-                BlockItem itemBlock = (BlockItem) stack.getItem();
+            if (stack.getItem() instanceof BlockItem itemBlock) {
                 if (powderBlocks.contains(itemBlock)) {
                     entityitem = new ItemEntityConcrete(worldIn, d0, d1, d2, stack);
                 }
@@ -129,6 +129,7 @@ public class ConcreteTweaks {
             motX += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
             motY += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
             motZ += worldIn.getRandom().nextGaussian() * 0.007499999832361937D * (double) speed;
+            assert entityitem != null;
             entityitem.setDeltaMovement(motX, motY, motZ);
 
             // Dispensed items have no pickup delay so.....

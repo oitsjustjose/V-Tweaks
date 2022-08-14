@@ -66,7 +66,7 @@ public class EntityCullingRule {
                     this.entityTypeTags.add(tagKey);
                 } else {
                     ResourceLocation rl = new ResourceLocation(x);
-                    EntityType<?> ent = ForgeRegistries.ENTITIES.getValue(rl);
+                    EntityType<?> ent = ForgeRegistries.ENTITY_TYPES.getValue(rl);
                     if (ent != null) {
                         this.entityTypes.add(rl);
                     }
@@ -79,13 +79,11 @@ public class EntityCullingRule {
 
     public boolean apply(LivingSpawnEvent evt) {
         // filter by entity
-        boolean hasMatchedOnEntity = this.entityTypes.contains(evt.getEntity().getType().getRegistryName());
+        boolean hasMatchedOnEntity = this.entityTypes.contains(ForgeRegistries.ENTITY_TYPES.getKey(evt.getEntity().getType()));
         boolean hasMatchedOnEntityType = this.entityTypeTags.stream().anyMatch(typeTag -> evt.getEntity().getType().is(typeTag));
-        if (!hasMatchedOnEntity && !hasMatchedOnEntityType) {
-            return false;
-        }
+        if (!hasMatchedOnEntity && !hasMatchedOnEntityType) return false;
 
-        ServerLevel lvl = (ServerLevel) evt.getWorld();
+        ServerLevel lvl = (ServerLevel) evt.getLevel();
         ResourceLocation dimName = lvl.dimension().location();
         Holder<Biome> biomeHolder = lvl.getBiome(evt.getEntity().blockPosition());
         Either<ResourceKey<Biome>, Biome> unwrappedBiome = biomeHolder.unwrap();
@@ -94,16 +92,12 @@ public class EntityCullingRule {
         boolean hasMatchedOnBiomeTag = biomeTags.isEmpty() || biomeTags.stream().anyMatch(biomeHolder::is);
         boolean hasMatchedOnBiome = biomes.isEmpty() || biomes.stream().anyMatch(b -> {
             Biome eBiome = unwrappedBiome.right().orElse(null);
-            if (eBiome != null) {
-                return this.biomes.contains(eBiome);
-            }
+            if (eBiome != null) return this.biomes.contains(eBiome);
 
             ResourceKey<Biome> rb = unwrappedBiome.left().orElse(null);
             if (rb != null) {
                 eBiome = ForgeRegistries.BIOMES.getValue(rb.location());
-                if (eBiome != null) {
-                    return this.biomes.contains(eBiome);
-                }
+                if (eBiome != null) return this.biomes.contains(eBiome);
             }
             return false;
         });

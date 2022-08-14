@@ -6,8 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CakeBlock;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CakeTweak {
@@ -19,15 +19,15 @@ public class CakeTweak {
         }
 
         Block block = event.getState().getBlock();
-        if (event.getPlayer() != null && block instanceof CakeBlock) {
-            if (event.getState().hasProperty(CakeBlock.BITES)) {
-                int bites = event.getState().getValue(CakeBlock.BITES);
+        if (event.getPlayer() != null) {
+            if (event.getState().hasProperty(BlockStateProperties.BITES)) {
+                int bites = event.getState().getValue(BlockStateProperties.BITES);
                 if (bites == 0) {
-                    ItemEntity cakeItem = new ItemEntity((Level) event.getWorld(),
+                    ItemEntity cakeItem = new ItemEntity((Level) event.getLevel(),
                             (double) event.getPos().getX() + 0.5D, event.getPos().getY(),
-                            (double) event.getPos().getZ() + 0.5D, new ItemStack(Items.CAKE));
+                            (double) event.getPos().getZ() + 0.5D, new ItemStack(block.asItem()));
                     cakeItem.setPickUpDelay(10);
-                    event.getWorld().addFreshEntity(cakeItem);
+                    event.getLevel().addFreshEntity(cakeItem);
                 }
             }
         }

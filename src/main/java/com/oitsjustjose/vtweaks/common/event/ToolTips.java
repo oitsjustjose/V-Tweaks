@@ -1,11 +1,13 @@
 package com.oitsjustjose.vtweaks.common.event;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.datafixers.util.Pair;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +70,7 @@ public class ToolTips {
         return e.stream().anyMatch(x -> x.getFirst().getEffect().isBeneficial());
     }
 
-    private TranslatableComponent getHungerString(FoodProperties food) {
+    private MutableComponent getHungerString(FoodProperties food) {
         StringBuilder ret = new StringBuilder();
 
         int nutrition = food.getNutrition();
@@ -85,10 +87,16 @@ public class ToolTips {
             ret.append(color).append("\u258C");
         }
 
-        return new TranslatableComponent("vtweaks.hunger.tooltip.text", ret.toString());
+        TranslatableContents t = new TranslatableContents("vtweaks.hunger.tooltip.text", ret.toString());
+        try {
+            return t.resolve(null, null, 0);
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+        }
+        return Component.empty();
     }
 
-    private TranslatableComponent getSaturationString(int saturation) {
+    private MutableComponent getSaturationString(int saturation) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < saturation / 2; i++) {
             ret.append(ChatFormatting.GREEN).append("\u2588");
@@ -96,51 +104,58 @@ public class ToolTips {
         if (saturation % 2 != 0) {
             ret.append(ChatFormatting.GREEN).append("\u258C");
         }
-        return new TranslatableComponent("vtweaks.saturation.tooltip.text", ret.toString());
+        TranslatableContents t = new TranslatableContents("vtweaks.saturation.tooltip.text", ret.toString());
+        try {
+            return t.resolve(null, null, 0);
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+        }
+        return Component.empty();
     }
 
-    private TextComponent getDurabilityString(ItemStack itemstack) {
+    private MutableComponent getDurabilityString(ItemStack itemstack) {
         String ret = "Durability: ";
         int max = itemstack.getMaxDamage();
         int damage = itemstack.getDamageValue();
         float percentage = 1 - ((float) damage / (float) max);
+        MutableComponent c = Component.empty();
         if (percentage >= .9) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.LIGHT_PURPLE + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .8) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.DARK_PURPLE + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .7) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.BLUE + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .6) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.DARK_AQUA + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .5) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.DARK_GREEN + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .4) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.GREEN + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .3) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.YELLOW + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .2) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.GOLD + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
         if (percentage >= .1) {
-            return new TextComponent(
+            return c.append(
                     ret + ChatFormatting.RED + (max - damage) + " / " + max + ChatFormatting.RESET);
         }
-        return new TextComponent(
+        return c.append(
                 ret + ChatFormatting.DARK_RED + (max - damage) + " / " + max + ChatFormatting.RESET);
     }
 }
