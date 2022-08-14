@@ -15,13 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.apache.commons.compress.utils.Lists;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -75,7 +71,7 @@ public class UngriefedCreepers {
 
     @SubscribeEvent
     public void registerEvent(TickEvent evt) {
-        List<ExplodedBlock> toRemove = Lists.newArrayList();
+        List<ExplodedBlock> toRemove = new ArrayList<>();
 
         for (ExplodedBlock b : this.pending) {
             if (b.tick()) {
