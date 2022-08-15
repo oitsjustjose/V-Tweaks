@@ -1,18 +1,23 @@
 package com.oitsjustjose.vtweaks.common.enchantment;
 
-import com.oitsjustjose.vtweaks.common.util.Constants;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import org.jetbrains.annotations.NotNull;
 
 public class ImperishableEnchantment extends Enchantment {
+    private ItemStack cachedBook;
+
     public ImperishableEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
     }
 
     @Override
-    public boolean checkCompatibility(Enchantment enchantment) {
+    public boolean checkCompatibility(@NotNull Enchantment enchantment) {
         return this != enchantment;
     }
 
@@ -24,5 +29,13 @@ public class ImperishableEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int par1) {
         return 0;
+    }
+
+    public ItemStack asBook() {
+        if (cachedBook == null) {
+            this.cachedBook = new ItemStack(Items.ENCHANTED_BOOK);
+            EnchantedBookItem.addEnchantment(this.cachedBook, new EnchantmentInstance(this, 1));
+        }
+        return this.cachedBook;
     }
 }

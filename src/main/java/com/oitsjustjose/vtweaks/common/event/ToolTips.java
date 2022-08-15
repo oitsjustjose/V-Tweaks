@@ -22,30 +22,29 @@ public class ToolTips {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void registerTweak(ItemTooltipEvent event) {
-        if (event.getItemStack().isEmpty()) {
+        if (event.getItemStack().isEmpty()) return;
+
+        ItemStack stack = event.getItemStack();
+        FoodProperties foodProps = stack.getItem().getFoodProperties(stack, event.getEntity());
+        boolean shift = Screen.hasShiftDown();
+
+        if (!stack.isEdible()) return;
+        if (foodProps == null) return;
+
+        // Food tooltip
+        // Checks to see if feature is enabled
+        if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.NEVER) {
             return;
         }
 
-        ItemStack stack = event.getItemStack();
-        boolean shift = Screen.hasShiftDown();
+        float saturation = foodProps.getSaturationModifier() * 10;
 
-        // Food tooltip
-        if (stack.getItem().isEdible() && stack.getItem().getFoodProperties() != null) {
-            // Checks to see if feature is enabled
-            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.NEVER) {
-                return;
-            }
-
-            FoodProperties food = stack.getItem().getFoodProperties();
-            float saturation = food.getSaturationModifier() * 10;
-
-            if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.ALWAYS) {
-                event.getToolTip().add(getHungerString(food));
-                event.getToolTip().add(getSaturationString((int) saturation));
-            } else if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.WITH_SHIFT && shift) {
-                event.getToolTip().add(getHungerString(food));
-                event.getToolTip().add(getSaturationString((int) saturation));
-            }
+        if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.ALWAYS) {
+            event.getToolTip().add(getHungerString(foodProps));
+            event.getToolTip().add(getSaturationString((int) saturation));
+        } else if (CommonConfig.FOOD_TOOLTIP.get() == CommonConfig.FoodTooltips.WITH_SHIFT && shift) {
+            event.getToolTip().add(getHungerString(foodProps));
+            event.getToolTip().add(getSaturationString((int) saturation));
         }
 
         if (stack.isDamageableItem()) {

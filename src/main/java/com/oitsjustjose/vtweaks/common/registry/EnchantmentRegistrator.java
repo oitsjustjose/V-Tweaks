@@ -10,8 +10,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class EnchantmentRegistrator {
     public final DeferredRegister<Enchantment> REGISTRATOR = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Constants.MODID);
 
-    public final Enchantment lumbering;
-    public final Enchantment imperishable;
+    public final LumberingEnchantment lumbering;
+    public final ImperishableEnchantment imperishable;
 
     public EnchantmentRegistrator() {
         this.lumbering = new LumberingEnchantment();

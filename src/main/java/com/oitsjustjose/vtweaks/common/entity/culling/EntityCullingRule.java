@@ -77,7 +77,7 @@ public class EntityCullingRule {
         });
     }
 
-    public boolean apply(LivingSpawnEvent evt) {
+    public boolean apply(LivingSpawnEvent.CheckSpawn evt) {
         // filter by entity
         boolean hasMatchedOnEntity = this.entityTypes.contains(ForgeRegistries.ENTITY_TYPES.getKey(evt.getEntity().getType()));
         boolean hasMatchedOnEntityType = this.entityTypeTags.stream().anyMatch(typeTag -> evt.getEntity().getType().is(typeTag));

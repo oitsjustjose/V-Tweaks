@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -17,11 +18,10 @@ public class FeatherFallingTweak {
             return;
         }
         // Ensures we're working on a player entity AND we're working with fall damage
-        if (!(event.getEntity() instanceof ServerPlayer) || event.getSource() != DamageSource.FALL) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.getSource() != DamageSource.FALL) {
             return;
         }
 
-        ServerPlayer player = (ServerPlayer) event.getEntity();
         ItemStack boots = player.getInventory().getArmor(0);
         // Checks if boots are worn
         if (boots.isEmpty()) {
@@ -29,7 +29,7 @@ public class FeatherFallingTweak {
         }
 
         // Checks if FeatherFalling IV or higher is on the boots
-        if (EnchantmentHelper.getItemEnchantmentLevel(Utils.getEnchantment("minecraft", "feather_falling"), boots) >= 4) {
+        if (boots.getEnchantmentLevel(Enchantments.FALL_PROTECTION) >= 4) {
             boots.hurt((int) event.getAmount(), player.getRandom(), player);
             event.setAmount(0.0F);
         }

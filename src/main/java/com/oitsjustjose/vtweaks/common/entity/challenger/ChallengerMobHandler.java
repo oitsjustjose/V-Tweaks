@@ -25,15 +25,11 @@ public class ChallengerMobHandler {
     public static final WeightedCollection<ChallengerMob> challengerMobVariants = new WeightedCollection<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void registerEvent(LivingSpawnEvent event) {
+    public void registerEvent(LivingSpawnEvent.CheckSpawn event) {
         if (event.getLevel().isClientSide()) return;
         if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
         if (MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get() <= 0.0D) return;
-        // TODO: This needs to be changed to use the smarter logic discovered in entity culling. I'm using events all wrong..
-        if (event.getEntity().getPersistentData().getBoolean("challenger_mob_checked")) return;
-
-
-        event.getEntity().getPersistentData().putBoolean("challenger_mob_checked", true);
+        if (event.getEntity().getPersistentData().contains("challenger_mob_data")) return;
         if (event.getLevel().getRandom().nextDouble() > MobTweakConfig.GLOBAL_CHALLENGER_MOB_CHANCE.get()) return;
 
 

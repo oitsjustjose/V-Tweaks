@@ -1,0 +1,24 @@
+{
+  "type": "vtweaks:anvil",
+  "left": {
+    "item": "minecraft:writable_book"
+  },
+  "right": {
+    "item": "minecraft:golden_axe",
+    "nbt": {
+      "Damage": 0
+    }
+  },
+  "result": {
+    "item": "minecraft:enchanted_book",
+    "nbt": {
+      "StoredEnchantments": [
+        {
+          "id": "vtweaks:lumbering",
+          "lvl": 1
+        }
+      ]
+    }
+  },
+  "cost": 16
+}
