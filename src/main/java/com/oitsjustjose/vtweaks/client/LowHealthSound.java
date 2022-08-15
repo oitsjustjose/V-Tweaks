@@ -13,13 +13,8 @@ public class LowHealthSound {
 
     @SubscribeEvent
     public void registerEvent(PlayerEvent evt) {
-        if (!ClientConfig.ENABLE_LOW_HEALTH_SOUND.get()) {
-            return;
-        }
-
-        if (evt.getEntity() == null || !evt.getEntity().isAlive()) {
-            return;
-        }
+        if (!ClientConfig.ENABLE_LOW_HEALTH_SOUND.get()) return;
+        if (evt.getEntity() == null || !evt.getEntity().isAlive()) return;
 
         float vol = ClientConfig.LOW_HEALTH_VOLUME.get().floatValue();
         long now = System.currentTimeMillis();

@@ -26,9 +26,7 @@ public class ChallengerMobDataLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> datamap, @Nonnull ResourceManager manager, ProfilerFiller profiler) {
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) {
-            return;
-        }
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
 
         ChallengerMobHandler.challengerMobVariants.clear();
         datamap.forEach((rl, json) -> {

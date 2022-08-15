@@ -13,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -24,22 +23,17 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.ArrayList;
 
 public class ImperishableHandler {
-    private TranslatableContents notification = new TranslatableContents("vtweaks.tool.damaged");
+    private final TranslatableContents notification = new TranslatableContents("vtweaks.tool.damaged");
 
     @SubscribeEvent
     public void register(BreakSpeed event) {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-            return;
-        }
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) return;
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
+        if (event.getEntity() == null) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (stack.isEmpty()) {
-            return;
-        }
+        if (stack.isEmpty()) return;
 
         if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
@@ -49,75 +43,61 @@ public class ImperishableHandler {
         }
     }
 
-    // Attacking an entity with any tool
-    @SubscribeEvent
-    public void register(AttackEntityEvent event) {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-            return;
+    private void notifyPlayer(ServerPlayer player) {
+        player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
+        MutableComponent component;
+        try {
+            component = notification.resolve(null, player, 0);
+        } catch (CommandSyntaxException e) {
+            component = Component.empty().append(e.getMessage());
+            e.printStackTrace();
         }
+        player.displayClientMessage(component, true);
+    }
 
-        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
-
+    /* Code dedup effort */
+    public boolean handle(ServerPlayer player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
-                if (event.isCancelable()) {
-                    player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
-                    MutableComponent component;
-                    try {
-                        component = notification.resolve(null, player, 0);
-                    } catch (CommandSyntaxException e) {
-                        component = Component.empty().append(e.getMessage());
-                        e.printStackTrace();
-                    }
-                    player.displayClientMessage(component, true);
-                    event.setCanceled(true);
-                }
+                notifyPlayer(player);
+                return true;
             }
+        }
+        return false;
+    }
+
+
+    // Attacking an entity with any tool
+    @SubscribeEvent
+    public void register(AttackEntityEvent event) {
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) return;
+        if (event.getEntity() == null) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+
+        if (event.isCancelable() && handle(player)) {
+            event.setCanceled(true);
         }
     }
 
     // Item use checks (e.g. shearing a sheep, tilling grass, etc.)
     @SubscribeEvent
     public void register(PlayerInteractEvent event) {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-            return;
-        }
-        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) return;
+        if (event.getEntity() == null) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        ItemStack stack = player.getMainHandItem();
-        if (stack.getEnchantmentLevel(VTweaks.Enchantments.imperishable) > 0) {
-            if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
-                if (event.isCancelable()) {
-                    player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, (float) Math.min(1.0F, 0.5F + player.getRandom().nextDouble()));
-                    MutableComponent component;
-                    try {
-                        component = notification.resolve(null, player, 0);
-                    } catch (CommandSyntaxException e) {
-                        component = Component.empty().append(e.getMessage());
-                        e.printStackTrace();
-                    }
-                    player.displayClientMessage(component, true);
-                    event.setCanceled(true);
-                }
-            }
+        if (event.isCancelable() && handle(player)) {
+            event.setCanceled(true);
         }
     }
 
     // Armor damage checks
     @SubscribeEvent
     public void register(PlayerEvent event) {
-        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-            return;
-        }
-
-        if (event.getEntity() == null || !(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
+        if (!EnchantmentConfig.ENABLE_IMPERISHABLE.get()) return;
+        if (event.getEntity() == null) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         try {
             ArrayList<ItemStack> salvaged = Lists.newArrayList();

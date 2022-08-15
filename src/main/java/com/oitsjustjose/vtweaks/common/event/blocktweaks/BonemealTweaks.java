@@ -19,31 +19,28 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class BonemealTweaks {
     @SubscribeEvent
     public void registerTweak(RightClickBlock event) {
-        // Checks if feature is enabled
-        if (!BlockTweakConfig.ENABLE_BONEMEAL_TWEAK.get() || !(event.getEntity() instanceof Player)) {
-            return;
-        }
+        if (!BlockTweakConfig.ENABLE_BONEMEAL_TWEAK.get()) return;
 
-        Player player = (Player) event.getEntity();
-        Level world = event.getLevel();
-        Block testFor = world.getBlockState(event.getPos()).getBlock();
-        RandomSource rand = world.random;
+        Player player = event.getEntity();
+        Level level = event.getLevel();
+        Block testFor = level.getBlockState(event.getPos()).getBlock();
+        RandomSource rand = level.random;
 
         if (!player.getMainHandItem().isEmpty()) {
             ItemStack heldItem = player.getMainHandItem();
             if (heldItem.getItem() == Items.BONE_MEAL) {
                 if (testFor == Blocks.CACTUS || testFor == Blocks.SUGAR_CANE) {
-                    if (world.getBlockState(event.getPos().below(2)).getBlock() != testFor
-                            && world.getBlockState(event.getPos().above()).isAir()) {
+                    if (level.getBlockState(event.getPos().below(2)).getBlock() != testFor
+                            && level.getBlockState(event.getPos().above()).isAir()) {
                         player.swing(InteractionHand.MAIN_HAND);
                         for (int i = 0; i < 8; i++) {
-                            spawnParticles(world, rand, event.getPos());
+                            spawnParticles(level, rand, event.getPos());
                         }
-                        if (!world.isClientSide()) {
+                        if (!level.isClientSide()) {
                             if (!player.isCreative()) {
                                 heldItem.setCount(heldItem.getCount() - 1);
                             }
-                            world.setBlock(event.getPos().above(), world.getBlockState(event.getPos()), 2);
+                            level.setBlock(event.getPos().above(), level.getBlockState(event.getPos()), 2);
                         }
                     }
                 }

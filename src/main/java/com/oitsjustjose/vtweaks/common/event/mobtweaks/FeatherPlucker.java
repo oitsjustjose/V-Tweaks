@@ -1,15 +1,14 @@
 package com.oitsjustjose.vtweaks.common.event.mobtweaks;
 
-import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import com.oitsjustjose.vtweaks.common.util.Utils;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -34,9 +33,10 @@ public class FeatherPlucker {
         if (!player.getMainHandItem().isEmpty()
                 && player.getMainHandItem().getItem() instanceof ShearsItem) {
             if (!player.level.isClientSide() && canPluck(chicken)) {
-                player.level.addFreshEntity(
-                        Utils.createItemEntity(player.level, event.getTarget().getOnPos(),
-                                Items.FEATHER));
+                /* Drop feather in the world */
+                ItemEntity drop = new ItemEntity(event.getLevel(), chicken.getX(), chicken.getY(), chicken.getZ(), new ItemStack(Items.FEATHER));
+                event.getLevel().addFreshEntity(drop);
+
                 chicken.hurt(DamageSource.GENERIC, 0.0F);
                 setCooldown(chicken);
                 if (!player.isCreative()) {

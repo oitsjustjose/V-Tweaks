@@ -25,9 +25,6 @@ public class NoPetFriendlyFire {
         }
     }
 
-    /**
-     * Prevents Auxilliary Damage to Pets
-     */
     @SubscribeEvent
     public void registerEvent(LivingHurtEvent evt) {
         if (MobTweakConfig.NO_PET_FRIENDLY_FIRE.get() == MobTweakConfig.NoPetFriendlyFire.DISABLED) return;

@@ -30,20 +30,15 @@ public class UngriefedCreepers {
 
     @SubscribeEvent
     public void registerEvent(ExplosionEvent evt) {
-        if (evt.getExplosion() == null || evt.getExplosion().getSourceMob() == null) {
-            return;
-        }
+        if (!MobTweakConfig.UNGRIEFED_CREEPERS.get()) return;
 
-        if (!MobTweakConfig.UNGRIEFED_CREEPERS.get()) {
-            return;
-        }
+        if (evt.getExplosion() == null) return;
+        if (evt.getExplosion().getSourceMob() == null) return;
 
         LivingEntity exploder = evt.getExplosion().getSourceMob();
         Level lvl = exploder.getLevel();
 
-        if (!exploder.getType().is(Constants.CREEPERS)) {
-            return;
-        }
+        if (!exploder.getType().is(Constants.CREEPERS)) return;
 
         AtomicInteger idx = new AtomicInteger();
         // Enqueue future block placements from Lowest Y, Increment
@@ -58,7 +53,7 @@ public class UngriefedCreepers {
         });
 
         // Destroy current blocks from Highest Y, Decrement
-        Collections.sort(evt.getExplosion().getToBlow(), (a, b) -> Integer.compare(b.getY(), a.getY()));
+        evt.getExplosion().getToBlow().sort((a, b) -> Integer.compare(b.getY(), a.getY()));
         evt.getExplosion().getToBlow().forEach(pos -> {
             lvl.removeBlockEntity(pos);
             lvl.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -108,10 +103,6 @@ public class UngriefedCreepers {
                 this.ticks++;
                 return false;
             }
-        }
-
-        public BlockPos getPos() {
-            return this.pos;
         }
 
         private void restore() {

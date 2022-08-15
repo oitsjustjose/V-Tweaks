@@ -9,7 +9,7 @@ import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.data.ChallengerMobDataLoader;
 import com.oitsjustjose.vtweaks.common.data.EntityCullDataLoader;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipeHandler;
-import com.oitsjustjose.vtweaks.common.enchantment.FeatherFallingTweak;
+import com.oitsjustjose.vtweaks.common.enchantment.handler.FeatherFallingHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.ImperishableHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.LumberingHandler;
 import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerMobHandler;
@@ -74,7 +74,7 @@ public class VTweaks {
         // Enchantments
         MinecraftForge.EVENT_BUS.register(new LumberingHandler());
         MinecraftForge.EVENT_BUS.register(new ImperishableHandler());
-        MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
+        MinecraftForge.EVENT_BUS.register(new FeatherFallingHandler());
         MinecraftForge.EVENT_BUS.register(new AnvilRecipeHandler());
 
         // Mob Tweaks

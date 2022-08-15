@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.common.entity.challenger;
 
 import com.oitsjustjose.vtweaks.common.config.MobTweakConfig;
-import com.oitsjustjose.vtweaks.common.util.Utils;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +46,6 @@ public class ChallengerMobHandler {
     @SubscribeEvent
     public void registerEvent(LivingDropsEvent event) {
         if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
-
         if (event.getEntity() == null) return;
         if (!(event.getEntity() instanceof Monster monster)) return;
 
@@ -56,7 +54,8 @@ public class ChallengerMobHandler {
 
         ItemStack loot = challenger.pickLoot();
         if (loot != null) {
-            ItemEntity drop = Utils.createItemEntity(monster.getLevel(), monster.getOnPos(), loot);
+//            ItemEntity drop = Utils.createItemEntity(monster.getLevel(), monster.getOnPos(), loot);
+            ItemEntity drop = new ItemEntity(monster.getLevel(), monster.getX(), monster.getY(), monster.getZ(), loot);
             event.getDrops().add(drop);
         }
 

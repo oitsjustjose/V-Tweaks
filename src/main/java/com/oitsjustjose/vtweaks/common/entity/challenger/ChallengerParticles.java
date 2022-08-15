@@ -12,13 +12,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ChallengerParticles {
     @SubscribeEvent
     public void registerEvent(EntityEvent evt) {
-        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get() || !ClientConfig.ENABLE_CHALLENGER_PARTICLES.get()) {
-            return;
-        }
-
-        if (evt.getEntity() == null || !evt.getEntity().isAlive()) {
-            return;
-        }
+        if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
+        if (!ClientConfig.ENABLE_CHALLENGER_PARTICLES.get()) return;
+        if (evt.getEntity() == null) return;
+        if (!evt.getEntity().isAlive()) return;
 
         if (evt.getEntity() instanceof Monster) {
             if (ChallengerMobHandler.isChallengerMob((Monster) evt.getEntity())) {

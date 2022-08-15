@@ -18,20 +18,21 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Optional;
+
 public class LumberingHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void register(BlockEvent.BreakEvent event) {
-        // Check if enchantment is disabled
-        if (!EnchantmentConfig.ENABLE_LUMBERING.get()) {
-            return;
-        }
+        if (!EnchantmentConfig.ENABLE_LUMBERING.get()) return;
         // Check that state, world, player or player's held item all exist
-        if (event.getState() == null || event.getLevel() == null || event.getPlayer() == null
-                || event.getPlayer().getMainHandItem().isEmpty() || event.getPlayer().isCreative()
-                || !(event.getLevel() instanceof ServerLevel)) {
-            return;
-        }
-        ServerLevel world = (ServerLevel) event.getLevel();
+        if (event.getState() == null) return;
+        if (event.getLevel() == null) return;
+        if (event.getPlayer() == null) return;
+        if (event.getPlayer().getMainHandItem().isEmpty()) return;
+        if (event.getPlayer().isCreative()) return;
+
+        if (!(event.getLevel() instanceof ServerLevel world)) return;
+
         Player player = event.getPlayer();
         ItemStack stack = player.getMainHandItem();
         // Checks if the axe has lumbering
@@ -42,6 +43,7 @@ public class LumberingHandler {
                 }
             }
         }
+
     }
 
     private boolean chopTree(ServerLevel world, Player player, BlockPos pos, BlockState original, int curr) {
@@ -52,6 +54,7 @@ public class LumberingHandler {
             }
             return false;
         }
+
         for (int mod_x = -1; mod_x <= 1; mod_x++) {
             for (int mod_y = -1; mod_y <= 1; mod_y++) {
                 for (int mod_z = -1; mod_z <= 1; mod_z++) {
@@ -96,12 +99,8 @@ public class LumberingHandler {
             }
         }
 
-        IEnergyStorage cap = axe.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-        if (cap != null) {
-            return cap.getEnergyStored() > 0;
-        }
-
-        return (axe.getMaxDamage() - axe.getDamageValue()) > 2;
+        Optional<IEnergyStorage> cap = axe.getCapability(CapabilityEnergy.ENERGY, null).resolve();
+        return cap.map(iEnergyStorage -> iEnergyStorage.getEnergyStored() > 0).orElseGet(() -> (axe.getMaxDamage() - axe.getDamageValue()) > 2);
     }
 
     private boolean woodMatchFilter(BlockState original, BlockState current) {

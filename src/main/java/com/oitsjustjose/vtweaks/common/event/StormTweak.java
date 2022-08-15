@@ -8,16 +8,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class StormTweak {
     @SubscribeEvent
     public void registerTweak(LevelEvent event) {
-        // Check if feature is enabled
-        if (!CommonConfig.DISABLE_THUNDER_STORMS.get() || event.getLevel() == null) {
-            return;
-        }
+        if (!CommonConfig.DISABLE_THUNDER_STORMS.get()) return;
+        if (event.getLevel() == null) return;
         // Converts storms to regular rain
         if (event.getLevel() != null) {
             if (event.getLevel().getLevelData().isRaining()) {
                 if (event.getLevel().getLevelData().isThundering()) {
-                    if (event.getLevel().getLevelData() instanceof ServerLevelData) {
-                        ((ServerLevelData) event.getLevel().getLevelData()).setThundering(false);
+                    if (event.getLevel().getLevelData() instanceof ServerLevelData data) {
+                        data.setThundering(false);
                     }
                 }
             }
