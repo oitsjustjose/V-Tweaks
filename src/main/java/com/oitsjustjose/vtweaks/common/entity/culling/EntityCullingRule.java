@@ -107,16 +107,14 @@ public class EntityCullingRule {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("EntityCullingRule for Entities");
-        builder.append(this.entityTypes.toString());
-        builder.append(" + ");
-        builder.append(this.entityTypeTags.toString());
-        builder.append(" in Biomes ");
-        builder.append(this.biomes.toString());
-        builder.append(" + ");
-        builder.append(this.biomeTags.toString());
-        builder.append(" In ");
-        builder.append(this.dimensions);
-        return builder.toString();
+        return "EntityCullingRule for Entities" + this.entityTypes.toString() +
+                " + " +
+                this.entityTypeTags.toString() +
+                " in Biomes " +
+                this.biomes.toString() +
+                " + " +
+                this.biomeTags.toString() +
+                " In " +
+                this.dimensions;
     }
 }

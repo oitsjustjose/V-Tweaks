@@ -38,8 +38,7 @@ public class PetArmory {
     @SubscribeEvent
     public void registerEvent(AnimalTameEvent event) {
         if (MobTweakConfig.ENABLE_PET_ARMORY.get()) {
-            if (event.getAnimal() instanceof TamableAnimal) {
-                TamableAnimal pet = (TamableAnimal) event.getAnimal();
+            if (event.getAnimal() instanceof TamableAnimal pet) {
                 backupPriorSettings(pet);
                 for (EquipmentSlot slotType : EquipmentSlot.values()) {
                     pet.setDropChance(slotType, 1F);

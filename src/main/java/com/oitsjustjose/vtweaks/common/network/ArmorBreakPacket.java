@@ -11,7 +11,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ArmorBreakPacket {
-    public ArmorBreakPacket(FriendlyByteBuf buf) {
+    public ArmorBreakPacket(FriendlyByteBuf ignoredBuf) {
     }
 
     public ArmorBreakPacket() {
@@ -21,7 +21,7 @@ public class ArmorBreakPacket {
         return new ArmorBreakPacket(buf);
     }
 
-    public static void encode(ArmorBreakPacket msg, FriendlyByteBuf buf) {
+    public static void encode(ArmorBreakPacket ignoredMsg, FriendlyByteBuf ignoredBuf) {
     }
 
     public void handleServer(Supplier<NetworkEvent.Context> context) {
@@ -29,11 +29,11 @@ public class ArmorBreakPacket {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void handleClient(ArmorBreakPacket msg, Supplier<NetworkEvent.Context> context) {
+    public static void handleClient(ArmorBreakPacket ignoredMsg, Supplier<NetworkEvent.Context> context) {
         if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.get().enqueueWork(() -> {
                 Minecraft mc = Minecraft.getInstance();
-                mc.player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, 1.0F);
+                if (mc.player != null) mc.player.playSound(SoundEvents.SHIELD_BREAK, 1.0F, 1.0F);
             });
         }
         context.get().setPacketHandled(true);

@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.PacketDistributor;
 
 public class CommonProxy {
-    public static NetworkManager networkManager = new NetworkManager();
+    public static final NetworkManager networkManager = new NetworkManager();
 
     public void init() {
         networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,

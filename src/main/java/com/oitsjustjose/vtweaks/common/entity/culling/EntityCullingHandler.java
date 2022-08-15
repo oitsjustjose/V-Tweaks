@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 
 public class EntityCullingHandler {
-    public static ArrayList<EntityCullingRule> rules = new ArrayList<>();
+    public static final ArrayList<EntityCullingRule> rules = new ArrayList<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void registerEvent(LivingSpawnEvent.CheckSpawn evt) {

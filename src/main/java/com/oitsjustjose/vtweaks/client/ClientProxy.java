@@ -2,7 +2,6 @@ package com.oitsjustjose.vtweaks.client;
 
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
-import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerMob;
 import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
 import com.oitsjustjose.vtweaks.common.network.DustParticlePacket;
 import net.minecraft.client.Minecraft;
@@ -13,11 +12,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 public class ClientProxy extends CommonProxy {
     Minecraft mc;
-    public static ConcurrentHashMap<Integer, ChallengerMob> challengerMobs = new ConcurrentHashMap<>();
 
     @Override
     public void init() {

@@ -15,7 +15,6 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class AnvilRecipe implements Recipe<RecipeWrapper> {
     public final ResourceLocation id;
@@ -61,12 +60,12 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
         // If the left item is expected to have a tag
         boolean leftTagVerified = !this.left.hasTag() && !l.hasTag();
-        if (this.left.hasTag()) {
+        if (this.left.hasTag() && this.left.getTag() != null) {
             leftTagVerified = l.hasTag() && bareMinimumCompare(this.left.getTag(), l.getTag());
         }
 
         boolean rightTagVerified = !this.right.hasTag() && !r.hasTag();
-        if (this.right.hasTag()) {
+        if (this.right.hasTag() && this.right.getTag() != null) {
             rightTagVerified = r.hasTag() && bareMinimumCompare(this.right.getTag(), r.getTag());
         }
 

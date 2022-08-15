@@ -10,12 +10,12 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class DustParticlePacket {
-    public float r;
-    public float g;
-    public float b;
-    public double x;
-    public double y;
-    public double z;
+    public final float r;
+    public final float g;
+    public final float b;
+    public final double x;
+    public final double y;
+    public final double z;
 
     public DustParticlePacket(float r, float g, float b, double x, double y, double z) {
         this.r = r;

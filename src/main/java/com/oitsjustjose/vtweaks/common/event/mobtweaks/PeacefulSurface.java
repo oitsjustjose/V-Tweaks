@@ -20,7 +20,7 @@ public class PeacefulSurface {
         // Spawn is a natural spawn
         if (event.getSpawnReason() != MobSpawnType.NATURAL) return;
         // Entity is a Monster
-        if (!(event.getEntity() instanceof Monster monster)) return;
+        if (!(event.getEntity() instanceof Monster)) return;
         // World is a server-world
         if (!(event.getLevel() instanceof ServerLevel lvl)) return;
 

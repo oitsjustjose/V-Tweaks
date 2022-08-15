@@ -28,7 +28,7 @@ public class FeatherPlucker {
         if (!(event.getTarget() instanceof Chicken chicken)) return;
         if (event.getEntity() == null) return;
 
-        Player player = (Player) event.getEntity();
+        Player player = event.getEntity();
 
         if (!player.getMainHandItem().isEmpty()
                 && player.getMainHandItem().getItem() instanceof ShearsItem) {

@@ -26,8 +26,7 @@ public class BlockTweakConfig {
                 .define("enableCropTweaks", true);
         CROP_TWEAK_BLACKLIST = COMMON_BUILDER.comment("A list of blocks to ignore, of form <modid:block>")
                 .defineList("cropTweaksBlacklist", Lists.newArrayList(), (itemRaw) -> {
-                    if (itemRaw instanceof String) {
-                        String itemName = (String) itemRaw;
+                    if (itemRaw instanceof String itemName) {
                         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(itemName)) != null;
                     }
                     return false;
@@ -37,11 +36,10 @@ public class BlockTweakConfig {
         ENABLE_CAKE_DROP = COMMON_BUILDER.comment("Allows for uneaten cake to drop on break").define("enableCakeDrop",
                 true);
         ENABLE_TORCH_LIGHT_TWEAKS = COMMON_BUILDER.comment(
-                "Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`")
+                        "Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`")
                 .define("enableTorchLighting", true);
-
         ENABLE_TREE_CHOP_DOWN = COMMON_BUILDER.comment(
-                "Trees fall down (like, actually not just like lumbering). Credit to Tersnip's impl (oitsjustjo.se/u/5cCfruy1x)")
+                        "Trees fall down (like, actually not just like lumbering). Credit to Tersnip's impl (oitsjustjo.se/u/5cCfruy1x)")
                 .define("enableTreeChopDown", false);
         TREE_CHOP_DOWN_LOG_COUNT = COMMON_BUILDER
                 .comment("The number of logs above the one broken to trigger the chopdown effect")

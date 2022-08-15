@@ -19,9 +19,10 @@ public class ItemTweakConfig {
         ENABLE_DESPAWN_TIME_OVERRIDE = COMMON_BUILDER.comment("Allow for modifications to item despawn timers")
                 .define("enableDespawnTimeAdjustments", false);
         DESPAWN_TIME_OVERRIDE = COMMON_BUILDER.comment(
-                "Adjust Item Despawn Time (in ticks: 20 ticks in a second - default despawn delay is 6000 ticks)\n"
-                        + "-1 prevents items from despawning at all.\n"
-                        + "If other \"do x on despawn\" configs are enabled, then those items **will still despawn**")
+                        """
+                                Adjust Item Despawn Time (in ticks: 20 ticks in a second - default despawn delay is 6000 ticks)
+                                -1 prevents items from despawning at all.
+                                If other "do x on despawn" configs are enabled, then those items **will still despawn**""")
                 .defineInRange("despawnTimeAdjustments", 6000, -1, Integer.MAX_VALUE);
         ENABLE_CONCRETE_TWEAKS = COMMON_BUILDER
                 .comment("Convert Concrete Powder to Concrete when the item is thrown into water")

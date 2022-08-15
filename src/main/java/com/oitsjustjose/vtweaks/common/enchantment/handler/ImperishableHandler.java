@@ -117,8 +117,6 @@ public class ImperishableHandler {
                 player.getInventory().setChanged();
                 VTweaks.proxy.playSound(event.getEntity());
             });
-        } catch (NullPointerException ignored) {
-            return;
-        }
+        } catch (NullPointerException ignored) {}
     }
 }

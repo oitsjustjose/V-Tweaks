@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class ChallengerMobDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> datamap, @Nonnull ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(@NotNull Map<ResourceLocation, JsonElement> datamap, @Nonnull ResourceManager manager, @NotNull ProfilerFiller profiler) {
         if (!MobTweakConfig.ENABLE_CHALLENGER_MOBS.get()) return;
 
         ChallengerMobHandler.challengerMobVariants.clear();

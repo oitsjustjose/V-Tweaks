@@ -25,14 +25,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ConcreteTweaks {
-    public static ArrayList<Item> concreteBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE.asItem(),
-            Blocks.LIGHT_GRAY_CONCRETE.asItem(), Blocks.GRAY_CONCRETE.asItem(), Blocks.BLACK_CONCRETE.asItem(),
-            Blocks.RED_CONCRETE.asItem(), Blocks.ORANGE_CONCRETE.asItem(), Blocks.YELLOW_CONCRETE.asItem(),
-            Blocks.LIME_CONCRETE.asItem(), Blocks.GREEN_CONCRETE.asItem(), Blocks.LIGHT_BLUE_CONCRETE.asItem(),
-            Blocks.CYAN_CONCRETE.asItem(), Blocks.BLUE_CONCRETE.asItem(), Blocks.PURPLE_CONCRETE.asItem(),
-            Blocks.MAGENTA_CONCRETE.asItem(), Blocks.PINK_CONCRETE.asItem(), Blocks.BROWN_CONCRETE.asItem());
-
-    public static ArrayList<Item> powderBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE_POWDER.asItem(),
+    public static final ArrayList<Item> powderBlocks = Lists.newArrayList(Blocks.WHITE_CONCRETE_POWDER.asItem(),
             Blocks.LIGHT_GRAY_CONCRETE_POWDER.asItem(), Blocks.GRAY_CONCRETE_POWDER.asItem(),
             Blocks.BLACK_CONCRETE_POWDER.asItem(), Blocks.RED_CONCRETE_POWDER.asItem(),
             Blocks.ORANGE_CONCRETE_POWDER.asItem(), Blocks.YELLOW_CONCRETE_POWDER.asItem(),

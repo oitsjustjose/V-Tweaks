@@ -46,10 +46,10 @@ import java.util.HashMap;
 @Mod(Constants.MODID)
 public class VTweaks {
     private static VTweaks instance;
-    public Logger LOGGER = LogManager.getLogger();
-    public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-    public static EnchantmentRegistrator Enchantments = new EnchantmentRegistrator();
-    public static RecipeRegistrator RecipeSerializers = new RecipeRegistrator();
+    public final Logger LOGGER = LogManager.getLogger();
+    public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+    public static final EnchantmentRegistrator Enchantments = new EnchantmentRegistrator();
+    public static final RecipeRegistrator RecipeSerializers = new RecipeRegistrator();
 
     public VTweaks() {
         instance = this;
@@ -67,7 +67,7 @@ public class VTweaks {
         return instance;
     }
 
-    public void setup(final FMLCommonSetupEvent event) {
+    public void setup(final FMLCommonSetupEvent ignoredEvent) {
         // Proxy init - sets up networking too
         proxy.init();
 
@@ -98,9 +98,7 @@ public class VTweaks {
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
         MinecraftForge.EVENT_BUS.register(new ConcreteTweaks());
-        ConcreteTweaks.powderBlocks.forEach((item) -> {
-            DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
-        });
+        ConcreteTweaks.powderBlocks.forEach((item) -> DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM));
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());

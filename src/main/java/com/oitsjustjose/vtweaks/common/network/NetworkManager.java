@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class NetworkManager {
-    public SimpleChannel networkWrapper;
+    public final SimpleChannel networkWrapper;
     private static final String PROTOCOL_VERSION = "1";
 
     public NetworkManager() {

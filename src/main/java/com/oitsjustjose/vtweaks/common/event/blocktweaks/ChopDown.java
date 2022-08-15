@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -49,8 +48,8 @@ public class ChopDown {
         // Let's not chop down everything if it's basically not a tree
         boolean leavesFound = false;
 
-        LinkedList<BlockPos> queue = new LinkedList<BlockPos>();
-        HashMap<BlockPos, Integer> used = new HashMap<BlockPos, Integer>();
+        LinkedList<BlockPos> queue = new LinkedList<>();
+        HashMap<BlockPos, Integer> used = new HashMap<>();
 
         queue.add(initialPos);
         used.put(initialPos, leaf);
