@@ -120,8 +120,7 @@ public class ChopDown {
             case NORTH -> pos.offset(1, 0, -transformedY + 1);
             case EAST -> pos.offset(1 + transformedY, 0, 1);
             case WEST -> pos.offset(-transformedY + 1, 0, 1);
-            default -> // Up and Down won't be involved.
-                    pos;
+            default -> pos; // UP and DOWN not needed;
         };
     }
 
