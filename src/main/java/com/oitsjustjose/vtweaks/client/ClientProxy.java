@@ -38,7 +38,6 @@ public class ClientProxy extends CommonProxy {
 
     public static void showDustParticle(float r, float g, float b, double x, double y, double z) {
         Minecraft mc = Minecraft.getInstance();
-
         Entity view = mc.getCameraEntity();
 
         if (view != null) {
@@ -47,7 +46,7 @@ public class ClientProxy extends CommonProxy {
 
             if (mc.player != null && mc.player.shouldRenderAtSqrDistance(position.distanceTo(particlePos))) {
                 ParticleOptions p = new DustParticleOptions(new Vector3f(r, g, b), 1.0F);
-                mc.levelRenderer.addParticle(p, false, x, y, z, 0D, 0D, 0D);
+                mc.player.clientLevel.addParticle(p, false, x, y, z, 0D, 0D, 0D);
             }
         }
     }

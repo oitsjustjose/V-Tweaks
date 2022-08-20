@@ -113,7 +113,9 @@ artifacts {
      changelogType = 'markdown'
      changelog = file("./changelog.md")
      releaseType = 'release'
-     addGameVersion "1.18.2"
+     addGameVersion "1.19"
+     addGameVersion "1.19.1"
+     addGameVersion "1.19.2"
      mainArtifact(jar) {
          displayName = "V-Tweaks ${game_version} ${mod_version}"
      }
