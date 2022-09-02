@@ -1,5 +1,9 @@
 # V-Tweaks Changelog MC 1.18.x
 
+## 3.6.5.1
+
+- Fixed Anvil Recipe issue where left/right recipes not requiring any particular NBT would not work
+
 ## 3.6.5
 
 - Backported Anvil Recipes / Changes to 1.18.2 from 1.19 Branch
