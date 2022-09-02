@@ -58,13 +58,12 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         if (l.getItem() != this.left.getItem()) return false;
         if (r.getItem() != this.right.getItem()) return false;
 
-        // If the left item is expected to have a tag
-        boolean leftTagVerified = !this.left.hasTag() && !l.hasTag();
+        boolean leftTagVerified = !this.left.hasTag();
         if (this.left.hasTag() && this.left.getTag() != null) {
             leftTagVerified = l.hasTag() && bareMinimumCompare(this.left.getTag(), l.getTag());
         }
 
-        boolean rightTagVerified = !this.right.hasTag() && !r.hasTag();
+        boolean rightTagVerified = !this.right.hasTag();
         if (this.right.hasTag() && this.right.getTag() != null) {
             rightTagVerified = r.hasTag() && bareMinimumCompare(this.right.getTag(), r.getTag());
         }
