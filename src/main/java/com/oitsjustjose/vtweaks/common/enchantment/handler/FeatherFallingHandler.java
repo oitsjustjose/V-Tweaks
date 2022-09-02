@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.enchantment;
+package com.oitsjustjose.vtweaks.common.enchantment.handler;
 
 import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.common.util.Utils;
@@ -9,7 +9,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class FeatherFallingTweak {
+public class FeatherFallingHandler {
     @SubscribeEvent
     public void registerTweak(LivingHurtEvent event) {
         // Check if enchantment is disabled

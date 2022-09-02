@@ -20,7 +20,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 
-public class EnchantmentImperishableHandler {
+public class ImperishableHandler {
     // Breaking a block with any tool
     @SubscribeEvent
     public void register(BreakSpeed event) {
@@ -38,7 +38,7 @@ public class EnchantmentImperishableHandler {
             return;
         }
 
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.Enchantments.imperishable, stack) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
                 event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 0.25F,
                         (float) Math.min(1.0F, 0.5F + event.getPlayer().getRandom().nextDouble()));
@@ -58,7 +58,7 @@ public class EnchantmentImperishableHandler {
         }
 
         ItemStack stack = event.getPlayer().getMainHandItem();
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.Enchantments.imperishable, stack) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
                 if (event.isCancelable()) {
                     event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 1.0F,
@@ -81,7 +81,7 @@ public class EnchantmentImperishableHandler {
         }
 
         ItemStack stack = event.getPlayer().getMainHandItem();
-        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.Enchantments.imperishable, stack) > 0) {
             if (stack.getDamageValue() >= (stack.getMaxDamage() - 1)) {
                 if (event.isCancelable()) {
                     event.getPlayer().playSound(SoundEvents.SHIELD_BREAK, 1.0F,
@@ -105,7 +105,7 @@ public class EnchantmentImperishableHandler {
             for (ItemStack stack : event.getPlayer().getArmorSlots()) {
                 if (stack.getItem() instanceof ArmorItem) {
                     ArmorItem armor = (ArmorItem) stack.getItem();
-                    if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.imperishable, stack) > 0) {
+                    if (EnchantmentHelper.getItemEnchantmentLevel(VTweaks.Enchantments.imperishable, stack) > 0) {
                         if (armor.getDamage(stack) >= (armor.getMaxDamage(stack) - 1)) {
                             salvaged.add(stack);
                         }

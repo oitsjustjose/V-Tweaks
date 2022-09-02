@@ -1,5 +1,9 @@
 # V-Tweaks Changelog MC 1.18.x
 
+## 3.6.5
+
+- Backported Anvil Recipes / Changes to 1.18.2 from 1.19 Branch
+
 ## 3.6.4.1 (HOTFIX)
 
 - Fixes crash on dedicated server for Ungriefed Creepers feature

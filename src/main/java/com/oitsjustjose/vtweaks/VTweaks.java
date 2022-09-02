@@ -6,14 +6,12 @@ import com.oitsjustjose.vtweaks.client.SmallBees;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
-import com.oitsjustjose.vtweaks.common.config.EnchantmentConfig;
 import com.oitsjustjose.vtweaks.common.data.ChallengerMobDataLoader;
 import com.oitsjustjose.vtweaks.common.data.EntityCullDataLoader;
-import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentImperishable;
-import com.oitsjustjose.vtweaks.common.enchantment.EnchantmentLumbering;
-import com.oitsjustjose.vtweaks.common.enchantment.FeatherFallingTweak;
-import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentImperishableHandler;
-import com.oitsjustjose.vtweaks.common.enchantment.handler.EnchantmentLumberingHandler;
+import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipeHandler;
+import com.oitsjustjose.vtweaks.common.enchantment.handler.FeatherFallingHandler;
+import com.oitsjustjose.vtweaks.common.enchantment.handler.ImperishableHandler;
+import com.oitsjustjose.vtweaks.common.enchantment.handler.LumberingHandler;
 import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerMobHandler;
 import com.oitsjustjose.vtweaks.common.entity.challenger.ChallengerParticles;
 import com.oitsjustjose.vtweaks.common.entity.culling.EntityCullingHandler;
@@ -25,13 +23,13 @@ import com.oitsjustjose.vtweaks.common.event.itemtweaks.AnvilRepairTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.ConcreteTweaks;
 import com.oitsjustjose.vtweaks.common.event.itemtweaks.DropTweaks;
 import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
+import com.oitsjustjose.vtweaks.common.registry.EnchantmentRegistrator;
+import com.oitsjustjose.vtweaks.common.registry.RecipeRegistrator;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import com.oitsjustjose.vtweaks.common.util.Recipes;
-import net.minecraft.world.item.enchantment.Enchantment;
+import com.oitsjustjose.vtweaks.common.util.JEICompat;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -43,17 +41,22 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+
 @Mod(Constants.MODID)
 public class VTweaks {
     private static VTweaks instance;
     public Logger LOGGER = LogManager.getLogger();
     public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
-    public static Enchantment lumbering = new EnchantmentLumbering();
-    public static Enchantment imperishable = new EnchantmentImperishable();
+    public static final EnchantmentRegistrator Enchantments = new EnchantmentRegistrator();
+    public static final RecipeRegistrator RecipeSerializers = new RecipeRegistrator();
 
     public VTweaks() {
         instance = this;
+
+        Enchantments.REGISTRATOR.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RecipeSerializers.SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -70,7 +73,10 @@ public class VTweaks {
         proxy.init();
 
         // Enchantments
-        MinecraftForge.EVENT_BUS.register(new Recipes());
+        MinecraftForge.EVENT_BUS.register(new LumberingHandler());
+        MinecraftForge.EVENT_BUS.register(new ImperishableHandler());
+        MinecraftForge.EVENT_BUS.register(new FeatherFallingHandler());
+        MinecraftForge.EVENT_BUS.register(new AnvilRecipeHandler());
 
         // Mob Tweaks
         MinecraftForge.EVENT_BUS.register(new PetArmory());
@@ -93,9 +99,7 @@ public class VTweaks {
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
         MinecraftForge.EVENT_BUS.register(new ConcreteTweaks());
-        ConcreteTweaks.powderBlocks.forEach((item) -> {
-            DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM);
-        });
+        ConcreteTweaks.powderBlocks.forEach((item) -> DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM));
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());
@@ -116,28 +120,6 @@ public class VTweaks {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerMobDataLoader());
         evt.addListener(new EntityCullDataLoader());
+        JEICompat.cache = new HashMap<>();
     }
-
-
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void registerEnchantments(final RegistryEvent.Register<Enchantment> enchantmentRegistryEvent) {
-
-            if (EnchantmentConfig.ENABLE_LUMBERING.get()) {
-                enchantmentRegistryEvent.getRegistry().register(VTweaks.lumbering);
-                MinecraftForge.EVENT_BUS.register(new EnchantmentLumberingHandler());
-            }
-
-            if (EnchantmentConfig.ENABLE_IMPERISHABLE.get()) {
-                enchantmentRegistryEvent.getRegistry().register(VTweaks.imperishable);
-                MinecraftForge.EVENT_BUS.register(new EnchantmentImperishableHandler());
-            }
-
-            if (EnchantmentConfig.ENABLE_FF_TWEAK.get()) {
-                MinecraftForge.EVENT_BUS.register(new FeatherFallingTweak());
-            }
-        }
-    }
-
 }

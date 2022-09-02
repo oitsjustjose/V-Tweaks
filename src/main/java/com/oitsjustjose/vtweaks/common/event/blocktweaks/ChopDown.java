@@ -43,7 +43,7 @@ public class ChopDown {
             return;
         }
 
-        int lumberLvl = EnchantmentHelper.getItemEnchantmentLevel(VTweaks.lumbering, evt.getPlayer().getMainHandItem());
+        int lumberLvl = EnchantmentHelper.getItemEnchantmentLevel(VTweaks.Enchantments.lumbering, evt.getPlayer().getMainHandItem());
 
         // Drop early if lumbering..
         if (evt.getPlayer().isCrouching() && lumberLvl > 0) {

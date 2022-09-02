@@ -6,10 +6,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class EnchantmentImperishable extends Enchantment {
-    public EnchantmentImperishable() {
+public class ImperishableEnchantment extends Enchantment {
+    public ImperishableEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
-        this.setRegistryName(new ResourceLocation(Constants.MODID, "imperishable"));
     }
 
     @Override

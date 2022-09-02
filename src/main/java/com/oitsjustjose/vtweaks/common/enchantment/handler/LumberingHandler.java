@@ -12,7 +12,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -20,7 +19,7 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EnchantmentLumberingHandler {
+public class LumberingHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void register(BreakEvent event) {
         // Check if enchantment is disabled
@@ -36,7 +35,7 @@ public class EnchantmentLumberingHandler {
         ServerLevel world = (ServerLevel) event.getWorld();
         Player player = event.getPlayer();
         // Checks if the axe has lumbering
-        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.lumbering, player) > 0) {
+        if (EnchantmentHelper.getEnchantmentLevel(VTweaks.Enchantments.lumbering, player) > 0) {
             if (player.isCrouching()) {
                 if (event.getState().is(BlockTags.LOGS)) {
                     chopTree(world, player, event.getPos(), event.getState(), 0);
