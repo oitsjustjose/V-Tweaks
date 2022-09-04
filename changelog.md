@@ -1,5 +1,9 @@
 # V-Tweaks Changelog MC 1.18.x
 
+## 3.6.5.2
+
+- Re-architected recipe cache to keep V-Tweaks from crashing when JEI is not installed
+
 ## 3.6.5.1
 
 - Fixed Anvil Recipe issue where left/right recipes not requiring any particular NBT would not work

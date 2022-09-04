@@ -8,6 +8,7 @@ import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.data.ChallengerMobDataLoader;
 import com.oitsjustjose.vtweaks.common.data.EntityCullDataLoader;
+import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipeHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.FeatherFallingHandler;
 import com.oitsjustjose.vtweaks.common.enchantment.handler.ImperishableHandler;
@@ -26,7 +27,6 @@ import com.oitsjustjose.vtweaks.common.event.mobtweaks.*;
 import com.oitsjustjose.vtweaks.common.registry.EnchantmentRegistrator;
 import com.oitsjustjose.vtweaks.common.registry.RecipeRegistrator;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import com.oitsjustjose.vtweaks.common.util.JEICompat;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -42,6 +42,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+
 
 @Mod(Constants.MODID)
 public class VTweaks {
@@ -120,6 +121,6 @@ public class VTweaks {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerMobDataLoader());
         evt.addListener(new EntityCullDataLoader());
-        JEICompat.cache = new HashMap<>();
+        AnvilRecipe.cache.clear();
     }
 }

@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.util.JEICompat;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -15,8 +14,12 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
+
 
 public class AnvilRecipe implements Recipe<RecipeWrapper> {
+    public static HashMap<ResourceLocation, AnvilRecipe> cache = new HashMap<>();
+
     public final ResourceLocation id;
     private final ItemStack left;
     private final ItemStack right;
@@ -29,7 +32,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.right = r;
         this.result = e;
         this.cost = c;
-        JEICompat.cache.put(id, this);
+        cache.put(id, this);
     }
 
     public ItemStack getLeft() {

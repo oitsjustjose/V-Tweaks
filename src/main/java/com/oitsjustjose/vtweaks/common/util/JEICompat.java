@@ -15,7 +15,6 @@ import java.util.List;
 @JeiPlugin
 public class JEICompat implements IModPlugin {
     private static final ResourceLocation ID = new ResourceLocation(Constants.MODID, "anvil_recipes");
-    public static HashMap<ResourceLocation, AnvilRecipe> cache = new HashMap<>();
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {
@@ -24,7 +23,7 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        List<IJeiAnvilRecipe> r = cache.values().stream().map(x -> registration.getVanillaRecipeFactory().createAnvilRecipe(x.getLeft(), List.of(x.getRight()), List.of(x.getResult()))).toList();
+        List<IJeiAnvilRecipe> r = AnvilRecipe.cache.values().stream().map(x -> registration.getVanillaRecipeFactory().createAnvilRecipe(x.getLeft(), List.of(x.getRight()), List.of(x.getResult()))).toList();
         registration.addRecipes(r, VanillaRecipeCategoryUid.ANVIL);
     }
 }
