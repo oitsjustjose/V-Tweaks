@@ -2,6 +2,10 @@
 
 ## Should work on 1.19.1 and .2, but this has not been tested.
 
+## 3.6.5.1
+
+- Hopefully resolved issues with `Accessing LegacyRandomSource from multiple threads` errors.
+
 ## 3.6.5
 
 ### Added
