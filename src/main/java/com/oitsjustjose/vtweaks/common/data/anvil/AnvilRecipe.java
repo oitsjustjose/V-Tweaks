@@ -4,6 +4,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.util.JEICompat;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -22,13 +23,17 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     private final ItemStack right;
     private final ItemStack result;
     private final int cost;
+    private final boolean copyNbtFromLeft;
+    private final boolean copyNbtFromRight;
 
-    public AnvilRecipe(ResourceLocation id, ItemStack l, ItemStack r, ItemStack e, int c) {
+    public AnvilRecipe(ResourceLocation id, ItemStack l, ItemStack r, ItemStack e, int c, boolean cpl, boolean cpr) {
         this.id = id;
         this.left = l;
         this.right = r;
         this.result = e;
         this.cost = c;
+        this.copyNbtFromLeft = cpl;
+        this.copyNbtFromRight = cpr;
         JEICompat.cache.put(id, this);
     }
 
@@ -46,6 +51,14 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
     public int getCost() {
         return this.cost;
+    }
+
+    public boolean shouldResultCopyNbtFromLeft() {
+        return this.copyNbtFromLeft;
+    }
+
+    public boolean shouldResultCopyNbtFromRight() {
+        return this.copyNbtFromRight;
     }
 
     @Override

@@ -18,7 +18,9 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         ItemStack right = deserialize(obj, "right");
         ItemStack result = deserialize(obj, "result");
         int cost = obj.get("cost").getAsInt();
-        return new AnvilRecipe(rl, left, right, result, cost);
+        boolean cpl = obj.has("cpFromLeft") && obj.get("cpFromLeft").getAsBoolean();
+        boolean cpr = obj.has("cpFromRight") && obj.get("cpFromRight").getAsBoolean();
+        return new AnvilRecipe(rl, left, right, result, cost, cpl, cpr);
     }
 
     @Override
@@ -27,6 +29,8 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         buf.writeItemStack(recipe.getRight(), false);
         buf.writeItemStack(recipe.getResult(), false);
         buf.writeInt(recipe.getCost());
+        buf.writeBoolean(recipe.shouldResultCopyNbtFromLeft());
+        buf.writeBoolean(recipe.shouldResultCopyNbtFromRight());
     }
 
     @Override
@@ -35,7 +39,9 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         ItemStack right = buf.readItem();
         ItemStack result = buf.readItem();
         int cost = buf.readInt();
-        return new AnvilRecipe(rl, left, right, result, cost);
+        boolean cpl = buf.readBoolean();
+        boolean cpr = buf.readBoolean();
+        return new AnvilRecipe(rl, left, right, result, cost, cpl, cpr);
     }
 
     private ItemStack deserialize(JsonObject parent, String key) {
