@@ -16,21 +16,21 @@ public class AnvilRecipeHandler {
     public void registerEvent(AnvilUpdateEvent evt) {
         Optional<AnvilRecipe> r = find(evt);
         if (r.isPresent()) {
-            ItemStack output = r.get().getResult();
+            ItemStack output = r.get().getResult().copy();
 
             if (r.get().shouldResultCopyNbtFromLeft()) {
                 CompoundTag oTag = output.getTag();
-                CompoundTag lTag = evt.getLeft().getTag();
+                CompoundTag lTag = evt.getLeft().copy().getTag();
                 if (lTag != null && oTag != null) {
-                    output.setTag(lTag.merge(oTag));
+                    output.setTag(lTag.copy().merge(oTag));
                 }
             }
 
             if (r.get().shouldResultCopyNbtFromRight()) {
                 CompoundTag oTag = output.getTag();
-                CompoundTag rTag = evt.getRight().getTag();
+                CompoundTag rTag = evt.getRight().copy().getTag();
                 if (rTag != null && oTag != null) {
-                    output.setTag(rTag.merge(oTag));
+                    output.setTag(rTag.copy().merge(oTag));
                 }
             }
 

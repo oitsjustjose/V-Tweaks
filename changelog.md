@@ -1,5 +1,9 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 3.6.6.2
+
+- Fixes to NBT breakages!! 
+
 ## 3.6.6
 
 - Added new optional Anvil Recipe attributes `cpFromLeft` and `cpFromRight`. Assumes to be `false` if not included. `cpFrom[Left|Right]` will copy all NBT **except** for those defined in the output, to the output. You can choose to set BOTH to true, but any overlap in NBT will be overwritten by the **RIGHT** input. 
