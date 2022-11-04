@@ -1,0 +1,19 @@
+{
+    "enchantment.vtweaks.lumbering": "Carpintaria",
+    "enchantment.vtweaks.imperishable": "Imperecível",
+    "enchantment.vtweaks.lumbering.desc": "§3Enquanto Agachado:§r\n    Derruba uma árvore inteira ao quebrar qualquer bloco de madeira da árvore.\n    §4§lFunciona em não-árvores também§r",
+    "enchantment.vtweaks.imperishable.desc": "Salva sua ferramenta ou peça de armadura de quebrar,\n    portanto §ldesabilitando a funcionalidade do item\n    até ser reparado.§r",
+    "vtweaks.death.message": "Você morreu em §e[X:%s, Y:%s, Z:%s]§r",
+    "vtweaks.man.pants": "§5Calças de homem§r",
+    "vtweaks.mighty.challenger.mob": "Mighty %s",
+    "vtweaks.hungry.challenger.mob": "Hunger %s",
+    "vtweaks.ranger.challenger.mob": "Ranger %s",
+    "vtweaks.arcane.challenger.mob": "Arcano %s",
+    "vtweaks.pyro.challenger.mob": "Pyro %s",
+    "vtweaks.zistonian.challenger.mob": "Zistoniano %s",
+    "vtweaks.reinforced.challenger.mob": "Endurecido %s",
+    "vtweaks.agile.challenger.mob": "Ágil %s",
+    "vtweaks.intro.link": "V-Tweaks Online Wiki",
+    "vtweaks.intro.message": "Bem-vindo! Parece que esta é sua primeira vez executando V-Tweaks neste mundo! Aqui está um link para um wiki online se você estiver interessado, lembre-se de que alguns recursos podem estar desabilitados!",
+    "vtweaks.tool.damaged": "§4§lSua ferramenta está muito danificada para ser usada!§r"
+}
