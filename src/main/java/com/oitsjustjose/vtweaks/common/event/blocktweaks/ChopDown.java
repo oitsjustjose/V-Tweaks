@@ -11,18 +11,24 @@ import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 public class ChopDown {
     @SubscribeEvent
@@ -92,13 +98,13 @@ public class ChopDown {
                 BlockPos blockPos = entry.getKey();
                 if (!initialPos.equals(blockPos) && canBeMoved(level, blockPos.offset(0, -1, 0))) {
                     BlockPos newPos = getNewPosition(initialPos, blockPos, dir);
-                    moveAsBlockEntity(level, blockPos, newPos);
+                    moveAsBlockEntity(level, blockPos, newPos, dir);
                 }
             }
         }
     }
 
-    private Direction getDirection(BlockPos playerPos, BlockPos brokenPos) {
+    private Direction getDirection(@NotNull BlockPos playerPos, BlockPos brokenPos) {
         double x = (brokenPos.getX() + 0.5) - playerPos.getX();
         double z = (brokenPos.getZ() + 0.5) - playerPos.getZ();
         double abX = Math.abs(x);
@@ -115,12 +121,25 @@ public class ChopDown {
         // Transforms height of tree into length of throw
         int transformedY = pos.getY() - initialBreakPos.getY();
         return switch (facing) {
-            case SOUTH -> pos.offset(1, 0, 1 + transformedY);
-            case NORTH -> pos.offset(1, 0, -transformedY + 1);
-            case EAST -> pos.offset(1 + transformedY, 0, 1);
-            case WEST -> pos.offset(-transformedY + 1, 0, 1);
+            case SOUTH -> pos.offset(0, 0, 1 + transformedY);
+            case NORTH -> pos.offset(0, 0, -transformedY - 1);
+            case EAST -> pos.offset(1 + transformedY, 0, 0);
+            case WEST -> pos.offset(-transformedY - 1, 0, 0);
             default -> pos; // UP and DOWN not needed;
         };
+    }
+
+    private BlockState rotate(Level level, BlockPos pos, BlockState state, Direction facing) {
+        if (state.hasProperty(RotatedPillarBlock.AXIS)) {
+            Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
+            BlockState ret = state.setValue(RotatedPillarBlock.AXIS, axis == Direction.Axis.X ? Direction.Axis.Y : Direction.Axis.X);
+            return switch (facing) {
+                case NORTH, SOUTH -> ret.rotate(level, pos, Rotation.CLOCKWISE_90);
+                case EAST, WEST -> ret;
+                default -> state;
+            };
+        }
+        return state;
     }
 
     private boolean canBeMoved(Level level, BlockPos pos) {
@@ -129,8 +148,8 @@ public class ChopDown {
                 || bs.is(BlockTags.BEEHIVES) || bs.isAir());
     }
 
-    private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos) {
-        BlockState bs = level.getBlockState(pos);
+    private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos, Direction direction) {
+        BlockState bs = rotate(level, pos, level.getBlockState(pos), direction);
         // destroy some leaves
         if (bs.is(BlockTags.LEAVES) && level.getRandom().nextBoolean()) {
             Block.dropResources(bs, level, newPos, null);
