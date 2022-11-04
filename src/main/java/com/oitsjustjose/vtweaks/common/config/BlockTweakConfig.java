@@ -39,7 +39,7 @@ public class BlockTweakConfig {
                         "Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`")
                 .define("enableTorchLighting", true);
         ENABLE_TREE_CHOP_DOWN = COMMON_BUILDER.comment(
-                        "Trees fall down (like, actually not just like lumbering). Credit to Tersnip's impl (oitsjustjo.se/u/5cCfruy1x)")
+                        "Trees fall down (like, actually not just like lumbering). Credit to Ternsip's impl (https://www.curseforge.com/minecraft/mc-mods/chopdown)")
                 .define("enableTreeChopDown", false);
         TREE_CHOP_DOWN_LOG_COUNT = COMMON_BUILDER
                 .comment("The number of logs above the one broken to trigger the chopdown effect")

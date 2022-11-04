@@ -1,5 +1,9 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 3.6.7
+
+- At long last, the chopdown feature is *no longer experimental* and has been finished to a point where I am content with it. This update fixes the offsets when breaking trees, as well as rotates logs as they fall.
+
 ## 3.6.6.2
 
 - Fixes to NBT breakages!! 
