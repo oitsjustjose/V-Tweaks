@@ -98,7 +98,16 @@ public class VTweaks {
         // Item Tweaks
         MinecraftForge.EVENT_BUS.register(new DropTweaks());
         MinecraftForge.EVENT_BUS.register(new ConcreteTweaks());
-        ConcreteTweaks.powderBlocks.forEach((item) -> DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM));
+        /* Fastutils is stupid and breaks things. At least try 3 times before giving up */
+        int fastUtilTryCtr = 0;
+        while (fastUtilTryCtr < 3) {
+            try {
+                ConcreteTweaks.powderBlocks.forEach((item) -> DispenserBlock.registerBehavior(item, ConcreteTweaks.CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM));
+                break;
+            } catch (ArrayIndexOutOfBoundsException exc) {
+                fastUtilTryCtr++;
+            }
+        }
 
         // Miscellaneous Features
         MinecraftForge.EVENT_BUS.register(new ToolTips());

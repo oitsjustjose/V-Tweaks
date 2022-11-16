@@ -11,16 +11,15 @@ import com.oitsjustjose.vtweaks.common.config.BlockTweakConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
-import java.util.UUID;
 
 public class ChopDown {
     @SubscribeEvent
@@ -74,7 +72,8 @@ public class ChopDown {
 
                         BlockState bs = level.getBlockState(tmpPos);
                         boolean isLog = bs.is(BlockTags.LOGS);
-                        boolean isLeaf = bs.is(BlockTags.LEAVES);
+                        // Leaf blocks that have been placed by the player are ignored
+                        boolean isLeaf = bs.is(BlockTags.LEAVES) && bs.hasProperty(LeavesBlock.PERSISTENT) && !bs.getValue(LeavesBlock.PERSISTENT);
 
                         if (isLeaf && !leavesFound) {
                             leavesFound = true;
@@ -144,8 +143,7 @@ public class ChopDown {
 
     private boolean canBeMoved(Level level, BlockPos pos) {
         BlockState bs = level.getBlockState(pos);
-        return !bs.hasBlockEntity() && (bs.is(BlockTags.LOGS) || bs.is(BlockTags.LEAVES)
-                || bs.is(BlockTags.BEEHIVES) || bs.isAir());
+        return !bs.hasBlockEntity() && (bs.is(BlockTags.LOGS) || (bs.is(BlockTags.LEAVES) && bs.hasProperty(LeavesBlock.PERSISTENT) && !bs.getValue(LeavesBlock.PERSISTENT)) || bs.is(BlockTags.BEEHIVES) || bs.isAir());
     }
 
     private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos, Direction direction) {

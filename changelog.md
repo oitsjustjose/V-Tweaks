@@ -1,5 +1,10 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 3.6.8
+
+- Chopdown will no longer consider player-placed leaves as part of a tree
+- Hopefully fixed failure to start due to FastUtils `it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap.rehash` error
+
 ## 3.6.7
 
 - At long last, the chopdown feature is *no longer experimental* and has been finished to a point where I am content with it. This update fixes the offsets when breaking trees, as well as rotates logs as they fall.
