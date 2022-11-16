@@ -46,8 +46,7 @@ public class ConcreteTweaks {
             return;
         }
         ItemEntity entItem = event.getEntityItem();
-        if (entItem.getItem().getItem() instanceof BlockItem) {
-            BlockItem itemBlock = (BlockItem) entItem.getItem().getItem();
+        if (entItem.getItem().getItem() instanceof BlockItem itemBlock) {
             if (powderBlocks.contains(itemBlock)) {
                 ItemEntityConcrete concrete = new ItemEntityConcrete(entItem);
                 if (!concrete.level.isClientSide()) {
@@ -95,6 +94,9 @@ public class ConcreteTweaks {
     public static final DispenseItemBehavior CONCRETE_POWDER_BEHAVIOR_DISPENSE_ITEM = new DefaultDispenseItemBehavior() {
         @Override
         public ItemStack execute(BlockSource source, ItemStack stack) {
+            if (!ItemTweakConfig.ENABLE_CONCRETE_TWEAKS.get()) {
+                return super.execute(source, stack);
+            }
             Direction facing = source.getBlockState().getValue(DispenserBlock.FACING);
             Position pos = DispenserBlock.getDispensePosition(source);
             ItemStack itemstack = stack.split(1);

@@ -29,6 +29,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -50,12 +52,11 @@ public class ChopDown {
             return;
         }
 
-        if (!(evt.getWorld() instanceof Level)) {
+        if (!(evt.getWorld() instanceof Level level)) {
             return;
         }
 
         BlockPos initialPos = evt.getPos();
-        Level level = (Level) evt.getWorld();
         Player player = evt.getPlayer();
 
         for (int dy = 0; dy < BlockTweakConfig.TREE_CHOP_DOWN_LOG_COUNT.get(); dy++) {
@@ -92,7 +93,8 @@ public class ChopDown {
 
                         BlockState bs = level.getBlockState(tmpPos);
                         boolean isLog = bs.is(BlockTags.LOGS);
-                        boolean isLeaf = bs.is(BlockTags.LEAVES);
+                        // Leaf blocks that have been placed by the player are ignored
+                        boolean isLeaf = bs.is(BlockTags.LEAVES) && bs.hasProperty(LeavesBlock.PERSISTENT) && !bs.getValue(LeavesBlock.PERSISTENT);
 
                         if (isLeaf && !leavesFound) {
                             leavesFound = true;
@@ -116,7 +118,7 @@ public class ChopDown {
                 BlockPos blockPos = entry.getKey();
                 if (!initialPos.equals(blockPos) && canBeMoved(level, blockPos.offset(0, -1, 0))) {
                     BlockPos newPos = getNewPosition(initialPos, blockPos, dir);
-                    moveAsBlockEntity(level, blockPos, newPos);
+                    moveAsBlockEntity(level, blockPos, newPos, dir);
                 }
             }
         }
@@ -138,28 +140,36 @@ public class ChopDown {
     private BlockPos getNewPosition(BlockPos initialBreakPos, BlockPos pos, Direction facing) {
         // Transforms height of tree into length of throw
         int transformedY = pos.getY() - initialBreakPos.getY();
-        switch (facing) {
-            case SOUTH:
-                return pos.offset(1, 0, 1 + transformedY);
-            case NORTH:
-                return pos.offset(1, 0, -transformedY + 1);
-            case EAST:
-                return pos.offset(1 + transformedY, 0, 1);
-            case WEST:
-                return pos.offset(-transformedY + 1, 0, 1);
-            default: // Up and Down won't be involved.
-                return pos;
-        }
+        return switch (facing) {
+            case SOUTH -> pos.offset(0, 0, 1 + transformedY);
+            case NORTH -> pos.offset(0, 0, -transformedY - 1);
+            case EAST -> pos.offset(1 + transformedY, 0, 0);
+            case WEST -> pos.offset(-transformedY - 1, 0, 0);
+            default -> // Up and Down won't be involved.
+                    pos;
+        };
     }
 
     private boolean canBeMoved(Level level, BlockPos pos) {
         BlockState bs = level.getBlockState(pos);
-        return !bs.hasBlockEntity() && (bs.is(BlockTags.LOGS) || bs.is(BlockTags.LEAVES)
-                || bs.is(BlockTags.BEEHIVES) || bs.isAir());
+        return !bs.hasBlockEntity() && (bs.is(BlockTags.LOGS) || (bs.is(BlockTags.LEAVES) && bs.hasProperty(LeavesBlock.PERSISTENT) && !bs.getValue(LeavesBlock.PERSISTENT)) || bs.is(BlockTags.BEEHIVES) || bs.isAir());
     }
 
-    private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos) {
-        BlockState bs = level.getBlockState(pos);
+    private BlockState rotate(Level level, BlockPos pos, BlockState state, Direction facing) {
+        if (state.hasProperty(RotatedPillarBlock.AXIS)) {
+            Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
+            BlockState ret = state.setValue(RotatedPillarBlock.AXIS, axis == Direction.Axis.X ? Direction.Axis.Y : Direction.Axis.X);
+            return switch (facing) {
+                case NORTH, SOUTH -> ret.rotate(level, pos, Rotation.CLOCKWISE_90);
+                case EAST, WEST -> ret;
+                default -> state;
+            };
+        }
+        return state;
+    }
+
+    private void moveAsBlockEntity(Level level, BlockPos pos, BlockPos newPos, Direction direction) {
+        BlockState bs = rotate(level, pos, level.getBlockState(pos), direction);
         // destroy some leaves
         if (bs.is(BlockTags.LEAVES) && level.getRandom().nextBoolean()) {
             Block.dropResources(bs, level, newPos, null);
