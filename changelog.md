@@ -1,5 +1,12 @@
 # V-Tweaks Changelog MC 1.18.x
 
+## 3.6.8
+
+- Bumped minor version to match the 1.19 branch
+- Ported improvements to Chopdown from 1.19 branch
+- Chopdown will no longer consider player-placed leaves as part of a tree
+- Hopefully fixed failure to start due to FastUtils `it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap.rehash` error 
+
 ## 3.6.5.2
 
 - Re-architected recipe cache to keep V-Tweaks from crashing when JEI is not installed
