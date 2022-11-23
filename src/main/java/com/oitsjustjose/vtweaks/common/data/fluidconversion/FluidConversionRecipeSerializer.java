@@ -12,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 public class FluidConversionRecipeSerializer implements RecipeSerializer<FluidConversionRecipe> {
     @Override
     public @NotNull FluidConversionRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject obj) {
-        ItemStack input = VTJsonHelpers.deserialize(obj, "input");
-        ItemStack output = VTJsonHelpers.deserialize(obj, "output");
+        ItemStack input = VTJsonHelpers.deserializeItemStack(obj, "input");
+        ItemStack output = VTJsonHelpers.deserializeItemStack(obj, "output");
         ResourceLocation fluid = new ResourceLocation(obj.get("fluid").getAsString());
         return new FluidConversionRecipe(id, input, output, fluid);
     }

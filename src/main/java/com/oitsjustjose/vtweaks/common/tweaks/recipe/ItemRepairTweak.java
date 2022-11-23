@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.tweaks.item;
+package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
 import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.Event;
 
-@Tweak(eventClass = AnvilUpdateEvent.class, category = "item")
+@Tweak(eventClass = AnvilUpdateEvent.class, category = "recipes")
 public class ItemRepairTweak extends VTweak {
     public ForgeConfigSpec.BooleanValue enabled;
 

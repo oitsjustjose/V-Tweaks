@@ -17,7 +17,7 @@ public class ClientConfig {
 
     static {
         var catNm = "client";
-        CLIENT_BUILDER.comment(catNm).push(catNm);
+        CLIENT_BUILDER.push(catNm);
         VTweaks.getInstance().TweakRegistry.getAllTweaks().stream()
                 .filter(tweak -> tweak.getClass().getAnnotation(Tweak.class).category().equals(catNm))
                 .forEach(tweak -> tweak.registerConfigs(CLIENT_BUILDER));

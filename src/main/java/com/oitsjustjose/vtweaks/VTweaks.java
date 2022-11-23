@@ -1,13 +1,18 @@
 package com.oitsjustjose.vtweaks;
 
+import com.oitsjustjose.vtweaks.client.ClientProxy;
+import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
+import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
 import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
+import com.oitsjustjose.vtweaks.common.tweaks.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.tweaks.core.TweakRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -20,8 +25,11 @@ import org.apache.logging.log4j.Logger;
 @Mod(Constants.MOD_ID)
 public class VTweaks {
     private static VTweaks instance;
+    public static final CommonProxy Proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
     public final Logger LOGGER = LogManager.getLogger();
     public final TweakRegistry TweakRegistry = new TweakRegistry();
+    public final TickScheduler Scheduler = new TickScheduler();
     public static final RecipeTypeRegistry CustomRecipeRegistry = new RecipeTypeRegistry();
 
     public VTweaks() {
@@ -29,6 +37,7 @@ public class VTweaks {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(Scheduler);
         MinecraftForge.EVENT_BUS.register(TweakRegistry);
 
         CustomRecipeRegistry.SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -52,5 +61,8 @@ public class VTweaks {
 
     @SubscribeEvent
     public void onSlashReload(AddReloadListenerEvent evt) {
+        evt.addListener(new ChallengerDataLoader());
+//        evt.addListener(new EntityCullDataLoader());
+//        JEICompat.cache = new HashMap<>();
     }
 }

@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.tweaks.item;
+package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
@@ -13,7 +13,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.Optional;
 
-@Tweak(eventClass = ItemTossEvent.class, category = "item")
+@Tweak(eventClass = ItemTossEvent.class, category = "recipes")
 public class FluidConversionTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;
