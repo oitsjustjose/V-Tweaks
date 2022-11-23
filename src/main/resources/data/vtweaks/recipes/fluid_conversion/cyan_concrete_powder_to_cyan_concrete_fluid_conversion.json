@@ -2,5 +2,5 @@
     "type": "vtweaks:fluid_conversion", 
     "input": {"item": "minecraft:cyan_concrete_powder"},
     "output": {"item": "minecraft:cyan_concrete"},
-    "fluid": "minecraft:water"
+    "fluid": "minecraft:lava"
 }

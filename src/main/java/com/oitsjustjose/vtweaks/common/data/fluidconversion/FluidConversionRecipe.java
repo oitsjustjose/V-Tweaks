@@ -1,12 +1,15 @@
 package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
+import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +24,8 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
         this.input = input;
         this.result = output;
         this.fluid = fluid;
-        // TODO: JEI Compat
+        JeiPlugin.AllFluidConversionRecipes.put(id, this);
+        DispenserBlock.registerBehavior(this.input.getItem(), new FluidConversionDispensing());
     }
 
     public ItemStack getInput() {

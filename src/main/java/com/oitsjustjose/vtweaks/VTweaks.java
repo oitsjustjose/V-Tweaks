@@ -2,13 +2,14 @@ package com.oitsjustjose.vtweaks;
 
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
-import com.oitsjustjose.vtweaks.common.config.ClientConfig;
-import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
 import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
+import com.oitsjustjose.vtweaks.common.tweaks.config.ClientConfig;
+import com.oitsjustjose.vtweaks.common.tweaks.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.tweaks.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.tweaks.core.TweakRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
+import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -63,6 +64,7 @@ public class VTweaks {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerDataLoader());
 //        evt.addListener(new EntityCullDataLoader());
-//        JEICompat.cache = new HashMap<>();
+        JeiPlugin.AllAnvilRecipes.clear();
+        JeiPlugin.AllFluidConversionRecipes.clear();
     }
 }
