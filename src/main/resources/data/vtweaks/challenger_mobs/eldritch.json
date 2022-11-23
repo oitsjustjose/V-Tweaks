@@ -11,7 +11,9 @@
   "speedMultiplier": 1.0,
   "entityFilter": {
     "isBlacklist": false,
-    "entities": ["minecraft:enderman"]
+    "entities": [
+      "minecraft:enderman"
+    ]
   },
   "effectsOnAttack": [
     {
@@ -34,15 +36,21 @@
   "loot": [
     {
       "weight": 3,
-      "item": { "item": "minecraft:experience_bottle" }
+      "item": {
+        "item": "minecraft:experience_bottle"
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:ender_eye" }
+      "item": {
+        "item": "minecraft:ender_eye"
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:ender_pearl" }
+      "item": {
+        "item": "minecraft:ender_pearl"
+      }
     }
   ]
 }

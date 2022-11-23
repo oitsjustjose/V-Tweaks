@@ -4,7 +4,6 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
 import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
 import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.items.ItemStackHandler;
@@ -14,11 +13,6 @@ import java.util.Optional;
 
 @Tweak(eventClass = AnvilUpdateEvent.class, category = "recipe")
 public class NBTAnvilRecipe extends VTweak {
-
-    @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
-    }
-
     @Override
     public void process(Event event) {
         var evt = (AnvilUpdateEvent) event;
@@ -52,6 +46,6 @@ public class NBTAnvilRecipe extends VTweak {
         var stackHandler = new ItemStackHandler(2);
         stackHandler.setStackInSlot(0, evt.getLeft());
         stackHandler.setStackInSlot(1, evt.getRight());
-        return level.getRecipeManager().getRecipeFor(VTweaks.CustomRecipeRegistry.ANVIL_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
+        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
     }
 }

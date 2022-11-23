@@ -57,6 +57,6 @@ public class FluidConversionDispensing extends DefaultDispenseItemBehavior {
     public Optional<FluidConversionRecipe> findRecipe(Level level, ItemStack stack) {
         var handler = new ItemStackHandler(1);
         handler.setStackInSlot(0, stack);
-        return level.getRecipeManager().getRecipeFor(VTweaks.CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
+        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
     }
 }

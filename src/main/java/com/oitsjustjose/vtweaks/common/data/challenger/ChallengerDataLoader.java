@@ -25,9 +25,9 @@ public class ChallengerDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(@NotNull Map<ResourceLocation, JsonElement> datamap, @Nonnull ResourceManager manager, @NotNull ProfilerFiller profiler) {
+    protected void apply(@NotNull Map<ResourceLocation, JsonElement> dataMap, @Nonnull ResourceManager mgr, @NotNull ProfilerFiller prof) {
         ChallengerEntityModifier.AllVariants.clear();
-        datamap.forEach((rl, json) -> {
+        dataMap.forEach((rl, json) -> {
             try {
                 JsonObject obj = json.getAsJsonObject();
 

@@ -3,7 +3,14 @@
   "gear": {
     "mainHand": {
       "item": "minecraft:stick",
-      "nbt": { "Enchantments": [{ "id": "binding_curse", "lvl": 1 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "binding_curse",
+            "lvl": 1
+          }
+        ]
+      }
     }
   },
   "color": {
@@ -16,7 +23,10 @@
   "speedMultiplier": 1.0,
   "entityFilter": {
     "isBlacklist": false,
-    "entities": ["minecraft:zombie", "minecraft:husk"]
+    "entities": [
+      "minecraft:zombie",
+      "minecraft:husk"
+    ]
   },
   "effectsOnAttack": [
     {
@@ -38,31 +48,47 @@
   "loot": [
     {
       "weight": 10,
-      "item": { "item": "minecraft:gold_ingot" }
+      "item": {
+        "item": "minecraft:gold_ingot"
+      }
     },
     {
       "weight": 12,
-      "item": { "item": "minecraft:gold_nugget", "count": 15 }
+      "item": {
+        "item": "minecraft:gold_nugget",
+        "count": 15
+      }
     },
     {
       "weight": 4,
-      "item": { "item": "minecraft:diamond" }
+      "item": {
+        "item": "minecraft:diamond"
+      }
     },
     {
       "weight": 7,
-      "item": { "item": "minecraft:emerald" }
+      "item": {
+        "item": "minecraft:emerald"
+      }
     },
     {
       "weight": 4,
-      "item": { "item": "minecraft:emerald", "count": 2 }
+      "item": {
+        "item": "minecraft:emerald",
+        "count": 2
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:ghast_tear" }
+      "item": {
+        "item": "minecraft:ghast_tear"
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:experience_bottle" }
+      "item": {
+        "item": "minecraft:experience_bottle"
+      }
     }
   ]
 }

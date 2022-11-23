@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks;
 import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
+import com.oitsjustjose.vtweaks.common.data.culling.EntityCullingDataLoader;
 import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
 import com.oitsjustjose.vtweaks.common.tweaks.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.tweaks.config.CommonConfig;
@@ -31,7 +32,7 @@ public class VTweaks {
     public final Logger LOGGER = LogManager.getLogger();
     public final TweakRegistry TweakRegistry = new TweakRegistry();
     public final TickScheduler Scheduler = new TickScheduler();
-    public static final RecipeTypeRegistry CustomRecipeRegistry = new RecipeTypeRegistry();
+    public final RecipeTypeRegistry CustomRecipeRegistry = new RecipeTypeRegistry();
 
     public VTweaks() {
         instance = this;
@@ -63,7 +64,7 @@ public class VTweaks {
     @SubscribeEvent
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerDataLoader());
-//        evt.addListener(new EntityCullDataLoader());
+        evt.addListener(new EntityCullingDataLoader());
         JeiPlugin.AllAnvilRecipes.clear();
         JeiPlugin.AllFluidConversionRecipes.clear();
     }

@@ -17,7 +17,8 @@ public class CommonConfig {
     private static final Builder COMMON_BUILDER = new Builder();
 
     static {
-        var categories = Lists.newArrayList("block", "item", "entity", "recipes", "world");
+        var categories = Lists.newArrayList("block", "item", "entity", "player",
+                "recipes", "world");
         categories.forEach(catNm -> {
             COMMON_BUILDER.push(catNm);
             VTweaks.getInstance().TweakRegistry.getAllTweaks().stream()

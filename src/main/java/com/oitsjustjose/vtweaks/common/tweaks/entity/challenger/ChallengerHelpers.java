@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-public class Helpers {
+public class ChallengerHelpers {
     public static boolean hasChallengerEntityModifier(Entity entity) {
         CompoundTag comp = entity.getPersistentData();
         return comp.contains("challenger_mob_data");

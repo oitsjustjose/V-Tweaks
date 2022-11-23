@@ -68,11 +68,11 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VTweaks.CustomRecipeRegistry.FLUID_CONVERSION;
+        return VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION;
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VTweaks.CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE;
+        return VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE;
     }
 }

@@ -165,11 +165,11 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VTweaks.CustomRecipeRegistry.ANVIL;
+        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL;
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VTweaks.CustomRecipeRegistry.ANVIL_RECIPE_TYPE;
+        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE;
     }
 }

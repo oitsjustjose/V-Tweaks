@@ -44,6 +44,6 @@ public class FluidConversionTweak extends VTweak {
         var level = evt.getPlayer().getLevel();
         var handler = new ItemStackHandler(1);
         handler.setStackInSlot(0, evt.getEntity().getItem());
-        return level.getRecipeManager().getRecipeFor(VTweaks.CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
+        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
     }
 }

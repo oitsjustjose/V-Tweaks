@@ -8,7 +8,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 
 @Tweak(eventClass = LivingSpawnEvent.CheckSpawn.class, category = "entity")
-public class ModifierHandler extends VTweak {
+public class ChallengerModifierHandler extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.DoubleValue globalChance;
 
@@ -28,10 +28,10 @@ public class ModifierHandler extends VTweak {
             if (evt.getLevel().isClientSide()) return;
             if (evt.getEntity().getPersistentData().contains("challenger_mob_data")) return;
             if (evt.getLevel().getRandom().nextDouble() > this.globalChance.get()) return;
-            if (Helpers.hasChallengerEntityModifier(monster)) return;
+            if (ChallengerHelpers.hasChallengerEntityModifier(monster)) return;
 
-            var modifier = Helpers.filterForEntity(monster).pick();
-            if (modifier != null && Helpers.canBeChallenger(modifier, monster)) {
+            var modifier = ChallengerHelpers.filterForEntity(monster).pick();
+            if (modifier != null && ChallengerHelpers.canBeChallenger(modifier, monster)) {
                 modifier.apply(monster);
             }
         }
