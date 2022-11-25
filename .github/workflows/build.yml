@@ -29,7 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: autobuild-${{ github.ref }}
           release_name: Automated Build ${{ github.ref }}
           body: See [The Commit Log](https://github.com/oitsjustjose/V-Tweaks/commits/)
           draft: false
@@ -37,4 +37,4 @@ jobs:
       - name: Upload Release Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "${GITHUB_REF##*/}"
+        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "autobuild-${GITHUB_REF##*/}"
