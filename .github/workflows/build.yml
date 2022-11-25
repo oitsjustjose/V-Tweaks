@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - '*'
   workflow_dispatch:
 
 jobs:
@@ -17,22 +17,9 @@ jobs:
           distribution: 'temurin'
           java-version: 17
           cache: 'gradle'
+      - name: Fix gradlew
+        run: sed -i -e 's/\r$//' ./gradlew
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Build with Gradle
+      - name: Ensure Build
         run: ./gradlew build
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Build ${{ github.ref }} for MC 1.18.x
-          body: See [The Changelog](https://github.com/oitsjustjose/V-Tweaks/blob/1.18/changelog.md)
-          draft: false
-          prerelease: true
-      - name: Upload Release Artifacts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "${GITHUB_REF##*/}"

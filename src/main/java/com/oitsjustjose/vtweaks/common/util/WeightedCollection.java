@@ -36,7 +36,7 @@ public class WeightedCollection<T> {
 
     @Nullable
     public T pick() {
-        int total = 0;
+        var total = 0;
         for (Integer x : items.values()) {
             total += x;
         }
@@ -45,9 +45,9 @@ public class WeightedCollection<T> {
             return null;
         }
 
-        int rng = this.random.nextInt(total);
+        var rng = this.random.nextInt(total);
         for (Map.Entry<T, Integer> entry : this.items.entrySet()) {
-            int wt = entry.getValue();
+            var wt = entry.getValue();
             if (rng < wt) {
                 return entry.getKey();
             }

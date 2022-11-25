@@ -3,23 +3,58 @@
   "gear": {
     "mainHand": {
       "item": "diamond_sword",
-      "nbt": { "Enchantments": [{ "id": "sharpness", "lvl": 2 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "sharpness",
+            "lvl": 2
+          }
+        ]
+      }
     },
     "helmet": {
       "item": "minecraft:iron_helmet",
-      "nbt": { "Enchantments": [{ "id": "unbreaking", "lvl": 2 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "unbreaking",
+            "lvl": 2
+          }
+        ]
+      }
     },
     "chestplate": {
       "item": "minecraft:iron_chestplate",
-      "nbt": { "Enchantments": [{ "id": "unbreaking", "lvl": 2 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "unbreaking",
+            "lvl": 2
+          }
+        ]
+      }
     },
     "leggings": {
       "item": "minecraft:iron_leggings",
-      "nbt": { "Enchantments": [{ "id": "unbreaking", "lvl": 2 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "unbreaking",
+            "lvl": 2
+          }
+        ]
+      }
     },
     "boots": {
       "item": "minecraft:iron_boots",
-      "nbt": { "Enchantments": [{ "id": "unbreaking", "lvl": 2 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "unbreaking",
+            "lvl": 2
+          }
+        ]
+      }
     }
   },
   "color": {
@@ -44,31 +79,47 @@
   "loot": [
     {
       "weight": 10,
-      "item": { "item": "minecraft:gold_ingot" }
+      "item": {
+        "item": "minecraft:gold_ingot"
+      }
     },
     {
       "weight": 12,
-      "item": { "item": "minecraft:gold_nugget", "count": 15 }
+      "item": {
+        "item": "minecraft:gold_nugget",
+        "count": 15
+      }
     },
     {
       "weight": 4,
-      "item": { "item": "minecraft:diamond" }
+      "item": {
+        "item": "minecraft:diamond"
+      }
     },
     {
       "weight": 7,
-      "item": { "item": "minecraft:emerald" }
+      "item": {
+        "item": "minecraft:emerald"
+      }
     },
     {
       "weight": 4,
-      "item": { "item": "minecraft:emerald", "count": 2 }
+      "item": {
+        "item": "minecraft:emerald",
+        "count": 2
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:ghast_tear" }
+      "item": {
+        "item": "minecraft:ghast_tear"
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:experience_bottle" }
+      "item": {
+        "item": "minecraft:experience_bottle"
+      }
     }
   ]
 }

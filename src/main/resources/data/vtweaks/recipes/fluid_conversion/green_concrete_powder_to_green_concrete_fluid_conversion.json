@@ -1,0 +1,10 @@
+{
+  "type": "vtweaks:fluid_conversion",
+  "input": {
+    "item": "minecraft:green_concrete_powder"
+  },
+  "output": {
+    "item": "minecraft:green_concrete"
+  },
+  "fluid": "minecraft:water"
+}

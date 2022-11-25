@@ -6,6 +6,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 public class AnvilRecipeType implements RecipeType<AnvilRecipe> {
     @Override
     public String toString() {
-        return Constants.MODID + ":anvil";
+        return Constants.MOD_ID + ":anvil";
     }
 }

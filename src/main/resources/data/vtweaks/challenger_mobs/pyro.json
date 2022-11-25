@@ -3,7 +3,14 @@
   "gear": {
     "mainHand": {
       "item": "minecraft:firework_rocket",
-      "nbt": { "Enchantments": [{ "id": "fire_aspect", "lvl": 3 }] }
+      "nbt": {
+        "Enchantments": [
+          {
+            "id": "fire_aspect",
+            "lvl": 3
+          }
+        ]
+      }
     }
   },
   "color": {
@@ -16,24 +23,35 @@
   "speedMultiplier": 1.0,
   "entityFilter": {
     "isBlacklist": false,
-    "entities": ["minecraft:spider", "minecraft:zombie"]
+    "entities": [
+      "minecraft:spider",
+      "minecraft:zombie"
+    ]
   },
   "effectsOnAttack": [],
   "loot": [
     {
       "weight": 3,
-      "item": { "item": "minecraft:ghast_tear" }
+      "item": {
+        "item": "minecraft:ghast_tear"
+      }
     },
     {
       "weight": 3,
-      "item": { "item": "minecraft:experience_bottle" }
+      "item": {
+        "item": "minecraft:experience_bottle"
+      }
     },
     {
       "weight": 5,
       "item": {
         "item": "minecraft:firework_rocket",
         "count": 5,
-        "nbt": { "Fireworks": { "Flight": 3 } }
+        "nbt": {
+          "Fireworks": {
+            "Flight": 3
+          }
+        }
       }
     },
     {
@@ -41,7 +59,11 @@
       "item": {
         "item": "minecraft:firework_rocket",
         "count": 3,
-        "nbt": { "Fireworks": { "Flight": 3 } }
+        "nbt": {
+          "Fireworks": {
+            "Flight": 3
+          }
+        }
       }
     },
     {
@@ -49,7 +71,11 @@
       "item": {
         "item": "minecraft:firework_rocket",
         "count": 2,
-        "nbt": { "Fireworks": { "Flight": 3 } }
+        "nbt": {
+          "Fireworks": {
+            "Flight": 3
+          }
+        }
       }
     }
   ]

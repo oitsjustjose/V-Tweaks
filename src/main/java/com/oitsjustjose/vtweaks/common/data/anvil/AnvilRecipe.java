@@ -1,10 +1,9 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.util.JEICompat;
+import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +33,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.cost = c;
         this.copyNbtFromLeft = cpl;
         this.copyNbtFromRight = cpr;
-        JEICompat.cache.put(id, this);
+        JeiPlugin.AllAnvilRecipes.put(id, this);
     }
 
     public ItemStack getLeft() {
@@ -63,8 +62,8 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public boolean matches(@NotNull RecipeWrapper wrapper, @NotNull Level level) {
-        ItemStack l = wrapper.getItem(0);
-        ItemStack r = wrapper.getItem(1);
+        var l = wrapper.getItem(0);
+        var r = wrapper.getItem(1);
         if (l == null || r == null) return false;
 
         /* Have to manually check the NBT because of weirdness */
@@ -166,11 +165,11 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VTweaks.RecipeSerializers.ANVIL;
+        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL;
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VTweaks.RecipeSerializers.ANVIL_RECIPE_TYPE;
+        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE;
     }
 }

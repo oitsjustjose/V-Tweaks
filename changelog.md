@@ -1,5 +1,30 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 4.0.0
+
+This rewrite includes a couple of major changes:
+
+## Removed Features:
+
+- All Enchantments: Chopdown somewhat removes the need for Lumbering and I always hated the Imperishable implementation
+- Bonemeal Tweaks: Bonemealing non-bonemealable blocks
+- Drop Tweaks: Configurable despawn timers, egg hatching, sapling planting - these were all bad.
+- Pet Armory: Throw gear at tamed pets - this was poorly implemented and was never worth the time to learn rendering
+- Death Point: This really isn't necessary now with the new echo compass thing in 1.19
+- Low Health Sound: Not really fitting for this mod, and its implementation was very data-modification heavy
+
+## Added Features
+
+- Corpse Drops Tweak - Items dropped by the player upon death will no longer despawn like other items.
+- Cactus Item Protection - prevents items from being eaten up by Cacti. **Configuration change requires restart**
+
+## Overhauls
+
+- Fluid Conversion Recipes - this _used_ to be the Concrete Tweak, but now they're Datapack based and you can modify the defaults (currently they just include all concrete powder -> concrete conversions)! You can specify the fluid, input and output and the recipe will automatically propagate in JEI with the custom plugin I made.
+- Falling blocks caused by the Chop Down tweak will no longer drop leaves, but instead drop the block's corresponding drops
+- `[CODE]` The Tweak system has been introduced. Create a new tweak by extending `VTweak` and using the `@Tweak` annotation. The config system will automatically grab onto what configs you need based on this annotation, and the Tweak Registry will automatically grab and fire all custom tweaks' events
+- `[CODE]` Config System has been overhauled, allowing each tweak to house its own configs rather than making them static members of some conglomerate config class. The `category` param in the `@Tweak` annotation tells the config system what category to put the tweak's configs in - if it's not one of the ones listed in `CommonConfig.java` or `ClientConfig.java`, then it will be skipped.
+
 ## 3.6.8
 
 - Chopdown will no longer consider player-placed leaves as part of a tree
@@ -7,15 +32,15 @@
 
 ## 3.6.7
 
-- At long last, the chopdown feature is *no longer experimental* and has been finished to a point where I am content with it. This update fixes the offsets when breaking trees, as well as rotates logs as they fall.
+- At long last, the chopdown feature is _no longer experimental_ and has been finished to a point where I am content with it. This update fixes the offsets when breaking trees, as well as rotates logs as they fall.
 
 ## 3.6.6.2
 
-- Fixes to NBT breakages!! 
+- Fixes to NBT breakages!!
 
 ## 3.6.6
 
-- Added new optional Anvil Recipe attributes `cpFromLeft` and `cpFromRight`. Assumes to be `false` if not included. `cpFrom[Left|Right]` will copy all NBT **except** for those defined in the output, to the output. You can choose to set BOTH to true, but any overlap in NBT will be overwritten by the **RIGHT** input. 
+- Added new optional Anvil Recipe attributes `cpFromLeft` and `cpFromRight`. Assumes to be `false` if not included. `cpFrom[Left|Right]` will copy all NBT **except** for those defined in the output, to the output. You can choose to set BOTH to true, but any overlap in NBT will be overwritten by the **RIGHT** input.
 
 ## Should work on 1.19.1 and .2, but this has not been tested.
 

@@ -2,14 +2,11 @@ package com.oitsjustjose.vtweaks.client;
 
 import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
-import com.oitsjustjose.vtweaks.common.network.ArmorBreakPacket;
-import com.oitsjustjose.vtweaks.common.network.DustParticlePacket;
+import com.oitsjustjose.vtweaks.common.network.packet.ChallengerParticlePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class ClientProxy extends CommonProxy {
@@ -18,17 +15,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init() {
         mc = Minecraft.getInstance();
-        CommonProxy.networkManager.networkWrapper.registerMessage(0, ArmorBreakPacket.class, ArmorBreakPacket::encode,
-                ArmorBreakPacket::decode, ArmorBreakPacket::handleClient);
-        networkManager.networkWrapper.registerMessage(1, DustParticlePacket.class, DustParticlePacket::encode,
-                DustParticlePacket::decode, DustParticlePacket::handleClient);
-    }
-
-    @Override
-    public void playSound(Player player) {
-        if (mc.player != null) {
-            mc.player.playSound(SoundEvents.SHIELD_BREAK, 1F, 1F);
-        }
+        networkManager.networkWrapper.registerMessage(0, ChallengerParticlePacket.class, ChallengerParticlePacket::encode, ChallengerParticlePacket::decode, ChallengerParticlePacket::handleClient);
     }
 
     @Override
