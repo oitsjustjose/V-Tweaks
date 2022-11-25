@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - '*'
   workflow_dispatch:
 
 jobs:
@@ -28,8 +28,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Build ${{ github.ref }} for MC 1.18.x
-          body: See [The Changelog](https://github.com/oitsjustjose/V-Tweaks/blob/1.18/changelog.md)
+          release_name: Automated Build ${{ github.ref }}
+          body: See [The Commit Log](https://github.com/oitsjustjose/V-Tweaks/commits/)
           draft: false
           prerelease: true
       - name: Upload Release Artifacts
