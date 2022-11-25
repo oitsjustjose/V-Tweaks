@@ -12,6 +12,7 @@ This rewrite includes a couple of major changes:
 - Pet Armory: Throw gear at tamed pets - this was poorly implemented and was never worth the time to learn rendering
 - Death Point: This really isn't necessary now with the new echo compass thing in 1.19
 - Low Health Sound: Not really fitting for this mod, and its implementation was very data-modification heavy
+- Chat message welcoming you to V-Tweaks is removed, this was annoying. I'll be implementing an optional Patchouli book for this soon :)
 
 ## Added Features
 
