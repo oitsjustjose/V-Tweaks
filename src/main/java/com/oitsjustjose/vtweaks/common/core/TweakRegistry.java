@@ -1,10 +1,10 @@
-package com.oitsjustjose.vtweaks.common.tweaks.core;
+package com.oitsjustjose.vtweaks.common.core;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.Type;
 
 import java.util.LinkedHashSet;
@@ -34,7 +34,7 @@ public class TweakRegistry {
                 var constructor = inst.getDeclaredConstructor();
                 this.allTweaks.add(constructor.newInstance());
             } catch (ReflectiveOperationException | LinkageError e) {
-                VTweaks.getInstance().LOGGER.error("Failed to load annotation {}", clsNm, e);
+                LogManager.getLogger().error("Failed to load annotation {}", clsNm, e);
             }
         });
     }

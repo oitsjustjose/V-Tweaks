@@ -1,9 +1,9 @@
-package com.oitsjustjose.vtweaks.common.tweaks.config;
+package com.oitsjustjose.vtweaks.common.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.fml.common.Mod;

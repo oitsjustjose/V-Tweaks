@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity.challenger;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;

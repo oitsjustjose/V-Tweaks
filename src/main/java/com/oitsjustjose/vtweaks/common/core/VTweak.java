@@ -1,4 +1,4 @@
-package com.oitsjustjose.vtweaks.common.tweaks.core;
+package com.oitsjustjose.vtweaks.common.core;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.Event;

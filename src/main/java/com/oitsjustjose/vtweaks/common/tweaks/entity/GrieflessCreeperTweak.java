@@ -1,16 +1,15 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.tweaks.core.TickScheduler;
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.TickScheduler;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeConfigSpec;

@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.block;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -29,6 +29,8 @@ public class CakeDropTweak extends VTweak {
 
         var evt = (BlockEvent.BreakEvent) event;
         if (evt.getPlayer() == null) return;
+        if (evt.getPlayer().isCreative()) return;
+
         var state = evt.getState();
 
         if (state.is(BlockTags.CANDLE_CAKES)) {

@@ -2,8 +2,8 @@ package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.items.ItemStackHandler;

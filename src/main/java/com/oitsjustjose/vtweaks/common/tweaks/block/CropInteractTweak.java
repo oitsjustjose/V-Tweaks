@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.block;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

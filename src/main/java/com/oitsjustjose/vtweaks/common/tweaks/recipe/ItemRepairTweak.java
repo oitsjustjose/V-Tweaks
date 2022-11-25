@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.AnvilUpdateEvent;

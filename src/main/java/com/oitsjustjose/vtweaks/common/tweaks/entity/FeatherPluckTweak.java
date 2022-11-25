@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ import net.minecraftforge.eventbus.api.Event;
 @Tweak(eventClass = PlayerInteractEvent.EntityInteract.class, category = "entity")
 public class FeatherPluckTweak extends VTweak {
     public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("forge", "chickens"));
-    public static final TagKey<Item> SHEARS = ItemTags.create(new ResourceLocation("minecraft", "shears"));
+    public static final TagKey<Item> SHEARS = ItemTags.create(new ResourceLocation("forge", "shears"));
     private static final String PLUCK_COOL_DOWN_KEY = Constants.MOD_ID + ":pluck_cool_down";
 
     private ForgeConfigSpec.BooleanValue enabled;

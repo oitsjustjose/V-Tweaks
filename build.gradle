@@ -2,11 +2,13 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
     dependencies {
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
@@ -17,6 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'org.spongepowered.mixin'
 
 
 group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -63,6 +66,12 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-common:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${game_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-forge:${jei_version}")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "vtweaks.refmap.json"
+    config "vtweaks.mixins.json"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -80,11 +89,6 @@ jar {
     }
 }
 
-
-// Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
 def reobfFile = file("$buildDir/reobfJar/output.jar")
 def reobfArtifact = artifacts.add('default', reobfFile) {
     type 'jar'

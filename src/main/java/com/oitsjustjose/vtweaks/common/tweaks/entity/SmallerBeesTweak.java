@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity;
 
-import com.oitsjustjose.vtweaks.common.tweaks.core.Tweak;
-import com.oitsjustjose.vtweaks.common.tweaks.core.VTweak;
+import com.oitsjustjose.vtweaks.common.core.Tweak;
+import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.client.model.BeeModel;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraftforge.client.event.RenderLivingEvent;
