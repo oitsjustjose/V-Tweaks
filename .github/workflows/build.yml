@@ -17,6 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: 17
           cache: 'gradle'
+      - name: Fix gradlew
+        run: sed -i -e 's/\r$//' ./gradlew
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Build with Gradle
