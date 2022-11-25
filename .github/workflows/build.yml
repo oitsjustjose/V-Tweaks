@@ -21,20 +21,5 @@ jobs:
         run: sed -i -e 's/\r$//' ./gradlew
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Build with Gradle
+      - name: Ensure Build
         run: ./gradlew build
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: autobuild-${{ github.ref }}
-          release_name: Automated Build ${{ github.ref }}
-          body: See [The Commit Log](https://github.com/oitsjustjose/V-Tweaks/commits/)
-          draft: false
-          prerelease: true
-      - name: Upload Release Artifacts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: hub release edit $(find . -type f -name "./build/libs/*.jar" -printf "-a %p ") -m "" "autobuild-${GITHUB_REF##*/}"
