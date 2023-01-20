@@ -1,9 +1,9 @@
 package com.oitsjustjose.vtweaks.common.core;
 
+import com.google.common.collect.Lists;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import org.apache.commons.compress.utils.Lists;
 import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.Type;
 
