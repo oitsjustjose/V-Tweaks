@@ -1,5 +1,31 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 4.0.5
+
+### Potential memory leak resolutions
+
+## 4.0.4
+
+### Micro-Optimized server and world tick performance
+
+## 4.0.3
+
+### Fixed
+
+- Feather Falling Tweaks not breaking boots when at max damage
+
+## 4.0.2
+
+### Fixed
+
+- Feather Falling Tweaks not working
+
+## 4.0.1
+
+### Fixed
+
+- Crash on dedicated servers (Thanks Apache 😒)
+
 ## 4.0.0
 
 This rewrite includes a couple of major changes:

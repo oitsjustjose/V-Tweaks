@@ -14,6 +14,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = LivingSpawnEvent.CheckSpawn.class, category = "entity")
 public class PeacefulSurfaceTweak extends VTweak {
@@ -29,11 +30,10 @@ public class PeacefulSurfaceTweak extends VTweak {
         this.minY = builder.comment("The lowest Y-level which mobs will be prevented from spawning").defineInRange("peacefulSurfaceMinY", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(LivingSpawnEvent.CheckSpawn evt) {
         if (!this.enabled.get()) return;
 
-        var evt = (LivingSpawnEvent.CheckSpawn) event;
         if (evt.getEntity() == null) return;
         if (evt.getSpawnReason() != MobSpawnType.NATURAL) return;
         if (!(evt.getEntity() instanceof Monster) || evt.getEntity().getType().is(BLACKLISTED_ENTITIES)) return;

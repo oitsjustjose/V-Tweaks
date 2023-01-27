@@ -8,6 +8,7 @@ import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -23,11 +24,9 @@ public class FluidConversionTweak extends VTweak {
         this.enabled = builder.comment("Allows you to throw things into specific fluids to convert them - by default this is just Concrete Powder this feature can be extended using Data Packs.").define("enableFluidConversionRecipes", true);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(ItemTossEvent evt) {
         if (!this.enabled.get()) return;
-
-        var evt = (ItemTossEvent) event;
         if (evt.getPlayer().getLevel().isClientSide()) return;
 
         var recipe = findRecipe(evt);

@@ -4,13 +4,12 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = LivingHurtEvent.class, category = "entity")
 public class ChallengerEffectHandler extends VTweak {
-    @Override
-    public void process(Event event) {
-        var evt = (LivingHurtEvent) event;
+    @SubscribeEvent
+    public void process(LivingHurtEvent evt) {
         if (evt.getEntity() == null || evt.getSource() == null) return;
 
         if (evt.getSource().getDirectEntity() instanceof Monster monster) {
@@ -23,9 +22,4 @@ public class ChallengerEffectHandler extends VTweak {
             }
         }
     }
-
-//    @Override
-//    public boolean isForEvent(Event event) {
-//        return event instanceof LivingHurtEvent;
-//    }
 }

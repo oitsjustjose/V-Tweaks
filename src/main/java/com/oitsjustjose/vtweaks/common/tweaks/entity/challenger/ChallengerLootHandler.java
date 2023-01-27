@@ -5,13 +5,12 @@ import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = LivingDropsEvent.class, category = "entity")
 public class ChallengerLootHandler extends VTweak {
-    @Override
-    public void process(Event event) {
-        var evt = (LivingDropsEvent) event;
+    @SubscribeEvent
+    public void process(LivingDropsEvent evt) {
         if (evt.getEntity() == null) return;
         if (!(evt.getEntity() instanceof Monster monster)) return;
 

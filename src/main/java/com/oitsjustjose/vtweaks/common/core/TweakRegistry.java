@@ -1,12 +1,12 @@
 package com.oitsjustjose.vtweaks.common.core;
 
 import com.google.common.collect.Lists;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.Type;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +14,10 @@ import java.util.Objects;
 public class TweakRegistry {
 
     final List<VTweak> allTweaks;
-
+    final HashMap<String, List<VTweak>> eventTweakMap;
     public TweakRegistry() {
         this.allTweaks = Lists.newArrayList();
+        this.eventTweakMap = new HashMap<>();
 
         var type = Type.getType(Tweak.class);
         var scanData = ModList.get().getAllScanData();
@@ -32,7 +33,10 @@ public class TweakRegistry {
                 var cls = Class.forName(clsNm);
                 var inst = cls.asSubclass(VTweak.class);
                 var constructor = inst.getDeclaredConstructor();
-                this.allTweaks.add(constructor.newInstance());
+
+                var instance = constructor.newInstance();
+                this.allTweaks.add(instance);
+                MinecraftForge.EVENT_BUS.register(instance);
             } catch (ReflectiveOperationException | LinkageError e) {
                 LogManager.getLogger().error("Failed to load annotation {}", clsNm, e);
             }
@@ -41,10 +45,5 @@ public class TweakRegistry {
 
     public List<VTweak> getAllTweaks() {
         return this.allTweaks;
-    }
-
-    @SubscribeEvent
-    public void fireEvent(Event event) {
-        this.allTweaks.stream().filter(x -> x.isForEvent(event)).distinct().forEach(x -> x.process(event));
     }
 }

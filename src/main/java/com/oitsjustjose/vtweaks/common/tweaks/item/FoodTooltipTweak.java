@@ -8,13 +8,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.List;
 
@@ -31,10 +32,9 @@ public class FoodTooltipTweak extends VTweak {
         this.setting = builder.comment("Show food hunger & saturation on item hover").defineEnum("foodTooltipSetting", TooltipSetting.WITH_SHIFT);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(ItemTooltipEvent evt) {
         if (this.setting.get() == TooltipSetting.NEVER) return;
-        var evt = (ItemTooltipEvent) event;
 
         var stack = evt.getItemStack();
         var food = stack.getFoodProperties(evt.getEntity());
@@ -56,38 +56,37 @@ public class FoodTooltipTweak extends VTweak {
     }
 
     private MutableComponent getHungerString(FoodProperties food, Rarity rarity) {
-        var ret = new StringBuilder();
         var nutrition = food.getNutrition();
         var anyBadEff = hasBadEffect(food.getEffects());
         var anyGoodEff = hasGoodEffect(food.getEffects());
-        var color = anyBadEff ? ChatFormatting.DARK_RED : anyGoodEff ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_GREEN;
 
-        for (int i = 0; i < (nutrition / 2); i++) {
-            ret.append(rarity == Rarity.COMMON ? color : rarity.color).append("\u2588");
-        }
-        if (nutrition % 2 != 0) {
-            ret.append(rarity == Rarity.COMMON ? color : rarity.color).append("\u258C");
-        }
+        var color = anyBadEff ? ChatFormatting.DARK_RED : anyGoodEff ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_GREEN;
+        var style = Style.EMPTY.withColor(color).withFont(Style.DEFAULT_FONT);
+        rarity.getStyleModifier().apply(style);
+
+        var ret = new StringBuilder();
+        ret.append("\u2588".repeat(Math.max(0, (nutrition / 2))));
+        if (nutrition % 2 != 0) ret.append("\u258C");
 
         var t = new TranslatableContents("vtweaks.hunger.tooltip.text", ret.toString());
         try {
-            return t.resolve(null, null, 0);
+            return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
             return Component.empty();
         }
     }
 
     private MutableComponent getSaturationString(int saturation, Rarity rarity) {
+        var style = Style.EMPTY.withColor(ChatFormatting.GREEN).withFont(Style.DEFAULT_FONT);
+        rarity.getStyleModifier().apply(style);
+
         var ret = new StringBuilder();
-        for (int i = 0; i < saturation / 2; i++) {
-            ret.append(rarity == Rarity.COMMON ? ChatFormatting.GREEN : rarity.color).append("\u2588");
-        }
-        if (saturation % 2 != 0) {
-            ret.append(rarity == Rarity.COMMON ? ChatFormatting.GREEN : rarity.color).append("\u258C");
-        }
+        ret.append("\u2588".repeat(Math.max(0, saturation / 2)));
+        if (saturation % 2 != 0) ret.append("\u258C");
+
         var t = new TranslatableContents("vtweaks.saturation.tooltip.text", ret.toString());
         try {
-            return t.resolve(null, null, 0);
+            return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
             return Component.empty();
         }

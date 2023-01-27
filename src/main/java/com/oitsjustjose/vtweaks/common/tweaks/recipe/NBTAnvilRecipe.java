@@ -1,11 +1,11 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -13,9 +13,8 @@ import java.util.Optional;
 
 @Tweak(eventClass = AnvilUpdateEvent.class, category = "recipe")
 public class NBTAnvilRecipe extends VTweak {
-    @Override
-    public void process(Event event) {
-        var evt = (AnvilUpdateEvent) event;
+    @SubscribeEvent
+    public void process(AnvilUpdateEvent evt) {
         var r = find(evt);
         if (r.isEmpty()) return;
 

@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = PlayerInteractEvent.EntityInteract.class, category = "entity")
 public class FeatherPluckTweak extends VTweak {
@@ -35,11 +35,10 @@ public class FeatherPluckTweak extends VTweak {
         this.cooldown = builder.comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.").defineInRange("featurePluckingCooldown", 600000, 1, Long.MAX_VALUE);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(PlayerInteractEvent.EntityInteract evt) {
         if (!this.enabled.get()) return;
 
-        var evt = (PlayerInteractEvent.EntityInteract) event;
         if (evt.getTarget() == null || evt.getEntity() == null) return;
         if (!evt.getTarget().getType().is(CHICKENS)) return;
 

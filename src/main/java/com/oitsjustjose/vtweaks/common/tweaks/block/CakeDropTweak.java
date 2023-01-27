@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
 @Tweak(eventClass = BlockEvent.BreakEvent.class, category = "block")
@@ -23,11 +23,10 @@ public class CakeDropTweak extends VTweak {
         this.enabled = builder.comment("Allows for uneaten cake to drop on break").define("enableCakeDrop", true);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(BlockEvent.BreakEvent evt) {
         if (!this.enabled.get()) return;
 
-        var evt = (BlockEvent.BreakEvent) event;
         if (evt.getPlayer() == null) return;
         if (evt.getPlayer().isCreative()) return;
 

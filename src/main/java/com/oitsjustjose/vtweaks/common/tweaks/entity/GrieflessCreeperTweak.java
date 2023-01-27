@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,10 +29,9 @@ public class GrieflessCreeperTweak extends VTweak {
         this.enabled = builder.comment("When any Creeper (or entity with EntityType tag #forge:creepers) explodes, all blocks destroyed will plop back into place after a few seconds!").define("ungriefCreepers", true);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(ExplosionEvent evt) {
         if (!this.enabled.get()) return;
-        var evt = (ExplosionEvent) event;
 
         if (evt.getExplosion() == null) return;
         if (evt.getExplosion().getSourceMob() == null) return;

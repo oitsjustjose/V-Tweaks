@@ -41,7 +41,6 @@ public class VTweaks {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(Scheduler);
-        MinecraftForge.EVENT_BUS.register(TweakRegistry);
 
         CustomRecipeRegistry.SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
 

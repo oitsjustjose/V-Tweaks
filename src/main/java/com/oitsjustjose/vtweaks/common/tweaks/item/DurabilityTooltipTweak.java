@@ -10,7 +10,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 
@@ -41,10 +41,9 @@ public class DurabilityTooltipTweak extends VTweak {
         this.setting = builder.comment("Show tool durability on item hover").defineEnum("durabilityTooltipSetting", TooltipSetting.WITH_SHIFT);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(ItemTooltipEvent evt) {
         if (this.setting.get() == TooltipSetting.NEVER) return;
-        var evt = (ItemTooltipEvent) event;
         var stack = evt.getItemStack();
         var shifting = Screen.hasShiftDown();
         if (!stack.isDamageableItem()) return;

@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,9 +39,8 @@ public class CropInteractTweak extends VTweak {
         this.enabled = builder.comment().define("enableCropTweaks", true);
     }
 
-    @Override
-    public void process(Event event) {
-        var evt = (PlayerInteractEvent.RightClickBlock) event;
+    @SubscribeEvent
+    public void process(PlayerInteractEvent.RightClickBlock evt) {
         if (!this.enabled.get()) return;
         if (evt.getHand() != InteractionHand.MAIN_HAND) return;
 

@@ -6,7 +6,7 @@ import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /* Category is Client for the config, maybe category should be renamed Config Category? */
 @Tweak(eventClass = LivingEvent.LivingTickEvent.class, category = "client")
@@ -18,11 +18,10 @@ public class ChallengerParticleHandler extends VTweak {
         this.enable = builder.comment("Enable colored particles for challenger mobs (dependent on particle setting as well)").define("enableChallengerMobParticles", true);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(LivingEvent.LivingTickEvent evt) {
         if (!this.enable.get()) return;
 
-        var evt = (LivingEvent.LivingTickEvent) event;
         if (evt.getEntity() == null) return;
         if (!evt.getEntity().isAlive()) return;
         if (!(evt.getEntity() instanceof Monster monster)) return;

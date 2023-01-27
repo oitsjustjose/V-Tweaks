@@ -1,8 +1,8 @@
 package com.oitsjustjose.vtweaks.common.tweaks.block;
 
-import com.oitsjustjose.vtweaks.common.entity.BetterFallingBlock;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import com.oitsjustjose.vtweaks.common.entity.BetterFallingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -35,11 +35,10 @@ public class ChopDownTweak extends VTweak {
         this.leafSearchRad = builder.comment("The radius that this tweak will use to attempt to find leaves. Set this to a large number to detect larger trees (may cause lag)").defineInRange("chopdownSearchRadius", 64, 1, Integer.MAX_VALUE);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(BlockEvent.BreakEvent evt) {
         if (!this.enabled.get()) return;
 
-        var evt = (BlockEvent.BreakEvent) event;
         var level = evt.getLevel();
         var initPos = evt.getPos();
         var player = evt.getPlayer();

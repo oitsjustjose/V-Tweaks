@@ -5,7 +5,7 @@ import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = LivingSpawnEvent.CheckSpawn.class, category = "entity")
 public class ChallengerModifierHandler extends VTweak {
@@ -18,12 +18,11 @@ public class ChallengerModifierHandler extends VTweak {
         this.globalChance = builder.comment("This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.").defineInRange("challengerMobGlobalChance", 0.25D, 0.0D, 1.0D);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(LivingSpawnEvent.CheckSpawn evt) {
         if (!this.enabled.get()) return;
         if (this.globalChance.get() <= 0.0D) return;
 
-        var evt = (LivingSpawnEvent.CheckSpawn) event;
         if (evt.getEntity() != null && evt.getEntity() instanceof Monster monster) {
             if (evt.getLevel().isClientSide()) return;
             if (evt.getEntity().getPersistentData().contains("challenger_mob_data")) return;

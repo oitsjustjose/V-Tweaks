@@ -4,9 +4,11 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.client.model.BeeModel;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = RenderLivingEvent.Pre.class, category = "client")
 public class SmallerBeesTweak extends VTweak {
@@ -17,19 +19,11 @@ public class SmallerBeesTweak extends VTweak {
         this.enabled = builder.comment("If enabled, all bees will always be half-sized. Does not affect breeding or hitboxes").define("enableSmallBees", true);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void process(Event event) {
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public void process(RenderLivingEvent.Pre<Bee, BeeModel<Bee>> evt) {
         if (!this.enabled.get()) return;
-        var evt = (RenderLivingEvent.Pre<Bee, BeeModel<Bee>>) event;
+        if (!(evt.getEntity() instanceof Bee)) return;
         evt.getPoseStack().scale(0.5F, 0.5F, 0.5F);
-    }
-
-    @Override
-    public boolean isForEvent(Event event) {
-        if (event instanceof RenderLivingEvent.Pre<?, ?> renderEvt) {
-            return renderEvt.getEntity() instanceof Bee;
-        }
-        return super.isForEvent(event);
     }
 }

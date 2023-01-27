@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
@@ -31,11 +31,9 @@ public class TorchLightingTweak extends VTweak {
         this.enabled = builder.comment("Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`").define("enableTorchLighting", true);
     }
 
-    @Override
-    public void process(Event event) {
+    @SubscribeEvent
+    public void process(PlayerInteractEvent.RightClickBlock evt) {
         if (!this.enabled.get()) return;
-
-        var evt = (PlayerInteractEvent.RightClickBlock) event;
 
         var player = evt.getEntity();
         var level = evt.getLevel();
