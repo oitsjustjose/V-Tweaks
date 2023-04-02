@@ -1,10 +1,26 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 4.0.6
+
+### Added:
+ 
+- All new configs for Food Tooltips:
+  - `useOriginalFoodTooltipColor (bool)`: if a food has a custom color such as via rarity or NBT, use that color instead of the other colors defined below for the *hunger bar*. If a food has no given custom color, then the default color (or the buff/debuff color) will be used. [Demo](https://oitsjustjose-sharex.s3.us-east-2.amazonaws.com/2023/04/java_04-02-23%2014-21-23-940.mp4)
+  - `foodTooltipColor (string)`: the HEX code for a normal food that gives no Positive / Negative potion effects on consumption
+  - `foodTooltipPositiveColor (string)`: the HEX code for a food that gives **NO Negative Potion Effects** and at least one Positive potion effect on consumption
+  - `foodTooltipNegativeColor (string)`: the HEX code for a food that gives at least one Negative potion effect on consumption
+  - `foodTooltipMultiplier (float)`: similar to health, 1 hunger is equivalent to half a hunger haunch. This setting controls a multiplier for this in terms of the hunger tooltip on foods.
+  - `foodTooltipSaturationColor (string)`: the HEX code for the saturation a food gives
+
+### Fixed (Hopefully 🤞)
+
+- Hopefully patched up a crash on world join with the error `java.lang.IllegalStateException: Accessing LegacyRandomSource from multiple threads`. I've looked into this issue for most of my day today and I have no earthly idea what I'm doing wrong to cause this, but hopefully a small change I made may have resolved this.
+
 ## 4.0.5
 
 ### Potential memory leak resolutions
 
-## 4.0.4
+## 4.0.4****
 
 ### Micro-Optimized server and world tick performance
 

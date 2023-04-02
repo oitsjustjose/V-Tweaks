@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.client;
 
 import com.mojang.math.Vector3f;
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.network.packet.ChallengerParticlePacket;
 import net.minecraft.client.Minecraft;
@@ -24,17 +25,22 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static void showDustParticle(float r, float g, float b, double x, double y, double z) {
-        Minecraft mc = Minecraft.getInstance();
-        Entity view = mc.getCameraEntity();
+        try {
+            Minecraft mc = Minecraft.getInstance();
+            Entity view = mc.getCameraEntity();
 
-        if (view != null) {
-            Vec3 position = view.getForward();
-            Vec3 particlePos = new Vec3(x, y, z);
+            if (view != null) {
+                Vec3 position = view.getForward();
+                Vec3 particlePos = new Vec3(x, y, z);
 
-            if (mc.player != null && mc.player.shouldRenderAtSqrDistance(position.distanceTo(particlePos))) {
-                ParticleOptions p = new DustParticleOptions(new Vector3f(r, g, b), 1.0F);
-                mc.player.clientLevel.addParticle(p, false, x, y, z, 0D, 0D, 0D);
+                if (mc.player != null && mc.player.shouldRenderAtSqrDistance(position.distanceTo(particlePos))) {
+                    ParticleOptions p = new DustParticleOptions(new Vector3f(r, g, b), 1.0F);
+                    mc.particleEngine.createParticle(p, x, y, z, 0D, 0D, 0D);
+                }
             }
+        } catch (IllegalStateException Exception) {
+            VTweaks.getInstance().LOGGER.warn("IllegalStateException thrown in ClientProxy#showDustParticle. Probably random source?");
+            Exception.printStackTrace();
         }
     }
 }
