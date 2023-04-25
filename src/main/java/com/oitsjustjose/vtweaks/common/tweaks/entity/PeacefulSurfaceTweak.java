@@ -3,7 +3,7 @@ package com.oitsjustjose.vtweaks.common.tweaks.entity;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -12,17 +12,16 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingSpawnEvent.CheckSpawn.class, category = "entity")
+@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
 public class PeacefulSurfaceTweak extends VTweak {
+    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
+    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.IntValue minY;
-
-    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
-    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
@@ -31,11 +30,11 @@ public class PeacefulSurfaceTweak extends VTweak {
     }
 
     @SubscribeEvent
-    public void process(LivingSpawnEvent.CheckSpawn evt) {
+    public void process(MobSpawnEvent.FinalizeSpawn evt) {
         if (!this.enabled.get()) return;
 
         if (evt.getEntity() == null) return;
-        if (evt.getSpawnReason() != MobSpawnType.NATURAL) return;
+        if (evt.getSpawnType() != MobSpawnType.NATURAL) return;
         if (!(evt.getEntity() instanceof Monster) || evt.getEntity().getType().is(BLACKLISTED_ENTITIES)) return;
         if (!(evt.getLevel() instanceof ServerLevel level)) return;
         if (level.dimensionTypeRegistration().is(BLACKLISTED_DIMENSIONS)) return;

@@ -2,6 +2,7 @@ package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -84,6 +85,11 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         return leftTagVerified && rightTagVerified;
     }
 
+    @Override
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper unused, @NotNull RegistryAccess unused2) {
+        return this.result;
+    }
+
     /* Does a check to see if an ItemStack matches on AT LEAST the tags+values from the recipe */
     private boolean bareMinimumCompare(CompoundTag orig, CompoundTag comp) {
         return orig.getAllKeys().stream().allMatch(key -> compareTags(orig, comp, key));
@@ -93,27 +99,34 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         if (!comp.contains(key)) return false;
 
         switch (orig.getTagType(key)) {
-            case Tag.TAG_BYTE:
+            case Tag.TAG_BYTE -> {
                 return orig.getByte(key) == comp.getByte(key);
-            case Tag.TAG_SHORT:
+            }
+            case Tag.TAG_SHORT -> {
                 return orig.getShort(key) == comp.getShort(key);
-            case Tag.TAG_INT:
+            }
+            case Tag.TAG_INT -> {
                 return orig.getInt(key) == comp.getInt(key);
-            case Tag.TAG_LONG:
+            }
+            case Tag.TAG_LONG -> {
                 return orig.getLong(key) == comp.getLong(key);
-            case Tag.TAG_FLOAT:
+            }
+            case Tag.TAG_FLOAT -> {
                 return orig.getFloat(key) == comp.getFloat(key);
-            case Tag.TAG_DOUBLE:
+            }
+            case Tag.TAG_DOUBLE -> {
                 return orig.getDouble(key) == comp.getDouble(key);
-            case Tag.TAG_BYTE_ARRAY:
+            }
+            case Tag.TAG_BYTE_ARRAY -> {
                 return Arrays.equals(orig.getByteArray(key), comp.getByteArray(key));
-            case Tag.TAG_STRING:
+            }
+            case Tag.TAG_STRING -> {
                 return orig.getString(key).equals(comp.getString(key));
-            case Tag.TAG_LIST:
+            }
+            case Tag.TAG_LIST -> {
                 ListTag origList = (ListTag) orig.get(key);
                 ListTag compList = (ListTag) comp.get(key);
                 if (origList == null || compList == null) return false;
-
                 if (origList.getElementType() != Tag.TAG_COMPOUND) {
                     VTweaks.getInstance().LOGGER.info("List tag of type {} is not supported", origList.getElementType());
                     return false;
@@ -131,12 +144,16 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
                     if (!anyMatchedForThisEntry) return false;
                 }
                 return true;
-            case Tag.TAG_COMPOUND:
+            }
+            case Tag.TAG_COMPOUND -> {
                 return bareMinimumCompare(orig.getCompound(key), comp.getCompound(key));
-            case Tag.TAG_INT_ARRAY:
+            }
+            case Tag.TAG_INT_ARRAY -> {
                 return Arrays.equals(orig.getIntArray(key), comp.getIntArray(key));
-            case Tag.TAG_LONG_ARRAY:
+            }
+            case Tag.TAG_LONG_ARRAY -> {
                 return Arrays.equals(orig.getLongArray(key), comp.getLongArray(key));
+            }
         }
 
         VTweaks.getInstance().LOGGER.info("Received tag ID of {} which is not recognized", orig.getId());
@@ -144,18 +161,13 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper wrapper) {
-        return this.result;
-    }
-
-    @Override
-    public @NotNull ItemStack getResultItem() {
-        return this.result;
-    }
-
-    @Override
     public boolean canCraftInDimensions(int _a, int _b) {
         return true;
+    }
+
+    @Override
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess unused) {
+        return this.result;
     }
 
     @Override

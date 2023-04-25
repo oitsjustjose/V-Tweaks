@@ -10,9 +10,8 @@ import java.nio.file.Path;
 @Mod.EventBusSubscriber
 public class MixinConfig {
     public static final ForgeConfigSpec MIXIN_CONFIG;
-    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-
     public static final ForgeConfigSpec.BooleanValue EnableCactusMixin;
+    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
     static {
         /* Ugh, I didn't want this */

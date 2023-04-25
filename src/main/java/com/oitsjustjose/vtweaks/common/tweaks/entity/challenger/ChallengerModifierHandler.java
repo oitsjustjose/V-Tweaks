@@ -4,10 +4,10 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingSpawnEvent.CheckSpawn.class, category = "entity")
+@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
 public class ChallengerModifierHandler extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.DoubleValue globalChance;
@@ -19,7 +19,7 @@ public class ChallengerModifierHandler extends VTweak {
     }
 
     @SubscribeEvent
-    public void process(LivingSpawnEvent.CheckSpawn evt) {
+    public void process(MobSpawnEvent.FinalizeSpawn evt) {
         if (!this.enabled.get()) return;
         if (this.globalChance.get() <= 0.0D) return;
 

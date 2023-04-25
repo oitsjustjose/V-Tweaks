@@ -27,9 +27,8 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(Constants.MOD_ID)
 public class VTweaks {
-    private static VTweaks instance;
     public static final CommonProxy Proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-
+    private static VTweaks instance;
     public final Logger LOGGER = LogManager.getLogger();
     public final TweakRegistry TweakRegistry = new TweakRegistry();
     public final TickScheduler Scheduler = new TickScheduler();

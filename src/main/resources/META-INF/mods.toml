@@ -1,26 +1,26 @@
-modLoader="javafml"
-loaderVersion="[43,)"
-license="GNU GPLv3"
+modLoader = "javafml"
+loaderVersion = "[45,)"
+license = "GNU GPLv3"
 
 [[mods]]
-modId="vtweaks"
-version="${file.jarVersion}"
-displayName="V-Tweaks"
-displayURL="http://github.com/oitsjustjose/v-tweaks"
-credits=""
-authors="oitsjustjose"
-description='''A mod that tweaks the vanilla game without adding any new items'''
+modId = "vtweaks"
+version = "${file.jarVersion}"
+displayName = "V-Tweaks"
+displayURL = "http://github.com/oitsjustjose/v-tweaks"
+credits = ""
+authors = "oitsjustjose"
+description = '''A mod that tweaks the vanilla game without adding any new items'''
 
 [[dependencies.vtweaks]]
-    modId="forge"
-    mandatory=true
-    versionRange="[43,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.vtweaks]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.19,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,)"
+ordering = "NONE"
+side = "BOTH"

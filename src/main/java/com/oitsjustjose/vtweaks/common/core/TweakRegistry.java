@@ -15,6 +15,7 @@ public class TweakRegistry {
 
     final List<VTweak> allTweaks;
     final HashMap<String, List<VTweak>> eventTweakMap;
+
     public TweakRegistry() {
         this.allTweaks = Lists.newArrayList();
         this.eventTweakMap = new HashMap<>();

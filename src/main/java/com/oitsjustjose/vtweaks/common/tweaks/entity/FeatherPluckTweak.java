@@ -3,13 +3,12 @@ package com.oitsjustjose.vtweaks.common.tweaks.entity;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(eventClass = PlayerInteractEvent.EntityInteract.class, category = "entity")
 public class FeatherPluckTweak extends VTweak {
-    public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("forge", "chickens"));
+    public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("forge", "chickens"));
     public static final TagKey<Item> SHEARS = ItemTags.create(new ResourceLocation("forge", "shears"));
     private static final String PLUCK_COOL_DOWN_KEY = Constants.MOD_ID + ":pluck_cool_down";
 
@@ -51,7 +50,7 @@ public class FeatherPluckTweak extends VTweak {
 
         var drop = new ItemEntity(evt.getLevel(), evt.getTarget().getX(), evt.getTarget().getY(), evt.getTarget().getZ(), new ItemStack(Items.FEATHER));
         evt.getLevel().addFreshEntity(drop);
-        evt.getTarget().hurt(DamageSource.GENERIC, 0.0F);
+        evt.getTarget().hurt(player.damageSources().generic(), 0.0F);
         setCooldown(evt.getTarget());
         if (!player.isCreative()) {
             player.getMainHandItem().hurt(1, player.getRandom(), null);

@@ -9,8 +9,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class WeightedCollection<T> {
-    private final HashMap<T, Integer> items;
     final Random random;
+    private final HashMap<T, Integer> items;
 
     public WeightedCollection() {
         this.items = new HashMap<>();

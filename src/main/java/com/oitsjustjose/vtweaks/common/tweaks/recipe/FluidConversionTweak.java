@@ -1,10 +1,10 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
-import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
+import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;

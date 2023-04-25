@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
 import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -47,18 +48,19 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper wrapper) {
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper p_44001_, @NotNull RegistryAccess p_267165_) {
         return this.result;
     }
 
-    @Override
-    public @NotNull ItemStack getResultItem() {
-        return this.result;
-    }
 
     @Override
     public boolean canCraftInDimensions(int _a, int _b) {
         return true;
+    }
+
+    @Override
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess p_267052_) {
+        return this.result;
     }
 
     @Override

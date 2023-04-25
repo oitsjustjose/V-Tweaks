@@ -43,16 +43,16 @@ public class BetterFallingBlock extends FallingBlockEntity {
         this.setStartPos(this.blockPosition());
     }
 
-    @Override
-    public @NotNull BlockState getBlockState() {
-        return this.heldState;
-    }
-
     public static BetterFallingBlock fall(Level level, BlockPos pos, BlockState heldState) {
         var ent = new BetterFallingBlock(level, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, heldState.hasProperty(BlockStateProperties.WATERLOGGED) ? heldState.setValue(BlockStateProperties.WATERLOGGED, Boolean.FALSE) : heldState);
         level.setBlock(pos, heldState.getFluidState().createLegacyBlock(), 3);
         level.addFreshEntity(ent);
         return ent;
+    }
+
+    @Override
+    public @NotNull BlockState getBlockState() {
+        return this.heldState;
     }
 
     @Override

@@ -23,10 +23,6 @@ import java.util.Locale;
 
 @Tweak(eventClass = ItemTooltipEvent.class, category = "item")
 public class FoodTooltipTweak extends VTweak {
-    public enum TooltipSetting {
-        NEVER, WITH_SHIFT, ALWAYS
-    }
-
     private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
     private ForgeConfigSpec.DoubleValue multiplier;
     private ForgeConfigSpec.ConfigValue<String> simpleColor;
@@ -60,7 +56,6 @@ public class FoodTooltipTweak extends VTweak {
         evt.getToolTip().add(getSaturationString((int) (food.getSaturationModifier() * 10 * multiplier.get()), stack.getRarity()));
     }
 
-
     private boolean hasBadEffect(List<Pair<MobEffectInstance, Float>> e) {
         return e.stream().anyMatch(x -> !x.getFirst().getEffect().isBeneficial());
     }
@@ -92,7 +87,7 @@ public class FoodTooltipTweak extends VTweak {
         ret.append("\u2588".repeat(Math.max(0, (nutrition / 2))));
         if (nutrition % 2 != 0) ret.append("\u258C");
 
-        var t = new TranslatableContents("vtweaks.hunger.tooltip.text", ret.toString());
+        var t = new TranslatableContents("vtweaks.hunger.tooltip.text", "--", new Object[]{ret.toString()});
         try {
             return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
@@ -108,11 +103,15 @@ public class FoodTooltipTweak extends VTweak {
         ret.append("\u2588".repeat(Math.max(0, saturation / 2)));
         if (saturation % 2 != 0) ret.append("\u258C");
 
-        var t = new TranslatableContents("vtweaks.saturation.tooltip.text", ret.toString());
+        var t = new TranslatableContents("vtweaks.saturation.tooltip.text", "--", new Object[]{ret.toString()});
         try {
             return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
             return Component.empty();
         }
+    }
+
+    public enum TooltipSetting {
+        NEVER, WITH_SHIFT, ALWAYS
     }
 }

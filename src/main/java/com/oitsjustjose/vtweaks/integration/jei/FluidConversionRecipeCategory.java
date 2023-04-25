@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -29,11 +30,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     private final IDrawable icon;
 
     public FluidConversionRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper
-                .drawableBuilder(new ResourceLocation(Constants.MOD_ID, "/textures/gui/fluid_conversion.png"), 0, 0, 76, 18)
-                .addPadding(0, 20, 32, 32)
-                .setTextureSize(76, 18)
-                .build();
+        this.background = guiHelper.drawableBuilder(new ResourceLocation(Constants.MOD_ID, "/textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
         icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.DISPENSER));
     }
 
@@ -47,7 +44,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     @Nonnull
     public Component getTitle() {
         try {
-            return new TranslatableContents("vtweaks.fluid_conversion.jei.title").resolve(null, null, 0);
+            return new TranslatableContents("vtweaks.fluid_conversion.jei.title", null, new Object[]{}).resolve(null, null, 0);
         } catch (CommandSyntaxException ex) {
             return Component.empty();
         }
@@ -66,7 +63,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, FluidConversionRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, FluidConversionRecipe recipe, @NotNull IFocusGroup focuses) {
         var input = recipe.getInput();
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
         var output = recipe.getResult();
@@ -81,12 +78,13 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     }
 
     @Override
-    public void draw(FluidConversionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
+        if (fluid == null) return;
         MutableComponent comp = Component.empty();
         try {
             var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
-            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", fluidNm).resolve(null, null, 0));
+            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", "--", new Object[]{fluidNm}).resolve(null, null, 0));
         } catch (CommandSyntaxException ignored) {
         }
 

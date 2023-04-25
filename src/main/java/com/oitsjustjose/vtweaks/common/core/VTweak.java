@@ -4,5 +4,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 
 public abstract class VTweak {
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {}
+    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    }
 }

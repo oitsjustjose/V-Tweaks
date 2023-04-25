@@ -3,7 +3,6 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -57,7 +56,7 @@ minecraft {
 }
 
 repositories {
-    maven { url = "https://dvs1.progwml6.com/files/maven" }
+    maven { url = "https://maven.blamejared.com" }
 }
 
 dependencies {

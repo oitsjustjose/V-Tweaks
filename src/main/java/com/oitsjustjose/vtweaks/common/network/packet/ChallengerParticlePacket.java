@@ -49,15 +49,15 @@ public class ChallengerParticlePacket {
         buf.writeDouble(msg.z);
     }
 
-    public void handleServer(Supplier<NetworkEvent.Context> context) {
-        context.get().setPacketHandled(true);
-    }
-
     @OnlyIn(Dist.CLIENT)
     public static void handleClient(ChallengerParticlePacket msg, Supplier<NetworkEvent.Context> context) {
         if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
             context.get().enqueueWork(() -> ClientProxy.showDustParticle(msg.r, msg.g, msg.b, msg.x, msg.y, msg.z));
         }
+        context.get().setPacketHandled(true);
+    }
+
+    public void handleServer(Supplier<NetworkEvent.Context> context) {
         context.get().setPacketHandled(true);
     }
 }
