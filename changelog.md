@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 4.0.7
+
+### Added:
+
+- `TransparentItemFrameTweak`: a tweak which allows you to sneak+right-click an item frame with any plain, uncolored Glass tagged with `#vtweaks:clear_glass`
+
 ## 4.0.6: INITIAL PORT TO 1.19.4
 
 ### Added:
