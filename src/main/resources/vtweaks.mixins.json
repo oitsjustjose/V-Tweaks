@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "vtweaks.refmap.json",
   "mixins": [
-    "ItemEntityMixin"
+    "ItemEntityMixin",
+    "ThrownPotionMixin"
   ],
   "client": [],
   "minVersion": "0.8"

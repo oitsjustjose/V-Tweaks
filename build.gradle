@@ -19,7 +19,7 @@ plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0+"
 }
 
-maven { url = "https://dvs1.progwml6.com/files/maven" }
+repositories { maven { url = "https://dvs1.progwml6.com/files/maven" } }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'

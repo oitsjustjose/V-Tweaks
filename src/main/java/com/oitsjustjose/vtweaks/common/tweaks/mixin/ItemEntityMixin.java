@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.common.tweaks.mixin;
 
-import com.oitsjustjose.vtweaks.common.config.MixinConfig;
+import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemEntityMixin {
     @Inject(at = @At("HEAD"), method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", cancellable = true)
     private void hurt(DamageSource source, float amt, CallbackInfoReturnable<Boolean> callback) {
-        if (MixinConfig.EnableCactusMixin.get() && source == DamageSource.CACTUS) {
+        if (CommonConfig.EnableCactusMixin.get() && source == DamageSource.CACTUS) {
             callback.setReturnValue(false);
         }
     }
