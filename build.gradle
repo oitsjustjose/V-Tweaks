@@ -3,7 +3,6 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -14,51 +13,38 @@ buildscript {
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'org.spongepowered.mixin'
 
+plugins {
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.matthewprenger.cursegradle" version "1.4.0+"
+}
+
+maven { url = "https://dvs1.progwml6.com/files/maven" }
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "VTweaks-${game_version}-${mod_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     mappings channel: 'official', version: "${game_version}"
     runs {
         client {
             workingDirectory project.file('run')
-
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                vtweaks {
-                    source sourceSets.main
-                }
-            }
+            mods { vtweaks { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
-
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                vtweaks {
-                    source sourceSets.main
-                }
-            }
+            mods { vtweaks { source sourceSets.main } }
         }
     }
 }
 
-repositories {
-    maven { url = "https://dvs1.progwml6.com/files/maven" }
-}
 
 dependencies {
     minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
@@ -74,67 +60,48 @@ mixin {
     config "vtweaks.mixins.json"
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
-            "Specification-Title": "vtweaks",
-            "Specification-Vendor": "oitsjustjose.com",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${mod_version}",
-            "Implementation-Vendor" :"oitsjustjose.com",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Specification-Title"     : "vtweaks",
+                "Specification-Vendor"    : "oitsjustjose.com",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${mod_version}",
+                "Implementation-Vendor"   : "oitsjustjose.com",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
 
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
+tasks.register('publish') {
+    dependsOn 'curseforge'
+    dependsOn 'modrinth'
 }
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'Deobf'
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'Sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives deobfJar
-    archives sourcesJar
-}
-
- curseforge {
-   apiKey = project.hasProperty("CURSEFORGE_API_KEY") ? project.CURSEFORGE_API_KEY : ""
-   project {
-     id = '238048'
-     changelogType = 'markdown'
-     changelog = file("./changelog.md")
-     releaseType = 'release'
-     addGameVersion "1.19"
-     addGameVersion "1.19.1"
-     addGameVersion "1.19.2"
-     mainArtifact(jar) {
-         displayName = "V-Tweaks ${game_version} ${mod_version}"
-     }
-   }
- }
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
+curseforge {
+    apiKey = project.hasProperty("CURSEFORGE_API_KEY") ? project.CURSEFORGE_API_KEY : ""
+    project {
+        id = '238048'
+        changelogType = 'markdown'
+        changelog = file("./changelog.md")
+        releaseType = 'release'
+        addGameVersion "${game_version}"
+        mainArtifact(jar) {
+            displayName = "V-Tweaks ${game_version} ${mod_version}"
         }
     }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
+}
+
+modrinth {
+    token = project.hasProperty("MODRINTH_API_KEY") ? project.MODRINTH_API_KEY : ""
+    projectId = "Bmda4Rq4"
+    versionName = "V-Tweaks ${game_version} ${mod_version}"
+    versionNumber = "${game_version}-${mod_version}"
+    versionType = "release"
+    uploadFile = jar
+    gameVersions = ["${game_version}"]
+    loaders = ["forge"]
+    changelog = file("./changelog.md").text
+    dependencies { required.project "jei" }
 }
