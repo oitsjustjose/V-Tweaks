@@ -4,7 +4,6 @@ import com.oitsjustjose.vtweaks.client.ClientProxy;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
-import com.oitsjustjose.vtweaks.common.config.MixinConfig;
 import com.oitsjustjose.vtweaks.common.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.core.TweakRegistry;
 import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
@@ -59,7 +58,6 @@ public class VTweaks {
         ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CLIENT_CONFIG);
         CommonConfig.loadConfig(CommonConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-common.toml"));
         ClientConfig.loadConfig(ClientConfig.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-client.toml"));
-        MixinConfig.loadConfig(MixinConfig.MIXIN_CONFIG, FMLPaths.CONFIGDIR.get().resolve("vtweaks-mixins.toml"));
     }
 
     @SubscribeEvent

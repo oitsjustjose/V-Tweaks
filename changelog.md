@@ -4,22 +4,31 @@
 
 ### Added:
 
-- `TransparentItemFrameTweak`: a tweak which allows you to sneak+right-click an item frame with any plain, uncolored Glass tagged with `#vtweaks:clear_glass`
+- `ItemFrameTweak`: Allows any `vtweaks:clear_glass`, or glow ink sac, to be activated on an item frame while sneaking
+  to make the item frame transparent or glowing respectively. [Demo](https://dv2ls.com/vt-itemframetweak)
+- `SplashPotionTweak`: Allows splash potions of water to behave the same as throwing an item in water, but using
+  V-Tweaks' <u>Fluid Conversion Recipes</u>. Works as an alternative if you'd like to set `enableFluidConversionRecipes`
+  to `false`, but **only works with blocks** instead of blocks and items. [Demo](https://dv2ls.com/vt-splash)
+
+### Changed:
+
+- Mixin configs are now a part of `vtweaks-common.toml`  - if you previously changed `enableCactusItemProtection`,
+  you'll need to change it again but in `vtweaks-common.toml` 🙁
 
 ## 4.0.6: INITIAL PORT TO 1.19.4
 
 ### Added:
 
 - All new configs for Food Tooltips:
-    - `useOriginalFoodTooltipColor (bool)`: if a food has a custom color such as via rarity or NBT, use that color
-      instead of the other colors defined below for the *hunger bar*. If a food has no given custom color, then the
+    - `useOriginalFoodTooltipColor (bool)`: if food has a custom color such as via rarity or NBT, use that color
+      instead of the other colors defined below for the *hunger bar*. If food has no given custom color, then the
       default color (or the buff/debuff color) will be
       used. [Demo](https://oitsjustjose-sharex.s3.us-east-2.amazonaws.com/2023/04/java_04-02-23%2014-21-23-940.mp4)
     - `foodTooltipColor (string)`: the HEX code for a normal food that gives no Positive / Negative potion effects on
       consumption
-    - `foodTooltipPositiveColor (string)`: the HEX code for a food that gives **NO Negative Potion Effects** and at
+    - `foodTooltipPositiveColor (string)`: the HEX code for food that gives **NO Negative Potion Effects** and at
       least one Positive potion effect on consumption
-    - `foodTooltipNegativeColor (string)`: the HEX code for a food that gives at least one Negative potion effect on
+    - `foodTooltipNegativeColor (string)`: the HEX code for food that gives at least one Negative potion effect on
       consumption
     - `foodTooltipMultiplier (float)`: similar to health, 1 hunger is equivalent to half a hunger haunch. This setting
       controls a multiplier for this in terms of the hunger tooltip on foods.
