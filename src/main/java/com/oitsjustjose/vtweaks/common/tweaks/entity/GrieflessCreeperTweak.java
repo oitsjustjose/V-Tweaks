@@ -38,7 +38,7 @@ public class GrieflessCreeperTweak extends VTweak {
         if (!evt.getExplosion().getDamageSource().getEntity().getType().is(CREEPERS)) return;
 
         var exploder = evt.getExplosion().getDamageSource().getEntity();
-        var lvl = exploder.getLevel();
+        var lvl = exploder.level();
         var idx = new AtomicInteger();
 
         // Enqueue future block placements from Lowest Y, Increment

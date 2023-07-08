@@ -4,6 +4,7 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
 import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -44,7 +45,8 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
     @Override
     public boolean matches(@NotNull RecipeWrapper wrapper, @NotNull Level level) {
         var wrapperStack = wrapper.getItem(0);
-        return wrapperStack.getItem() == this.input.getItem() && ItemStack.tagMatches(wrapperStack, this.input);
+        var tag = wrapperStack.getTag() == null ? new CompoundTag() : wrapperStack.getTag();
+        return wrapperStack.getItem() == this.input.getItem() && tag.equals(this.input.getTag());
     }
 
     @Override

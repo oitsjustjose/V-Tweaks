@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.integration.jei;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.util.Constants;
@@ -13,6 +12,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -77,8 +77,9 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         }
     }
 
+    //    T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY
     @Override
-    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
         if (fluid == null) return;
         MutableComponent comp = Component.empty();
@@ -93,8 +94,8 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var x = background.getWidth() - 2 - width;
         var y = 27;
 
-        minecraft.font.draw(stack, comp, x + 0.5F, y + 0.5F, 0x25252525);
-        minecraft.font.draw(stack, comp, x, y, 0x252525);
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+        guiGraphics.drawString(minecraft.font, comp, x + 1, y + 1, 0x25252525);
+        guiGraphics.drawString(minecraft.font, comp, x, y, 0x252525);
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
     }
 }

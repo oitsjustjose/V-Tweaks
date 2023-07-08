@@ -19,7 +19,7 @@ public class ChallengerLootHandler extends VTweak {
         var loot = modifier.pickLoot();
         if (loot == null) return;
 
-        var drop = new ItemEntity(monster.getLevel(), monster.getX(), monster.getY(), monster.getZ(), loot);
+        var drop = new ItemEntity(monster.level(), monster.getX(), monster.getY(), monster.getZ(), loot);
         evt.getDrops().add(drop);
     }
 }

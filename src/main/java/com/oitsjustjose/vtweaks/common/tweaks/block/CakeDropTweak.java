@@ -33,14 +33,14 @@ public class CakeDropTweak extends VTweak {
         var state = evt.getState();
 
         if (state.is(BlockTags.CANDLE_CAKES)) {
-            dropCake(evt.getPlayer().getLevel(), evt.getPos());
+            dropCake(evt.getPlayer().level(), evt.getPos());
             return;
         }
 
         if (state.hasProperty(BlockStateProperties.BITES)) {
             var bites = state.getValue(BlockStateProperties.BITES);
             if (bites == 0) {
-                dropCake(evt.getPlayer().getLevel(), evt.getPos());
+                dropCake(evt.getPlayer().level(), evt.getPos());
             }
         }
 

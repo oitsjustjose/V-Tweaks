@@ -27,12 +27,12 @@ public class FluidConversionTweak extends VTweak {
     @SubscribeEvent
     public void process(ItemTossEvent evt) {
         if (!this.enabled.get()) return;
-        if (evt.getPlayer().getLevel().isClientSide()) return;
+        if (evt.getPlayer().level().isClientSide()) return;
 
         var recipe = findRecipe(evt);
         if (recipe.isEmpty()) return;
         var replacementItem = new ConvertibleItemEntity(evt.getEntity(), recipe.get().getResult(), recipe.get().getFluid());
-        evt.getPlayer().getLevel().addFreshEntity(replacementItem);
+        evt.getPlayer().level().addFreshEntity(replacementItem);
 
         evt.setResult(Event.Result.DENY);
         evt.setCanceled(true);
@@ -40,7 +40,7 @@ public class FluidConversionTweak extends VTweak {
     }
 
     public Optional<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
-        var level = evt.getPlayer().getLevel();
+        var level = evt.getPlayer().level();
         var handler = new ItemStackHandler(1);
         handler.setStackInSlot(0, evt.getEntity().getItem());
         return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);

@@ -103,5 +103,5 @@ modrinth {
     gameVersions = ["${game_version}"]
     loaders = ["forge"]
     changelog = file("./changelog.md").text
-    dependencies { optional.project "jei" }
+    dependencies { required.project "jei" }
 }

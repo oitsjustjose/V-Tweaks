@@ -11,7 +11,7 @@ public class ConvertibleItemEntity extends ItemEntity {
     private boolean hasBeenConverted;
 
     public ConvertibleItemEntity(ItemEntity item, ItemStack output, ResourceLocation fluid) {
-        super(item.getLevel(), item.getX(), item.getY(), item.getZ(), item.getItem());
+        super(item.level(), item.getX(), item.getY(), item.getZ(), item.getItem());
         this.output = output;
         this.fluid = fluid;
         this.hasBeenConverted = false;
@@ -22,7 +22,7 @@ public class ConvertibleItemEntity extends ItemEntity {
     @Override
     public void tick() {
         if (!this.hasBeenConverted) {
-            var fluidState = this.level.getFluidState(this.blockPosition());
+            var fluidState = this.level().getFluidState(this.blockPosition());
             if (!fluidState.isEmpty()) {
                 ResourceLocation rl = ForgeRegistries.FLUID_TYPES.get().getKey(fluidState.getFluidType());
                 if (rl != null && rl.equals(this.fluid)) {
