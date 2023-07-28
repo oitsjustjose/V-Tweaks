@@ -9,10 +9,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Tweak(eventClass = ItemTossEvent.class, category = "recipes")
 public class FluidConversionTweak extends VTweak {
@@ -29,20 +28,22 @@ public class FluidConversionTweak extends VTweak {
         if (!this.enabled.get()) return;
         if (evt.getPlayer().level().isClientSide()) return;
 
-        var recipe = findRecipe(evt);
-        if (recipe.isEmpty()) return;
-        var replacementItem = new ConvertibleItemEntity(evt.getEntity(), recipe.get().getResult(), recipe.get().getFluid());
-        evt.getPlayer().level().addFreshEntity(replacementItem);
+        var recipes = findRecipe(evt);
+        if (recipes.isEmpty()) return;
 
+        var replacementItem = new ConvertibleItemEntity(evt.getEntity(), recipes);
+        evt.getPlayer().level().addFreshEntity(replacementItem);
         evt.setResult(Event.Result.DENY);
         evt.setCanceled(true);
         evt.getEntity().discard();
     }
 
-    public Optional<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
+    public List<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
         var level = evt.getPlayer().level();
-        var handler = new ItemStackHandler(1);
-        handler.setStackInSlot(0, evt.getEntity().getItem());
-        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
+        var recipes = level.getRecipeManager().getAllRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE);
+        // Recipes use a stack size of 1, so set it to 1 to actually get a good compare
+        var searchStack = evt.getEntity().getItem().copy();
+        searchStack.setCount(1);
+        return recipes.stream().filter(x -> x.getInput().equals(searchStack, true)).collect(Collectors.toList());
     }
 }

@@ -1,4 +1,10 @@
-# V-Tweaks Changelog MC 1.19.x
+# V-Tweaks Changelog MC 1.20.1
+
+## 4.0.8
+
+### Fixed:
+
+- `FluidConversionTweak` not working for many reasons
 
 ## 4.0.7
 
