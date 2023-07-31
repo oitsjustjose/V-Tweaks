@@ -2,7 +2,6 @@ package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
-import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +24,7 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
         this.input = input;
         this.result = output;
         this.fluid = fluid;
-        JeiPlugin.AllFluidConversionRecipes.put(id, this);
+        VTweaks.getInstance().addFluidConversionRecipe(id, this);
         DispenserBlock.registerBehavior(this.input.getItem(), new FluidConversionDispensing());
     }
 

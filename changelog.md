@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.19.x
 
+## 4.0.8
+
+### Fixed:
+
+- Hard dependency on JEI
+
 ## 4.0.7
 
 ### Added:
