@@ -6,11 +6,13 @@ import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.core.TweakRegistry;
+import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
 import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
 import com.oitsjustjose.vtweaks.common.data.culling.EntityCullingDataLoader;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,6 +26,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
+
 @Mod(Constants.MOD_ID)
 public class VTweaks {
     public static final CommonProxy Proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
@@ -33,8 +37,14 @@ public class VTweaks {
     public final TickScheduler Scheduler = new TickScheduler();
     public final RecipeTypeRegistry CustomRecipeRegistry = new RecipeTypeRegistry();
 
+    private final HashMap<ResourceLocation, AnvilRecipe> AllAnvilRecipes;
+    private final HashMap<ResourceLocation, FluidConversionRecipe> AllFluidConversionRecipes;
+
     public VTweaks() {
         instance = this;
+
+        AllAnvilRecipes = new HashMap<>();
+        AllFluidConversionRecipes = new HashMap<>();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -64,7 +74,25 @@ public class VTweaks {
     public void onSlashReload(AddReloadListenerEvent evt) {
         evt.addListener(new ChallengerDataLoader());
         evt.addListener(new EntityCullingDataLoader());
-        JeiPlugin.AllAnvilRecipes.clear();
-        JeiPlugin.AllFluidConversionRecipes.clear();
+        AllAnvilRecipes.clear();
+        AllFluidConversionRecipes.clear();
+    }
+
+    public void addAnvilRecipe(ResourceLocation loc, AnvilRecipe recipe) {
+        this.AllAnvilRecipes.put(loc, recipe);
+    }
+
+    public void addFluidConversionRecipe(ResourceLocation loc, FluidConversionRecipe recipe) {
+        this.AllFluidConversionRecipes.put(loc, recipe);
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<ResourceLocation, AnvilRecipe> getAnvilRecipes() {
+        return (HashMap<ResourceLocation, AnvilRecipe>) this.AllAnvilRecipes.clone();
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<ResourceLocation, FluidConversionRecipe> getFluidConversionRecipes() {
+        return (HashMap<ResourceLocation, FluidConversionRecipe>) this.AllFluidConversionRecipes.clone();
     }
 }

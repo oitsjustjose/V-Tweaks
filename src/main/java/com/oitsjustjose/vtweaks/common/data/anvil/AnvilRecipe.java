@@ -1,7 +1,6 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.integration.jei.JeiPlugin;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -34,7 +33,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.cost = c;
         this.copyNbtFromLeft = cpl;
         this.copyNbtFromRight = cpr;
-        JeiPlugin.AllAnvilRecipes.put(id, this);
+        VTweaks.getInstance().addAnvilRecipe(id, this);
     }
 
     public ItemStack getLeft() {
