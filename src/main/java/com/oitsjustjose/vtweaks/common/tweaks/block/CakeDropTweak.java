@@ -14,7 +14,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
-@Tweak(eventClass = BlockEvent.BreakEvent.class, category = "block")
+@Tweak(category = "block")
 public class CakeDropTweak extends VTweak {
     public ForgeConfigSpec.BooleanValue enabled;
 

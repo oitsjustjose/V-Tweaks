@@ -21,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 import java.util.Locale;
 
-@Tweak(eventClass = ItemTooltipEvent.class, category = "item")
+@Tweak(category = "item")
 public class FoodTooltipTweak extends VTweak {
     private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
     private ForgeConfigSpec.DoubleValue multiplier;

@@ -11,7 +11,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.Optional;
 
-@Tweak(eventClass = AnvilUpdateEvent.class, category = "recipe")
+@Tweak(category = "recipe")
 public class NBTAnvilRecipe extends VTweak {
     @SubscribeEvent
     public void process(AnvilUpdateEvent evt) {

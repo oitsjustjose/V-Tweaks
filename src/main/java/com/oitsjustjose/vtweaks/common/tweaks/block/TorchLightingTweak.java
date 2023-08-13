@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
-@Tweak(eventClass = PlayerInteractEvent.RightClickBlock.class, category = "block")
+@Tweak(category = "block")
 public class TorchLightingTweak extends VTweak {
     public static final TagKey<Item> TORCH_ITEM = ItemTags.create(new ResourceLocation(MOD_ID, "ignition_item"));
     public static final TagKey<Block> TORCH_IGNITE_BL = BlockTags.create(new ResourceLocation(MOD_ID, "torch_ignition_blacklist"));

@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
-@Tweak(eventClass = PlayerInteractEvent.RightClickBlock.class, category = "block")
+@Tweak(category = "block")
 public class CropInteractTweak extends VTweak {
     public static final TagKey<Block> CROP_BLACKLIST = BlockTags.create(new ResourceLocation(MOD_ID, "blacklisted_harvest_crops"));
 

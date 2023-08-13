@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = AttackEntityEvent.class, category = "entity")
+@Tweak(category = "entity")
 public class PetFriendlyFireTweak extends VTweak {
     private ForgeConfigSpec.EnumValue<FFSetting> setting;
 

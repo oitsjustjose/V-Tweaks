@@ -7,7 +7,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingDropsEvent.class, category = "entity")
+@Tweak(category = "entity")
 public class ChallengerLootHandler extends VTweak {
     @SubscribeEvent
     public void process(LivingDropsEvent evt) {

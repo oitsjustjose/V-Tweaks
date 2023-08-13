@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
+@Tweak(category = "entity")
 public class ChallengerModifierHandler extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.DoubleValue globalChance;

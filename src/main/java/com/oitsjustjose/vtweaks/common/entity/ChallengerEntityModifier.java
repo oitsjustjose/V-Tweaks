@@ -85,12 +85,12 @@ public class ChallengerEntityModifier {
             monster.setDropChance(e, 0.0F);
         }
 
-        monster.setItemSlot(EquipmentSlot.HEAD, this.helmet);
-        monster.setItemSlot(EquipmentSlot.CHEST, this.chestplate);
-        monster.setItemSlot(EquipmentSlot.LEGS, this.leggings);
-        monster.setItemSlot(EquipmentSlot.FEET, this.boots);
-        monster.setItemInHand(InteractionHand.MAIN_HAND, this.mainHand);
-        monster.setItemInHand(InteractionHand.OFF_HAND, this.offHand);
+        monster.setItemSlot(EquipmentSlot.HEAD, this.helmet.copy());
+        monster.setItemSlot(EquipmentSlot.CHEST, this.chestplate.copy());
+        monster.setItemSlot(EquipmentSlot.LEGS, this.leggings.copy());
+        monster.setItemSlot(EquipmentSlot.FEET, this.boots.copy());
+        monster.setItemInHand(InteractionHand.MAIN_HAND, this.mainHand.copy());
+        monster.setItemInHand(InteractionHand.OFF_HAND, this.offHand.copy());
 
         double speed = Objects.requireNonNull(monster.getAttribute(Attributes.MOVEMENT_SPEED)).getBaseValue();
         double health = Objects.requireNonNull(monster.getAttribute(Attributes.MAX_HEALTH)).getBaseValue();
@@ -126,7 +126,8 @@ public class ChallengerEntityModifier {
 
     @Nullable
     public ItemStack pickLoot() {
-        return this.loot.pick();
+        var loot = this.loot.pick();
+        return loot == null ? null : loot.copy();
     }
 
     public String getUnlocalizedName() {

@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
+@Tweak(category = "entity")
 public class PeacefulSurfaceTweak extends VTweak {
     public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
     public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));

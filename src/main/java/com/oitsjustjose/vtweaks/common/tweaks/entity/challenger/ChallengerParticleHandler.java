@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /* Category is Client for the config, maybe category should be renamed Config Category? */
-@Tweak(eventClass = LivingEvent.LivingTickEvent.class, category = "client")
+@Tweak(category = "client")
 public class ChallengerParticleHandler extends VTweak {
     private ForgeConfigSpec.BooleanValue enable;
 

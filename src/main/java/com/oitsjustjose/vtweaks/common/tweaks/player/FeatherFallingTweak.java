@@ -9,7 +9,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingHurtEvent.class, category = "player")
+@Tweak(category = "player")
 public class FeatherFallingTweak extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
 

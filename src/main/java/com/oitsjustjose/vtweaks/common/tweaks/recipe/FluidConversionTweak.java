@@ -13,7 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Tweak(eventClass = ItemTossEvent.class, category = "recipes")
+@Tweak(category = "recipes")
 public class FluidConversionTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;

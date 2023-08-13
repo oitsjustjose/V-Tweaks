@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 
-@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
+@Tweak(category = "entity")
 public class EntityCullingHandler extends VTweak {
     public static final ArrayList<EntityCullingRule> AllRules = new ArrayList<>();
 

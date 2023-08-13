@@ -17,5 +17,7 @@
   "vtweaks.saturation.tooltip.text": "§7Sat:§r %s",
   "vtweaks.hunger.tooltip.text": "§7Hunger:§r %s",
   "vtweaks.fluid_conversion.jei.title": "Throw Item in Fluid",
-  "vtweaks.fluid_conversion.jei.text": "Toss/Dispense in %s"
+  "vtweaks.fluid_conversion.jei.text": "Toss/Dispense in %s",
+  "vtweaks.warranty.message.text.singular": "We've been trying to reach you about your item's extended warranty",
+  "vtweaks.warranty.message.text.plural": "We've been trying to reach you about your items' extended warranty"
 }

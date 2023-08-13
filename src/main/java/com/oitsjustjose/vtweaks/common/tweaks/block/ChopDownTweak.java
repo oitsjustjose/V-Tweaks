@@ -21,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-@Tweak(eventClass = BlockEvent.BreakEvent.class, category = "block")
+@Tweak(category = "block")
 public class ChopDownTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;

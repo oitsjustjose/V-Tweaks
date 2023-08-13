@@ -8,7 +8,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingDropsEvent.class, category = "player")
+@Tweak(category = "player")
 public class CorpseDropsTweak extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
 
