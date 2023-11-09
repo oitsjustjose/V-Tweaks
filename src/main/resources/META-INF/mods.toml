@@ -11,6 +11,9 @@ credits = ""
 authors = "oitsjustjose"
 description = '''A mod that tweaks the vanilla game without adding any new items'''
 
+[[mixins]]
+config = "vtweaks.mixins.json"
+
 [[dependencies.vtweaks]]
 modId = "forge"
 mandatory = true

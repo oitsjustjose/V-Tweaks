@@ -1,63 +1,45 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
-    dependencies {
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-    }
-}
-
 plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
     id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0+"
+    id 'net.neoforged.gradle.userdev' version '7.0.26'
 }
 
 repositories { maven { url = "https://maven.blamejared.com" } }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
-
-group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.oitsjustjose.vtweaks'
 archivesBaseName = "VTweaks-${game_version}-${mod_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-minecraft {
-    mappings channel: 'official', version: "${game_version}"
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods { vtweaks { source sourceSets.main } }
-        }
 
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods { vtweaks { source sourceSets.main } }
-        }
+//minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+//minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', "vtweaks"
+    }
+
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', "vtweaks"
+        programArgument '--nogui'
     }
 }
 
-
 dependencies {
-    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-common-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-common:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-forge:${jei_version}")
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-}
-
-mixin {
-    add sourceSets.main, "vtweaks.refmap.json"
-    config "vtweaks.mixins.json"
+    implementation "net.neoforged:forge:${game_version}-${neo_version}"
+    compileOnly "mezz.jei:jei-${game_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${game_version}-forge-api:${jei_version}"
+//    runtimeOnly "mezz.jei:jei-${game_version}-common:${jei_version}"
+//    runtimeOnly "mezz.jei:jei-${game_version}-forge:${jei_version}"
 }
 
 jar {
@@ -65,7 +47,7 @@ jar {
         attributes([
             "Specification-Title"     : "vtweaks",
             "Specification-Vendor"    : "oitsjustjose.com",
-            "Specification-Version"   : "1", // We are version 1 of ourselves
+            "Specification-Version"   : "1",
             "Implementation-Title"    : project.name,
             "Implementation-Version"  : "${mod_version}",
             "Implementation-Vendor"   : "oitsjustjose.com",
@@ -73,6 +55,8 @@ jar {
         ])
     }
 }
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 
 tasks.register('publish') {
     dependsOn 'curseforge'
@@ -87,6 +71,8 @@ curseforge {
         changelog = file("./changelog.md")
         releaseType = 'release'
         addGameVersion "${game_version}"
+        addGameVersion "forge"
+        addGameVersion "neoforge"
         mainArtifact(jar) {
             displayName = "V-Tweaks ${game_version} ${mod_version}"
         }
@@ -101,7 +87,7 @@ modrinth {
     versionType = "release"
     uploadFile = jar
     gameVersions = ["${game_version}"]
-    loaders = ["forge"]
+    loaders = ["forge", "neoforge"]
     changelog = file("./changelog.md").text
     dependencies { required.project "jei" }
 }

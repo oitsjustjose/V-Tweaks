@@ -1,6 +1,7 @@
 .gradle
 /build/
 /run/
+/runs/
 /out/
 *.DS_STORE
 *.iml
