@@ -21,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 import java.util.Locale;
 
-@Tweak(category = "item")
+@Tweak(category = "item.tooltips.food")
 public class FoodTooltipTweak extends VTweak {
     private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
     private ForgeConfigSpec.DoubleValue multiplier;
@@ -40,6 +40,7 @@ public class FoodTooltipTweak extends VTweak {
         this.debuffColor = builder.comment("Modifies the color of a tooltip for a food that gives debuffs on consumption.\nUses HEX Web Colors which you can pick from here: https://dv2ls.com/colpic").define("foodTooltipNegativeColor", "#AA0000");
         this.saturationColor = builder.comment("Modifies the color of the saturation tooltip.\nUses HEX Web Colors which you can pick from here: https://dv2ls.com/colpic").define("foodTooltipSaturationColor", "#AA0000");
         this.useOriginalFoodTooltipColor = builder.comment("If a food has a custom color, use that color instead of the defined color regardless of the buffs/debuffs the food gives").define("useOriginalFoodTooltipColor", true);
+        builder.pop(2);
     }
 
     @SubscribeEvent
