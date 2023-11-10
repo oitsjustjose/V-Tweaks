@@ -1,5 +1,34 @@
 # V-Tweaks Changelog MC 1.20.1
 
+## 4.0.10
+
+### Added:
+
+- Configuration for which moon phases Peaceful Surface should apply to (defaults to all but the New Moon)
+- [Trader Stonks (Enabled by default)](https://twitter.com/oitsjustjose/status/1687305938816872448)
+    - This feature, inspired by SimplySarc's idea, makes it so that Wandering Traders may sell any "valuable" items that
+      you've lost recently
+    - This functionality is in a beta state - please report bugs if you find any!!
+    - Technical details:
+        - Uses the tag `vtweaks:valuable`
+            - If configured (this setting is on by default), if a `vtweaks:valuable` item _can_ be enchanted, it'll only
+              save the item _if_ it's enchanted.
+        - The chance that an item is added is configurable
+        - The Emerald cost is configurable, but it'll always cost Emeralds
+        - The item that gets added is random, and it might be yours _or_ some other players'!
+        - A silly message is shown when chatting with a Wanderer (can be disabled)
+
+### Fixed:
+
+- Peaceful Surface outright not working
+- Feather Falling Tweak not working as intended, negating _all_ damage _except_ for fall damage 🤦‍♂️
+- Splash potions of \<fluid\> not working on FluidConversionRecipes
+
+### Changed:
+
+- Re-organized a lot of configs - please check your `vtweaks-common.toml` file to verify that your previous settings are
+  what they should be
+
 ## 4.0.9
 
 ### Fixed:
