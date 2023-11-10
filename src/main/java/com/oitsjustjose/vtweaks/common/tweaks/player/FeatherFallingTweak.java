@@ -21,7 +21,7 @@ public class FeatherFallingTweak extends VTweak {
     @SubscribeEvent
     public void process(LivingHurtEvent evt) {
         if (!this.enabled.get()) return;
-        if (evt.getSource().is(DamageTypes.FALL)) return;
+        if (!evt.getSource().is(DamageTypes.FALL)) return;
         if (!(evt.getEntity() instanceof ServerPlayer player)) return;
 
         var boots = player.getInventory().getArmor(0);

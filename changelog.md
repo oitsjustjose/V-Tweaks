@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.20.1
 
+## 4.0.11:
+
+### Fixed:
+
+- Actually fix feather falling tweak -_-
+
 ## 4.0.10
 
 ### Added:
