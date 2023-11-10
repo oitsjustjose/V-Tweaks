@@ -32,21 +32,24 @@ import java.util.UUID;
 
 import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
-@Tweak(category = "entity")
+@Tweak(category = "entity.trader")
 public class TraderStonks extends VTweak {
 
     /* --- CONFIGS --- */
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.BooleanValue enableFlavorText;
-    private ForgeConfigSpec.BooleanValue wanderingTraderRecoverySaveUnenchantedGear;
+    private ForgeConfigSpec.BooleanValue saveUnenchanted;
     private ForgeConfigSpec.IntValue numItemsToRestore;
 
     private ForgeConfigSpec.IntValue minCost;
     private ForgeConfigSpec.IntValue maxCost;
 
+    private ForgeConfigSpec.DoubleValue chanceToSellValuable;
+
     /* --- CONSTANTS --- */
     public static final String lostItemKey = MOD_ID + ":lost_items";
     public static final String lostItemAddedKey = MOD_ID + ":lost_item_added";
+    public static final String skipKey = MOD_ID + ":skipme";
     public static final TagKey<Item> VALUABLE = ItemTags.create(new ResourceLocation(MOD_ID, "valuable"));
 
     /* --- TRACKING --- */
@@ -55,12 +58,15 @@ public class TraderStonks extends VTweak {
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
-        enabled = builder.comment("If enabled, any valuable tools / items lost forever via Cactus, Lava, Void, etc. might be found by the next Wandering Trader and put up for sale!\nValuable items are determined by the vtweaks:valuable tag and the ").define("wanderingTraderRecoveryEnabled", true);
-        enableFlavorText = builder.comment("Whether or not to show a silly message when interacting with a trader that has that player's items").define("wanderingTraderRecoveryFlavorText", true);
-        wanderingTraderRecoverySaveUnenchantedGear = builder.comment("Determines if a destroyed #vtweaks:valuable should still be saved if it *can* be enchanted but isn't").define("wanderingTraderRecoverySaveUnenchantedGear", false);
-        numItemsToRestore = builder.comment("The maximum number of a player's lost items will be sold by a Wandering Trader each visit").defineInRange("wanderingTraderRecoveryItemCount", 5, 1, Integer.MAX_VALUE);
-        minCost = builder.comment("The minimum amount of emeralds a recovered item should cost").defineInRange("wanderingTraderRecoveryMinCost", 24, 1, 128);
-        maxCost = builder.comment("The maximum amount of emeralds a recovered item should cost").defineInRange("wanderingTraderRecoveryMaxCost", 92, 1, 128);
+        enabled = builder.comment("If enabled, any valuable tools / items lost forever via Cactus, Lava, Void, etc. might be found by the next Wandering Trader and put up for sale!\nValuable items are determined by the vtweaks:valuable tag and, if the item can be enchanted and the config option wanderingTraderRecoverySaveUnenchantedGear is set to true, is enchanted.").define("wanderingTraderRecoveryEnabled", true);
+        enableFlavorText = builder.comment("Whether or not to show a silly message when interacting with a trader that has that player's items").define("enableFlavorText", true);
+        saveUnenchanted = builder.comment("Determines if a destroyed #vtweaks:valuable should still be saved if it *can* be enchanted but isn't").define("saveUnenchantedGear", false);
+        numItemsToRestore = builder.comment("The maximum number of a player's lost items will be sold by a Wandering Trader each visit").defineInRange("numItemsToRestore", 5, 1, Integer.MAX_VALUE);
+        minCost = builder.comment("The minimum amount of emeralds a recovered item should cost").defineInRange("minEmeraldCost", 24, 1, 128);
+        maxCost = builder.comment("The maximum amount of emeralds a recovered item should cost").defineInRange("maxEmeraldCost", 92, 1, 128);
+        chanceToSellValuable = builder.comment("The chance that a given Wandering Trader will offer lost valuables for sale").defineInRange("chanceToSellValuable", 1.F, 0.F, 1.F);
+
+        builder.pop();
     }
 
     /* --- Item added to world --- */
@@ -156,6 +162,13 @@ public class TraderStonks extends VTweak {
         // Not a trader
         if (!(evt.getTarget() instanceof WanderingTrader trader)) return;
         var traderTag = trader.getPersistentData();
+        if (traderTag.contains(skipKey)) return;
+        // Use RNG to determine if we should add the skip key to persist between interacts
+        if (evt.getLevel().getRandom().nextDouble() > chanceToSellValuable.get()) {
+            traderTag.putBoolean(skipKey, true);
+            return;
+        }
+
         // Already added a trade to their list, don't add another
         if (traderTag.contains(lostItemAddedKey)) return;
 
@@ -209,7 +222,7 @@ public class TraderStonks extends VTweak {
     private boolean isItemValuable(ItemStack stack) {
         if (!stack.is(VALUABLE)) return false;
 
-        if (!wanderingTraderRecoverySaveUnenchantedGear.get() && stack.isEnchantable()) {
+        if (!saveUnenchanted.get() && stack.isEnchantable()) {
             return stack.isEnchanted();
         }
         return true;
