@@ -11,6 +11,12 @@
 - Added a new optional setting `strict`. When set to false, the inputs on both sides of the recipe will ignore NBT;
   otherwise the inputs will need to match the NBT specified in the datapack entry
 
+**Water Conversion Recipes**:
+
+- Fixed background not working in JEI
+- Added catalysts for the JEI tab so that it would appear as a "use" for Dispensers, Splash Water Bottles & Water
+  Buckets
+
 ## 4.0.11:
 
 ### Fixed:
