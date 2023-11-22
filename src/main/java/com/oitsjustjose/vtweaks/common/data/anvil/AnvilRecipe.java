@@ -24,8 +24,9 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     private final int cost;
     private final boolean copyNbtFromLeft;
     private final boolean copyNbtFromRight;
+    private final boolean strictMatch;
 
-    public AnvilRecipe(ResourceLocation id, ItemStack l, ItemStack r, ItemStack e, int c, boolean cpl, boolean cpr) {
+    public AnvilRecipe(ResourceLocation id, ItemStack l, ItemStack r, ItemStack e, int c, boolean cpl, boolean cpr, boolean strict) {
         this.id = id;
         this.left = l;
         this.right = r;
@@ -33,6 +34,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.cost = c;
         this.copyNbtFromLeft = cpl;
         this.copyNbtFromRight = cpr;
+        this.strictMatch = strict;
         VTweaks.getInstance().addAnvilRecipe(id, this);
     }
 
@@ -60,6 +62,10 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         return this.copyNbtFromRight;
     }
 
+    public boolean isStrictMatch() {
+        return this.strictMatch;
+    }
+
     @Override
     public boolean matches(@NotNull RecipeWrapper wrapper, @NotNull Level level) {
         var l = wrapper.getItem(0);
@@ -69,6 +75,9 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         /* Have to manually check the NBT because of weirdness */
         if (l.getItem() != this.left.getItem()) return false;
         if (r.getItem() != this.right.getItem()) return false;
+
+        /* Recipe inputs match so that's enough for us :) */
+        if (!isStrictMatch()) return true;
 
         // If the left item is expected to have a tag
         boolean leftTagVerified = !this.left.hasTag() && !l.hasTag();

@@ -1,5 +1,16 @@
 # V-Tweaks Changelog MC 1.20.1
 
+## 4.0.12:
+
+### Changed:
+
+**Anvil Recipe**:
+
+- The setting `cpFromLeft` has been renamed to `copyTagsFromLeft`
+- The setting `cpFromRight` has been renamed to `copyTagsFromRight`
+- Added a new optional setting `strict`. When set to false, the inputs on both sides of the recipe will ignore NBT;
+  otherwise the inputs will need to match the NBT specified in the datapack entry
+
 ## 4.0.11:
 
 ### Fixed:

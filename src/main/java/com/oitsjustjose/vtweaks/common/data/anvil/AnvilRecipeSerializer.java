@@ -15,9 +15,10 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         var right = VTJsonHelpers.deserializeItemStack(obj, "right");
         var result = VTJsonHelpers.deserializeItemStack(obj, "result");
         var cost = obj.get("cost").getAsInt();
-        var cpl = obj.has("cpFromLeft") && obj.get("cpFromLeft").getAsBoolean();
-        var cpr = obj.has("cpFromRight") && obj.get("cpFromRight").getAsBoolean();
-        return new AnvilRecipe(rl, left, right, result, cost, cpl, cpr);
+        var cpl = obj.has("copyTagsFromLeft") && obj.get("copyTagsFromLeft").getAsBoolean();
+        var cpr = obj.has("copyTagsFromRight") && obj.get("copyTagsFromRight").getAsBoolean();
+        var strict = obj.has("strict") && obj.get("strict").getAsBoolean();
+        return new AnvilRecipe(rl, left, right, result, cost, cpl, cpr, strict);
     }
 
     @Override
@@ -28,6 +29,7 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         buf.writeInt(recipe.getCost());
         buf.writeBoolean(recipe.shouldResultCopyNbtFromLeft());
         buf.writeBoolean(recipe.shouldResultCopyNbtFromRight());
+        buf.writeBoolean(recipe.isStrictMatch());
     }
 
     @Override
@@ -38,6 +40,7 @@ public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
         var cost = buf.readInt();
         var cpl = buf.readBoolean();
         var cpr = buf.readBoolean();
-        return new AnvilRecipe(id, left, right, result, cost, cpl, cpr);
+        var strict = buf.readBoolean();
+        return new AnvilRecipe(id, left, right, result, cost, cpl, cpr, strict);
     }
 }
