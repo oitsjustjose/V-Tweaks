@@ -4,9 +4,13 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,6 +22,13 @@ public class JeiPlugin implements IModPlugin {
     @Override
     public @NotNull ResourceLocation getPluginUid() {
         return ID;
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(Blocks.DISPENSER), FluidConversionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Items.WATER_BUCKET), FluidConversionRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(FluidConversionRecipeCategory.SPLASH_POTION, FluidConversionRecipeCategory.TYPE);
     }
 
     @Override
