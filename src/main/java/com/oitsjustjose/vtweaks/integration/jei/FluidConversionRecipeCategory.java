@@ -25,6 +25,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConversionRecipe> {
     public static final RecipeType<FluidConversionRecipe> TYPE = RecipeType.create(Constants.MOD_ID, "fluid_conversion", FluidConversionRecipe.class);
@@ -73,15 +75,12 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var output = recipe.getResult();
         if (fluid == null) return;
 
-        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addItemStack(input).setSlotName("inputSlot");
+        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
         var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
         var outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
-        if (!input.isEmpty() && !output.isEmpty()) {
-            builder.createFocusLink(inputSlot, fluidSlot, outputSlot);
-        }
+        // There is *no* auto-transfer for this, so there's nothing to really build a focus link for
     }
 
-    //    T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY
     @Override
     public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());

@@ -9,6 +9,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,10 +42,8 @@ public class FluidConversionTweak extends VTweak {
 
     public List<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
         var level = evt.getPlayer().level();
-        var recipes = level.getRecipeManager().getAllRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE);
-        // Recipes use a stack size of 1, so set it to 1 to actually get a good compare
-        var searchStack = evt.getEntity().getItem().copy();
-        searchStack.setCount(1);
-        return recipes.stream().filter(x -> x.getInput().equals(searchStack, true)).collect(Collectors.toList());
+        var stackHandler = new ItemStackHandler(1);
+        stackHandler.setStackInSlot(0, evt.getEntity().getItem());
+        return level.getRecipeManager().getRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
     }
 }

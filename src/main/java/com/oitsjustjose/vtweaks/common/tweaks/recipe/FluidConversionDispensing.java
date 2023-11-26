@@ -11,6 +11,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -55,10 +57,8 @@ public class FluidConversionDispensing extends DefaultDispenseItemBehavior {
     }
 
     public List<FluidConversionRecipe> findRecipes(Level level, ItemStack stack) {
-        var recipes = level.getRecipeManager().getAllRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE);
-        // Recipes use a stack size of 1, so set it to 1 to actually get a good compare
-        var searchStack = stack.copy();
-        searchStack.setCount(1);
-        return recipes.stream().filter(x -> x.getInput().equals(searchStack, true)).collect(Collectors.toList());
+        var stackHandler = new ItemStackHandler(1);
+        stackHandler.setStackInSlot(0, stack);
+        return level.getRecipeManager().getRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
     }
 }

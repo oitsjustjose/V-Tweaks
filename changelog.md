@@ -1,5 +1,41 @@
 # V-Tweaks Changelog MC 1.20.1
 
+## 4.0.13:
+
+### Added:
+
+- Full ingredient support for Anvil and Fluid Conversion Recipes
+    - This means you can now define multiple inputs using Tags or Array Inputs. For example, the following recipe allows
+      you to throw either 1 stick, or any colored wool, to convert it to white wool.
+  ```json
+  {
+    "type": "vtweaks:fluid_conversion",
+    "input": [{
+      "item": "minecraft:stick"
+    }, {
+      "tag": "minecraft:wool"
+    }],
+    "output": {
+      "item": "minecraft:white_wool"
+    },
+    "fluid": "minecraft:water"
+    }
+
+  ```
+
+### Changed:
+
+- Chopdown Config now has its own subsection - **previous settings will need to be re-applied**
+
+### Removed:
+
+- Accidentally left in a test JSON recipe for Anvil Crafting - removed that!
+
+### Fixed:
+
+- [Crash on Item Pickup](https://github.com/oitsjustjose/V-Tweaks/issues/110)
+
+
 ## 4.0.12:
 
 ### Changed:
