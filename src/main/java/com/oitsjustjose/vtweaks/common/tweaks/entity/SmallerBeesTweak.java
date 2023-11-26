@@ -10,7 +10,7 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = RenderLivingEvent.Pre.class, category = "client")
+@Tweak(category = "client")
 public class SmallerBeesTweak extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
 

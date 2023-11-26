@@ -19,7 +19,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = PlayerInteractEvent.EntityInteract.class, category = "entity")
+@Tweak(category = "entity")
 public class FeatherPluckTweak extends VTweak {
     public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("forge", "chickens"));
     public static final TagKey<Item> SHEARS = ItemTags.create(new ResourceLocation("forge", "shears"));

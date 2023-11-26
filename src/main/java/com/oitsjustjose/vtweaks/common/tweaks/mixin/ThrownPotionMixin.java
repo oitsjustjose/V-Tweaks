@@ -24,14 +24,14 @@ public abstract class ThrownPotionMixin {
     protected void onHitBlock(BlockPos pos, CallbackInfo ci) {
         if (CommonConfig.EnableSplashPotionMixin.get()) {
             var base = (Entity) (Object) this;
-            var state = base.level.getBlockState(pos);
+            var state = base.getLevel().getBlockState(pos);
             var item = state.getBlock().asItem();
-            var foundRecipe = findRecipe(base.level, new ItemStack(item));
+            var foundRecipe = findRecipe(base.getLevel(), new ItemStack(item));
             if (foundRecipe.isEmpty()) return;
             var recipe = foundRecipe.get();
             if (recipe.getFluid().getPath().equalsIgnoreCase("water")) {
                 if (recipe.getResult().getItem() instanceof BlockItem blockItem) {
-                    base.level.setBlock(pos, blockItem.getBlock().withPropertiesOf(state), 3);
+                    base.getLevel().setBlock(pos, blockItem.getBlock().withPropertiesOf(state), 3);
                 }
             }
         }

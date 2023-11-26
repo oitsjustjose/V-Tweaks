@@ -1,38 +1,43 @@
 package com.oitsjustjose.vtweaks.common.tweaks.block;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.entity.BetterFallingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
-@Tweak(eventClass = BlockEvent.BreakEvent.class, category = "block")
+@Tweak(category = "block.chopdown")
 public class ChopDownTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;
     public ForgeConfigSpec.IntValue logCount;
     public ForgeConfigSpec.IntValue leafSearchRad;
+    public ForgeConfigSpec.BooleanValue requireTool;
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
         this.enabled = builder.comment("Trees fall down (like, actually not just like lumbering). Credit to Ternsip's impl (https://www.curseforge.com/minecraft/mc-mods/chopdown)").define("enableTreeChopDown", true);
         this.logCount = builder.comment("The number of logs above the one broken to trigger the chopdown effect").defineInRange("chopDownLogRequirement", 3, 1, Integer.MAX_VALUE);
         this.leafSearchRad = builder.comment("The radius that this tweak will use to attempt to find leaves. Set this to a large number to detect larger trees (may cause lag)").defineInRange("chopdownSearchRadius", 64, 1, Integer.MAX_VALUE);
+        this.requireTool = builder.comment("If set to true, ChopDown will only work when the player is using the right tool for the log").define("requiresRightTool", false);
+        builder.pop();
     }
 
     @SubscribeEvent
@@ -43,12 +48,15 @@ public class ChopDownTweak extends VTweak {
         var initPos = evt.getPos();
         var player = evt.getPlayer();
 
+        // Check to see if the player is using the right tool to yield drops. Ignore if they aren't.
+        if (this.requireTool.get() && !isBestTool(evt.getState(), player.getMainHandItem())) return;
+
         /* Verify that there are enough logs to consider this a tree */
         for (int dy = 0; dy < this.logCount.get(); dy++) {
             if (!level.getBlockState(initPos.offset(0, dy, 0)).is(BlockTags.LOGS)) return;
         }
 
-        var leaves = 5; /* TODO: What did this do again? */
+        var leaves = 5;
         var rad = this.leafSearchRad.get();
         var foundLeaves = false;
         var queue = new LinkedList<BlockPos>();
@@ -70,7 +78,7 @@ public class ChopDownTweak extends VTweak {
 
                         var state = level.getBlockState(tmp);
                         var isLog = state.is(BlockTags.LOGS);
-                        var isLeaf = state.is(BlockTags.LEAVES) && state.hasProperty(LeavesBlock.PERSISTENT) && !state.getValue(LeavesBlock.PERSISTENT);
+                        var isLeaf = state.is(BlockTags.LEAVES) && (!state.hasProperty(LeavesBlock.PERSISTENT) || !state.getValue(LeavesBlock.PERSISTENT));
                         if (isLeaf && !foundLeaves) foundLeaves = true;
 
                         if ((dy >= 0 && step == leaves && isLog) || isLeaf) {
@@ -188,5 +196,34 @@ public class ChopDownTweak extends VTweak {
             return dirX == 1 ? Direction.EAST : Direction.WEST;
         }
         return dirZ == 1 ? Direction.SOUTH : Direction.NORTH;
+    }
+
+    private static boolean isBestTool(BlockState stateIn, ItemStack toolIn) {
+        if (toolIn.isEmpty()) return false;
+
+        var searchKey = ":mineable/";
+        var mineableKey = stateIn.getTags().filter(x -> x.location().toString().contains(searchKey)).findFirst();
+        if (mineableKey.isEmpty()) {
+            VTweaks.getInstance().LOGGER.warn(
+                    "Failed to find mineable tag on block {} with tags {}",
+                    stateIn.getBlock().getDescriptionId(),
+                    stateIn.getTags().map(x -> x.location().toString()).collect(Collectors.joining(", "))
+            );
+            return false;
+        }
+
+        var toolType = mineableKey.get().location().toString();
+        toolType = toolType.substring(toolType.indexOf(searchKey) + searchKey.length());
+
+        var variants = Arrays.asList(
+                ItemTags.create(new ResourceLocation("minecraft", toolType + "s")),
+                ItemTags.create(new ResourceLocation("forge", "tools/" + toolType + "s"))
+        );
+
+        for (var variant : variants) {
+            if (toolIn.is(variant)) return true;
+        }
+
+        return false;
     }
 }

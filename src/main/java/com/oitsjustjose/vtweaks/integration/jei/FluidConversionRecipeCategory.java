@@ -18,7 +18,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,12 +28,14 @@ import javax.annotation.Nonnull;
 
 public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConversionRecipe> {
     public static final RecipeType<FluidConversionRecipe> TYPE = RecipeType.create(Constants.MOD_ID, "fluid_conversion", FluidConversionRecipe.class);
+    public static final ItemStack SPLASH_POTION = PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.WATER);
     private final IDrawable background;
     private final IDrawable icon;
 
     public FluidConversionRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(new ResourceLocation(Constants.MOD_ID, "/textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
-        icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.DISPENSER));
+
+        this.background = guiHelper.drawableBuilder(new ResourceLocation(Constants.MOD_ID, "textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
+        this.icon = guiHelper.createDrawableItemStack(SPLASH_POTION);
     }
 
     @Override
@@ -69,12 +73,10 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var output = recipe.getResult();
         if (fluid == null) return;
 
-        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addItemStack(input).setSlotName("inputSlot");
+        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
         var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
         var outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
-        if (!input.isEmpty() && !output.isEmpty()) {
-            builder.createFocusLink(inputSlot, fluidSlot, outputSlot);
-        }
+        // There is *no* auto-transfer for this, so there's nothing to really build a focus link for
     }
 
     @Override

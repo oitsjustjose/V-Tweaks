@@ -8,7 +8,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = TickEvent.LevelTickEvent.class, category = "world")
+@Tweak(category = "world")
 public class StormDisableTweak extends VTweak {
     private ForgeConfigSpec.BooleanValue enable;
 

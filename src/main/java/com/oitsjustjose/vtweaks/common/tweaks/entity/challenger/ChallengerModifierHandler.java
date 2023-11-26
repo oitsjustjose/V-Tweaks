@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = MobSpawnEvent.FinalizeSpawn.class, category = "entity")
+@Tweak(category = "entity.challengers")
 public class ChallengerModifierHandler extends VTweak {
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.DoubleValue globalChance;
@@ -16,6 +16,7 @@ public class ChallengerModifierHandler extends VTweak {
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
         this.enabled = builder.comment("A data-driven way to make some special mobs with abilities, effects, specialized loot and more!").define("enableChallengerMobs", true);
         this.globalChance = builder.comment("This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.").defineInRange("challengerMobGlobalChance", 0.25D, 0.0D, 1.0D);
+        builder.pop();
     }
 
     @SubscribeEvent

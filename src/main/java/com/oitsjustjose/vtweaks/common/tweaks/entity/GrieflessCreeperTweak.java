@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Tweak(eventClass = ExplosionEvent.Detonate.class, category = "entity")
+@Tweak(category = "entity")
 public class GrieflessCreeperTweak extends VTweak {
     public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("forge", "creepers"));
     private ForgeConfigSpec.BooleanValue enabled;

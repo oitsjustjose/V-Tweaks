@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = PlayerInteractEvent.EntityInteract.class, category = "entity")
+@Tweak(category = "entity")
 public class ItemFrameTweak extends VTweak {
     public static final TagKey<Item> GLASS = ItemTags.create(new ResourceLocation(Constants.MOD_ID, "clear_glass"));
 

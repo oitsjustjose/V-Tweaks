@@ -1,4 +1,14 @@
-# V-Tweaks Changelog MC 1.19.x
+# V-Tweaks Changelog MC 1.19.4
+
+## 4.0.13:
+
+Backport 4.0.9-current from 1.20.1
+
+## 4.0.8
+
+### Fixed:
+
+- Hard dependency on JEI
 
 ## 4.0.8
 

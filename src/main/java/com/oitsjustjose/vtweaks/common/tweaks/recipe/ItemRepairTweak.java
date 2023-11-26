@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = AnvilUpdateEvent.class, category = "recipes")
+@Tweak(category = "recipes")
 public class ItemRepairTweak extends VTweak {
     public ForgeConfigSpec.BooleanValue enabled;
 
