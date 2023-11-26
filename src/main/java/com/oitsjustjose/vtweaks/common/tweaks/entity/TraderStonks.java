@@ -178,7 +178,7 @@ public class TraderStonks extends VTweak {
 
         // No lost items stored on the player
         var lostItems = tag.getList(lostItemKey, Tag.TAG_COMPOUND);
-        if (lostItems.size() == 0) return;
+        if (lostItems.isEmpty()) return;
 
         int addedItemsCount = 0;
         for (int __ = 0; __ < numItemsToRestore.get(); __++) {
