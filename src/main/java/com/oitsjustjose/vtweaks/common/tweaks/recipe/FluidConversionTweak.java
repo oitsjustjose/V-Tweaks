@@ -13,7 +13,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Tweak(category = "recipes")
 public class FluidConversionTweak extends VTweak {

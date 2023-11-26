@@ -73,19 +73,21 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var output = recipe.getResult();
         if (fluid == null) return;
 
-        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
-        var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
-        var outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
+        builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
+        builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
         // There is *no* auto-transfer for this, so there's nothing to really build a focus link for
     }
 
     @Override
-    public void draw(FluidConversionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
         MutableComponent comp = Component.empty();
         try {
-            var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
-            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", fluidNm).resolve(null, null, 0));
+            if (fluid != null) {
+                var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
+                comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", fluidNm).resolve(null, null, 0));
+            }
         } catch (CommandSyntaxException ignored) {
         }
 

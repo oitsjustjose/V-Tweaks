@@ -2,7 +2,6 @@ package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

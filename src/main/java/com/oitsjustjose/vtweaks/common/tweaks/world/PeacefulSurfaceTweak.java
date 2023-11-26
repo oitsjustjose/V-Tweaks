@@ -32,7 +32,7 @@ public class PeacefulSurfaceTweak extends VTweak {
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
-        final String moonPhaseList = String.join(", ", Arrays.stream(MoonPhase.values()).map(Enum::toString).collect(Collectors.toList()));
+        final String moonPhaseList = Arrays.stream(MoonPhase.values()).map(Enum::toString).collect(Collectors.joining(", "));
         this.enabled = builder.comment("Prevents mobs from spawning above sea level unless it's a new moon").define("enablePeacefulSurface", false);
         this.minY = builder.comment("The lowest Y-level which mobs will be prevented from spawning").defineInRange("peacefulSurfaceMinY", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
         // *sigh* -- I really wanted this to be a list of ENUMs, but that doesn't seem to work right so I guess we'll just go with Strings... :/
