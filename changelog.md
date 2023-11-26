@@ -10,6 +10,12 @@ Backport 4.0.9-current from 1.20.1
 
 - Hard dependency on JEI
 
+## 4.0.8
+
+### Fixed:
+
+- Hard dependency on JEI
+
 ## 4.0.7
 
 ### Added:
