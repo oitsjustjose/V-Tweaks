@@ -1,11 +1,17 @@
 package com.oitsjustjose.vtweaks.common.tweaks.block;
 
+import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.entity.BetterFallingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -19,8 +25,11 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.tools.Tool;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 @Tweak(category = "block.chopdown")
 public class ChopDownTweak extends VTweak {
@@ -48,7 +57,7 @@ public class ChopDownTweak extends VTweak {
         var player = evt.getPlayer();
 
         // Check to see if the player is using the right tool to yield drops. Ignore if they aren't.
-        if (this.requireTool.get() && !ForgeHooks.isCorrectToolForDrops(evt.getState(), player)) return;
+        if (this.requireTool.get() && !isBestTool(evt.getState(), player.getMainHandItem())) return;
 
         /* Verify that there are enough logs to consider this a tree */
         for (int dy = 0; dy < this.logCount.get(); dy++) {
@@ -195,5 +204,34 @@ public class ChopDownTweak extends VTweak {
             return dirX == 1 ? Direction.EAST : Direction.WEST;
         }
         return dirZ == 1 ? Direction.SOUTH : Direction.NORTH;
+    }
+
+    private static boolean isBestTool(BlockState stateIn, ItemStack toolIn) {
+        if (toolIn.isEmpty()) return false;
+
+        var searchKey = ":mineable/";
+        var mineableKey = stateIn.getTags().filter(x -> x.location().toString().contains(searchKey)).findFirst();
+        if (mineableKey.isEmpty()) {
+            VTweaks.getInstance().LOGGER.warn(
+                    "Failed to find mineable tag on block {} with tags {}",
+                    stateIn.getBlock().getDescriptionId(),
+                    stateIn.getTags().map(x -> x.location().toString()).collect(Collectors.joining(", "))
+            );
+            return false;
+        }
+
+        var toolType = mineableKey.get().location().toString();
+        toolType = toolType.substring(toolType.indexOf(searchKey) + searchKey.length());
+
+        var variants = Arrays.asList(
+                ItemTags.create(new ResourceLocation("minecraft", toolType + "s")),
+                ItemTags.create(new ResourceLocation("forge", "tools/" + toolType + "s"))
+        );
+
+        for (var variant : variants) {
+            if (toolIn.is(variant)) return true;
+        }
+
+        return false;
     }
 }

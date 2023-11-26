@@ -43,12 +43,12 @@ public class PeacefulSurfaceTweak extends VTweak {
     }
 
     @SubscribeEvent
-    public void process(MobSpawnEvent.SpawnPlacementCheck evt) {
+    public void process(MobSpawnEvent.FinalizeSpawn evt) {
         if (!this.enabled.get()) return;
 
         if (evt.getSpawnType() != MobSpawnType.NATURAL) return;
-        if (evt.getEntityType().getCategory() != MobCategory.MONSTER) return;
-        if (evt.getEntityType().is(BLACKLISTED_ENTITIES)) return;
+        if (evt.getEntity().getType().getCategory() != MobCategory.MONSTER) return;
+        if (evt.getEntity().getType().is(BLACKLISTED_ENTITIES)) return;
         if (!(evt.getLevel() instanceof ServerLevel level)) return;
         if (level.dimensionTypeRegistration().is(BLACKLISTED_DIMENSIONS)) return;
 
@@ -56,7 +56,7 @@ public class PeacefulSurfaceTweak extends VTweak {
         final String currentPhase = MoonPhase.values()[level.getMoonPhase()].toString();
         if (this.moonPhases.get().stream().noneMatch(moonPhase -> Objects.equals(moonPhase, currentPhase))) return;
 
-        if (evt.getPos().getY() >= this.minY.get()) {
+        if (evt.getY() >= this.minY.get()) {
             evt.setResult(Event.Result.DENY);
         }
     }

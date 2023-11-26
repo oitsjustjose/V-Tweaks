@@ -1,104 +1,14 @@
-# V-Tweaks Changelog MC 1.20.1
+# V-Tweaks Changelog MC 1.19.4
 
 ## 4.0.13:
 
-### Added:
-
-- Full ingredient support for Anvil and Fluid Conversion Recipes
-    - This means you can now define multiple inputs using Tags or Array Inputs. For example, the following recipe allows
-      you to throw either 1 stick, or any colored wool, to convert it to white wool.
-  ```json
-  {
-    "type": "vtweaks:fluid_conversion",
-    "input": [{
-      "item": "minecraft:stick"
-    }, {
-      "tag": "minecraft:wool"
-    }],
-    "output": {
-      "item": "minecraft:white_wool"
-    },
-    "fluid": "minecraft:water"
-    }
-
-  ```
-
-### Changed:
-
-- Chopdown Config now has its own subsection - **previous settings will need to be re-applied**
-
-### Removed:
-
-- Accidentally left in a test JSON recipe for Anvil Crafting - removed that!
-
-### Fixed:
-
-- [Crash on Item Pickup](https://github.com/oitsjustjose/V-Tweaks/issues/110)
-
-
-## 4.0.12:
-
-### Changed:
-
-**Anvil Recipe**:
-
-- The setting `cpFromLeft` has been renamed to `copyTagsFromLeft`
-- The setting `cpFromRight` has been renamed to `copyTagsFromRight`
-- Added a new optional setting `strict`. When set to false, the inputs on both sides of the recipe will ignore NBT;
-  otherwise the inputs will need to match the NBT specified in the datapack entry
-
-**Water Conversion Recipes**:
-
-- Fixed background not working in JEI
-- Added catalysts for the JEI tab so that it would appear as a "use" for Dispensers, Splash Water Bottles & Water
-  Buckets
-
-## 4.0.11:
-
-### Fixed:
-
-- Actually fix feather falling tweak -_-
-
-## 4.0.10
-
-### Added:
-
-- Configuration for which moon phases Peaceful Surface should apply to (defaults to all but the New Moon)
-- [Trader Stonks (Enabled by default)](https://twitter.com/oitsjustjose/status/1687305938816872448)
-    - This feature, inspired by SimplySarc's idea, makes it so that Wandering Traders may sell any "valuable" items that
-      you've lost recently
-    - This functionality is in a beta state - please report bugs if you find any!!
-    - Technical details:
-        - Uses the tag `vtweaks:valuable`
-            - If configured (this setting is on by default), if a `vtweaks:valuable` item _can_ be enchanted, it'll only
-              save the item _if_ it's enchanted.
-        - The chance that an item is added is configurable
-        - The Emerald cost is configurable, but it'll always cost Emeralds
-        - The item that gets added is random, and it might be yours _or_ some other players'!
-        - A silly message is shown when chatting with a Wanderer (can be disabled)
-
-### Fixed:
-
-- Peaceful Surface outright not working
-- Feather Falling Tweak not working as intended, negating _all_ damage _except_ for fall damage 🤦‍♂️
-- Splash potions of \<fluid\> not working on FluidConversionRecipes
-
-### Changed:
-
-- Re-organized a lot of configs - please check your `vtweaks-common.toml` file to verify that your previous settings are
-  what they should be
-
-## 4.0.9
-
-### Fixed:
-
-- Hard dependency on JEI
+Backport 4.0.9-current from 1.20.1
 
 ## 4.0.8
 
 ### Fixed:
 
-- `FluidConversionTweak` not working for many reasons
+- Hard dependency on JEI
 
 ## 4.0.7
 

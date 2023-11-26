@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 public class AnvilRecipeSerializer implements RecipeSerializer<AnvilRecipe> {
     @Override
     public @NotNull AnvilRecipe fromJson(@NotNull ResourceLocation rl, @NotNull JsonObject obj) {
-        var left = Ingredient.fromJson(obj.get("left"), false);
-        var right = Ingredient.fromJson(obj.get("right"), false);
+        var left = Ingredient.fromJson(obj.get("left"));
+        var right = Ingredient.fromJson(obj.get("right"));
         var result = VTJsonHelpers.deserializeItemStack(obj, "result");
         var cost = obj.get("cost").getAsInt();
         var cpl = obj.has("copyTagsFromLeft") && obj.get("copyTagsFromLeft").getAsBoolean();

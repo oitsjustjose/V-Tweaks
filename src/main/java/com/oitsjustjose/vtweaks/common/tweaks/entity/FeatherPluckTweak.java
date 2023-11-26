@@ -46,7 +46,7 @@ public class FeatherPluckTweak extends VTweak {
 
         if (!canPluck(evt.getTarget())) return;
         player.swing(InteractionHand.MAIN_HAND);
-        if (player.level().isClientSide()) return;
+        if (player.getLevel().isClientSide()) return;
 
         var drop = new ItemEntity(evt.getLevel(), evt.getTarget().getX(), evt.getTarget().getY(), evt.getTarget().getZ(), new ItemStack(Items.FEATHER));
         evt.getLevel().addFreshEntity(drop);
