@@ -1,11 +1,13 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -17,14 +19,15 @@ import java.util.Arrays;
 
 public class AnvilRecipe implements Recipe<RecipeWrapper> {
     public final ResourceLocation id;
-    private final ItemStack left;
-    private final ItemStack right;
+    private final Ingredient left;
+    private final Ingredient right;
     private final ItemStack result;
     private final int cost;
     private final boolean copyNbtFromLeft;
     private final boolean copyNbtFromRight;
+    private final boolean strictMatch;
 
-    public AnvilRecipe(ResourceLocation id, ItemStack l, ItemStack r, ItemStack e, int c, boolean cpl, boolean cpr) {
+    public AnvilRecipe(ResourceLocation id, Ingredient l, Ingredient r, ItemStack e, int c, boolean cpl, boolean cpr, boolean strict) {
         this.id = id;
         this.left = l;
         this.right = r;
@@ -32,15 +35,16 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.cost = c;
         this.copyNbtFromLeft = cpl;
         this.copyNbtFromRight = cpr;
+        this.strictMatch = strict;
         VTweaks.getInstance().addAnvilRecipe(id, this);
     }
 
-    public ItemStack getLeft() {
-        return this.left.copy();
+    public Ingredient getLeft() {
+        return this.left;
     }
 
-    public ItemStack getRight() {
-        return this.right.copy();
+    public Ingredient getRight() {
+        return this.right;
     }
 
     public ItemStack getResult() {
@@ -59,28 +63,46 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         return this.copyNbtFromRight;
     }
 
+    public boolean isStrictMatch() {
+        return this.strictMatch;
+    }
+
     @Override
     public boolean matches(@NotNull RecipeWrapper wrapper, @NotNull Level level) {
         var l = wrapper.getItem(0);
         var r = wrapper.getItem(1);
         if (l == null || r == null) return false;
 
-        /* Have to manually check the NBT because of weirdness */
-        if (l.getItem() != this.left.getItem()) return false;
-        if (r.getItem() != this.right.getItem()) return false;
+        if (!(this.left.test(l) && this.right.test(r))) return false;
 
-        // If the left item is expected to have a tag
-        boolean leftTagVerified = !this.left.hasTag() && !l.hasTag();
-        if (this.left.hasTag() && this.left.getTag() != null) {
-            leftTagVerified = l.hasTag() && bareMinimumCompare(this.left.getTag(), l.getTag());
+        /* Recipe inputs match so that's enough for us :) */
+        if (!isStrictMatch()) return true;
+
+        var leftIngredientMatch = Arrays.stream(this.left.getItems()).filter(x -> x.getItem() == l.getItem()).findFirst().orElse(ItemStack.EMPTY);
+        var rightIngredientMatch = Arrays.stream(this.right.getItems()).filter(x -> x.getItem() == r.getItem()).findFirst().orElse(ItemStack.EMPTY);
+
+        if (rightIngredientMatch.isEmpty() || leftIngredientMatch.isEmpty()) {
+            VTweaks.getInstance().LOGGER.error("Anvil recipe [{} + {}] met an invalid state in AnvilRecipes#matches", l.toString(), r.toString());
+            return false;
         }
 
-        boolean rightTagVerified = !this.right.hasTag() && !r.hasTag();
-        if (this.right.hasTag() && this.right.getTag() != null) {
-            rightTagVerified = r.hasTag() && bareMinimumCompare(this.right.getTag(), r.getTag());
+        // If the left item is expected to have a tag
+        boolean leftTagVerified = !leftIngredientMatch.hasTag() && !l.hasTag();
+        if (leftIngredientMatch.hasTag() && leftIngredientMatch.getTag() != null) {
+            leftTagVerified = l.hasTag() && bareMinimumCompare(leftIngredientMatch.getTag(), l.getTag());
+        }
+
+        boolean rightTagVerified = !rightIngredientMatch.hasTag() && !r.hasTag();
+        if (rightIngredientMatch.hasTag() && rightIngredientMatch.getTag() != null) {
+            rightTagVerified = r.hasTag() && bareMinimumCompare(rightIngredientMatch.getTag(), r.getTag());
         }
 
         return leftTagVerified && rightTagVerified;
+    }
+
+    @Override
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper unused, @NotNull RegistryAccess unused2) {
+        return this.result;
     }
 
     /* Does a check to see if an ItemStack matches on AT LEAST the tags+values from the recipe */
@@ -154,18 +176,13 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper wrapper) {
-        return this.result;
-    }
-
-    @Override
-    public @NotNull ItemStack getResultItem() {
-        return this.result;
-    }
-
-    @Override
     public boolean canCraftInDimensions(int _a, int _b) {
         return true;
+    }
+
+    @Override
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess unused) {
+        return this.result;
     }
 
     @Override

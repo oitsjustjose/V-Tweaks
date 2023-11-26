@@ -1,13 +1,13 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity.culling;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class EntityCullingRule {
             try {
                 if (x.startsWith("#")) {
                     var location = new ResourceLocation(x.substring(1));
-                    var tagKey = TagKey.create(Registry.BIOME_REGISTRY, location);
+                    var tagKey = TagKey.create(Registries.BIOME, location);
                     this.biomeTags.add(tagKey);
                 } else {
                     var location = new ResourceLocation(x);
@@ -59,7 +59,7 @@ public class EntityCullingRule {
                 // Case that you've given me a tag
                 if (x.startsWith("#")) {
                     var location = new ResourceLocation(x.substring(1));
-                    var tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, location);
+                    var tagKey = TagKey.create(Registries.ENTITY_TYPE, location);
                     this.entityTypeTags.add(tagKey);
                 } else {
                     var location = new ResourceLocation(x);
@@ -74,7 +74,7 @@ public class EntityCullingRule {
         });
     }
 
-    public boolean apply(LivingSpawnEvent.CheckSpawn evt) {
+    public boolean apply(MobSpawnEvent.FinalizeSpawn evt) {
         // filter by entity
         var hasMatchedOnEntity = this.entityTypes.contains(ForgeRegistries.ENTITY_TYPES.getKey(evt.getEntity().getType()));
         var hasMatchedOnEntityType = this.entityTypeTags.stream().anyMatch(typeTag -> evt.getEntity().getType().is(typeTag));

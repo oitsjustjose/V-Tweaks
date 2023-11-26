@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.client;
 
-import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.network.packet.ChallengerParticlePacket;
@@ -9,20 +8,10 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class ClientProxy extends CommonProxy {
     Minecraft mc;
-
-    @Override
-    public void init() {
-        mc = Minecraft.getInstance();
-        networkManager.networkWrapper.registerMessage(0, ChallengerParticlePacket.class, ChallengerParticlePacket::encode, ChallengerParticlePacket::decode, ChallengerParticlePacket::handleClient);
-    }
-
-    @Override
-    public void addParticle(float r, float g, float b, double x, double y, double z) {
-        showDustParticle(r, g, b, x, y, z);
-    }
 
     public static void showDustParticle(float r, float g, float b, double x, double y, double z) {
         try {
@@ -42,5 +31,16 @@ public class ClientProxy extends CommonProxy {
             VTweaks.getInstance().LOGGER.warn("IllegalStateException thrown in ClientProxy#showDustParticle. Probably random source?");
             Exception.printStackTrace();
         }
+    }
+
+    @Override
+    public void init() {
+        mc = Minecraft.getInstance();
+        networkManager.networkWrapper.registerMessage(0, ChallengerParticlePacket.class, ChallengerParticlePacket::encode, ChallengerParticlePacket::decode, ChallengerParticlePacket::handleClient);
+    }
+
+    @Override
+    public void addParticle(float r, float g, float b, double x, double y, double z) {
+        showDustParticle(r, g, b, x, y, z);
     }
 }

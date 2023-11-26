@@ -11,7 +11,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.Optional;
 
-@Tweak(eventClass = AnvilUpdateEvent.class, category = "recipe")
+@Tweak(category = "recipe")
 public class NBTAnvilRecipe extends VTweak {
     @SubscribeEvent
     public void process(AnvilUpdateEvent evt) {
@@ -41,7 +41,7 @@ public class NBTAnvilRecipe extends VTweak {
     }
 
     public Optional<AnvilRecipe> find(AnvilUpdateEvent evt) {
-        var level = evt.getPlayer().getLevel();
+        var level = evt.getPlayer().level();
         var stackHandler = new ItemStackHandler(2);
         stackHandler.setStackInSlot(0, evt.getLeft());
         stackHandler.setStackInSlot(1, evt.getRight());

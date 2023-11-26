@@ -1,10 +1,10 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
-import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
+import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -12,9 +12,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Tweak(eventClass = ItemTossEvent.class, category = "recipes")
+@Tweak(category = "recipes")
 public class FluidConversionTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;
@@ -27,22 +28,22 @@ public class FluidConversionTweak extends VTweak {
     @SubscribeEvent
     public void process(ItemTossEvent evt) {
         if (!this.enabled.get()) return;
-        if (evt.getPlayer().getLevel().isClientSide()) return;
+        if (evt.getPlayer().level().isClientSide()) return;
 
-        var recipe = findRecipe(evt);
-        if (recipe.isEmpty()) return;
-        var replacementItem = new ConvertibleItemEntity(evt.getEntity(), recipe.get().getResult(), recipe.get().getFluid());
-        evt.getPlayer().getLevel().addFreshEntity(replacementItem);
+        var recipes = findRecipe(evt);
+        if (recipes.isEmpty()) return;
 
+        var replacementItem = new ConvertibleItemEntity(evt.getEntity(), recipes);
+        evt.getPlayer().level().addFreshEntity(replacementItem);
         evt.setResult(Event.Result.DENY);
         evt.setCanceled(true);
         evt.getEntity().discard();
     }
 
-    public Optional<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
-        var level = evt.getPlayer().getLevel();
-        var handler = new ItemStackHandler(1);
-        handler.setStackInSlot(0, evt.getEntity().getItem());
-        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);
+    public List<FluidConversionRecipe> findRecipe(ItemTossEvent evt) {
+        var level = evt.getPlayer().level();
+        var stackHandler = new ItemStackHandler(1);
+        stackHandler.setStackInSlot(0, evt.getEntity().getItem());
+        return level.getRecipeManager().getRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
     }
 }

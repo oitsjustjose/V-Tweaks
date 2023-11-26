@@ -21,12 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 import java.util.Locale;
 
-@Tweak(eventClass = ItemTooltipEvent.class, category = "item")
+@Tweak(category = "item.tooltips.food")
 public class FoodTooltipTweak extends VTweak {
-    public enum TooltipSetting {
-        NEVER, WITH_SHIFT, ALWAYS
-    }
-
     private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
     private ForgeConfigSpec.DoubleValue multiplier;
     private ForgeConfigSpec.ConfigValue<String> simpleColor;
@@ -44,6 +40,7 @@ public class FoodTooltipTweak extends VTweak {
         this.debuffColor = builder.comment("Modifies the color of a tooltip for a food that gives debuffs on consumption.\nUses HEX Web Colors which you can pick from here: https://dv2ls.com/colpic").define("foodTooltipNegativeColor", "#AA0000");
         this.saturationColor = builder.comment("Modifies the color of the saturation tooltip.\nUses HEX Web Colors which you can pick from here: https://dv2ls.com/colpic").define("foodTooltipSaturationColor", "#AA0000");
         this.useOriginalFoodTooltipColor = builder.comment("If a food has a custom color, use that color instead of the defined color regardless of the buffs/debuffs the food gives").define("useOriginalFoodTooltipColor", true);
+        builder.pop(2);
     }
 
     @SubscribeEvent
@@ -59,7 +56,6 @@ public class FoodTooltipTweak extends VTweak {
         evt.getToolTip().add(getHungerString(stack, food, stack.getRarity()));
         evt.getToolTip().add(getSaturationString((int) (food.getSaturationModifier() * 10 * multiplier.get()), stack.getRarity()));
     }
-
 
     private boolean hasBadEffect(List<Pair<MobEffectInstance, Float>> e) {
         return e.stream().anyMatch(x -> !x.getFirst().getEffect().isBeneficial());
@@ -92,7 +88,7 @@ public class FoodTooltipTweak extends VTweak {
         ret.append("\u2588".repeat(Math.max(0, (nutrition / 2))));
         if (nutrition % 2 != 0) ret.append("\u258C");
 
-        var t = new TranslatableContents("vtweaks.hunger.tooltip.text", ret.toString());
+        var t = new TranslatableContents("vtweaks.hunger.tooltip.text", "--", new Object[]{ret.toString()});
         try {
             return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
@@ -108,11 +104,15 @@ public class FoodTooltipTweak extends VTweak {
         ret.append("\u2588".repeat(Math.max(0, saturation / 2)));
         if (saturation % 2 != 0) ret.append("\u258C");
 
-        var t = new TranslatableContents("vtweaks.saturation.tooltip.text", ret.toString());
+        var t = new TranslatableContents("vtweaks.saturation.tooltip.text", "--", new Object[]{ret.toString()});
         try {
             return t.resolve(null, null, 0).setStyle(style);
         } catch (CommandSyntaxException e) {
             return Component.empty();
         }
+    }
+
+    public enum TooltipSetting {
+        NEVER, WITH_SHIFT, ALWAYS
     }
 }

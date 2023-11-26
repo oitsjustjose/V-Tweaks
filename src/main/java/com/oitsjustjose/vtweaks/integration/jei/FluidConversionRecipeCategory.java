@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.integration.jei;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.util.Constants;
@@ -13,28 +12,32 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConversionRecipe> {
     public static final RecipeType<FluidConversionRecipe> TYPE = RecipeType.create(Constants.MOD_ID, "fluid_conversion", FluidConversionRecipe.class);
+    public static final ItemStack SPLASH_POTION = PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.WATER);
     private final IDrawable background;
     private final IDrawable icon;
 
     public FluidConversionRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper
-                .drawableBuilder(new ResourceLocation(Constants.MOD_ID, "/textures/gui/fluid_conversion.png"), 0, 0, 76, 18)
-                .addPadding(0, 20, 32, 32)
-                .setTextureSize(76, 18)
-                .build();
-        icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.DISPENSER));
+
+        this.background = guiHelper.drawableBuilder(new ResourceLocation(Constants.MOD_ID, "textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
+        this.icon = guiHelper.createDrawableItemStack(SPLASH_POTION);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     @Nonnull
     public Component getTitle() {
         try {
-            return new TranslatableContents("vtweaks.fluid_conversion.jei.title").resolve(null, null, 0);
+            return new TranslatableContents("vtweaks.fluid_conversion.jei.title", null, new Object[]{}).resolve(null, null, 0);
         } catch (CommandSyntaxException ex) {
             return Component.empty();
         }
@@ -66,27 +69,26 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, FluidConversionRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, FluidConversionRecipe recipe, @NotNull IFocusGroup focuses) {
         var input = recipe.getInput();
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
         var output = recipe.getResult();
         if (fluid == null) return;
 
-        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addItemStack(input).setSlotName("inputSlot");
+        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
         var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
         var outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
-        if (!input.isEmpty() && !output.isEmpty()) {
-            builder.createFocusLink(inputSlot, fluidSlot, outputSlot);
-        }
+        // There is *no* auto-transfer for this, so there's nothing to really build a focus link for
     }
 
     @Override
-    public void draw(FluidConversionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
+        if (fluid == null) return;
         MutableComponent comp = Component.empty();
         try {
             var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
-            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", fluidNm).resolve(null, null, 0));
+            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", "--", new Object[]{fluidNm}).resolve(null, null, 0));
         } catch (CommandSyntaxException ignored) {
         }
 
@@ -95,8 +97,8 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var x = background.getWidth() - 2 - width;
         var y = 27;
 
-        minecraft.font.draw(stack, comp, x + 0.5F, y + 0.5F, 0x25252525);
-        minecraft.font.draw(stack, comp, x, y, 0x252525);
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+        guiGraphics.drawString(minecraft.font, comp, x + 1, y + 1, 0x25252525);
+        guiGraphics.drawString(minecraft.font, comp, x, y, 0x252525);
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
     }
 }

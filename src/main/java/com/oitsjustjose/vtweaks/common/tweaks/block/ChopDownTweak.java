@@ -15,24 +15,28 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 
-@Tweak(eventClass = BlockEvent.BreakEvent.class, category = "block")
+@Tweak(category = "block.chopdown")
 public class ChopDownTweak extends VTweak {
 
     public ForgeConfigSpec.BooleanValue enabled;
     public ForgeConfigSpec.IntValue logCount;
     public ForgeConfigSpec.IntValue leafSearchRad;
+    public ForgeConfigSpec.BooleanValue requireTool;
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
         this.enabled = builder.comment("Trees fall down (like, actually not just like lumbering). Credit to Ternsip's impl (https://www.curseforge.com/minecraft/mc-mods/chopdown)").define("enableTreeChopDown", true);
         this.logCount = builder.comment("The number of logs above the one broken to trigger the chopdown effect").defineInRange("chopDownLogRequirement", 3, 1, Integer.MAX_VALUE);
         this.leafSearchRad = builder.comment("The radius that this tweak will use to attempt to find leaves. Set this to a large number to detect larger trees (may cause lag)").defineInRange("chopdownSearchRadius", 64, 1, Integer.MAX_VALUE);
+        this.requireTool = builder.comment("If set to true, ChopDown will only work when the player is using the right tool for the log").define("requiresRightTool", false);
+        builder.pop();
     }
 
     @SubscribeEvent
@@ -43,12 +47,15 @@ public class ChopDownTweak extends VTweak {
         var initPos = evt.getPos();
         var player = evt.getPlayer();
 
+        // Check to see if the player is using the right tool to yield drops. Ignore if they aren't.
+        if (this.requireTool.get() && !ForgeHooks.isCorrectToolForDrops(evt.getState(), player)) return;
+
         /* Verify that there are enough logs to consider this a tree */
         for (int dy = 0; dy < this.logCount.get(); dy++) {
             if (!level.getBlockState(initPos.offset(0, dy, 0)).is(BlockTags.LOGS)) return;
         }
 
-        var leaves = 5; /* TODO: What did this do again? */
+        var leaves = 5;
         var rad = this.leafSearchRad.get();
         var foundLeaves = false;
         var queue = new LinkedList<BlockPos>();
@@ -70,7 +77,7 @@ public class ChopDownTweak extends VTweak {
 
                         var state = level.getBlockState(tmp);
                         var isLog = state.is(BlockTags.LOGS);
-                        var isLeaf = state.is(BlockTags.LEAVES) && state.hasProperty(LeavesBlock.PERSISTENT) && !state.getValue(LeavesBlock.PERSISTENT);
+                        var isLeaf = state.is(BlockTags.LEAVES) && (!state.hasProperty(LeavesBlock.PERSISTENT) || !state.getValue(LeavesBlock.PERSISTENT));
                         if (isLeaf && !foundLeaves) foundLeaves = true;
 
                         if ((dy >= 0 && step == leaves && isLog) || isLeaf) {

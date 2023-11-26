@@ -1,19 +1,18 @@
 package com.oitsjustjose.vtweaks.common.entity;
 
-import net.minecraft.resources.ResourceLocation;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+
 public class ConvertibleItemEntity extends ItemEntity {
-    private final ItemStack output;
-    private final ResourceLocation fluid;
+    private final List<FluidConversionRecipe> recipes;
     private boolean hasBeenConverted;
 
-    public ConvertibleItemEntity(ItemEntity item, ItemStack output, ResourceLocation fluid) {
-        super(item.getLevel(), item.getX(), item.getY(), item.getZ(), item.getItem());
-        this.output = output;
-        this.fluid = fluid;
+    public ConvertibleItemEntity(ItemEntity item, List<FluidConversionRecipe> Recipes) {
+        super(item.level(), item.getX(), item.getY(), item.getZ(), item.getItem());
+        this.recipes = Recipes;
         this.hasBeenConverted = false;
         this.setDeltaMovement(item.getDeltaMovement());
         this.setPickUpDelay(40);
@@ -22,11 +21,12 @@ public class ConvertibleItemEntity extends ItemEntity {
     @Override
     public void tick() {
         if (!this.hasBeenConverted) {
-            var fluidState = this.level.getFluidState(this.blockPosition());
+            var fluidState = this.level().getFluidState(this.blockPosition());
             if (!fluidState.isEmpty()) {
-                ResourceLocation rl = ForgeRegistries.FLUID_TYPES.get().getKey(fluidState.getFluidType());
-                if (rl != null && rl.equals(this.fluid)) {
-                    ItemStack clone = this.output.copy();
+                var rl = ForgeRegistries.FLUID_TYPES.get().getKey(fluidState.getFluidType());
+                var recipe = this.recipes.stream().filter(x -> x.getFluid().equals(rl)).findFirst();
+                if (recipe.isPresent()) {
+                    var clone = recipe.get().getResult().copy();
                     clone.setCount(this.getItem().getCount());
                     if (this.getItem().hasTag()) {
                         clone.setTag(this.getItem().getTag());

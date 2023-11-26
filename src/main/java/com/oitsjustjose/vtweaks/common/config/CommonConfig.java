@@ -20,12 +20,14 @@ public class CommonConfig {
     private static final Builder COMMON_BUILDER = new Builder();
 
     static {
-        var categories = Lists.newArrayList("block", "item", "entity", "player", "recipes", "world");
+        var categories = VTweaks.getInstance().TweakRegistry.getAllTweaks().stream().map(tweak -> tweak.getClass().getAnnotation(Tweak.class).category()).sorted();
+
         categories.forEach(catNm -> {
             COMMON_BUILDER.push(catNm);
             VTweaks.getInstance().TweakRegistry.getAllTweaks().stream().filter(tweak -> tweak.getClass().getAnnotation(Tweak.class).category().equals(catNm)).forEach(tweak -> tweak.registerConfigs(COMMON_BUILDER));
             COMMON_BUILDER.pop();
         });
+
 
         // Mixin Configs
         COMMON_BUILDER.comment("All changes made here require a game restart.").push("mixins");

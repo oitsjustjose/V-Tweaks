@@ -14,12 +14,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 
-@Tweak(eventClass = ItemTooltipEvent.class, category = "item")
+@Tweak(category = "item.tooltips")
 public class DurabilityTooltipTweak extends VTweak {
-    public enum TooltipSetting {
-        NEVER, WITH_SHIFT, ALWAYS
-    }
-
     /* A mapping of colors for the dura tooltip, where round to 0 leads to Dark Red and round to 9 leads to Light purple */
     private final ArrayList<ChatFormatting> ColorByIndex = Lists.newArrayList(
             ChatFormatting.DARK_RED,
@@ -33,12 +29,12 @@ public class DurabilityTooltipTweak extends VTweak {
             ChatFormatting.DARK_PURPLE,
             ChatFormatting.LIGHT_PURPLE
     );
-
     private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
 
     @Override
     public void registerConfigs(ForgeConfigSpec.Builder builder) {
         this.setting = builder.comment("Show tool durability on item hover").defineEnum("durabilityTooltipSetting", TooltipSetting.WITH_SHIFT);
+        builder.pop();
     }
 
     @SubscribeEvent
@@ -60,5 +56,9 @@ public class DurabilityTooltipTweak extends VTweak {
         var percentage = 1 - ((float) damage / (float) max);
         var scaled = Math.max(Math.min(Math.round(percentage * 10) - 1, 9), 0);
         return c.append(ret + ColorByIndex.get(scaled) + (max - damage) + "/" + max + ChatFormatting.RESET);
+    }
+
+    public enum TooltipSetting {
+        NEVER, WITH_SHIFT, ALWAYS
     }
 }

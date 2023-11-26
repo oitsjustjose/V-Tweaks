@@ -6,7 +6,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Tweak(eventClass = LivingHurtEvent.class, category = "entity")
+@Tweak(category = "entity")
 public class ChallengerEffectHandler extends VTweak {
     @SubscribeEvent
     public void process(LivingHurtEvent evt) {
