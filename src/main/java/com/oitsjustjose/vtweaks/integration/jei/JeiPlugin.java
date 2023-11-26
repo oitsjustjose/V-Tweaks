@@ -13,6 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 @mezz.jei.api.JeiPlugin
@@ -40,7 +41,7 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        var anvilRecipes = VTweaks.getInstance().getAnvilRecipes().values().stream().map(x -> registration.getVanillaRecipeFactory().createAnvilRecipe(x.getLeft(), List.of(x.getRight()), List.of(x.getResult()))).toList();
+        var anvilRecipes = VTweaks.getInstance().getAnvilRecipes().values().stream().map(x -> registration.getVanillaRecipeFactory().createAnvilRecipe(Arrays.asList(x.getLeft().getItems()), Arrays.asList(x.getRight().getItems()), List.of(x.getResult()))).toList();
         registration.addRecipes(RecipeTypes.ANVIL, anvilRecipes);
         registration.addRecipes(FluidConversionRecipeCategory.TYPE, VTweaks.getInstance().getFluidConversionRecipes().values().stream().toList());
     }
