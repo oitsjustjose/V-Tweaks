@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.common.tweaks.entity;
 
+import com.google.common.collect.Lists;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
@@ -24,7 +25,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.HashMap;
 import java.util.List;
