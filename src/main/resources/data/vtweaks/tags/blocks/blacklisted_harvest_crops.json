@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:mangrove_propagule",
-    "minecraft:pitcher_crop"
+    "minecraft:mangrove_propagule"
   ]
 }

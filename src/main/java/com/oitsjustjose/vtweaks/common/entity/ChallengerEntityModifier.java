@@ -3,6 +3,7 @@ package com.oitsjustjose.vtweaks.common.entity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.common.data.helpers.VTJsonHelpers;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +18,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
-import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

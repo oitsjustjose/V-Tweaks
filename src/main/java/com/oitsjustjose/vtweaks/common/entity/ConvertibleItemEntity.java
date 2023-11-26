@@ -11,7 +11,7 @@ public class ConvertibleItemEntity extends ItemEntity {
     private boolean hasBeenConverted;
 
     public ConvertibleItemEntity(ItemEntity item, List<FluidConversionRecipe> Recipes) {
-        super(item.level(), item.getX(), item.getY(), item.getZ(), item.getItem());
+        super(item.getLevel(), item.getX(), item.getY(), item.getZ(), item.getItem());
         this.recipes = Recipes;
         this.hasBeenConverted = false;
         this.setDeltaMovement(item.getDeltaMovement());
@@ -21,7 +21,7 @@ public class ConvertibleItemEntity extends ItemEntity {
     @Override
     public void tick() {
         if (!this.hasBeenConverted) {
-            var fluidState = this.level().getFluidState(this.blockPosition());
+            var fluidState = this.getLevel().getFluidState(this.blockPosition());
             if (!fluidState.isEmpty()) {
                 var rl = ForgeRegistries.FLUID_TYPES.get().getKey(fluidState.getFluidType());
                 var recipe = this.recipes.stream().filter(x -> x.getFluid().equals(rl)).findFirst();

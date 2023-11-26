@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.client;
 
+import com.mojang.math.Vector3f;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.CommonProxy;
 import com.oitsjustjose.vtweaks.common.network.packet.ChallengerParticlePacket;
@@ -8,7 +9,6 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 public class ClientProxy extends CommonProxy {
     Minecraft mc;

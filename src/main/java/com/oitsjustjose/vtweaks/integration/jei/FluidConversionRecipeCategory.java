@@ -1,5 +1,6 @@
 package com.oitsjustjose.vtweaks.integration.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.util.Constants;
@@ -12,7 +13,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -25,8 +25,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConversionRecipe> {
     public static final RecipeType<FluidConversionRecipe> TYPE = RecipeType.create(Constants.MOD_ID, "fluid_conversion", FluidConversionRecipe.class);
@@ -82,13 +80,12 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     }
 
     @Override
-    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
-        if (fluid == null) return;
         MutableComponent comp = Component.empty();
         try {
             var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
-            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", "--", new Object[]{fluidNm}).resolve(null, null, 0));
+            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", fluidNm).resolve(null, null, 0));
         } catch (CommandSyntaxException ignored) {
         }
 
@@ -97,8 +94,8 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var x = background.getWidth() - 2 - width;
         var y = 27;
 
-        guiGraphics.drawString(minecraft.font, comp, x + 1, y + 1, 0x25252525);
-        guiGraphics.drawString(minecraft.font, comp, x, y, 0x252525);
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+        minecraft.font.draw(stack, comp, x + 0.5F, y + 0.5F, 0x25252525);
+        minecraft.font.draw(stack, comp, x, y, 0x252525);
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
     }
 }

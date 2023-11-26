@@ -73,7 +73,7 @@ public class TraderStonks extends VTweak {
     @SubscribeEvent
     public void process(ItemTossEvent evt) {
         if (!enabled.get()) return;
-        if (evt.getEntity().level().isClientSide()) return;
+        if (evt.getEntity().getLevel().isClientSide()) return;
         if (!evt.getEntity().getItem().is(VALUABLE)) return;
 
         var uuid = evt.getPlayer().getUUID();
@@ -87,7 +87,7 @@ public class TraderStonks extends VTweak {
     @SubscribeEvent
     public void process(LivingDropsEvent evt) {
         if (!this.enabled.get()) return;
-        if (evt.getEntity().level().isClientSide()) return;
+        if (evt.getEntity().getLevel().isClientSide()) return;
         if (!(evt.getEntity() instanceof Player player)) return;
 
         var uuid = player.getUUID();
@@ -106,7 +106,7 @@ public class TraderStonks extends VTweak {
     @SubscribeEvent
     public void process(PlayerEvent.ItemPickupEvent evt) {
         if (!enabled.get()) return;
-        if (evt.getOriginalEntity().level().isClientSide()) return;
+        if (evt.getOriginalEntity().getLevel().isClientSide()) return;
 
         HashMap<UUID, List<ItemEntity>> changes = new HashMap<>();
         for (var entry : trackedValuables.entrySet()) {

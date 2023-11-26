@@ -41,7 +41,7 @@ public class NBTAnvilRecipe extends VTweak {
     }
 
     public Optional<AnvilRecipe> find(AnvilUpdateEvent evt) {
-        var level = evt.getPlayer().level();
+        var level = evt.getPlayer().getLevel();
         var stackHandler = new ItemStackHandler(2);
         stackHandler.setStackInSlot(0, evt.getLeft());
         stackHandler.setStackInSlot(1, evt.getRight());

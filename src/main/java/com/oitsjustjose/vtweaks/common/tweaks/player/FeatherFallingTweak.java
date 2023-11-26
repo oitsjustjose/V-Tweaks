@@ -3,7 +3,7 @@ package com.oitsjustjose.vtweaks.common.tweaks.player;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -21,7 +21,7 @@ public class FeatherFallingTweak extends VTweak {
     @SubscribeEvent
     public void process(LivingHurtEvent evt) {
         if (!this.enabled.get()) return;
-        if (!evt.getSource().is(DamageTypes.FALL)) return;
+        if (evt.getSource() != DamageSource.FALL) return;
         if (!(evt.getEntity() instanceof ServerPlayer player)) return;
 
         var boots = player.getInventory().getArmor(0);

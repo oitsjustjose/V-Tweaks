@@ -101,7 +101,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper unused, @NotNull RegistryAccess unused2) {
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper wrapper) {
         return this.result;
     }
 
@@ -181,7 +181,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess unused) {
+    public @NotNull ItemStack getResultItem() {
         return this.result;
     }
 

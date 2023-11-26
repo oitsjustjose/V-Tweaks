@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 
 @Tweak(category = "world.peacefulsurface")
 public class PeacefulSurfaceTweak extends VTweak {
-    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
-    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
+    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
+    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
     private ForgeConfigSpec.BooleanValue enabled;
     private ForgeConfigSpec.IntValue minY;
     private ForgeConfigSpec.ConfigValue<List<String>> moonPhases;
@@ -43,12 +43,12 @@ public class PeacefulSurfaceTweak extends VTweak {
     }
 
     @SubscribeEvent
-    public void process(MobSpawnEvent.SpawnPlacementCheck evt) {
+    public void process(LivingSpawnEvent.CheckSpawn evt) {
         if (!this.enabled.get()) return;
 
-        if (evt.getSpawnType() != MobSpawnType.NATURAL) return;
-        if (evt.getEntityType().getCategory() != MobCategory.MONSTER) return;
-        if (evt.getEntityType().is(BLACKLISTED_ENTITIES)) return;
+        if (evt.getSpawnReason() != MobSpawnType.NATURAL) return;
+        if (evt.getEntity().getType().getCategory() != MobCategory.MONSTER) return;
+        if (evt.getEntity().getType().is(BLACKLISTED_ENTITIES)) return;
         if (!(evt.getLevel() instanceof ServerLevel level)) return;
         if (level.dimensionTypeRegistration().is(BLACKLISTED_DIMENSIONS)) return;
 
@@ -56,7 +56,7 @@ public class PeacefulSurfaceTweak extends VTweak {
         final String currentPhase = MoonPhase.values()[level.getMoonPhase()].toString();
         if (this.moonPhases.get().stream().noneMatch(moonPhase -> Objects.equals(moonPhase, currentPhase))) return;
 
-        if (evt.getPos().getY() >= this.minY.get()) {
+        if (evt.getY() >= this.minY.get()) {
             evt.setResult(Event.Result.DENY);
         }
     }

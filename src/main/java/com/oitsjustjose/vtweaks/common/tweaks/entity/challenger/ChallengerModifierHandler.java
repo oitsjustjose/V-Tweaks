@@ -4,7 +4,7 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Tweak(category = "entity.challengers")
@@ -20,7 +20,7 @@ public class ChallengerModifierHandler extends VTweak {
     }
 
     @SubscribeEvent
-    public void process(MobSpawnEvent.FinalizeSpawn evt) {
+    public void process(LivingSpawnEvent.CheckSpawn evt) {
         if (!this.enabled.get()) return;
         if (this.globalChance.get() <= 0.0D) return;
 

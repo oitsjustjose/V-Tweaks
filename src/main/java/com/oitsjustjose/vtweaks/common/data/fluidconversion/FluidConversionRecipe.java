@@ -44,7 +44,7 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper p_44001_, @NotNull RegistryAccess p_267165_) {
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper p_44001_) {
         return this.result;
     }
 
@@ -54,7 +54,7 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess p_267052_) {
+    public @NotNull ItemStack getResultItem() {
         return this.result;
     }
 

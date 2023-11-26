@@ -65,13 +65,13 @@ public class BetterFallingBlock extends FallingBlockEntity {
         if (!this.isNoGravity()) this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        if (!this.level().isClientSide) {
+        if (!this.getLevel().isClientSide) {
             BlockPos blockpos = this.blockPosition();
 
-            if (!this.onGround()) {
-                if (!this.level().isClientSide && (this.time > 100 && (blockpos.getY() <= this.level().getMinBuildHeight() || blockpos.getY() > this.level().getMaxBuildHeight()) || this.time > 600)) {
-                    if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                        if (this.level() instanceof ServerLevel serverLevel) {
+            if (!this.isOnGround()) {
+                if (!this.getLevel().isClientSide && (this.time > 100 && (blockpos.getY() <= this.getLevel().getMinBuildHeight() || blockpos.getY() > this.getLevel().getMaxBuildHeight()) || this.time > 600)) {
+                    if (this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                        if (this.getLevel() instanceof ServerLevel serverLevel) {
                             Block.getDrops(this.heldState, serverLevel, blockpos, null).forEach(this::spawnAtLocation);
                         }
                     }
@@ -79,34 +79,34 @@ public class BetterFallingBlock extends FallingBlockEntity {
                     this.discard();
                 }
             } else {
-                var state = this.level().getBlockState(blockpos);
+                var state = this.getLevel().getBlockState(blockpos);
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
-                boolean canReplace = state.canBeReplaced(new DirectionalPlaceContext(this.level(), blockpos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-                boolean canBePlacedHere = this.heldState.canSurvive(this.level(), blockpos) && !FallingBlock.isFree(this.level().getBlockState(blockpos.below()));
+                boolean canReplace = state.canBeReplaced(new DirectionalPlaceContext(this.getLevel(), blockpos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+                boolean canBePlacedHere = this.heldState.canSurvive(this.getLevel(), blockpos) && !FallingBlock.isFree(this.getLevel().getBlockState(blockpos.below()));
                 if (canReplace && canBePlacedHere) {
                     /* Waterlog if it fell into water and is waterloggable */
-                    if (this.heldState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level().getFluidState(blockpos).getType() == Fluids.WATER) {
+                    if (this.heldState.hasProperty(BlockStateProperties.WATERLOGGED) && this.getLevel().getFluidState(blockpos).getType() == Fluids.WATER) {
                         this.heldState = this.heldState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
                     }
                     /* Set block and notify */
-                    if (this.level().setBlock(blockpos, this.heldState, 3)) {
-                        ((ServerLevel) this.level()).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockpos, this.level().getBlockState(blockpos)));
+                    if (this.getLevel().setBlock(blockpos, this.heldState, 3)) {
+                        ((ServerLevel) this.getLevel()).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockpos, this.getLevel().getBlockState(blockpos)));
                         this.discard();
                         if (block instanceof Fallable) {
-                            ((Fallable) block).onLand(this.level(), blockpos, this.heldState, state, this);
+                            ((Fallable) block).onLand(this.getLevel(), blockpos, this.heldState, state, this);
                         }
-                    } else if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                    } else if (this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                         this.discard();
                         this.callOnBrokenAfterFall(block, blockpos);
-                        if (this.level() instanceof ServerLevel serverLevel) {
+                        if (this.getLevel() instanceof ServerLevel serverLevel) {
                             Block.getDrops(this.heldState, serverLevel, blockpos, null).forEach(this::spawnAtLocation);
                         }
                     }
                 } else {
                     this.discard();
-                    if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                    if (this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                         this.callOnBrokenAfterFall(block, blockpos);
-                        if (this.level() instanceof ServerLevel serverLevel) {
+                        if (this.getLevel() instanceof ServerLevel serverLevel) {
                             Block.getDrops(this.heldState, serverLevel, blockpos, null).forEach(this::spawnAtLocation);
                         }
                     }

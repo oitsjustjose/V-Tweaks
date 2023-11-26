@@ -4,8 +4,8 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Tweak(category = "entity")
 public class GrieflessCreeperTweak extends VTweak {
-    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("forge", "creepers"));
+    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("forge", "creepers"));
     private ForgeConfigSpec.BooleanValue enabled;
 
     @Override
@@ -38,7 +38,7 @@ public class GrieflessCreeperTweak extends VTweak {
         if (!evt.getExplosion().getDamageSource().getEntity().getType().is(CREEPERS)) return;
 
         var exploder = evt.getExplosion().getDamageSource().getEntity();
-        var lvl = exploder.level();
+        var lvl = exploder.getLevel();
         var idx = new AtomicInteger();
 
         // Enqueue future block placements from Lowest Y, Increment
