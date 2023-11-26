@@ -14,6 +14,7 @@ import java.nio.file.Path;
 @Mod.EventBusSubscriber
 public class CommonConfig {
     public static final ForgeConfigSpec COMMON_CONFIG;
+
     public static final ForgeConfigSpec.BooleanValue EnableCactusMixin;
     public static final ForgeConfigSpec.BooleanValue EnableSplashPotionMixin;
     private static final Builder COMMON_BUILDER = new Builder();
