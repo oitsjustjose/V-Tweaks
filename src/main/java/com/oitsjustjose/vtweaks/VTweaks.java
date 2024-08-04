@@ -11,6 +11,7 @@ import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecip
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
 import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;

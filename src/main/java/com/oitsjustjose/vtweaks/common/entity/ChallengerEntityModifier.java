@@ -107,7 +107,7 @@ public class ChallengerEntityModifier {
         comp.put("challenger_mob_data", type);
 
         // Infinite Fire Resistance
-        monster.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
+        monster.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true, false));
     }
 
     private MutableComponent mobClassName(Monster mob) {

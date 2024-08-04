@@ -2,7 +2,7 @@
   "weight": 10,
   "gear": {
     "mainHand": {
-      "item": "minecraft:oak_sign",
+      "id": "minecraft:oak_sign",
       "nbt": {
         "display": {
           "Name": "[{\"text\":\"Zistonian Battle Sign\",\"italic\":false,\"color\":\"yellow\"}]"
@@ -16,7 +16,7 @@
       }
     },
     "leggings": {
-      "item": "minecraft:golden_leggings",
+      "id": "minecraft:golden_leggings",
       "nbt": {
         "display": {
           "Name": "[{\"text\":\"Man Pants\",\"italic\":false,\"color\":\"yellow\"}]",
@@ -53,32 +53,32 @@
     {
       "weight": 10,
       "item": {
-        "item": "minecraft:gold_ingot"
+        "id": "minecraft:gold_ingot"
       }
     },
     {
       "weight": 12,
       "item": {
-        "item": "minecraft:gold_nugget",
+        "id": "minecraft:gold_nugget",
         "count": 15
       }
     },
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:diamond"
+        "id": "minecraft:diamond"
       }
     },
     {
       "weight": 7,
       "item": {
-        "item": "minecraft:emerald"
+        "id": "minecraft:emerald"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:experience_bottle"
+        "id": "minecraft:experience_bottle"
       }
     }
   ]

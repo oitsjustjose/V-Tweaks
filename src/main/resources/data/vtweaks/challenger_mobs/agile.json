@@ -22,25 +22,25 @@
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:redstone"
+        "id": "minecraft:redstone"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:ghast_tear"
+        "id": "minecraft:ghast_tear"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:experience_bottle"
+        "id": "minecraft:experience_bottle"
       }
     },
     {
       "weight": 7,
       "item": {
-        "item": "minecraft:potion",
+        "id": "minecraft:potion",
         "nbt": {
           "CustomPotionColor": 3259330,
           "CustomPotionEffects": [

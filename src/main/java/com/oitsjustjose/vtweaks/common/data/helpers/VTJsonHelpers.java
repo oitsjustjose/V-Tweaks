@@ -17,16 +17,16 @@ import java.util.NoSuchElementException;
 
 public class VTJsonHelpers {
     public static ItemStack deserializeItemStack(JsonObject parent, String key) {
-        if (parent.has(key)) {
-            try {
-                return ItemStack.CODEC.parse(JsonOps.INSTANCE, parent.getAsJsonObject(key)).result().orElseThrow();
-            } catch (NoSuchElementException ex) {
-                VTweaks.getInstance().LOGGER.error("Item {} does not exist", parent.get(key).toString());
-                ex.printStackTrace();
-                return ItemStack.EMPTY;
-            }
+        // No item was defined for this slot -- no biggie
+        if (!parent.has(key)) return ItemStack.EMPTY;
+
+        try {
+            return ItemStack.CODEC.parse(JsonOps.INSTANCE, parent.getAsJsonObject(key)).result().orElseThrow();
+        } catch (NoSuchElementException ex) {
+            VTweaks.getInstance().LOGGER.error("Item {} does not exist", parent.get(key).toString());
+            VTweaks.getInstance().LOGGER.error(ex);
+            return ItemStack.EMPTY;
         }
-        return ItemStack.EMPTY;
     }
 
     public static ArrayList<MobEffectInstance> deserializeEffectInstanceList(JsonArray arr) {

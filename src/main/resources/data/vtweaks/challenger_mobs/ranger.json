@@ -2,26 +2,22 @@
   "weight": 10,
   "gear": {
     "helmet": {
-      "item": "minecraft:leather_helmet",
-      "nbt": {
-        "display": {
-          "color": 5350221
+      "id": "minecraft:leather_helmet",
+      "components": {
+        "minecraft:dyed_color": {
+          "rgb": 5350221
         }
       }
     },
     "mainHand": {
-      "item": "minecraft:bow",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "minecraft:punch",
-            "lvl": 2
-          },
-          {
-            "id": "minecraft:power",
-            "lvl": 3
+      "id": "minecraft:bow",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:power": 3.0,
+            "minecraft:punch": 2.0
           }
-        ]
+        }
       }
     }
   },
@@ -45,45 +41,45 @@
     {
       "weight": 10,
       "item": {
-        "item": "minecraft:gold_ingot"
+        "id": "minecraft:gold_ingot"
       }
     },
     {
       "weight": 12,
       "item": {
-        "item": "minecraft:gold_nugget",
+        "id": "minecraft:gold_nugget",
         "count": 15
       }
     },
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:diamond"
+        "id": "minecraft:diamond"
       }
     },
     {
       "weight": 7,
       "item": {
-        "item": "minecraft:string"
+        "id": "minecraft:string"
       }
     },
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:string",
+        "id": "minecraft:string",
         "count": 2
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:ghast_tear"
+        "id": "minecraft:ghast_tear"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:experience_bottle"
+        "id": "minecraft:experience_bottle"
       }
     }
   ]

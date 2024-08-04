@@ -2,7 +2,7 @@
   "weight": 10,
   "gear": {
     "mainHand": {
-      "item": "minecraft:stick",
+      "id": "minecraft:stick",
       "nbt": {
         "Enchantments": [
           {
@@ -49,45 +49,45 @@
     {
       "weight": 10,
       "item": {
-        "item": "minecraft:gold_ingot"
+        "id": "minecraft:gold_ingot"
       }
     },
     {
       "weight": 12,
       "item": {
-        "item": "minecraft:gold_nugget",
+        "id": "minecraft:gold_nugget",
         "count": 15
       }
     },
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:diamond"
+        "id": "minecraft:diamond"
       }
     },
     {
       "weight": 7,
       "item": {
-        "item": "minecraft:emerald"
+        "id": "minecraft:emerald"
       }
     },
     {
       "weight": 4,
       "item": {
-        "item": "minecraft:emerald",
+        "id": "minecraft:emerald",
         "count": 2
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:ghast_tear"
+        "id": "minecraft:ghast_tear"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:experience_bottle"
+        "id": "minecraft:experience_bottle"
       }
     }
   ]

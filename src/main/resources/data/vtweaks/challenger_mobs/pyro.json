@@ -2,7 +2,7 @@
   "weight": 10,
   "gear": {
     "mainHand": {
-      "item": "minecraft:firework_rocket",
+      "id": "minecraft:firework_rocket",
       "nbt": {
         "Enchantments": [
           {
@@ -33,19 +33,19 @@
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:ghast_tear"
+        "id": "minecraft:ghast_tear"
       }
     },
     {
       "weight": 3,
       "item": {
-        "item": "minecraft:experience_bottle"
+        "id": "minecraft:experience_bottle"
       }
     },
     {
       "weight": 5,
       "item": {
-        "item": "minecraft:firework_rocket",
+        "id": "minecraft:firework_rocket",
         "count": 5,
         "nbt": {
           "Fireworks": {
@@ -57,7 +57,7 @@
     {
       "weight": 5,
       "item": {
-        "item": "minecraft:firework_rocket",
+        "id": "minecraft:firework_rocket",
         "count": 3,
         "nbt": {
           "Fireworks": {
@@ -69,7 +69,7 @@
     {
       "weight": 5,
       "item": {
-        "item": "minecraft:firework_rocket",
+        "id": "minecraft:firework_rocket",
         "count": 2,
         "nbt": {
           "Fireworks": {
