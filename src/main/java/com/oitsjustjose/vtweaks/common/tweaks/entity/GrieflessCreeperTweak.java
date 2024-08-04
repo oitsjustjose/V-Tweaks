@@ -12,32 +12,31 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Tweak(category = "entity")
 public class GrieflessCreeperTweak extends VTweak {
-    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("forge", "creepers"));
-    private ForgeConfigSpec.BooleanValue enabled;
+    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("forge", "creepers"));
+    private ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("When any Creeper (or entity with EntityType tag #forge:creepers) explodes, all blocks destroyed will plop back into place after a few seconds!").define("ungriefCreepers", true);
     }
 
     @SubscribeEvent
-    public void process(ExplosionEvent evt) {
+    public void process(ExplosionEvent.Start evt) {
         if (!this.enabled.get()) return;
 
-        if (evt.getExplosion() == null) return;
-        if (evt.getExplosion().getDamageSource().getEntity() == null) return;
-        if (!evt.getExplosion().getDamageSource().getEntity().getType().is(CREEPERS)) return;
+        if (evt.getExplosion().getDirectSourceEntity() == null) return;
+        if (!evt.getExplosion().getDirectSourceEntity().getType().is(CREEPERS)) return;
 
-        var exploder = evt.getExplosion().getDamageSource().getEntity();
+        var exploder = evt.getExplosion().getDirectSourceEntity();
         var lvl = exploder.level();
         var idx = new AtomicInteger();
 

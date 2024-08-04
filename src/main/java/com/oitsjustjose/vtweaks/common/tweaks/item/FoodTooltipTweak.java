@@ -10,29 +10,30 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
 import java.util.Locale;
 
 @Tweak(category = "item.tooltips.food")
 public class FoodTooltipTweak extends VTweak {
-    private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
-    private ForgeConfigSpec.DoubleValue multiplier;
-    private ForgeConfigSpec.ConfigValue<String> simpleColor;
-    private ForgeConfigSpec.ConfigValue<String> buffColor;
-    private ForgeConfigSpec.ConfigValue<String> debuffColor;
-    private ForgeConfigSpec.ConfigValue<String> saturationColor;
-    private ForgeConfigSpec.BooleanValue useOriginalFoodTooltipColor;
+    private ModConfigSpec.EnumValue<TooltipSetting> setting;
+    private ModConfigSpec.DoubleValue multiplier;
+    private ModConfigSpec.ConfigValue<String> simpleColor;
+    private ModConfigSpec.ConfigValue<String> buffColor;
+    private ModConfigSpec.ConfigValue<String> debuffColor;
+    private ModConfigSpec.ConfigValue<String> saturationColor;
+    private ModConfigSpec.BooleanValue useOriginalFoodTooltipColor;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.setting = builder.comment("Show food hunger & saturation on item hover").defineEnum("foodTooltipSetting", TooltipSetting.WITH_SHIFT);
         this.multiplier = builder.comment("Modifies the number of hunger & saturation points rendered (specifically for Hunger Strike).\n" + "The original hunger value is multiplied by this value, so 42x means 2 times as much hunger/saturation will render, and 0.5 means half as much hunger/saturation will render.").defineInRange("foodTooltipMultiplier", 1.0, 0.0, Float.MAX_VALUE);
         this.simpleColor = builder.comment("Modifies the color of a tooltip for a food that gives no effects on consumption.\nUses HEX Web Colors which you can pick from here: https://dv2ls.com/colpic").define("foodTooltipColor", "#00AA00");
@@ -50,23 +51,27 @@ public class FoodTooltipTweak extends VTweak {
         var stack = evt.getItemStack();
         var food = stack.getFoodProperties(evt.getEntity());
         var shifting = Screen.hasShiftDown();
-        if (!stack.isEdible() || food == null) return;
+        if (food == null) return;
         if (this.setting.get() == TooltipSetting.WITH_SHIFT && !shifting) return;
 
         evt.getToolTip().add(getHungerString(stack, food, stack.getRarity()));
-        evt.getToolTip().add(getSaturationString((int) (food.getSaturationModifier() * 10 * multiplier.get()), stack.getRarity()));
+        evt.getToolTip().add(getSaturationString((int) (food.saturation() * 10 * multiplier.get()), stack.getRarity()));
     }
 
-    private boolean hasBadEffect(List<Pair<MobEffectInstance, Float>> e) {
-        return e.stream().anyMatch(x -> !x.getFirst().getEffect().isBeneficial());
-    }
+    private boolean hasEffectType(List<FoodProperties.PossibleEffect> e, MobEffectCategory type) {
+        return e.stream().anyMatch(possibleEffect -> {
+            var unwrapped = possibleEffect.effect().getEffect().unwrap();
+            if (unwrapped.right().isPresent()) {
+                return unwrapped.right().get().getCategory() == type;
+            }
 
-    private boolean hasGoodEffect(List<Pair<MobEffectInstance, Float>> e) {
-        return e.stream().anyMatch(x -> x.getFirst().getEffect().isBeneficial());
+            // TODO: Verify this works 100% of the time....
+            return false;
+        });
     }
 
     private MutableComponent getHungerString(ItemStack stack, FoodProperties food, Rarity rarity) {
-        var nutrition = (int) (food.getNutrition() * multiplier.get());
+        var nutrition = (int) (food.nutrition() * multiplier.get());
 
         // Determine color based on stack and food effects
         var color = simpleColor.get();
@@ -75,13 +80,13 @@ public class FoodTooltipTweak extends VTweak {
         } else if (useOriginalFoodTooltipColor.get() && stack.getDisplayName().getStyle().getColor() != null &&
                 stack.getDisplayName().getStyle().getColor().getValue() != 16777215) {
             color = String.format(Locale.ROOT, "#%06X", stack.getDisplayName().getStyle().getColor().getValue());
-        } else if (hasBadEffect(food.getEffects())) {
+        } else if (hasEffectType(food.effects(), MobEffectCategory.HARMFUL)) {
             color = debuffColor.get();
-        } else if (hasGoodEffect(food.getEffects())) {
+        } else if (hasEffectType(food.effects(), MobEffectCategory.BENEFICIAL)) {
             color = buffColor.get();
         }
 
-        var style = Style.EMPTY.withColor(TextColor.parseColor(color)).withFont(Style.DEFAULT_FONT);
+        var style = Style.EMPTY.withColor(TextColor.parseColor(color).getOrThrow()).withFont(Style.DEFAULT_FONT);
         rarity.getStyleModifier().apply(style);
 
         var ret = new StringBuilder();
@@ -97,7 +102,7 @@ public class FoodTooltipTweak extends VTweak {
     }
 
     private MutableComponent getSaturationString(int saturation, Rarity rarity) {
-        var style = Style.EMPTY.withColor(TextColor.parseColor(saturationColor.get())).withFont(Style.DEFAULT_FONT);
+        var style = Style.EMPTY.withColor(TextColor.parseColor(saturationColor.get()).getOrThrow()).withFont(Style.DEFAULT_FONT);
         rarity.getStyleModifier().apply(style);
 
         var ret = new StringBuilder();

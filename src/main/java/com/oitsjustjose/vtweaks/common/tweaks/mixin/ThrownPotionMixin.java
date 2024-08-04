@@ -8,9 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +29,7 @@ public abstract class ThrownPotionMixin {
             var item = state.getBlock().asItem();
             var foundRecipe = findRecipe(base.level(), new ItemStack(item));
             if (foundRecipe.isEmpty()) return;
-            var recipe = foundRecipe.get();
+            var recipe = foundRecipe.get().value();
             if (recipe.getFluid().getPath().equalsIgnoreCase("water")) {
                 if (recipe.getResult().getItem() instanceof BlockItem blockItem) {
                     base.level().setBlock(pos, blockItem.getBlock().withPropertiesOf(state), 3);
@@ -37,7 +38,7 @@ public abstract class ThrownPotionMixin {
         }
     }
 
-    public Optional<FluidConversionRecipe> findRecipe(Level level, ItemStack item) {
+    public Optional<RecipeHolder<FluidConversionRecipe>> findRecipe(Level level, ItemStack item) {
         var handler = new ItemStackHandler(1);
         handler.setStackInSlot(0, item);
         return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(handler), level);

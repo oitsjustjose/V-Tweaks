@@ -14,26 +14,24 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @Tweak(category = "entity")
 public class ItemFrameTweak extends VTweak {
-    public static final TagKey<Item> GLASS = ItemTags.create(new ResourceLocation(Constants.MOD_ID, "clear_glass"));
+    public static final TagKey<Item> GLASS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "clear_glass"));
 
-    private ForgeConfigSpec.BooleanValue enabled;
+    private ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("Allows any vtweaks:clear_glass, or glow ink sac, to be activated on an item frame while sneaking to make the item frame transparent or glowing respectively.").define("enableItemFrameTweak", true);
     }
 
     @SubscribeEvent
     public void process(PlayerInteractEvent.EntityInteract evt) {
         if (!this.enabled.get()) return;
-        if (evt.getTarget() == null || evt.getEntity() == null) return;
         if (!(evt.getTarget() instanceof ItemFrame frame)) return;
 
         var player = evt.getEntity();
@@ -60,7 +58,6 @@ public class ItemFrameTweak extends VTweak {
         }
         player.swing(evt.getHand());
         evt.setCanceled(true);
-        evt.setResult(Event.Result.DENY);
         evt.setCancellationResult(InteractionResult.CONSUME);
     }
 }

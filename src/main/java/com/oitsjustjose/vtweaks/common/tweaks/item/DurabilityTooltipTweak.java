@@ -8,9 +8,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.ArrayList;
 
@@ -29,10 +29,10 @@ public class DurabilityTooltipTweak extends VTweak {
             ChatFormatting.DARK_PURPLE,
             ChatFormatting.LIGHT_PURPLE
     );
-    private ForgeConfigSpec.EnumValue<TooltipSetting> setting;
+    private ModConfigSpec.EnumValue<TooltipSetting> setting;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.setting = builder.comment("Show tool durability on item hover").defineEnum("durabilityTooltipSetting", TooltipSetting.WITH_SHIFT);
         builder.pop();
     }

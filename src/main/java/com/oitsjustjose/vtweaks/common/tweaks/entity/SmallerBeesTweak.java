@@ -4,18 +4,18 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.client.model.BeeModel;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RenderLivingEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 @Tweak(category = "client")
 public class SmallerBeesTweak extends VTweak {
-    private ForgeConfigSpec.BooleanValue enabled;
+    private ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("If enabled, all bees will always be half-sized. Does not affect breeding or hitboxes").define("enableSmallBees", true);
     }
 

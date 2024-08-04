@@ -1,80 +1,84 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
-    dependencies {
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-    }
-}
-
 plugins {
-    id "com.modrinth.minotaur" version "2.+"
-    id "com.matthewprenger.cursegradle" version "1.4.0+"
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
+    id 'com.modrinth.minotaur' version '2.+'
+    id 'com.matthewprenger.cursegradle' version '1.4.0+'
 }
 
-repositories { maven { url = "https://maven.blamejared.com" } }
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
+group = mod_group_id
+version = mod_version
+base { archivesName = "VTweaks-${minecraft_version}-${mod_version}" }
 
-group = 'com.oitsjustjose.vtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "VTweaks-${game_version}-${mod_version}"
+repositories { 
+    mavenLocal() 
+    maven { url = "https://maven.blamejared.com" }
+}
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-minecraft {
-    mappings channel: 'official', version: "${game_version}"
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods { vtweaks { source sourceSets.main } }
-        }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods { vtweaks { source sourceSets.main } }
-        }
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
+
+    gameTestServer {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
     }
 }
 
+configurations { runtimeClasspath.extendsFrom localRuntime }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-common-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-common:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-forge:${jei_version}")
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation "net.neoforged:neoforge:${neo_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
-mixin {
-    add sourceSets.main, "vtweaks.refmap.json"
-    config "vtweaks.mixins.json"
-}
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
+// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
 
-jar {
-    manifest {
-        attributes([
-            "Specification-Title"     : "vtweaks",
-            "Specification-Vendor"    : "oitsjustjose.com",
-            "Specification-Version"   : "1", // We are version 1 of ourselves
-            "Implementation-Title"    : project.name,
-            "Implementation-Version"  : "${mod_version}",
-            "Implementation-Vendor"   : "oitsjustjose.com",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
     }
 }
 
-tasks.register('publish') {
+publish {
     dependsOn 'curseforge'
     dependsOn 'modrinth'
 }
@@ -86,9 +90,9 @@ curseforge {
         changelogType = 'markdown'
         changelog = file("./changelog.md")
         releaseType = 'release'
-        addGameVersion "${game_version}"
+        addGameVersion "${minecraft_version}"
         mainArtifact(jar) {
-            displayName = "V-Tweaks ${game_version} ${mod_version}"
+            displayName = "V-Tweaks ${minecraft_version} ${mod_version}"
         }
     }
 }
@@ -96,12 +100,28 @@ curseforge {
 modrinth {
     token = project.hasProperty("MODRINTH_API_KEY") ? project.MODRINTH_API_KEY : ""
     projectId = "Bmda4Rq4"
-    versionName = "V-Tweaks ${game_version} ${mod_version}"
-    versionNumber = "${game_version}-${mod_version}"
+    versionName = "V-Tweaks ${minecraft_version} ${mod_version}"
+    versionNumber = "${minecraft_version}-${mod_version}"
     versionType = "release"
     uploadFile = jar
-    gameVersions = ["${game_version}"]
+    gameVersions = ["${minecraft_version}"]
     loaders = ["forge"]
     changelog = file("./changelog.md").text
     dependencies { required.project "jei" }
 }
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+
+

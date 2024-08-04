@@ -13,21 +13,21 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
 @Tweak(category = "block")
 public class TorchLightingTweak extends VTweak {
-    public static final TagKey<Item> TORCH_ITEM = ItemTags.create(new ResourceLocation(MOD_ID, "ignition_item"));
-    public static final TagKey<Block> TORCH_IGNITE_BL = BlockTags.create(new ResourceLocation(MOD_ID, "torch_ignition_blacklist"));
+    public static final TagKey<Item> TORCH_ITEM = ItemTags.create(ResourceLocation.fromNamespaceAndPath(MOD_ID, "ignition_item"));
+    public static final TagKey<Block> TORCH_IGNITE_BL = BlockTags.create(ResourceLocation.fromNamespaceAndPath(MOD_ID, "torch_ignition_blacklist"));
 
-    public ForgeConfigSpec.BooleanValue enabled;
+    public ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`").define("enableTorchLighting", true);
     }
 

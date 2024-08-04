@@ -4,10 +4,11 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.Optional;
 
@@ -15,29 +16,20 @@ import java.util.Optional;
 public class NBTAnvilRecipe extends VTweak {
     @SubscribeEvent
     public void process(AnvilUpdateEvent evt) {
-        var r = find(evt);
-        if (r.isEmpty()) return;
+        var recipe = find(evt);
+        if (recipe.isEmpty()) return;
 
-        var output = r.get().getResult().copy();
-
-        if (r.get().shouldResultCopyNbtFromLeft()) {
-            var oTag = output.getTag();
-            var lTag = evt.getLeft().copy().getTag();
-            if (lTag != null && oTag != null) {
-                output.setTag(lTag.copy().merge(oTag));
-            }
+        var output = recipe.get().getResult().copy();
+        if (recipe.get().copyComponentsFromLeft()) {
+            output.applyComponents(evt.getLeft().copy().getComponents());
         }
 
-        if (r.get().shouldResultCopyNbtFromRight()) {
-            var oTag = output.getTag();
-            var rTag = evt.getRight().copy().getTag();
-            if (rTag != null && oTag != null) {
-                output.setTag(rTag.copy().merge(oTag));
-            }
+        if (recipe.get().copyComponentsFromRight()) {
+            output.applyComponents(evt.getRight().copy().getComponents());
         }
 
         evt.setOutput(output);
-        evt.setCost(r.get().getCost());
+        evt.setCost(recipe.get().getCost());
     }
 
     public Optional<AnvilRecipe> find(AnvilUpdateEvent evt) {
@@ -45,6 +37,6 @@ public class NBTAnvilRecipe extends VTweak {
         var stackHandler = new ItemStackHandler(2);
         stackHandler.setStackInSlot(0, evt.getLeft());
         stackHandler.setStackInSlot(1, evt.getRight());
-        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
+        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE, new RecipeWrapper(stackHandler), level).map(RecipeHolder::value);
     }
 }

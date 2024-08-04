@@ -18,7 +18,7 @@ import java.util.List;
 
 @mezz.jei.api.JeiPlugin
 public class JeiPlugin implements IModPlugin {
-    private static final ResourceLocation ID = new ResourceLocation(Constants.MOD_ID, "jei_recipes");
+    private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "jei_recipes");
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {

@@ -4,14 +4,13 @@ import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 @Tweak(category = "entity")
 public class ChallengerLootHandler extends VTweak {
     @SubscribeEvent
     public void process(LivingDropsEvent evt) {
-        if (evt.getEntity() == null) return;
         if (!(evt.getEntity() instanceof Monster monster)) return;
 
         var modifier = ChallengerHelpers.getChallengerEntityModifier(monster);

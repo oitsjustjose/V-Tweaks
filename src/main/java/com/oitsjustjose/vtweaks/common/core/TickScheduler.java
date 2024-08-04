@@ -1,8 +1,8 @@
 package com.oitsjustjose.vtweaks.common.core;
 
 import com.google.common.collect.Sets;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.Set;
 import java.util.UUID;
@@ -11,7 +11,7 @@ public class TickScheduler {
     protected Set<ScheduledTask> tasks = Sets.newConcurrentHashSet();
 
     @SubscribeEvent
-    public void registerEvent(TickEvent.ServerTickEvent event) {
+    public void registerEvent(ServerTickEvent.Pre event) {
         long now = System.currentTimeMillis();
         this.tasks.removeIf(x -> x.ready(now));
     }

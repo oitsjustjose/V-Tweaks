@@ -7,14 +7,14 @@ import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecip
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipeSerializer;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipeType;
 import com.oitsjustjose.vtweaks.common.util.Constants;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class RecipeTypeRegistry {
-    public final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MOD_ID);
-    public final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Constants.MOD_ID);
+    public final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Constants.MOD_ID);
+    public final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Constants.MOD_ID);
     public final RecipeSerializer<AnvilRecipe> ANVIL;
     public final RecipeType<AnvilRecipe> ANVIL_RECIPE_TYPE;
 

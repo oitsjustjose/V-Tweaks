@@ -3,8 +3,9 @@ package com.oitsjustjose.vtweaks.common.tweaks.entity.challenger;
 import com.oitsjustjose.vtweaks.common.entity.ChallengerEntityModifier;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 public class ChallengerHelpers {
@@ -45,7 +46,7 @@ public class ChallengerHelpers {
     }
 
     public static boolean canBeChallenger(ChallengerEntityModifier mob, Entity entity) {
-        var type = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+        var type = EntityType.getKey(entity.getType());
         var isBl = mob.isEntityFilterIsBlacklist();
         var types = mob.getEntityFilter();
         return (types.contains(type) && !isBl) || (!types.contains(type) && isBl);

@@ -9,17 +9,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 
 @Tweak(category = "block")
 public class CakeDropTweak extends VTweak {
-    public ForgeConfigSpec.BooleanValue enabled;
+    public ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("Allows for uneaten cake to drop on break").define("enableCakeDrop", true);
     }
 
@@ -27,7 +27,6 @@ public class CakeDropTweak extends VTweak {
     public void process(BlockEvent.BreakEvent evt) {
         if (!this.enabled.get()) return;
 
-        if (evt.getPlayer() == null) return;
         if (evt.getPlayer().isCreative()) return;
 
         var state = evt.getState();

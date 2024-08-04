@@ -1,8 +1,8 @@
 package com.oitsjustjose.vtweaks.common.core;
 
 import com.google.common.collect.Lists;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.Type;
 
@@ -37,7 +37,7 @@ public class TweakRegistry {
 
                 var instance = constructor.newInstance();
                 this.allTweaks.add(instance);
-                MinecraftForge.EVENT_BUS.register(instance);
+                NeoForge.EVENT_BUS.register(instance);
             } catch (ReflectiveOperationException | LinkageError e) {
                 LogManager.getLogger().error("Failed to load annotation {}", clsNm, e);
             }

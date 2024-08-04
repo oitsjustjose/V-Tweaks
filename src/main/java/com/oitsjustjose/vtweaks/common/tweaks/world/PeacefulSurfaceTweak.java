@@ -12,10 +12,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,14 +23,14 @@ import java.util.stream.Collectors;
 
 @Tweak(category = "world.peacefulsurface")
 public class PeacefulSurfaceTweak extends VTweak {
-    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Constants.MOD_ID, "ignored_by_peaceful_surface"));
-    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, new ResourceLocation(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
-    private ForgeConfigSpec.BooleanValue enabled;
-    private ForgeConfigSpec.IntValue minY;
-    private ForgeConfigSpec.ConfigValue<List<String>> moonPhases;
+    public static final TagKey<EntityType<?>> BLACKLISTED_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "ignored_by_peaceful_surface"));
+    public static final TagKey<DimensionType> BLACKLISTED_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "peaceful_surface_blacklist_dims"));
+    private ModConfigSpec.BooleanValue enabled;
+    private ModConfigSpec.IntValue minY;
+    private ModConfigSpec.ConfigValue<List<String>> moonPhases;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         final String moonPhaseList = String.join(", ", Arrays.stream(MoonPhase.values()).map(Enum::toString).collect(Collectors.toList()));
         this.enabled = builder.comment("Prevents mobs from spawning above sea level unless it's a new moon").define("enablePeacefulSurface", false);
         this.minY = builder.comment("The lowest Y-level which mobs will be prevented from spawning").defineInRange("peacefulSurfaceMinY", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -57,7 +56,7 @@ public class PeacefulSurfaceTweak extends VTweak {
         if (this.moonPhases.get().stream().noneMatch(moonPhase -> Objects.equals(moonPhase, currentPhase))) return;
 
         if (evt.getPos().getY() >= this.minY.get()) {
-            evt.setResult(Event.Result.DENY);
+            evt.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
         }
     }
 

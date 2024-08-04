@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
@@ -43,8 +43,10 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
         return this.fluid;
     }
 
+    public ResourceLocation getId() { return this.id; }
+
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper p_44001_, @NotNull RegistryAccess p_267165_) {
+    public @NotNull ItemStack assemble(@NotNull RecipeWrapper p_44001_, @NotNull HolderLookup.Provider pRegistries) {
         return this.result;
     }
 
@@ -54,13 +56,8 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess p_267052_) {
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider pRegistries) {
         return this.result;
-    }
-
-    @Override
-    public @NotNull ResourceLocation getId() {
-        return id;
     }
 
     @Override

@@ -75,7 +75,7 @@ public class ChallengerEntityModifier {
         this.entityFilterIsBlacklist = entityFilter.get("isBlacklist").getAsBoolean();
         this.entityFilter = new ArrayList<>();
         for (JsonElement e : entityFilter.get("entities").getAsJsonArray()) {
-            this.entityFilter.add(new ResourceLocation(e.getAsString()));
+            this.entityFilter.add(ResourceLocation.parse(e.getAsString()));
         }
     }
 

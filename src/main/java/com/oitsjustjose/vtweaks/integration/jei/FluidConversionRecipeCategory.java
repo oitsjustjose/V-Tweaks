@@ -13,30 +13,28 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConversionRecipe> {
     public static final RecipeType<FluidConversionRecipe> TYPE = RecipeType.create(Constants.MOD_ID, "fluid_conversion", FluidConversionRecipe.class);
-    public static final ItemStack SPLASH_POTION = PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), Potions.WATER);
+    public static final ItemStack SPLASH_POTION = PotionContents.createItemStack(Items.SPLASH_POTION, Potions.WATER.getDelegate());
     private final IDrawable background;
     private final IDrawable icon;
 
     public FluidConversionRecipeCategory(IGuiHelper guiHelper) {
 
-        this.background = guiHelper.drawableBuilder(new ResourceLocation(Constants.MOD_ID, "textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
+        this.background = guiHelper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
         this.icon = guiHelper.createDrawableItemStack(SPLASH_POTION);
     }
 
@@ -71,9 +69,8 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, FluidConversionRecipe recipe, @NotNull IFocusGroup focuses) {
         var input = recipe.getInput();
-        var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
+        var fluid = BuiltInRegistries.FLUID.get(recipe.getFluid());
         var output = recipe.getResult();
-        if (fluid == null) return;
 
         var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
         var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
@@ -83,8 +80,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
 
     @Override
     public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        var fluid = ForgeRegistries.FLUIDS.getValue(recipe.getFluid());
-        if (fluid == null) return;
+        var fluid = BuiltInRegistries.FLUID.get(recipe.getFluid());
         MutableComponent comp = Component.empty();
         try {
             var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);

@@ -18,10 +18,9 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,13 +30,13 @@ import java.util.stream.Collectors;
 @Tweak(category = "block.chopdown")
 public class ChopDownTweak extends VTweak {
 
-    public ForgeConfigSpec.BooleanValue enabled;
-    public ForgeConfigSpec.IntValue logCount;
-    public ForgeConfigSpec.IntValue leafSearchRad;
-    public ForgeConfigSpec.BooleanValue requireTool;
+    public ModConfigSpec.BooleanValue enabled;
+    public ModConfigSpec.IntValue logCount;
+    public ModConfigSpec.IntValue leafSearchRad;
+    public ModConfigSpec.BooleanValue requireTool;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment("Trees fall down (like, actually not just like lumbering). Credit to Ternsip's impl (https://www.curseforge.com/minecraft/mc-mods/chopdown)").define("enableTreeChopDown", true);
         this.logCount = builder.comment("The number of logs above the one broken to trigger the chopdown effect").defineInRange("chopDownLogRequirement", 3, 1, Integer.MAX_VALUE);
         this.leafSearchRad = builder.comment("The radius that this tweak will use to attempt to find leaves. Set this to a large number to detect larger trees (may cause lag)").defineInRange("chopdownSearchRadius", 64, 1, Integer.MAX_VALUE);
@@ -221,8 +220,8 @@ public class ChopDownTweak extends VTweak {
         toolType = toolType.substring(toolType.indexOf(searchKey) + searchKey.length());
 
         var variants = Arrays.asList(
-                ItemTags.create(new ResourceLocation("minecraft", toolType + "s")),
-                ItemTags.create(new ResourceLocation("forge", "tools/" + toolType + "s"))
+                ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", toolType + "s")),
+                ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "tools/" + toolType + "s"))
         );
 
         for (var variant : variants) {

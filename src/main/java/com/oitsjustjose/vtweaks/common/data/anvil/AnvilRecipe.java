@@ -1,10 +1,8 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -12,13 +10,13 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
 public class AnvilRecipe implements Recipe<RecipeWrapper> {
-    public final ResourceLocation id;
+    private final ResourceLocation id;
     private final Ingredient left;
     private final Ingredient right;
     private final ItemStack result;
@@ -27,16 +25,20 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     private final boolean copyNbtFromRight;
     private final boolean strictMatch;
 
-    public AnvilRecipe(ResourceLocation id, Ingredient l, Ingredient r, ItemStack e, int c, boolean cpl, boolean cpr, boolean strict) {
+    public AnvilRecipe(ResourceLocation id, Ingredient leftIn, Ingredient rightIn, ItemStack resultIn, int xpCostIn, boolean copyComponentsFromLeftIn, boolean copyComponentsFromRightIn, boolean strictMatchIn) {
         this.id = id;
-        this.left = l;
-        this.right = r;
-        this.result = e;
-        this.cost = c;
-        this.copyNbtFromLeft = cpl;
-        this.copyNbtFromRight = cpr;
-        this.strictMatch = strict;
+        this.left = leftIn;
+        this.right = rightIn;
+        this.result = resultIn;
+        this.cost = xpCostIn;
+        this.copyNbtFromLeft = copyComponentsFromLeftIn;
+        this.copyNbtFromRight = copyComponentsFromRightIn;
+        this.strictMatch = strictMatchIn;
         VTweaks.getInstance().addAnvilRecipe(id, this);
+    }
+
+    public ResourceLocation getId() {
+        return this.id;
     }
 
     public Ingredient getLeft() {
@@ -55,11 +57,11 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         return this.cost;
     }
 
-    public boolean shouldResultCopyNbtFromLeft() {
+    public boolean copyComponentsFromLeft() {
         return this.copyNbtFromLeft;
     }
 
-    public boolean shouldResultCopyNbtFromRight() {
+    public boolean copyComponentsFromRight() {
         return this.copyNbtFromRight;
     }
 
@@ -86,93 +88,42 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
             return false;
         }
 
-        // If the left item is expected to have a tag
-        boolean leftTagVerified = !leftIngredientMatch.hasTag() && !l.hasTag();
-        if (leftIngredientMatch.hasTag() && leftIngredientMatch.getTag() != null) {
-            leftTagVerified = l.hasTag() && bareMinimumCompare(leftIngredientMatch.getTag(), l.getTag());
+        boolean leftCompVerified = leftIngredientMatch.getComponents().isEmpty() && l.getComponents().isEmpty();
+        if (!leftIngredientMatch.getComponents().isEmpty()) {
+            leftCompVerified = !l.getComponents().isEmpty() && doComponentsMatch(leftIngredientMatch.getComponents(), l.getComponents());
         }
 
-        boolean rightTagVerified = !rightIngredientMatch.hasTag() && !r.hasTag();
-        if (rightIngredientMatch.hasTag() && rightIngredientMatch.getTag() != null) {
-            rightTagVerified = r.hasTag() && bareMinimumCompare(rightIngredientMatch.getTag(), r.getTag());
+        boolean rightCompVerified = rightIngredientMatch.getComponents().isEmpty() && r.getComponents().isEmpty();
+        if (!rightIngredientMatch.getComponents().isEmpty()) {
+            rightCompVerified = !r.getComponents().isEmpty() && doComponentsMatch(rightIngredientMatch.getComponents(), r.getComponents());
         }
 
-        return leftTagVerified && rightTagVerified;
+        return leftCompVerified && rightCompVerified;
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RecipeWrapper unused, @NotNull RegistryAccess unused2) {
+    public ItemStack assemble(RecipeWrapper pInput, HolderLookup.Provider pRegistries) {
         return this.result;
     }
 
-    /* Does a check to see if an ItemStack matches on AT LEAST the tags+values from the recipe */
-    private boolean bareMinimumCompare(CompoundTag orig, CompoundTag comp) {
-        return orig.getAllKeys().stream().allMatch(key -> compareTags(orig, comp, key));
-    }
+    private boolean doComponentsMatch(DataComponentMap orig, DataComponentMap comp) {
+        // If these aren't the same size, there's no way they'll match.
+        if (orig.size() == comp.size()) return false;
 
-    private boolean compareTags(CompoundTag orig, CompoundTag comp, String key) {
-        if (!comp.contains(key)) return false;
+        for (var origKey : orig.keySet()) {
+            var value = orig.get(origKey);
 
-        switch (orig.getTagType(key)) {
-            case Tag.TAG_BYTE -> {
-                return orig.getByte(key) == comp.getByte(key);
-            }
-            case Tag.TAG_SHORT -> {
-                return orig.getShort(key) == comp.getShort(key);
-            }
-            case Tag.TAG_INT -> {
-                return orig.getInt(key) == comp.getInt(key);
-            }
-            case Tag.TAG_LONG -> {
-                return orig.getLong(key) == comp.getLong(key);
-            }
-            case Tag.TAG_FLOAT -> {
-                return orig.getFloat(key) == comp.getFloat(key);
-            }
-            case Tag.TAG_DOUBLE -> {
-                return orig.getDouble(key) == comp.getDouble(key);
-            }
-            case Tag.TAG_BYTE_ARRAY -> {
-                return Arrays.equals(orig.getByteArray(key), comp.getByteArray(key));
-            }
-            case Tag.TAG_STRING -> {
-                return orig.getString(key).equals(comp.getString(key));
-            }
-            case Tag.TAG_LIST -> {
-                ListTag origList = (ListTag) orig.get(key);
-                ListTag compList = (ListTag) comp.get(key);
-                if (origList == null || compList == null) return false;
-                if (origList.getElementType() != Tag.TAG_COMPOUND) {
-                    VTweaks.getInstance().LOGGER.info("List tag of type {} is not supported", origList.getElementType());
+            if (comp.has(origKey)) {
+                if (comp.get(origKey) != value) {
                     return false;
                 }
-
-                // Iterate over every REQUIRED tag in orig
-                for (int i = 0; i < origList.size(); i++) {
-                    boolean anyMatchedForThisEntry = false;
-                    CompoundTag t1 = origList.getCompound(i);
-                    // Iterate over every tag in comp - some may be extra / not req'd, that's fine
-                    for (int j = 0; j < compList.size(); j++) {
-                        CompoundTag t2 = compList.getCompound(j);
-                        anyMatchedForThisEntry = bareMinimumCompare(t1, t2);
-                    }
-                    if (!anyMatchedForThisEntry) return false;
-                }
-                return true;
-            }
-            case Tag.TAG_COMPOUND -> {
-                return bareMinimumCompare(orig.getCompound(key), comp.getCompound(key));
-            }
-            case Tag.TAG_INT_ARRAY -> {
-                return Arrays.equals(orig.getIntArray(key), comp.getIntArray(key));
-            }
-            case Tag.TAG_LONG_ARRAY -> {
-                return Arrays.equals(orig.getLongArray(key), comp.getLongArray(key));
+            } else { /* The component to compare is missing a required key -- these don't match */
+                return false;
             }
         }
 
-        VTweaks.getInstance().LOGGER.info("Received tag ID of {} which is not recognized", orig.getId());
-        return false;
+        // We know that all required components exist and that they're the same sizes, so this is a 1:1 match!
+        return true;
     }
 
     @Override
@@ -181,13 +132,8 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess unused) {
+    public ItemStack getResultItem(HolderLookup.Provider pRegistries) {
         return this.result;
-    }
-
-    @Override
-    public @NotNull ResourceLocation getId() {
-        return id;
     }
 
     @Override

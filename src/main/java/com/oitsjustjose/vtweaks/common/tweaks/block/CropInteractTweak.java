@@ -19,10 +19,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,12 +30,12 @@ import static com.oitsjustjose.vtweaks.common.util.Constants.MOD_ID;
 
 @Tweak(category = "block")
 public class CropInteractTweak extends VTweak {
-    public static final TagKey<Block> CROP_BLACKLIST = BlockTags.create(new ResourceLocation(MOD_ID, "blacklisted_harvest_crops"));
+    public static final TagKey<Block> CROP_BLACKLIST = BlockTags.create(ResourceLocation.fromNamespaceAndPath(MOD_ID, "blacklisted_harvest_crops"));
 
-    public ForgeConfigSpec.BooleanValue enabled;
+    public ModConfigSpec.BooleanValue enabled;
 
     @Override
-    public void registerConfigs(ForgeConfigSpec.Builder builder) {
+    public void registerConfigs(ModConfigSpec.Builder builder) {
         this.enabled = builder.comment().define("enableCropTweaks", true);
     }
 
