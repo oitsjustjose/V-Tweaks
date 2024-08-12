@@ -3,13 +3,10 @@
   "gear": {
     "mainHand": {
       "id": "minecraft:firework_rocket",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "fire_aspect",
-            "lvl": 3
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "fire_aspect": 3
+        }
       }
     }
   },
@@ -47,9 +44,9 @@
       "item": {
         "id": "minecraft:firework_rocket",
         "count": 5,
-        "nbt": {
-          "Fireworks": {
-            "Flight": 3
+        "components": {
+          "minecraft:fireworks": {
+            "flight_duration": 3
           }
         }
       }
@@ -59,9 +56,9 @@
       "item": {
         "id": "minecraft:firework_rocket",
         "count": 3,
-        "nbt": {
-          "Fireworks": {
-            "Flight": 3
+        "components": {
+          "minecraft:fireworks": {
+            "flight_duration": 3
           }
         }
       }
@@ -71,9 +68,9 @@
       "item": {
         "id": "minecraft:firework_rocket",
         "count": 2,
-        "nbt": {
-          "Fireworks": {
-            "Flight": 3
+        "components": {
+          "minecraft:fireworks": {
+            "flight_duration": 3
           }
         }
       }

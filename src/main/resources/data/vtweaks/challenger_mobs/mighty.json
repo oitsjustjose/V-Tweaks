@@ -3,57 +3,42 @@
   "gear": {
     "mainHand": {
       "id": "diamond_sword",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "sharpness",
-            "lvl": 2
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "sharpness": 2
+        }
       }
     },
     "helmet": {
       "id": "minecraft:iron_helmet",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "unbreaking",
-            "lvl": 2
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:unbreaking": 2
+        }
       }
     },
     "chestplate": {
       "id": "minecraft:iron_chestplate",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "unbreaking",
-            "lvl": 2
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:unbreaking": 2
+        }
       }
     },
     "leggings": {
       "id": "minecraft:iron_leggings",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "unbreaking",
-            "lvl": 2
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:unbreaking": 2
+        }
       }
     },
     "boots": {
       "id": "minecraft:iron_boots",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "unbreaking",
-            "lvl": 2
-          }
-        ]
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:unbreaking": 2
+        }
       }
     }
   },

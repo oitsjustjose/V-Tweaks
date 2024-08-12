@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -15,14 +16,15 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class VTJsonHelpers {
-    public static ItemStack deserializeItemStack(JsonObject parent, String key) {
+public class JsonUtils {
+    public static ItemStack deserializeItemStack(HolderLookup.Provider provider, JsonObject parent, String key) {
         // No item was defined for this slot -- no biggie
         if (!parent.has(key)) return ItemStack.EMPTY;
 
         try {
-            return ItemStack.CODEC.parse(JsonOps.INSTANCE, parent.getAsJsonObject(key)).result().orElseThrow();
-        } catch (NoSuchElementException ex) {
+            var ctx = provider.createSerializationContext(JsonOps.INSTANCE);
+            return ItemStack.CODEC.parse(ctx, parent.getAsJsonObject(key)).getOrThrow();
+        } catch (NoSuchElementException | IllegalStateException ex) {
             VTweaks.getInstance().LOGGER.error("Item {} does not exist", parent.get(key).toString());
             VTweaks.getInstance().LOGGER.error(ex);
             return ItemStack.EMPTY;
@@ -60,12 +62,12 @@ public class VTJsonHelpers {
     }
 
     @Nonnull
-    public static WeightedCollection<ItemStack> deserializeLootTable(JsonArray table) {
+    public static WeightedCollection<ItemStack> deserializeLootTable(HolderLookup.Provider provider, JsonArray table) {
         WeightedCollection<ItemStack> loot = new WeightedCollection<>();
         for (var jsonElement : table) {
             JsonObject obj = jsonElement.getAsJsonObject();
             int chance = obj.get("weight").getAsInt();
-            ItemStack item = deserializeItemStack(obj, "item");
+            ItemStack item = deserializeItemStack(provider, obj, "item");
             loot.add(item, chance);
         }
         return loot;

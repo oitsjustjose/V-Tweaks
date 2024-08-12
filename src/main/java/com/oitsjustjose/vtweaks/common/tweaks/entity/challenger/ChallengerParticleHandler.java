@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /* Category is Client for the config, maybe category should be renamed Config Category? */
-@Tweak(category = "client")
+@Tweak(category = "entity.challengers.particles")
 public class ChallengerParticleHandler extends VTweak {
     private ModConfigSpec.BooleanValue enable;
 

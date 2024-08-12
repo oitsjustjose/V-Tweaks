@@ -41,15 +41,15 @@
       "weight": 7,
       "item": {
         "id": "minecraft:potion",
-        "nbt": {
-          "CustomPotionColor": 3259330,
-          "CustomPotionEffects": [
-            {
-              "Id": 1,
-              "Duration": 3600,
-              "Amplifier": 2
-            }
-          ]
+        "components": {
+          "minecraft:potion_contents": {
+            "custom_color": 3259330,
+            "custom_effects": [{
+              "id": "minecraft:speed",
+              "duration": 3600,
+              "amplifier": 2
+            }]
+          }
         }
       }
     }

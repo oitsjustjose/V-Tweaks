@@ -19,8 +19,8 @@ public class SmallerBeesTweak extends VTweak {
         this.enabled = builder.comment("If enabled, all bees will always be half-sized. Does not affect breeding or hitboxes").define("enableSmallBees", true);
     }
 
+//    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public void process(RenderLivingEvent.Pre<Bee, BeeModel<Bee>> evt) {
         if (!this.enabled.get()) return;
         if (!(evt.getEntity() instanceof Bee)) return;

@@ -3,8 +3,9 @@ package com.oitsjustjose.vtweaks.common.entity;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.oitsjustjose.vtweaks.common.data.helpers.VTJsonHelpers;
+import com.oitsjustjose.vtweaks.common.data.helpers.JsonUtils;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
@@ -42,7 +44,7 @@ public class ChallengerEntityModifier {
     private final boolean entityFilterIsBlacklist;
     Vector3f particleColor;
 
-    public ChallengerEntityModifier(JsonObject json) {
+    public ChallengerEntityModifier(HolderLookup.Provider provider, JsonObject json) {
         if (json == null) {
             throw new NullPointerException("Provided JSON is null");
         }
@@ -61,15 +63,15 @@ public class ChallengerEntityModifier {
         this.speedMultiplier = json.get("speedMultiplier").getAsDouble();
 
         JsonObject gear = json.get("gear").getAsJsonObject();
-        this.mainHand = VTJsonHelpers.deserializeItemStack(gear, "mainHand");
-        this.offHand = VTJsonHelpers.deserializeItemStack(gear, "offHand");
-        this.helmet = VTJsonHelpers.deserializeItemStack(gear, "helmet");
-        this.chestplate = VTJsonHelpers.deserializeItemStack(gear, "chestplate");
-        this.leggings = VTJsonHelpers.deserializeItemStack(gear, "leggings");
-        this.boots = VTJsonHelpers.deserializeItemStack(gear, "boots");
+        this.mainHand = JsonUtils.deserializeItemStack(provider, gear, "mainHand");
+        this.offHand = JsonUtils.deserializeItemStack(provider, gear, "offHand");
+        this.helmet = JsonUtils.deserializeItemStack(provider, gear, "helmet");
+        this.chestplate = JsonUtils.deserializeItemStack(provider, gear, "chestplate");
+        this.leggings = JsonUtils.deserializeItemStack(provider, gear, "leggings");
+        this.boots = JsonUtils.deserializeItemStack(provider, gear, "boots");
 
-        this.effectsOnAttack = VTJsonHelpers.deserializeEffectInstanceList(json.get("effectsOnAttack").getAsJsonArray());
-        this.loot = VTJsonHelpers.deserializeLootTable(json.get("loot").getAsJsonArray());
+        this.effectsOnAttack = JsonUtils.deserializeEffectInstanceList(json.get("effectsOnAttack").getAsJsonArray());
+        this.loot = JsonUtils.deserializeLootTable(provider, json.get("loot").getAsJsonArray());
 
         JsonObject entityFilter = json.get("entityFilter").getAsJsonObject();
         this.entityFilterIsBlacklist = entityFilter.get("isBlacklist").getAsBoolean();

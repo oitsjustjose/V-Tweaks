@@ -3,13 +3,12 @@
   "gear": {
     "mainHand": {
       "id": "minecraft:stick",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "binding_curse",
-            "lvl": 1
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:binding_curse": 1
           }
-        ]
+        }
       }
     }
   },

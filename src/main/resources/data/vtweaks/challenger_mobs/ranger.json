@@ -14,8 +14,8 @@
       "components": {
         "minecraft:enchantments": {
           "levels": {
-            "minecraft:power": 3.0,
-            "minecraft:punch": 2.0
+            "minecraft:power": 3,
+            "minecraft:punch": 2
           }
         }
       }

@@ -3,32 +3,22 @@
   "gear": {
     "mainHand": {
       "id": "minecraft:oak_sign",
-      "nbt": {
-        "display": {
-          "Name": "[{\"text\":\"Zistonian Battle Sign\",\"italic\":false,\"color\":\"yellow\"}]"
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:knockback": 10
         },
-        "Enchantments": [
-          {
-            "id": "knockback",
-            "lvl": 10
-          }
-        ]
+        "minecraft:custom_name": "[{\"text\":\"Zistonian Battle Sign\",\"italic\":false,\"color\":\"yellow\"}]"
       }
     },
     "leggings": {
       "id": "minecraft:golden_leggings",
-      "nbt": {
-        "display": {
-          "Name": "[{\"text\":\"Man Pants\",\"italic\":false,\"color\":\"yellow\"}]",
-          "Lore": [
-            "[{\"text\":\"Some tell tales of an ancient MindCrack player who once wore these.\",\"italic\":false}]"
-          ]
+      "components": {
+        "minecraft:enchantments": {
+          "blast_protection": 6
         },
-        "Enchantments": [
-          {
-            "id": "blast_protection",
-            "lvl": 6
-          }
+        "minecraft:custom_name": "[{\"text\":\"Man Pants\",\"italic\":false,\"color\":\"yellow\"}]",
+        "minecraft:lore": [
+          "[{\"text\":\"Some tell tales of an ancient MindCrack player who once wore these.\",\"italic\":false}]"
         ]
       }
     }

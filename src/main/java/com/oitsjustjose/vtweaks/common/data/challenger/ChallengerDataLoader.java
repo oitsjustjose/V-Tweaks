@@ -21,7 +21,7 @@ public class ChallengerDataLoader extends SimpleJsonResourceReloadListener {
 
 
     public ChallengerDataLoader() {
-        super(GSON, "challenger_mobs");
+    super(GSON, "challenger_mobs");
     }
 
     @Override
@@ -34,7 +34,8 @@ public class ChallengerDataLoader extends SimpleJsonResourceReloadListener {
                 if (obj.entrySet().isEmpty()) {
                     VTweaks.getInstance().LOGGER.info("Challenger mob {} has been disabled", rl);
                 } else {
-                    var modifier = new ChallengerEntityModifier(obj);
+                    var x = this.getRegistryLookup();
+                    var modifier = new ChallengerEntityModifier(x, obj);
                     ChallengerEntityModifier.AllVariants.add(modifier, modifier.getWeight());
                     VTweaks.getInstance().LOGGER.info("Successfully added new Challenger Mob {} ({})", modifier.getUnlocalizedName(), rl);
                 }

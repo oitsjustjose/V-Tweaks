@@ -40,7 +40,6 @@ public record ChallengerParticleData(
         return TYPE;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handleClient(ChallengerParticleData data, IPayloadContext ctx) {
         if (ctx.flow().getReceptionSide() == LogicalSide.CLIENT) {
             ctx.enqueueWork(() -> ClientProxy.showDustParticle(data));
