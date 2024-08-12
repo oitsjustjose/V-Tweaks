@@ -1,9 +1,9 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
+import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
@@ -37,6 +37,6 @@ public class NBTAnvilRecipe extends VTweak {
         var stackHandler = new ItemStackHandler(2);
         stackHandler.setStackInSlot(0, evt.getLeft());
         stackHandler.setStackInSlot(1, evt.getRight());
-        return level.getRecipeManager().getRecipeFor(VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE, new RecipeWrapper(stackHandler), level).map(RecipeHolder::value);
+        return level.getRecipeManager().getRecipeFor(VtweaksRegistry.ANVIL_RECIPE_TYPE.get(), new RecipeWrapper(stackHandler), level).map(RecipeHolder::value);
     }
 }

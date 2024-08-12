@@ -1,10 +1,10 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
+import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -42,6 +42,6 @@ public class FluidConversionTweak extends VTweak {
         var level = evt.getPlayer().level();
         var stackHandler = new ItemStackHandler(1);
         stackHandler.setStackInSlot(0, evt.getEntity().getItem());
-        return level.getRecipeManager().getRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
+        return level.getRecipeManager().getRecipesFor(VtweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(stackHandler), level);
     }
 }

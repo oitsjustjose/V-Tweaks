@@ -1,8 +1,8 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
+import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.BlockSource;
@@ -59,6 +59,6 @@ public class FluidConversionDispensing extends DefaultDispenseItemBehavior {
     public List<RecipeHolder<FluidConversionRecipe>> findRecipes(Level level, ItemStack stack) {
         var stackHandler = new ItemStackHandler(1);
         stackHandler.setStackInSlot(0, stack);
-        return level.getRecipeManager().getRecipesFor(VTweaks.getInstance().CustomRecipeRegistry.FLUID_CONVERSION_RECIPE_TYPE, new RecipeWrapper(stackHandler), level);
+        return level.getRecipeManager().getRecipesFor(VtweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(stackHandler), level);
     }
 }

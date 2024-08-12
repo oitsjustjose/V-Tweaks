@@ -9,9 +9,8 @@ import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
 import com.oitsjustjose.vtweaks.common.data.culling.EntityCullingDataLoader;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
-import com.oitsjustjose.vtweaks.common.registries.RecipeTypeRegistry;
+import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -31,9 +30,7 @@ public class VTweaks {
     public final Logger LOGGER = LogManager.getLogger();
     public final TweakRegistry TweakRegistry = new TweakRegistry();
     public final TickScheduler Scheduler = new TickScheduler();
-    public final RecipeTypeRegistry CustomRecipeRegistry = new RecipeTypeRegistry();
     public final NetworkManager NetworkManager = new NetworkManager();
-
     private final HashMap<ResourceLocation, AnvilRecipe> AllAnvilRecipes;
     private final HashMap<ResourceLocation, FluidConversionRecipe> AllFluidConversionRecipes;
 
@@ -45,9 +42,9 @@ public class VTweaks {
         NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(Scheduler);
         eventBus.register(NetworkManager);
-//        NeoForge.EVENT_BUS.register(NetworkManager);
 
-        CustomRecipeRegistry.SERIALIZERS.register(eventBus);
+        VtweaksRegistry.RECIPE_TYPES.register(eventBus);
+        VtweaksRegistry.RECIPE_SERIALIZERS.register(eventBus);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "vtweaks-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "vtweaks-common.toml");

@@ -1,6 +1,7 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
 import com.oitsjustjose.vtweaks.VTweaks;
+import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.ResourceLocation;
@@ -138,11 +139,11 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL;
+        return VtweaksRegistry.ANVIL_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VTweaks.getInstance().CustomRecipeRegistry.ANVIL_RECIPE_TYPE;
+        return VtweaksRegistry.ANVIL_RECIPE_TYPE.get();
     }
 }
