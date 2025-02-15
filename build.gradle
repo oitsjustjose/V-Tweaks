@@ -94,7 +94,7 @@ curseforge {
 }
 
 modrinth {
-    token = project.hasProperty("MODRINTH_API_KEY") ? project.MODRINTH_API_KEY : ""
+    token = project.hasProperty("MODRINTH_TOKEN") ? project.MODRINTH_TOKEN : ""
     projectId = "Bmda4Rq4"
     versionName = "V-Tweaks ${game_version} ${mod_version}"
     versionNumber = "${game_version}-${mod_version}"
