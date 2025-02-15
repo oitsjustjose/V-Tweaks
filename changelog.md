@@ -1,9 +1,16 @@
 # V-Tweaks Changelog MC 1.20.1
 
+## 4.0.15:
+
+### Added:
+
+- NonStackingItemTweak
+  - Disabled by default for obvious reasons
+  - Makes it so items on the ground will no longer merge together into a single Item Entity like back in beta
+
 ## 4.0.14:
 
-This will be the last update for 1.20.1 as I begin porting to NeoForge on 1.21, and possibly start looking into Fabric
-support (no promises though!). Thanks for your patience with this recurring problem that has been fixed by outright
+Thanks for your patience with this recurring problem that has been fixed by outright
 removing it:
 
 ### Removed:
