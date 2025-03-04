@@ -6,7 +6,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 
 @Tweak(category = "entity.challengers")
 public class ChallengerModifierHandler extends VTweak {
@@ -15,9 +14,9 @@ public class ChallengerModifierHandler extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("A data-driven way to make some special mobs with abilities, effects, specialized loot and more!").define("enableChallengerMobs", true);
-        this.globalChance = builder.comment("This controls the overall chance for V-Tweaks to attempt converting a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters.").defineInRange("challengerMobGlobalChance", 0.25D, 0.0D, 1.0D);
-        builder.pop();
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("A data-driven way to make some special mobs with abilities, effects, specialized loot and more!\nSee https://mods.oitsjustjose.com/V-Tweaks/#challengers for datapack documentation").define("enabled", true);
+        this.globalChance = builder.comment("Controls the overall chance of attempting to convert a monster to a Challenger.\nThis chance is applied before any Challenger Mob weights or entity filters").defineInRange("globalChance", 0.25D, 0.0D, 1.0D);
     }
 
     @SubscribeEvent
@@ -25,7 +24,7 @@ public class ChallengerModifierHandler extends VTweak {
         if (!this.enabled.get()) return;
         if (this.globalChance.get() <= 0.0D) return;
 
-        if (evt.getEntity() != null && evt.getEntity() instanceof Monster monster) {
+        if (evt.getEntity() instanceof Monster monster) {
             if (evt.getLevel().isClientSide()) return;
             if (evt.getEntity().getPersistentData().contains("challenger_mob_data")) return;
             if (evt.getLevel().getRandom().nextDouble() > this.globalChance.get()) return;

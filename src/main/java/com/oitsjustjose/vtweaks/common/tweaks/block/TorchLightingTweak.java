@@ -28,7 +28,8 @@ public class TorchLightingTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Allows the player to re-light certain blocks like Candles and Campfires (defined by the block using the `lit` blockstate) using torches or other items in the tag `vtweaks:ignition_item`").define("enableTorchLighting", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Allows the player to re-light any block with the 'lit' blockstate when holding any #vtweaks:ignition_item (item tag). Blacklist blocks using the #vtweaks:torch_ignition_blacklist block tag.").define("enableTorchLighting", true);
     }
 
     @SubscribeEvent

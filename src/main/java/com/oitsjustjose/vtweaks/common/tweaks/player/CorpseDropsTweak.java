@@ -14,7 +14,8 @@ public class CorpseDropsTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Prevents any drops dropped by the player on death from despawning").define("enablePlayerDeathDropSafety", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Prevents drops from a player's death from de-spawning").define("enablePlayerDeathDropSafety", true);
     }
 
     @SubscribeEvent

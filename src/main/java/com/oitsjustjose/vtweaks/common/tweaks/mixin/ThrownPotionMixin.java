@@ -2,7 +2,7 @@ package com.oitsjustjose.vtweaks.common.tweaks.mixin;
 
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
-import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -41,6 +41,6 @@ public abstract class ThrownPotionMixin {
     public Optional<RecipeHolder<FluidConversionRecipe>> findRecipe(Level level, ItemStack item) {
         var handler = new ItemStackHandler(1);
         handler.setStackInSlot(0, item);
-        return level.getRecipeManager().getRecipeFor(VtweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(handler), level);
+        return level.getRecipeManager().getRecipeFor(VTweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(handler), level);
     }
 }

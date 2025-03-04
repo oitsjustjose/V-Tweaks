@@ -14,7 +14,8 @@ public class ItemRepairTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Makes all anvil tool repairs always cost 1 level of XP").define("enableCheapAnvilRepair", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Removes the scaling repair cost of items in an anvil").define("enableCheapAnvilRepair", true);
     }
 
     @SubscribeEvent

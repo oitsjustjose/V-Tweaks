@@ -36,7 +36,8 @@ public class CropInteractTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment().define("enableCropTweaks", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Allows right-clicking crops when fully grown to harvest. Adding a block to the #vtweaks:blacklisted_harvest_crops block tag will prevent this tweak from applying to said crop.").define("enableCropTweaks", true);
     }
 
     @SubscribeEvent

@@ -20,7 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-@Tweak(category = "entity")
+@Tweak(category = "entity.featherplucking")
 public class FeatherPluckTweak extends VTweak {
     public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("forge", "chickens"));
     public static final TagKey<Item> SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "shears"));
@@ -31,8 +31,9 @@ public class FeatherPluckTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Allows chicken feathers to be plucked w/ shears").define("enableFeatherPlucking", true);
-        this.cooldown = builder.comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.").defineInRange("featurePluckingCooldown", 600000, 1, Long.MAX_VALUE);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Allows feathers to be plucked from any #forge:chickens using any #forge:shears").define("enabled", true);
+        this.cooldown = builder.comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.").defineInRange("cooldownInMilliseconds", 600000, 1, Long.MAX_VALUE);
     }
 
     @SubscribeEvent

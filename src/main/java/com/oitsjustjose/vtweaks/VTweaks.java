@@ -3,13 +3,13 @@ package com.oitsjustjose.vtweaks;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.core.TickScheduler;
-import com.oitsjustjose.vtweaks.common.core.TweakRegistry;
 import com.oitsjustjose.vtweaks.common.data.anvil.AnvilRecipe;
+import com.oitsjustjose.vtweaks.common.core.TweakRegistry;
 import com.oitsjustjose.vtweaks.common.data.challenger.ChallengerDataLoader;
 import com.oitsjustjose.vtweaks.common.data.culling.EntityCullingDataLoader;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.network.NetworkManager;
-import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +17,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.apache.logging.log4j.LogManager;
@@ -43,11 +45,13 @@ public class VTweaks {
         NeoForge.EVENT_BUS.register(Scheduler);
         eventBus.register(NetworkManager);
 
-        VtweaksRegistry.RECIPE_TYPES.register(eventBus);
-        VtweaksRegistry.RECIPE_SERIALIZERS.register(eventBus);
+        VTweaksRegistry.RECIPE_TYPES.register(eventBus);
+        VTweaksRegistry.RECIPE_SERIALIZERS.register(eventBus);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "vtweaks-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "vtweaks-common.toml");
+        // Make the config screen work with the Common & Client Configs
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (cont, parent) -> new ConfigurationScreen(modContainer, parent));
     }
 
     public static VTweaks getInstance() {

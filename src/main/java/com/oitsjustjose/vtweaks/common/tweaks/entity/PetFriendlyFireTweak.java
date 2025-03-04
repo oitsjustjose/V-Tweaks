@@ -13,7 +13,8 @@ public class PetFriendlyFireTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.setting = builder.comment("If set to \"OWNER\", this will prevent owners of pets from attacking their own pet. If set to \"ALL\", this prevents all players from attacking anyone's pet").defineEnum("enablePetFriendlyFireTweak", FFSetting.OWNER);
+        super.registerConfigs(builder);
+        this.setting = builder.comment("Prevents pets from being hit by friendly fire.\nOWNER prevents only the owner of the pet from hurting a pet, whereas ALL prevents any player from hurting any pet.\nDISABLED disables the tweak.").defineEnum("enablePetFriendlyFireTweak", FFSetting.OWNER);
     }
 
     @SubscribeEvent

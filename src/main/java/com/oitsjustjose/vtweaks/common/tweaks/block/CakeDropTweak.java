@@ -20,7 +20,8 @@ public class CakeDropTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Allows for uneaten cake to drop on break").define("enableCakeDrop", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Allows uneaten cake to drop itself when broken").define("enableCakeDrop", true);
     }
 
     @SubscribeEvent

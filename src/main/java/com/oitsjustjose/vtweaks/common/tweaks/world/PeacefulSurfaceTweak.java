@@ -31,14 +31,14 @@ public class PeacefulSurfaceTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        final String moonPhaseList = String.join(", ", Arrays.stream(MoonPhase.values()).map(Enum::toString).collect(Collectors.toList()));
-        this.enabled = builder.comment("Prevents mobs from spawning above sea level unless it's a new moon").define("enablePeacefulSurface", false);
-        this.minY = builder.comment("The lowest Y-level which mobs will be prevented from spawning").defineInRange("peacefulSurfaceMinY", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        super.registerConfigs(builder);
+        final String moonPhaseList = Arrays.stream(MoonPhase.values()).map(Enum::toString).collect(Collectors.joining(", "));
+        this.enabled = builder.comment("Prevents mobs from spawning above the configured sea level on nights of the configured moon phases").define("enabled", false);
+        this.minY = builder.comment("The configured 'sea level' which mobs will be prevented from spawning").defineInRange("seaLevel", 60, Integer.MIN_VALUE, Integer.MAX_VALUE);
         // *sigh* -- I really wanted this to be a list of ENUMs, but that doesn't seem to work right so I guess we'll just go with Strings... :/
         this.moonPhases = builder.comment("Peaceful Surface will only apply on nights whose moon phases are contained in this list (by default, all nights except for New Moons are going to be peaceful).\nOptions can include: " + moonPhaseList).define("moonPhasesToApplyTo",
                 Lists.newArrayList(MoonPhase.FULL.toString(), MoonPhase.WANING_GIBBOUS.toString(), MoonPhase.LAST_QUARTER.toString(), MoonPhase.WANING_CRESCENT.toString(), MoonPhase.WAXING_CRESCENT.toString(), MoonPhase.FIRST_QUARTER.toString(), MoonPhase.WAXING_GIBBOUS.toString())
         );
-        builder.pop();
     }
 
     @SubscribeEvent

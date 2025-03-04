@@ -22,7 +22,8 @@ public class FeatherFallingTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Feather Falling IV or above directs 100% of fall damage to boots").define("enableFeatherFallTweak", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Feather Falling IV or above redirects all fall damage the player's boots").define("enableFeatherFallTweak", true);
     }
 
     @SubscribeEvent

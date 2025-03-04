@@ -10,16 +10,17 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 @Tweak(category = "world")
 public class StormDisableTweak extends VTweak {
-    private ModConfigSpec.BooleanValue enable;
+    private ModConfigSpec.BooleanValue enabled;
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enable = builder.comment("Disables thunder storms, fixing glitched lighting from thunder and other side-effects").define("enableStormTweak", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Disables thunder storms, converting storms to normal rain").define("enableStormTweak", true);
     }
 
     @SubscribeEvent
     public void process(LevelTickEvent.Pre evt) {
-        if (!this.enable.get()) return;
+        if (!this.enabled.get()) return;
         if (!evt.getLevel().getLevelData().isThundering()) return;
         if (!(evt.getLevel().getLevelData() instanceof ServerLevelData levelData)) return;
         levelData.setThundering(false);

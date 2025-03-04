@@ -1,7 +1,7 @@
 package com.oitsjustjose.vtweaks.common.data.fluidconversion;
 
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.registries.VtweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
@@ -63,12 +63,12 @@ public class FluidConversionRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VtweaksRegistry.FLUID_CONVERSION_SERIALIZER.get();
+        return VTweaksRegistry.FLUID_CONVERSION_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VtweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get();
+        return VTweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get();
     }
 
     @Override

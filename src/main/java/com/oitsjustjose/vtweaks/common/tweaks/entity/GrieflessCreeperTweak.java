@@ -26,7 +26,8 @@ public class GrieflessCreeperTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("When any Creeper (or entity with EntityType tag #forge:creepers) explodes, all blocks destroyed will plop back into place after a few seconds!").define("ungriefCreepers", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("When any #forge:creepers explodes, all blocks destroyed will plop back into place after a few seconds").define("ungriefCreepers", true);
     }
 
     @SubscribeEvent

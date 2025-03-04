@@ -11,18 +11,19 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /* Category is Client for the config, maybe category should be renamed Config Category? */
-@Tweak(category = "entity.challengers.particles")
+@Tweak(category = "client.entity.challengers")
 public class ChallengerParticleHandler extends VTweak {
-    private ModConfigSpec.BooleanValue enable;
+    private ModConfigSpec.BooleanValue enabled;
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enable = builder.comment("Enable colored particles for challenger mobs (dependent on particle setting as well)").define("enableChallengerMobParticles", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Enable colored particles for challenger mobs (dependent on your particle setting as well)").define("enableParticles", true);
     }
 
     @SubscribeEvent
     public void process(EntityTickEvent.Pre evt) {
-        if (!this.enable.get()) return;
+        if (!this.enabled.get()) return;
         if (!evt.getEntity().isAlive()) return;
         if (!(evt.getEntity() instanceof Monster monster)) return;
 

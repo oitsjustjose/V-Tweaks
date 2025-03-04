@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.ArrayList;
 
-@Tweak(category = "item.tooltips")
+@Tweak(category = "client.tooltips")
 public class DurabilityTooltipTweak extends VTweak {
     /* A mapping of colors for the dura tooltip, where round to 0 leads to Dark Red and round to 9 leads to Light purple */
     private final ArrayList<ChatFormatting> ColorByIndex = Lists.newArrayList(
@@ -33,8 +33,8 @@ public class DurabilityTooltipTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
+        super.registerConfigs(builder);
         this.setting = builder.comment("Show tool durability on item hover").defineEnum("durabilityTooltipSetting", TooltipSetting.WITH_SHIFT);
-        builder.pop();
     }
 
     @SubscribeEvent

@@ -37,11 +37,11 @@ public class ChopDownTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Trees fall down (like, actually not just like lumbering). Credit to Ternsip's impl (https://www.curseforge.com/minecraft/mc-mods/chopdown)").define("enableTreeChopDown", true);
-        this.logCount = builder.comment("The number of logs above the one broken to trigger the chopdown effect").defineInRange("chopDownLogRequirement", 3, 1, Integer.MAX_VALUE);
-        this.leafSearchRad = builder.comment("The radius that this tweak will use to attempt to find leaves. Set this to a large number to detect larger trees (may cause lag)").defineInRange("chopdownSearchRadius", 64, 1, Integer.MAX_VALUE);
-        this.requireTool = builder.comment("If set to true, ChopDown will only work when the player is using the right tool for the log").define("requiresRightTool", false);
-        builder.pop();
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Trees fall down using falling block entities").define("enabled", true);
+        this.logCount = builder.comment("The minimum number of logs above the one broken to be detected as a tree").defineInRange("numLogsRequired", 3, 1, Integer.MAX_VALUE);
+        this.leafSearchRad = builder.comment("The radius used to attempt to find leaves to detect a tree. Set this to a large number to detect larger sparse trees (may cause lag)").defineInRange("leafSearchRadius", 64, 1, Integer.MAX_VALUE);
+        this.requireTool = builder.comment("If enabled, ChopDown will only work when the player is using the right tool for the log").define("rightToolRequired", false);
     }
 
     @SubscribeEvent

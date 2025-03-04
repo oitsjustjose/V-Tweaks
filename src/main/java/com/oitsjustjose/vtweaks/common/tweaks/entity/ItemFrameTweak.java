@@ -26,7 +26,8 @@ public class ItemFrameTweak extends VTweak {
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
-        this.enabled = builder.comment("Allows any vtweaks:clear_glass, or glow ink sac, to be activated on an item frame while sneaking to make the item frame transparent or glowing respectively.").define("enableItemFrameTweak", true);
+        super.registerConfigs(builder);
+        this.enabled = builder.comment("Allows any #vtweaks:clear_glass, or glow ink sac, to be activated on an item frame while sneaking to make the item frame transparent or glowing respectively.").define("enableItemFrameTweak", true);
     }
 
     @SubscribeEvent
