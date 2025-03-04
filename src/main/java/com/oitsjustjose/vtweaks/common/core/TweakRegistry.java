@@ -1,9 +1,7 @@
 package com.oitsjustjose.vtweaks.common.core;
 
 import com.google.common.collect.Lists;
-import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.config.ClientConfig;
-import net.minecraft.world.item.DebugStickItem;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
@@ -53,7 +51,6 @@ public class TweakRegistry {
 
         this.clientTweaks.sort(Comparator.comparing(VTweak::getCategory));
         this.commonTweaks.sort(Comparator.comparing(VTweak::getCategory));
-        Debug();
     }
 
     public List<VTweak> getClientTweaks() {
@@ -62,14 +59,5 @@ public class TweakRegistry {
 
     public List<VTweak> getCommonTweaks() {
         return this.commonTweaks;
-    }
-
-    public void Debug() {
-        this.clientTweaks.forEach(this::_forEach);
-        this.commonTweaks.forEach(this::_forEach);
-    }
-
-    private void _forEach(VTweak tweak) {
-        System.out.println(tweak.getCategory());
     }
 }

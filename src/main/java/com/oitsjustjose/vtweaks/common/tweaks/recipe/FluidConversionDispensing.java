@@ -1,8 +1,9 @@
 package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipeInput;
 import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
-import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.ModRecipeTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.BlockSource;
@@ -12,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -57,8 +56,7 @@ public class FluidConversionDispensing extends DefaultDispenseItemBehavior {
     }
 
     public List<RecipeHolder<FluidConversionRecipe>> findRecipes(Level level, ItemStack stack) {
-        var stackHandler = new ItemStackHandler(1);
-        stackHandler.setStackInSlot(0, stack);
-        return level.getRecipeManager().getRecipesFor(VTweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(stackHandler), level);
+        var input = new FluidConversionRecipeInput(stack);
+        return level.getRecipeManager().getRecipesFor(ModRecipeTypes.FLUID_CONVERSION.get(), input, level);
     }
 }

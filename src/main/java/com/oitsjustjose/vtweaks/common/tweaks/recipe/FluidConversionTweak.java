@@ -3,14 +3,13 @@ package com.oitsjustjose.vtweaks.common.tweaks.recipe;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
+import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipeInput;
 import com.oitsjustjose.vtweaks.common.entity.ConvertibleItemEntity;
-import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.ModRecipeTypes;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 
@@ -41,8 +40,7 @@ public class FluidConversionTweak extends VTweak {
 
     public List<RecipeHolder<FluidConversionRecipe>> findRecipe(ItemTossEvent evt) {
         var level = evt.getPlayer().level();
-        var stackHandler = new ItemStackHandler(1);
-        stackHandler.setStackInSlot(0, evt.getEntity().getItem());
-        return level.getRecipeManager().getRecipesFor(VTweaksRegistry.FLUID_CONVERSION_RECIPE_TYPE.get(), new RecipeWrapper(stackHandler), level);
+        var input = new FluidConversionRecipeInput(evt.getEntity().getItem());
+        return level.getRecipeManager().getRecipesFor(ModRecipeTypes.FLUID_CONVERSION.get(), input, level);
     }
 }

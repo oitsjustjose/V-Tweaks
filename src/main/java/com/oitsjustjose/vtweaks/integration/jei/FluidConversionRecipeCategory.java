@@ -56,12 +56,6 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
 
     @Override
     @Nonnull
-    public IDrawable getBackground() {
-        return this.background;
-    }
-
-    @Override
-    @Nonnull
     public IDrawable getIcon() {
         return this.icon;
     }
@@ -80,6 +74,8 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
 
     @Override
     public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
+
         var fluid = BuiltInRegistries.FLUID.get(recipe.getFluid());
         MutableComponent comp = Component.empty();
         try {

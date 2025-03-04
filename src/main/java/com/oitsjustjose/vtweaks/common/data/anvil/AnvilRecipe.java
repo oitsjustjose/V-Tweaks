@@ -1,23 +1,27 @@
 package com.oitsjustjose.vtweaks.common.data.anvil;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.oitsjustjose.vtweaks.VTweaks;
-import com.oitsjustjose.vtweaks.common.registries.VTweaksRegistry;
+import com.oitsjustjose.vtweaks.common.registries.ModRecipeSerializers;
+import com.oitsjustjose.vtweaks.common.registries.ModRecipeTypes;
+import com.oitsjustjose.vtweaks.common.util.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class AnvilRecipe implements Recipe<RecipeWrapper> {
-    private final ResourceLocation id;
+public class AnvilRecipe implements Recipe<AnvilRecipeInput> {
     private final Ingredient left;
     private final Ingredient right;
     private final ItemStack result;
@@ -26,8 +30,7 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     private final boolean copyNbtFromRight;
     private final boolean strictMatch;
 
-    public AnvilRecipe(ResourceLocation id, Ingredient leftIn, Ingredient rightIn, ItemStack resultIn, int xpCostIn, boolean copyComponentsFromLeftIn, boolean copyComponentsFromRightIn, boolean strictMatchIn) {
-        this.id = id;
+    public AnvilRecipe(Ingredient leftIn, Ingredient rightIn, ItemStack resultIn, int xpCostIn, boolean copyComponentsFromLeftIn, boolean copyComponentsFromRightIn, boolean strictMatchIn) {
         this.left = leftIn;
         this.right = rightIn;
         this.result = resultIn;
@@ -35,11 +38,6 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
         this.copyNbtFromLeft = copyComponentsFromLeftIn;
         this.copyNbtFromRight = copyComponentsFromRightIn;
         this.strictMatch = strictMatchIn;
-        VTweaks.getInstance().addAnvilRecipe(id, this);
-    }
-
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     public Ingredient getLeft() {
@@ -71,10 +69,9 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public boolean matches(@NotNull RecipeWrapper wrapper, @NotNull Level level) {
-        var l = wrapper.getItem(0);
-        var r = wrapper.getItem(1);
-        if (l == null || r == null) return false;
+    public boolean matches(@NotNull AnvilRecipeInput anvilRecipeInput, @NotNull Level level) {
+        var l = anvilRecipeInput.getItem(0);
+        var r = anvilRecipeInput.getItem(1);
 
         if (!(this.left.test(l) && this.right.test(r))) return false;
 
@@ -103,8 +100,8 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public ItemStack assemble(RecipeWrapper pInput, HolderLookup.Provider pRegistries) {
-        return this.result;
+    public @NotNull ItemStack assemble(@NotNull AnvilRecipeInput __, HolderLookup.@NotNull Provider ___) {
+        return this.result.copy();
     }
 
     private boolean doComponentsMatch(DataComponentMap orig, DataComponentMap comp) {
@@ -133,17 +130,72 @@ public class AnvilRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider pRegistries) {
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider __) {
         return this.result;
     }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return VTweaksRegistry.ANVIL_SERIALIZER.get();
+        return ModRecipeSerializers.ANVIL.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return VTweaksRegistry.ANVIL_RECIPE_TYPE.get();
+        return ModRecipeTypes.ANVIL.get();
+    }
+
+    public static class Serializer implements RecipeSerializer<AnvilRecipe> {
+        public static final MapCodec<AnvilRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                Ingredient.CODEC.fieldOf("left").forGetter(AnvilRecipe::getLeft),
+                Ingredient.CODEC.fieldOf("right").forGetter(AnvilRecipe::getRight),
+                ItemStack.CODEC.fieldOf("result").forGetter(AnvilRecipe::getResult),
+                Codec.INT.fieldOf("xpCost").forGetter(AnvilRecipe::getCost),
+                Codec.BOOL.fieldOf("copyCompsFromLeft").forGetter(AnvilRecipe::copyComponentsFromLeft),
+                Codec.BOOL.fieldOf("copyCompsFromRight").forGetter(AnvilRecipe::copyComponentsFromRight),
+                Codec.BOOL.fieldOf("strict").forGetter(AnvilRecipe::isStrictMatch)
+        ).apply(inst, AnvilRecipe::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, AnvilRecipe> STREAM_CODEC = StreamCodec.of(
+                AnvilRecipe.Serializer::toNetwork,
+                AnvilRecipe.Serializer::fromNetwork
+        );
+
+        public static void toNetwork(RegistryFriendlyByteBuf buf, AnvilRecipe recipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.getLeft());
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.getRight());
+            ItemStack.STREAM_CODEC.encode(buf, recipe.getResult());
+            buf.writeInt(recipe.getCost());
+            buf.writeBoolean(recipe.copyComponentsFromLeft());
+            buf.writeBoolean(recipe.copyComponentsFromRight());
+            buf.writeBoolean(recipe.isStrictMatch());
+        }
+
+        public static AnvilRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
+            var left = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
+            var right = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
+            var output = ItemStack.STREAM_CODEC.decode(buf);
+            var cost = buf.readInt();
+            var cpFromLeft = buf.readBoolean();
+            var cpFromRight = buf.readBoolean();
+            var strict = buf.readBoolean();
+            return new AnvilRecipe(left, right, output, cost, cpFromLeft, cpFromRight, strict);
+        }
+
+        @Override
+        public @NotNull MapCodec<AnvilRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, AnvilRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+    }
+
+    public static class Type implements RecipeType<AnvilRecipe> {
+        @Override
+        public String toString() {
+            return Constants.MOD_ID + ":anvil";
+        }
     }
 }
