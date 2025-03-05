@@ -102,6 +102,7 @@ curseforge {
         changelogType = 'markdown'
         changelog = file("./changelog.md")
         releaseType = 'release'
+        addGameVersion "NeoForge"
         addGameVersion "${minecraft_version}"
         mainArtifact(jar) {
             displayName = "V-Tweaks ${minecraft_version} ${mod_version}"
@@ -110,14 +111,14 @@ curseforge {
 }
 
 modrinth {
-    token = project.hasProperty("MODRINTH_API_KEY") ? project.MODRINTH_API_KEY : ""
+    token = project.hasProperty("MODRINTH_TOKEN") ? project.MODRINTH_TOKEN : ""
     projectId = "Bmda4Rq4"
     versionName = "V-Tweaks ${minecraft_version} ${mod_version}"
     versionNumber = "${minecraft_version}-${mod_version}"
     versionType = "release"
     uploadFile = jar
     gameVersions = ["${minecraft_version}"]
-    loaders = ["forge"]
+    loaders = ["neoforge"]
     changelog = file("./changelog.md").text
     dependencies { required.project "jei" }
 }
