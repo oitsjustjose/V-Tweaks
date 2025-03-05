@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks.common.core;
 
-import com.oitsjustjose.vtweaks.VTweaks;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 

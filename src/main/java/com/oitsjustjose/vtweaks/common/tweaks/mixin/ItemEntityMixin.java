@@ -21,7 +21,7 @@ public abstract class ItemEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "mergeWithNeighbours", cancellable = true)
     private void mergeWithNeighbours(CallbackInfo callback) {
-        if (CommonConfig.EnableItemNostackMixin.get()) {
+        if (CommonConfig.EnableItemMergingMixin.get()) {
             callback.cancel();
         }
     }
