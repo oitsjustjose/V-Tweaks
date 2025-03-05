@@ -1,10 +1,10 @@
 {
   "type": "vtweaks:fluid_conversion",
   "input": {
-    "id": "minecraft:orange_concrete_powder"
+    "item": "minecraft:cyan_concrete_powder"
   },
   "output": {
-    "id": "minecraft:orange_concrete"
+    "id": "minecraft:cyan_concrete"
   },
   "fluid": "minecraft:water"
 }

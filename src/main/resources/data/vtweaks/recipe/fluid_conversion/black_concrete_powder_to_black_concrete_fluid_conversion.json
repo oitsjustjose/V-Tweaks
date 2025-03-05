@@ -1,10 +1,10 @@
 {
   "type": "vtweaks:fluid_conversion",
   "input": {
-    "id": "minecraft:brown_concrete_powder"
+    "item": "minecraft:black_concrete_powder"
   },
   "output": {
-    "id": "minecraft:brown_concrete"
+    "id": "minecraft:black_concrete"
   },
   "fluid": "minecraft:water"
 }

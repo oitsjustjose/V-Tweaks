@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.oitsjustjose.vtweaks.common.registries.ModRecipeSerializers;
 import com.oitsjustjose.vtweaks.common.registries.ModRecipeTypes;
 import com.oitsjustjose.vtweaks.common.tweaks.recipe.FluidConversionDispensing;
+import com.oitsjustjose.vtweaks.common.util.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -106,10 +107,10 @@ public class FluidConversionRecipe implements Recipe<FluidConversionRecipeInput>
         }
     }
 
-//    public static class Type implements RecipeType<FluidConversionRecipe> {
-//        @Override
-//        public String toString() {
-//            return Constants.MOD_ID + ":fluid_conversion";
-//        }
-//    }
+    public static class Type implements RecipeType<FluidConversionRecipe> {
+        @Override
+        public String toString() {
+            return Constants.MOD_ID + ":fluid_conversion";
+        }
+    }
 }

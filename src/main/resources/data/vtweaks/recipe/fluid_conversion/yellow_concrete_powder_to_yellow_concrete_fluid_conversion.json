@@ -1,7 +1,7 @@
 {
   "type": "vtweaks:fluid_conversion",
   "input": {
-    "id": "minecraft:yellow_concrete_powder"
+    "item": "minecraft:yellow_concrete_powder"
   },
   "output": {
     "id": "minecraft:yellow_concrete"

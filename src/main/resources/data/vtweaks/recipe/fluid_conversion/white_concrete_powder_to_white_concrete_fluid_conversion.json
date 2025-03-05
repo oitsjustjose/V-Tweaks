@@ -1,10 +1,10 @@
 {
   "type": "vtweaks:fluid_conversion",
   "input": {
-    "id": "minecraft:lime_concrete_powder"
+    "item": "minecraft:white_concrete_powder"
   },
   "output": {
-    "id": "minecraft:lime_concrete"
+    "id": "minecraft:white_concrete"
   },
   "fluid": "minecraft:water"
 }

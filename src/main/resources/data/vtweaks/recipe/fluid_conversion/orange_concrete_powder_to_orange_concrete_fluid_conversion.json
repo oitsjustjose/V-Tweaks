@@ -1,10 +1,10 @@
 {
   "type": "vtweaks:fluid_conversion",
   "input": {
-    "id": "minecraft:light_gray_concrete_powder"
+    "item": "minecraft:orange_concrete_powder"
   },
   "output": {
-    "id": "minecraft:light_gray_concrete"
+    "id": "minecraft:orange_concrete"
   },
   "fluid": "minecraft:water"
 }
