@@ -48,6 +48,7 @@
   "vtweaks.configuration.enablePlayerDeathDropSafety": "Safe Player Drop Tweak",
   "vtweaks.configuration.enableSmallBees": "Smol Bees",
   "vtweaks.configuration.enableSplashPotionTweak": "Splash Fluid Conversion Mixin",
+  "vtweaks.configuration.enableNonStackingItemTweak": "Non-merging Items Mixin",
   "vtweaks.configuration.enableStormTweak": "Storm Tweak",
   "vtweaks.configuration.enableTorchLighting": "Torch Re-light Tweak",
   "vtweaks.configuration.enableTreeChopDown": "Tree Chopdown Tweak",
