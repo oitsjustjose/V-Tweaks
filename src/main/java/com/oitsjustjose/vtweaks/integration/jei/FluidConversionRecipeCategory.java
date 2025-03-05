@@ -1,8 +1,8 @@
 package com.oitsjustjose.vtweaks.integration.jei;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.util.Constants;
+import com.oitsjustjose.vtweaks.common.util.I18n;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -15,8 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,9 +31,18 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     private final IDrawable icon;
 
     public FluidConversionRecipeCategory(IGuiHelper guiHelper) {
-
         this.background = guiHelper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/fluid_conversion.png"), 0, 0, 76, 18).addPadding(0, 20, 32, 32).setTextureSize(76, 18).build();
         this.icon = guiHelper.createDrawableItemStack(SPLASH_POTION);
+    }
+
+    @Override
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override
@@ -47,11 +54,7 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
     @Override
     @Nonnull
     public Component getTitle() {
-        try {
-            return new TranslatableContents("vtweaks.fluid_conversion.jei.title", null, new Object[]{}).resolve(null, null, 0);
-        } catch (CommandSyntaxException ex) {
-            return Component.empty();
-        }
+        return I18n.Translate("vtweaks.fluid_conversion.jei.title");
     }
 
     @Override
@@ -66,23 +69,19 @@ public class FluidConversionRecipeCategory implements IRecipeCategory<FluidConve
         var fluid = BuiltInRegistries.FLUID.get(recipe.getFluid());
         var output = recipe.getResult();
 
-        var inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
-        var fluidSlot = builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
-        var outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
+        builder.addSlot(RecipeIngredientRole.INPUT, 1 + 32, 1).addIngredients(input).setSlotName("inputSlot");
+        builder.addSlot(RecipeIngredientRole.CATALYST, 1 + 32, 1).addFluidStack(fluid, 1000).setSlotName("fluidSlot");
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 32, 1).addItemStack(output).setSlotName("outputSlot");
         // There is *no* auto-transfer for this, so there's nothing to really build a focus link for
     }
 
     @Override
-    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(FluidConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
 
         var fluid = BuiltInRegistries.FLUID.get(recipe.getFluid());
-        MutableComponent comp = Component.empty();
-        try {
-            var fluidNm = fluid.getFluidType().getDescription().getContents().resolve(null, null, 0);
-            comp.append(new TranslatableContents("vtweaks.fluid_conversion.jei.text", "--", new Object[]{fluidNm}).resolve(null, null, 0));
-        } catch (CommandSyntaxException ignored) {
-        }
+        var fluidNm = I18n.Resolve(fluid.getFluidType().getDescription().getContents());
+        var comp = I18n.Translate("vtweaks.fluid_conversion.jei.text", fluidNm);
 
         var minecraft = Minecraft.getInstance();
         var width = minecraft.font.width(comp);

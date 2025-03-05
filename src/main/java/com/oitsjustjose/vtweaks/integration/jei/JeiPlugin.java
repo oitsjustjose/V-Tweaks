@@ -4,22 +4,28 @@ import com.oitsjustjose.vtweaks.VTweaks;
 import com.oitsjustjose.vtweaks.common.data.fluidconversion.FluidConversionRecipe;
 import com.oitsjustjose.vtweaks.common.registries.ModRecipeTypes;
 import com.oitsjustjose.vtweaks.common.util.Constants;
+import com.oitsjustjose.vtweaks.common.util.I18n;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @mezz.jei.api.JeiPlugin
@@ -33,9 +39,30 @@ public class JeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(Blocks.DISPENSER), FluidConversionRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(Items.WATER_BUCKET), FluidConversionRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(FluidConversionRecipeCategory.SPLASH_POTION, FluidConversionRecipeCategory.TYPE);
+        var dispenser = new ItemStack(Blocks.DISPENSER);
+        var comp = I18n.Translate("vtweaks.dispenser.jei.title").plainCopy().withStyle(ChatFormatting.RESET);
+        dispenser.set(DataComponents.ITEM_NAME, comp);
+
+        registration.addRecipeCatalyst(dispenser, FluidConversionRecipeCategory.TYPE);
+
+        // Grab all fluid buckets for fluids that are used in any/all recipe sets
+
+        var fluids = new HashSet<ResourceLocation>();
+
+        var mc = Minecraft.getInstance();
+        var level = mc.level;
+        if (level == null) return;
+
+        for (var recipe : level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.FLUID_CONVERSION.get())) {
+            fluids.add(recipe.value().getFluid());
+        }
+
+        for (var fluidKey : fluids) {
+            var fluid = BuiltInRegistries.FLUID.get(fluidKey);
+            var bucket = fluid.getBucket();
+            if (bucket == Items.AIR) continue;
+            registration.addRecipeCatalyst(new ItemStack(bucket), FluidConversionRecipeCategory.TYPE);
+        }
     }
 
     @Override
@@ -46,18 +73,17 @@ public class JeiPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
+    public void registerRecipes(@NotNull IRecipeRegistration registration) {
         var mc = Minecraft.getInstance();
         var level = mc.level;
         if (level == null) {
-            VTweaks.getInstance().LOGGER.info("Client level is null! JEI will not work");
+            VTweaks.getInstance().LOGGER.info("Client level is null! JEI plugin will not work");
             return;
         }
 
         var recipeManager = level.getRecipeManager();
         registration.addRecipes(RecipeTypes.ANVIL, generateAnvilRecipes(registration, recipeManager));
-        registration.addRecipes(FluidConversionRecipeCategory.TYPE, generateFluidConversionRecipes(registration, recipeManager));
-//        registration.addRecipes(FluidConversionRecipeCategory.TYPE, VTweaks.getInstance().getFluidConversionRecipes().values().stream().toList());
+        registration.addRecipes(FluidConversionRecipeCategory.TYPE, generateFluidConversionRecipes(recipeManager));
     }
 
     private List<IJeiAnvilRecipe> generateAnvilRecipes(IRecipeRegistration registration, RecipeManager mgr) {
@@ -73,13 +99,7 @@ public class JeiPlugin implements IModPlugin {
         return ret;
     }
 
-    private List<FluidConversionRecipe> generateFluidConversionRecipes(IRecipeRegistration registration, RecipeManager mgr) {
-        List<FluidConversionRecipe> ret = Lists.newArrayList();
-
-        for (var recipe : mgr.getAllRecipesFor(ModRecipeTypes.FLUID_CONVERSION.get())) {
-            ret.add(recipe.value());
-        }
-
-        return ret;
+    private List<FluidConversionRecipe> generateFluidConversionRecipes(RecipeManager mgr) {
+        return mgr.getAllRecipesFor(ModRecipeTypes.FLUID_CONVERSION.get()).stream().map(RecipeHolder::value).toList();
     }
 }

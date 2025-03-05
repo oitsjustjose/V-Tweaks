@@ -2,14 +2,12 @@ package com.oitsjustjose.vtweaks.common.entity;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.oitsjustjose.vtweaks.common.data.helpers.JsonUtils;
+import com.oitsjustjose.vtweaks.common.util.I18n;
 import com.oitsjustjose.vtweaks.common.util.WeightedCollection;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,7 +16,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
@@ -112,18 +109,8 @@ public class ChallengerEntityModifier {
         monster.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true, false));
     }
 
-    private MutableComponent mobClassName(Monster mob) {
-        TranslatableContents c = new TranslatableContents(
-                "vtweaks." + this.unlocalizedName + ".challenger.mob",
-                "Challenger Mob",
-                new Object[]{mob.getName()}
-        );
-        try {
-            return c.resolve(null, mob, 0);
-        } catch (CommandSyntaxException e) {
-            e.printStackTrace();
-            return Component.empty().append(e.getMessage());
-        }
+    private Component mobClassName(Monster mob) {
+        return I18n.Translate("vtweaks." + this.unlocalizedName + ".challenger.mob", "Challenger Mob", mob.getName());
     }
 
     @Nullable

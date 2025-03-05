@@ -18,6 +18,7 @@
   "vtweaks.hunger.tooltip.text": "§7Hunger:§r %s",
   "vtweaks.fluid_conversion.jei.title": "Submerge or Splash with Fluid",
   "vtweaks.fluid_conversion.jei.text": "Submerge in %s",
+  "vtweaks.dispenser.jei.title": "Can be automated with Dispensers",
   "vtweaks.warranty.message.text.singular": "We've been trying to reach you about your item's extended warranty",
   "vtweaks.warranty.message.text.plural": "We've been trying to reach you about your items' extended warranty",
 
