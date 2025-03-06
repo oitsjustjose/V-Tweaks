@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,17 +23,20 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @Tweak(category = "entity.featherplucking")
 public class FeatherPluckTweak extends VTweak {
-    public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("forge", "chickens"));
-    public static final TagKey<Item> SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "shears"));
+    public static final TagKey<EntityType<?>> CHICKENS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("c", "chickens"));
+    public static final TagKey<Item> SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/shear"));
+
     private static final String PLUCK_COOL_DOWN_KEY = Constants.MOD_ID + ":pluck_cool_down";
 
     private ModConfigSpec.BooleanValue enabled;
+    private ModConfigSpec.BooleanValue worksOnBabies;
     private ModConfigSpec.LongValue cooldown;
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
         super.registerConfigs(builder);
-        this.enabled = builder.comment("Allows feathers to be plucked from any #forge:chickens using any #forge:shears").define("enabled", true);
+        this.enabled = builder.comment("Allows feathers to be plucked from any #c:chickens using any #c:tools/shear").define("enabled", true);
+        this.worksOnBabies = builder.comment("Should baby #c:chickens be able to have feathers plucked from them?").define("worksOnBabies", false);
         this.cooldown = builder.comment("The amount of time (in Milliseconds) between plucks. Defaults to 10 minutes.").defineInRange("cooldownInMilliseconds", 600000, 1, Long.MAX_VALUE);
     }
 
@@ -41,12 +45,16 @@ public class FeatherPluckTweak extends VTweak {
         if (!this.enabled.get()) return;
         if (!evt.getTarget().getType().is(CHICKENS)) return;
 
+        if (evt.getTarget() instanceof AgeableMob aged) {
+            if (!this.worksOnBabies.get() && aged.isBaby()) return;
+        }
+
         var player = evt.getEntity();
         if (!player.getMainHandItem().is(SHEARS)) return;
 
-        if (!canPluck(evt.getTarget())) return;
-        player.swing(InteractionHand.MAIN_HAND);
         if (player.level().isClientSide()) return;
+        if (!canPluck(evt.getTarget())) return;
+        player.swing(InteractionHand.MAIN_HAND, true);
 
         var drop = new ItemEntity(evt.getLevel(), evt.getTarget().getX(), evt.getTarget().getY(), evt.getTarget().getZ(), new ItemStack(Items.FEATHER));
         evt.getLevel().addFreshEntity(drop);

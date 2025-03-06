@@ -21,17 +21,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Tweak(category = "entity")
 public class GrieflessCreeperTweak extends VTweak {
-    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("forge", "creepers"));
+    public static final TagKey<EntityType<?>> CREEPERS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("c", "creepers"));
     private ModConfigSpec.BooleanValue enabled;
 
     @Override
     public void registerConfigs(ModConfigSpec.Builder builder) {
         super.registerConfigs(builder);
-        this.enabled = builder.comment("When any #forge:creepers explodes, all blocks destroyed will plop back into place after a few seconds").define("ungriefCreepers", true);
+        this.enabled = builder.comment("When any #c:creepers explodes, all blocks destroyed will plop back into place after a few seconds").define("ungriefCreepers", true);
     }
 
     @SubscribeEvent
-    public void process(ExplosionEvent.Start evt) {
+    public void process(ExplosionEvent.Detonate evt) {
         if (!this.enabled.get()) return;
 
         if (evt.getExplosion().getDirectSourceEntity() == null) return;
@@ -48,9 +48,11 @@ public class GrieflessCreeperTweak extends VTweak {
             var ent = lvl.getBlockEntity(pos);
             if (!state.isAir()) {
                 var restoreTask = new TickScheduler.ScheduledTask(() -> {
+                    var soundType = state.getSoundType(lvl, pos, null);
+
                     lvl.setBlock(pos, state, Block.UPDATE_CLIENTS | 1024);
                     lvl.setBlocksDirty(pos, lvl.getBlockState(pos), state);
-                    lvl.playSound(null, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 0.15F, 1.0F);
+                    lvl.playSound(null, pos, soundType.getPlaceSound(), SoundSource.BLOCKS, 0.15F, 1.0F);
                     if (ent != null) lvl.setBlockEntity(ent);
                 }, 5 + (idx.get() / 25F)); /* 25F => 25 blocks restored per second */
                 VTweaks.getInstance().Scheduler.addTask(restoreTask);

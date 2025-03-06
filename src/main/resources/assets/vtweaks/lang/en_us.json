@@ -54,5 +54,6 @@
   "vtweaks.configuration.rightToolRequired": "Require Correct Tool",
   "vtweaks.configuration.seaLevel": "'Sea Level' Y-Level",
   "vtweaks.configuration.tooltips": "Tooltips",
-  "vtweaks.configuration.ungriefCreepers": "Ungriefing Creepers Tweak"
+  "vtweaks.configuration.ungriefCreepers": "Ungriefing Creepers Tweak",
+  "vtweaks.configuration.worksOnBabies": "Baby Chicken Plucking"
 }
