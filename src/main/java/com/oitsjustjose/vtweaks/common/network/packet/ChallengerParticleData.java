@@ -1,6 +1,6 @@
 package com.oitsjustjose.vtweaks.common.network.packet;
 
-import com.oitsjustjose.vtweaks.client.ClientProxy;
+import com.oitsjustjose.vtweaks.client.VTweaksClient;
 import com.oitsjustjose.vtweaks.common.util.Constants;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -40,7 +40,7 @@ public record ChallengerParticleData(
 
     public static void handleClient(ChallengerParticleData data, IPayloadContext ctx) {
         if (ctx.flow().getReceptionSide() == LogicalSide.CLIENT) {
-            ctx.enqueueWork(() -> ClientProxy.showDustParticle(data));
+            ctx.enqueueWork(() -> VTweaksClient.showDustParticle(data));
         }
     }
 }
