@@ -1,6 +1,5 @@
 package com.oitsjustjose.vtweaks;
 
-import com.oitsjustjose.vtweaks.common.config.ClientConfig;
 import com.oitsjustjose.vtweaks.common.config.CommonConfig;
 import com.oitsjustjose.vtweaks.common.core.TickScheduler;
 import com.oitsjustjose.vtweaks.common.core.TweakRegistry;
@@ -15,8 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class VTweaks {
     private static VTweaks instance;
     public final Logger LOGGER = LogManager.getLogger();
+
     public final TweakRegistry TweakRegistry = new TweakRegistry();
     public final TickScheduler Scheduler = new TickScheduler();
     public final NetworkManager NetworkManager = new NetworkManager();
@@ -41,10 +39,7 @@ public class VTweaks {
 
         eventBus.register(NetworkManager);
 
-        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "vtweaks-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "vtweaks-common.toml");
-        // Make the config screen work with the Common & Client Configs
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (cont, parent) -> new ConfigurationScreen(modContainer, parent));
     }
 
     public static VTweaks getInstance() {
