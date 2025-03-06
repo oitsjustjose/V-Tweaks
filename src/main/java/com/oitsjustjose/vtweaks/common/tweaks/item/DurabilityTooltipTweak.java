@@ -3,8 +3,8 @@ package com.oitsjustjose.vtweaks.common.tweaks.item;
 import com.google.common.collect.Lists;
 import com.oitsjustjose.vtweaks.common.core.Tweak;
 import com.oitsjustjose.vtweaks.common.core.VTweak;
+import com.oitsjustjose.vtweaks.common.util.I18n;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
@@ -41,21 +41,22 @@ public class DurabilityTooltipTweak extends VTweak {
     public void process(ItemTooltipEvent evt) {
         if (this.setting.get() == TooltipSetting.NEVER) return;
         var stack = evt.getItemStack();
-        var shifting = Screen.hasShiftDown();
+        var shifting = evt.getFlags().hasShiftDown();
         if (!stack.isDamageableItem()) return;
         if (this.setting.get() == TooltipSetting.WITH_SHIFT && !shifting) return;
         evt.getToolTip().add(getDurabilityString(stack));
     }
 
     private MutableComponent getDurabilityString(ItemStack itemstack) {
-        var ret = "Durability: ";
-        var c = Component.empty();
+        var maxDamage = itemstack.getMaxDamage();
+        var currDamage = itemstack.getDamageValue();
+        var percentHealth = 1 - ((float) currDamage / (float) maxDamage);
+        var normalized = Math.max(Math.min(Math.round(percentHealth * 10) - 1, 9), 0);
 
-        var max = itemstack.getMaxDamage();
-        var damage = itemstack.getDamageValue();
-        var percentage = 1 - ((float) damage / (float) max);
-        var scaled = Math.max(Math.min(Math.round(percentage * 10) - 1, 9), 0);
-        return c.append(ret + ColorByIndex.get(scaled) + (max - damage) + "/" + max + ChatFormatting.RESET);
+        var comp = I18n.Translate("vtweaks.durability.tooltip.text").copy();
+        var comp2 = Component.literal((maxDamage - currDamage) + "/" + maxDamage).withStyle(ColorByIndex.get(normalized));
+
+        return comp.append(comp2);
     }
 
     public enum TooltipSetting {
