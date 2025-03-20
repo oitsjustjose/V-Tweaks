@@ -1,12 +1,19 @@
 # V-Tweaks Changelog MC 1.21
 
+## 4.0.19:
+
+### Added:
+
+- Particle effect while walking on Powder Snow blocks
+    - Offers a more accessible approach to telling the difference between normal & powder snow
+
 ## 4.0.18
 
 ### Added:
 
 - New mixin tweak to make Powder Snow blocks solid
-  - Disabled by default
-  - Makes exploration in ambient snowy areas less annoying
+    - Disabled by default
+    - Makes exploration in ambient snowy areas less annoying
 
 ## 4.0.17
 
