@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "vtweaks.refmap.json",
   "mixins": [
+    "DestroySpeedMixin",
     "ItemEntityMixin",
     "ThrownPotionMixin",
     "PowderedSnowMixin"
