@@ -1,5 +1,11 @@
 # V-Tweaks Changelog MC 1.21
 
+## 4.0.20:
+
+### Fixed:
+
+- Default Tags not loading because of directory changes
+
 ## 4.0.19:
 
 ### Added:

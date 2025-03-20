@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:torch",
+    "minecraft:soul_torch"
+  ]
+}
