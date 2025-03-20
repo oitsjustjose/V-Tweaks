@@ -1,5 +1,13 @@
 # V-Tweaks Changelog MC 1.21
 
+## 4.0.18
+
+### Added:
+
+- New mixin tweak to make Powder Snow blocks solid
+  - Disabled by default
+  - Makes exploration in ambient snowy areas less annoying
+
 ## 4.0.17
 
 ### Added:

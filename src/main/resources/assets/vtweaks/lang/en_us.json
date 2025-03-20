@@ -38,6 +38,7 @@
   "vtweaks.configuration.enablePetFriendlyFireTweak": "Pet Friendly Fire Tweak",
   "vtweaks.configuration.enablePlayerDeathDropSafety": "Safe Player Drop Tweak",
   "vtweaks.configuration.enableSmallBees": "Smol Bees",
+  "vtweaks.configuration.enableSolidPowderedSnow": "Solid Powdered Snow",
   "vtweaks.configuration.enableSplashPotionTweak": "Splash Fluid Conversion Mixin",
   "vtweaks.configuration.enableNonStackingItemTweak": "Non-merging Items Mixin",
   "vtweaks.configuration.enableStormTweak": "Storm Tweak",

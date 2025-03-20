@@ -10,6 +10,7 @@ public class CommonConfig {
     public static final ModConfigSpec.BooleanValue EnableCactusMixin;
     public static final ModConfigSpec.BooleanValue EnableSplashPotionMixin;
     public static final ModConfigSpec.BooleanValue EnableItemMergingMixin;
+    public static final ModConfigSpec.BooleanValue EnablePowderedSnowMixin;
 
     private static final Builder BUILDER = new Builder();
 
@@ -28,6 +29,7 @@ public class CommonConfig {
         EnableCactusMixin = BUILDER.comment("If enabled, this tweak prevents cactus from destroying items that run into it").gameRestart().define("enableCactusItemProtection", true);
         EnableSplashPotionMixin = BUILDER.comment("If enabled, allows splash potions of water to behave the same as throwing an item in water via V-Tweaks' Fluid Conversion Recipes").gameRestart().define("enableSplashPotionTweak", true);
         EnableItemMergingMixin = BUILDER.comment("If enabled, items entities will no longer stack together like Minecraft Beta").gameRestart().define("enableNonStackingItemTweak", false);
+        EnablePowderedSnowMixin = BUILDER.comment("If enabled, nothing will be able to sink into Powdered Snow blocks anymore").gameRestart().define("enableSolidPowderedSnow", false);
         BUILDER.pop();
 
         SPEC = BUILDER.build();

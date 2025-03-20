@@ -5,7 +5,8 @@
   "refmap": "vtweaks.refmap.json",
   "mixins": [
     "ItemEntityMixin",
-    "ThrownPotionMixin"
+    "ThrownPotionMixin",
+    "PowderedSnowMixin"
   ],
   "client": [],
   "minVersion": "0.8"
