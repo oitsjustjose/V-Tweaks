@@ -1,3 +1,3 @@
-# V-Tweaks
-A random array of tweaks and things for MC!
-Adding new mechanics without adding any items!
+# This Repo has Moved!
+
+This repository has been moved to a [new location!](https://git.oitsjustjose.com/me/V-Tweaks)
